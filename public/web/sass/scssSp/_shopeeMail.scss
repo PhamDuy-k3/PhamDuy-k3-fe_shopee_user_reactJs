@@ -1,0 +1,28 @@
+$redColoer:red;
+$whiteColoer:white;
+.shopee-Mail{
+    height: 20rem;
+    margin-top: 2rem;
+    background-color: $whiteColoer;
+    .item-shopee-mail-title h1{
+        color:$redColoer ;
+        font-size: 1.5rem;
+        padding: 1rem 0 0 0.2rem;
+    }
+    .item-shopee-mail{
+        width: 12rem;
+        border: 1px solid #F2F2F2;
+        img{
+            width: 100%;
+        }
+    }
+}
+@media (min-width:1080px) { 
+    .shopee-Mail{
+        .item-shopee-mail{
+            width: 14.97rem;
+            border: 1px solid #F2F2F2;
+        }
+    }
+}
+

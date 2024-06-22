@@ -1,0 +1,67 @@
+$colorRed:red;
+.flast-sale{
+    width: 96%;
+    height: 25rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    .flast-sale-title{
+        h1{
+            color: red;
+        }
+        .time {
+            margin-left: 150px;
+            margin-top: 30px;
+        }
+    }
+    .item-fl-sale{
+        width: 14rem !important ;
+        height: 18.5rem;
+        .item-fl-sale-image {
+            width: 100%;
+            height: 14rem;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .item-fl-sale-text{
+            p{
+                font-size: 1.5rem;
+                padding-top: 0.1rem;
+                color: $colorRed;
+            }
+        }
+        .progress{
+            margin-top: -0.7rem;
+            height: 1.5rem;
+            border-radius: 3rem;
+            background-color: #FFBDA6;
+            .progress-bar{
+                background-color: $colorRed;
+            }
+        }
+    }
+    .item-fl-sale:hover{ 
+        position: relative;
+        cursor: pointer;
+        animation-name: slashsale;
+        animation-timing-function: linear;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+     }
+     .slick-slider{
+        width: 100%;
+        .slick-next {
+            right: 5px ;
+        }
+        .slick-prev {
+            z-index: 1 !important;
+            left: 5px ;
+        }
+     }
+}
+
+@keyframes  slashsale{
+    from {top:0px}
+    to {top:-5px}
+}

@@ -1,0 +1,25 @@
+.horizontal-Form{ 
+    .quick-Example{
+        height: 25rem;
+        .quick-Example-header{
+            background-color: #17A2B8;
+        }
+        .quick-Example-content{
+            .form-group{
+                margin-bottom: 1rem;
+            }
+        }
+        .quick-Example-submit{
+            input[type='submit']{
+                background-color: #17A2B8;
+            }
+            input[name='cancel']{
+                background-color: #ffffff;
+                color: black;
+                margin-left: 40%;
+            }
+            
+        }
+    }
+   
+}

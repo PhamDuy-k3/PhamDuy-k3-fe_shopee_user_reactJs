@@ -1,0 +1,51 @@
+@import '_varibal';
+.infor-shop{
+    height:10rem ;
+    margin-top: 1rem;
+    background-color: white;
+    img{
+        width: 10rem;
+        height: 10rem;
+        margin-left: 1rem;
+    }
+    .infor-shop-title{
+        padding-top: 1rem;
+        p:first-child{
+            font-weight: 500;
+        }
+        .list-btn-shop{
+            button{
+                border: 1px solid $boder;
+                padding: 0.5rem;
+                background-color: #FFEEE8;
+                color: $redColor;
+               
+            }
+            button:hover{
+                background-color: #f8d0c2;
+            }
+            button:last-child{
+                background-color: white;
+                color: black;
+            }
+            button:last-child:hover{
+                background-color: #dbd7d6;
+            }
+        }
+    }
+    .infor-shop-text{
+        padding-top: 2rem;
+        .infor-shop-text-item{
+            margin-right: 3rem;
+            p:last-child{
+                margin-left: 1rem;
+                color: $redColor;
+            }
+        }
+    }
+}
+@media (min-width:1080px) { 
+    .infor-shop{
+        font-size: 1.1rem;
+    }
+}

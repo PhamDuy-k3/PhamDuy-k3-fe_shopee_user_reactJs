@@ -1,0 +1,183 @@
+@import '_varibal';
+.infor-detail-product{
+    margin-top: 1rem;
+    .insurance-text {
+        position: relative;
+        p:last-child{
+            margin-left: 2.7rem;
+        }
+        p:nth-child(2){
+            padding: 0.1rem;
+            position: absolute;
+            left: 9.2rem;
+            bottom: 0.1rem;
+            color: white;
+            background-color: $redColor;
+            border-top-left-radius: 3rem;
+            border-top-right-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+        }
+    }
+    .transport{
+        margin-top: 1rem;
+        .transport-text{
+            span{
+                margin-left: 1rem;
+            }
+            .fa-shuttle-van{
+               color: #f4cfc0;
+            }
+            .phi-vc{
+                p:last-child{
+                    margin-left: 1rem;
+                    span{
+                        margin-left: 0;
+                    }
+                }
+            }
+            .fa-less-than{
+                cursor: pointer;
+            }
+        }
+        .addres-transport{
+            z-index: 100;
+            display: none;
+            background-color: white;
+            position: fixed;
+            border: 1px solid $boder;
+            width: 40rem;
+            bottom: 10rem;
+            top: 13rem;
+            left: 30rem;
+            height: 18rem;
+            padding: 1rem;
+            .addres-transport-header{
+                width: 100%;
+                height: 3rem;
+                font-size: 1.2rem;
+                border-bottom: 1px solid $boder;
+            }
+            .search-addres{
+                input ,button{
+                    outline: none;
+                    font-size: 1rem;
+                    border: 1px solid $boder;
+                }
+                input{
+                    width: 25rem;
+                    padding-left: 1rem;
+                    margin-right: 1rem;
+                }
+                button{
+                    color: white;
+                    background-color: #F3826C;
+                    font-size: 1.2rem;
+                    padding: 0.5rem 1rem 0.5rem 1rem;
+                }
+            }
+        }
+    }
+   
+    .color{
+        margin-top: 1rem;
+        p{
+            padding-top: 0.5rem;
+        }
+        .color-list button{
+            border: 1px solid $boder;
+            background-color: white;
+            padding: 0.4rem;
+            margin-right: 1rem;
+        }
+       
+    }
+    .size{
+        margin-top: 1rem;
+        p{
+            padding-top: 0.5rem;
+        }
+        .size-text{
+            button{
+                border: 1px solid $boder;
+                padding: 0.4rem 2rem 0.4rem 2rem;
+                margin-right: 1rem;
+                background-color: white;
+            }
+            button:focus{
+                border: 1px solid rgb(245, 150, 150);
+                color: $redColor;
+            }
+
+        }
+    }
+    .number{
+        margin-top: 1rem;
+        p{
+            padding-top: 1rem;
+        }
+        .number-text {
+            button{
+                width: 3rem;
+                background-color: #FAFAFA;
+                border: 1px solid $boder;
+            }
+            input{
+                width: 5rem;
+                padding-left: 2rem;
+                border: 1px solid $boder;
+            }
+            p{
+                padding-top: 1rem;
+                margin-left: 1rem;
+            }
+        }
+    }
+    .cart{
+        margin-top: 2rem;
+        p{
+            background-color: #FFF5F1;
+            cursor: pointer;
+            padding: 1rem 2.5rem 1rem 2.5rem;
+            margin-right: 1rem;
+            border: 1px solid;
+            border-radius: 0.3rem;
+            color: $redColor;
+            i{
+                font-size: 1.3rem;
+                padding-right: 1rem;
+            }
+        }
+        p:hover{
+            background-color: #f4cfc0;
+        }
+        .mua{
+            p{
+                background-color: #EE4D2D;
+                color: white;
+            }
+        }
+        
+    }
+    .fa-less-than{
+        font-size: 0.7rem;
+    
+    }
+} 
+.button-clicked ,.size-clicked{
+    border: 1px solid rgb(245, 150, 150) !important;
+    color: $redColor !important;
+}
+
+@media (min-width:1080px) { 
+   .infor-detail-product{
+        font-size: 1.1rem;
+        .insurance-text {
+            p:last-child{
+                margin-left: 4rem;
+            }
+            p:nth-child(2){
+                left: 11rem;
+            }
+        }
+   }
+ }

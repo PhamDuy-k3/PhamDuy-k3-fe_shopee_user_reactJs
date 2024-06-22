@@ -1,0 +1,51 @@
+//tất cả danh muc
+.category-title{
+    p{
+        font-size: 1.2rem;
+        font-weight: bold;
+        i{
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+    }
+    li{
+        padding-top: 1rem;
+        font-size: 1rem;
+        .fa-less-than{
+            color: rgb(106, 104, 104);
+            margin-left: 1rem;
+            font-size: 0.7rem;
+        }
+    }
+   
+}
+.list-display-two ,.list-display-one{
+    display: none;
+}
+.active{
+    background-color: #EE4D2D !important;
+    color: rgb(255, 255, 255);
+}
+.active1{
+    color: red;
+}
+// sắp x
+.items-category-title{
+    width: 100%;
+    margin-top: 0.4rem;
+    background-color: #EDEDED;
+    ul{
+        padding-top: 0.5rem;
+        margin-left: -1rem;
+        padding-bottom: 0.5rem;
+        li{
+            padding: 0.5rem;
+            background-color: white;
+            margin-right: 1rem;
+            select{
+                padding: 1rem;
+                border-color: transparent;
+            }
+        }
+    }
+}

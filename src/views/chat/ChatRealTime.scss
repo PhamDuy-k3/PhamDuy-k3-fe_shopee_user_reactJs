@@ -1,0 +1,101 @@
+.chat-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  width: 35rem;
+  margin-left: 10%;
+  border: 1px solid rgb(194, 191, 191);
+  overflow-y: scroll;
+
+  .messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+
+    .message {
+      max-width: 70%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 10px;
+      position: relative;
+
+      img {
+        max-width: 100%; // Ảnh sẽ chiếm hết không gian có sẵn
+        border-radius: 10px;
+      }
+
+      .timestamp-hidden {
+        display: none;
+        position: absolute;
+        bottom: -20px;
+        background-color: white;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .timestamp-hidden.self {
+        right: 10px;
+      }
+
+      .timestamp-hidden.server {
+        left: 10px;
+      }
+
+      &:hover {
+        // Khi di chuột vào tin nhắn, hiện thị timestamp
+        .timestamp-hidden {
+          display: block;
+        }
+      }
+    }
+
+    .message.self {
+      align-self: flex-end;
+      background-color: #daf8cb;
+    }
+
+    .message.server {
+      align-self: flex-start;
+      background-color: #f1f0f0;
+    }
+
+    .timestamp {
+      font-size: 0.75em;
+      color: gray;
+      position: absolute;
+      bottom: -15px;
+      right: 10px;
+    }
+  }
+
+  .input-container {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+
+    input {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  }
+}

@@ -1,0 +1,87 @@
+.Chat{
+    position: fixed;
+    bottom: 0;
+    z-index: 105;
+    right: 1rem;
+    .chat-big{
+        display: none;
+        position: relative;
+        animation-name: chat-big-up;
+        animation-duration: 0.25s;
+        .chat{
+            width: 45rem;
+            height: 35rem;
+            background-color: #F3F3F3;
+            border: 1px solid rgb(236, 236, 231);
+            border-radius: 0.5rem;
+            flex-direction: column;
+            p{
+                padding-left: 0.2rem;
+            }
+            .chat-title{
+                height: 3rem;
+                background-color: white;
+                .chat-title-text{
+                    color: #EE4D2D;
+                    font-size: 1.3rem;
+                }
+                .chat-title-next{
+                    .hide ,.collapses{
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        margin-top: 0.7rem;
+                        text-align: center;
+                        border: 1px solid rgb(19, 19, 18);
+                        background-color:#F3F3F3 ;
+                        i{
+                            font-size: 1rem;
+                            cursor: pointer;
+                        }
+                    }
+                    .collapses{
+                        margin-left:2rem;
+                    }
+                }
+            }
+            .chat-text{
+                width: 100%;
+            }
+        }
+        
+    }
+    .chat-small{
+        width: 10rem;
+        cursor: pointer;
+        border-radius: 0.5rem 0.5rem 0 0 ;
+        padding: 1rem 0 0 1.5rem;
+        background-color: white;
+        box-shadow: 0 1px 8px 1px rgb(228, 226, 226);
+        color: #EE4D2D;
+        font-size: 1.6rem;
+       p{
+        font-weight: 600;
+        margin-left: 1rem;
+       }
+    }
+}
+@keyframes chat-big-up {
+    from{
+        width: 0rem;
+        height: 0rem;
+
+    }to{
+        width: 45rem;
+        height: 35rem;
+    }
+}
+@keyframes chat-big-down {
+    from{
+        width: 45rem;
+        height: 35rem;
+
+    }to{
+        width: 0rem;
+        height: 0rem;
+    }
+}
+

@@ -1,0 +1,139 @@
+.Todo-list{
+    width: 22rem;
+    border: 1px solid $boderContent;
+    margin-top: 1rem;
+    background-color: white;
+    height: 35rem;
+    .Todo-list-header{
+        height: 5rem;
+        padding: 1.5rem;
+        border-bottom: 1px solid $boderContent;
+        .Todo-list-title{
+            p{
+                font-size: 1.2rem;
+            }
+        }
+        nav{
+            li{
+                border: 1px solid $boderContent;
+                width: 1.5rem;
+                text-align: center;
+            }
+        }
+    }
+    .Todo-list-content{
+        height: 25rem;
+        ul{
+            li{
+                width: 96%;
+                height: 4rem;
+                background-color: #F8F9FA;
+                padding: 0.5rem;
+                border-left: 2px solid #E9ECEF;
+                .icheck-primary{
+                    position: relative;
+                    margin-left: 0.5rem;
+                    label{
+                        input{
+                            display: none;
+                        }
+                        i{
+                            position: absolute;
+                            display: none;
+                            font-size: 1.7rem;
+                            top:0;
+                            left: -1rem;
+                            color: #007BFF;
+                        }
+                        #todoCheck1:checked~i,
+                        #todoCheck2:checked~i,
+                        #todoCheck3:checked~i,
+                        #todoCheck4:checked~i,
+                        #todoCheck5:checked~i,
+                        #todoCheck6:checked~i{
+                            display: block;
+                        }
+                    }
+                    label::before{
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        left: -1rem;
+                        background-color: #E9ECEF;
+                        border: 1px solid $boderContent;
+                    }
+                    label:hover::before {
+                        border: 2px solid blue;
+                        cursor: pointer; 
+                    }
+                }
+             
+                .time-tool{
+                    width: 30%;
+                }
+                .text{
+                    width: 70%;
+                    position: relative;
+                    margin-left: 1rem;
+                }
+                .del-text{
+                    width: 100%;
+                    height: 100%;
+                    display: none;
+                    top: 0.1rem;
+                    left: 0;
+                    font-size: 0.9rem;
+                    position: absolute;
+                    background-color: #F8F9FA;
+                }
+                .time{
+                    padding-left: 1rem;
+                    button{
+                        font-size: 0.7rem;
+                        padding: 1px 2px 1px 2px !important;
+                    }
+                }
+                .tools{
+                    margin-left: 10%;
+                }
+            }
+        }
+    }
+    .Todo-list-add{
+        height: 5rem;
+        background-color: #F7F7F7;
+        button{
+            margin-top: 1rem;
+            color: white;
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            border: 1px solid $boderContent;
+            background-color: #007BFF ;
+            margin-left: 60%;
+        }
+    }
+}
+.fa-edit{
+   color: red;
+}
+.fa-edit-none{
+    display: none;
+}
+@media (min-width:1080px) { 
+    .Todo-list{
+        width: 55%;
+        height: 27rem;
+        .Todo-list-content{
+            height: 17rem;
+            ul{
+                li{
+                    height: 2.5rem;
+                }
+            }
+        }
+        .Todo-list-add{
+            height: 4.9rem;
+        }
+    }
+ }

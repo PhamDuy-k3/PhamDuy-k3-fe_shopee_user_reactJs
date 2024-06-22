@@ -1,0 +1,54 @@
+.content-wraper{
+    height: 202rem;
+    border-bottom: 1px solid $boderContent;
+    .content-wraper-header{
+        height: 5rem;
+        padding: 1rem;
+        padding-left: 1.2rem;
+        >h2{
+            font-weight: 400;
+         }
+         .content-wraper-header-cl2 {
+            position: absolute;
+            right: 1rem;
+            p{
+                margin-right: 0.5rem
+            }
+        }
+    }
+      
+    @import '_more-infor';
+    @import '_sale';
+    @import '_dircet-chat';
+    @import '_todo-list';
+    @import '_visitor';
+    @import '_Sale-Draph';
+    @import '_Calendar';
+    
+  
+}
+.content-wraper:not(.hiddenContentWraper){
+    display: none;
+}
+.text-align{
+    text-align: center;
+}
+
+@media (min-width:1080px) { 
+   .content-wraper{
+        width: 100%;
+        height: 104rem;
+        .content-wraper-header-cl2{
+            margin-left: 40rem;
+        }
+        .all-content-con{
+            width: 45%;
+            float: right;
+            margin-top: -1310px;
+            .Visitor,.Sale-Draph,.Calendar{
+                width: 90%;
+                margin-left: 1rem;
+            }
+        }
+   }
+}

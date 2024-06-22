@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Ký</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/sass/scssDn/styleDn.css" />
+    <link rel="stylesheet" href="/public/sass/scssDk/styleDk.css" />
+  </head>
+  <body>
+    <div class="box">
+      <header class="col-12 d-flex">
+        <div class="title col-10">
+          <div class="logo d-flex">
+            <img src="img/imgDn/logo.jpg" alt="" />
+            <p>Đăng Ký</p>
+          </div>
+        </div>
+        <div class="help">
+          <p>Bạn cần giúp đỡ ?</p>
+        </div>
+      </header>
+      <div
+        class="context col-12 d-flex"
+        style="
+          background-image: url(img/imgDn/banner.webp);
+          background-size: cover;
+        "
+      >
+        <form
+          name="surveyForm"
+          onsubmit="return validateSurveyFormDk()"
+          action="http://127.0.0.1:5500/public/shopee/dn.html"
+        >
+          <div class="infor-login">
+            <div class="infor-login-title d-flex">
+              <p>Đăng Ký</p>
+            </div>
+            <div class="infor-login-input">
+              <div class="Phone">
+                <label for="Phone">
+                  <input
+                    oninput="validateSurveyFormDk()"
+                    type="text"
+                    id="Phone"
+                    placeholder="Số điện thoại"
+                  />
+                </label>
+              </div>
+              <p id="error_Phone" style="position: absolute; color: red"></p>
+              <div class="login">
+                <label for="login">
+                  <input type="submit" id="login" value="ĐĂNG KÝ" />
+                </label>
+              </div>
+            </div>
+
+            <div class="infor-login-forget d-flex">
+              <p><a href="">Quên mật khẩu</a></p>
+              <p><a href="">Đăng nhập với SMS</a></p>
+            </div>
+            <hr />
+            <div class="or">
+              <p>HOẶC</p>
+            </div>
+            <div class="fb-gg">
+              <button>
+                <i class="fab fa-facebook" style="color: #0b5be5"></i> Facebook
+              </button>
+              <button>
+                <i class="fab fa-google" style="color: #c91d50"></i> Google
+              </button>
+            </div>
+            <div class="Angree">
+              <p>Bằng việc đăng ký , bạn đã đồng ý với Shopee về</p>
+              <p>
+                <a href="">Điều khoản dịch vụ </a>&
+                <a href="">Chính sách bảo mật</a>
+              </p>
+            </div>
+            <div class="new-now-shopee d-flex">
+              <p>Bặn mới biết đến Shopee?</p>
+              <p><a href="dn.html"> Đăng Nhập</a></p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <footer></footer>
+    </div>
+  </body>
+  <!-- <script src="dk.js"></script> -->
+  <script src="/public/JS/dk.js"></script>
+</html>

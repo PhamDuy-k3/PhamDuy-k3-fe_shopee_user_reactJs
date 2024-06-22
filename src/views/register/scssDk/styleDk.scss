@@ -1,0 +1,51 @@
+@import '/public/sass/scssCtsp/varibal';
+.infor-login{
+    .infor-login-input{
+        margin-top: -10px;
+        position: relative;
+        .Phone{
+            i{
+                position: absolute;
+                right: 2rem;
+                margin-top: 3rem;
+                color: green;
+            }
+        }
+    }
+    .or-dk{
+        width: 100%;
+        height: 1rem;
+        hr{
+            margin-top: 2rem !important;
+        }
+        .or-dk-text{
+            position: absolute;
+            top: 13.5rem;
+            left: 11rem;
+            p{
+                background-color: white;
+                padding: 1rem;
+                color: rgb(153, 157, 157);
+            }
+        }
+    }
+    
+    .Angree{
+        text-align: center;
+        margin-top: 1rem;
+        a{
+            color: $redColor;
+        }
+    }
+}
+@media (min-width:1080px) { 
+    .infor-login{
+        .or-dk{
+            .or-dk-text{
+                top: 14.5rem;
+            }
+        }
+        
+        
+    }
+}

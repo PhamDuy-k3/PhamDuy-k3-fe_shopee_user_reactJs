@@ -1,0 +1,26 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-size: 5px;
+}
+body{
+    background-color: #F5F5F5;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+@media (min-width:1080px) { 
+    html{
+        font-size: 13.5px;
+    }
+    .context{
+        max-width: 1700px;
+        margin: 0 auto;
+    }
+}

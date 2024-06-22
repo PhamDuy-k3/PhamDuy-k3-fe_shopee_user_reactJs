@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+html {
+  font-size: 4px;
+}
+.body {
+  padding: 2rem;
+  width: 100%;
+  margin-top: 3rem;
+  background-color: #F5F5F5;
+  input[type= "checkbox"]{
+    width: 1.2rem;
+    height: 1.2rem;  
+  }
+  .colum-1{
+    padding: 0.8rem;
+    height: 3rem;
+    background-color: #FFFEFB;
+    border: 1px solid #F3DD9E;
+    p{
+      padding-left: 1rem;
+    }
+  }
+  .body-title {
+    height: 3rem;
+    padding: 1rem 0 0 2rem;
+    color: gray;
+    margin-top: 1rem;
+    background-color: white;
+  }
+  .list-products {
+    width: 100%;
+    overflow-y: scroll;
+    height: 23rem;
+   
+    .item-product{
+      border-bottom: 2px solid #F3F3F3;
+      padding: 1rem;
+      .store-name{
+        border-bottom: 2px solid #F3F3F3;
+        padding-bottom: 1rem;
+      }
+      .product-infor{
+        margin-top: 1rem;
+        input[type= "checkbox"]{
+          margin-top: 2rem;
+          margin-right: 1rem;
+        }
+        .product{
+          p{
+            padding-top: 1rem;
+            padding-left: 0.5rem;
+          }
+          select{
+            outline: none;
+            border: none;
+            color: gray;
+
+          }
+        }
+        .price-info{
+          p{
+            margin-right: 0.5rem;
+          }
+        }
+        .quantity{
+          input{
+            border: 1px solid  #d5d2d2;
+            background-color: white;
+          }
+          input[type= "button"]{
+            width: 2rem;
+          }
+          input[type= "number"]{
+            width: 3.5rem;
+            padding-left: 1rem;
+          }
+        }
+        .total-price{
+          p{
+            padding-left: 1rem;
+          }
+        }
+        .remove-item{
+          cursor: pointer;
+          padding-left: 2rem;
+        }
+        .remove-item:hover{
+         color: red;
+        }
+      }
+    }
+    .porduct-name{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .colum-4{
+    padding-left: 1rem;
+    button{
+      border: none ;
+      width: 15rem;
+      background-color: #EE4D2D;
+      color: white;
+    }
+  }
+}
+::-webkit-scrollbar{
+  width: 4px;
+}
+::-webkit-scrollbar-thumb{
+ background-color: #A3A6A9;
+ border-radius: 5px;
+}
+.text-center {
+  text-align: center;
+}
+@media only screen and (min-width: 1024px) {
+  html {
+    font-size: 13.5px;
+  }
+}

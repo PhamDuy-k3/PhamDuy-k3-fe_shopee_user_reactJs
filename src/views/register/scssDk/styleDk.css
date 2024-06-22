@@ -1,0 +1,28 @@
+.infor-login .infor-login-input {
+  margin-top: -10px;
+}
+.infor-login .or-dk {
+  position: absolute;
+  top: 14rem;
+  left: 11rem;
+}
+.infor-login .or-dk p {
+  background-color: white;
+  padding: 1rem;
+  color: rgb(153, 157, 157);
+}
+.infor-login .Angree {
+  text-align: center;
+  margin-top: 1rem;
+}
+.infor-login .Angree a {
+  color: red;
+}
+
+@media (min-width: 1080px) {
+  .infor-login .or-dk {
+    top: 15rem;
+  }
+}
+
+/*# sourceMappingURL=styleDk.css.map */

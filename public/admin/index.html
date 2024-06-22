@@ -1,0 +1,3081 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin-PD</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="open-start">
+      <img src="img/AdminLTELogo.webp" alt="" />
+    </div>
+    <div class="side-bar">
+      <div class="side-bar-header">
+        <div class="side-bar-header-title d-flex">
+          <img src="img/AdminLTELogo.webp" alt="" />
+          <p class="hidenText">AdminLTE 3</p>
+        </div>
+        <div class="side-bar-header-infor d-flex">
+          <img src="img/AdminLTELogo.webp" alt="" />
+          <p class="hidenText">Pham Duy Dev Web</p>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="search d-flex hidenText">
+          <div class="search-input col-9 hidenText">
+            <label for="search">
+              <input
+                class="col-12"
+                type="text"
+                id="search"
+                placeholder="Search"
+              />
+            </label>
+          </div>
+          <div class="search-icon col-3 hidenText">
+            <i class="fas fa-search"></i>
+          </div>
+        </div>
+        <div class="Options">
+          <nav>
+            <ul class="main-menu">
+              <li>
+                <p class="active option">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span class="hidenText"> Dashboard</span
+                  ><i class="fas fa-angle-left fa-angle-left0 hidenText"></i>
+                </p>
+                <ul class="menu-sub" id="sub0">
+                  <li>
+                    <p class="optionClick bgOpClick">
+                      <i class="far fa-circle"></i>
+                      <span class="hidenText"> Dashboard v1</span>
+                    </p>
+                  </li>
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v2</span>
+                      </p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v3</span>
+                      </p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <p class="option">
+                  <i class="fas fa-chart-pie"></i>
+                  <span class="hidenText"> User</span
+                  ><i class="fas fa-angle-left fa-angle-left1 hidenText"></i>
+                </p>
+                <ul class="menu-sub" id="sub1">
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v1</span>
+                      </p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v2</span>
+                      </p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v3</span>
+                      </p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <p class="option">
+                  <i class="fab fa-wpforms"></i>
+                  <span class="hidenText"> Forms</span
+                  ><i class="fas fa-angle-left fa-angle-left2 hidenText"></i>
+                </p>
+                <ul class="menu-sub" id="sub2">
+                  <li>
+                    <p class="optionClick">
+                      <i class="far fa-circle"></i>
+                      <span class="hidenText"> General Form</span>
+                    </p>
+                  </li>
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v2</span>
+                      </p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v3</span>
+                      </p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <p class="option">
+                  <i class="fas fa-table"></i>
+                  <span class="hidenText"> Table</span
+                  ><i class="fas fa-angle-left fa-angle-left3 hidenText"></i>
+                </p>
+                <ul class="menu-sub" id="sub3">
+                  <li>
+                    <p class="optionClick">
+                      <i class="far fa-circle"></i>
+                      <span class="hidenText"> Simple Tables</span>
+                    </p>
+                  </li>
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v2</span>
+                      </p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href=""
+                      ><p>
+                        <i class="far fa-circle"></i>
+                        <span class="hidenText"> Dashboard v3</span>
+                      </p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <nav class="d-flex">
+        <ul class="navbar-one d-flex">
+          <li><i class="fas fa-bars" onclick="hiddenSidebar()"></i></li>
+          <div class="display-hidden d-flex">
+            <p>Home</p>
+            <p>Contact</p>
+          </div>
+        </ul>
+        <ul class="navbar-two d-flex">
+          <li>
+            <i class="fas fa-search open-search-nav"></i>
+            <div class="searchNav">
+              <div class="search-nav d-flex">
+                <label for="search_nav">
+                  <input
+                    type="text"
+                    id="search_nav"
+                    placeholder="Search"
+                    oninput="keyBroad()"
+                  />
+                  <i class="fas fa-times clear-search"></i>
+                </label>
+                <div class="search-nav-icon">
+                  <i class="fas fa-search"></i>
+                  <i class="fas fa-times close-search-nav"></i>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <i class="far fa-comments"></i>
+            <div class="chat">
+              <p class="sizeChat">3</p>
+            </div>
+            <div class="infro-chat">
+              <a href="">
+                <div class="item-chat d-flex">
+                  <div class="item-chat-img col-4">
+                    <img src="img/user.jpg" alt="" />
+                  </div>
+                  <div class="item-chat-text">
+                    <p>Phạm Duy <i class="fas fa-star"></i></p>
+                    <p>Call me</p>
+                    <p>
+                      <i class="far fa-clock"></i><span> 4</span
+                      ><span> Hours</span><span> Ago</span>
+                    </p>
+                  </div>
+                </div>
+              </a>
+              <div class="item-chat d-flex">
+                <div class="item-chat-img col-4">
+                  <img src="img/user.jpg" alt="" />
+                </div>
+                <div class="item-chat-text">
+                  <p>Phạm Duy <i class="fas fa-star"></i></p>
+                  <p>Call me</p>
+                  <p>
+                    <i class="far fa-clock"></i><span> 4</span
+                    ><span> Hours</span><span> Ago</span>
+                  </p>
+                </div>
+              </div>
+              <div class="item-chat d-flex">
+                <div class="item-chat-img col-4">
+                  <img src="img/user.jpg" alt="" />
+                </div>
+                <div class="item-chat-text">
+                  <p>Phạm Duy <i class="fas fa-star"></i></p>
+                  <p>Call me</p>
+                  <p>
+                    <i class="far fa-clock"></i><span> 4</span
+                    ><span> Hours</span><span> Ago</span>
+                  </p>
+                </div>
+              </div>
+              <div class="see-all-message">
+                <p>See All Messagse</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <i class="far fa-bell"></i>
+            <div class="tb">
+              <p>15</p>
+            </div>
+          </li>
+          <li><i class="fas fa-expand-arrows-alt"></i></li>
+          <li><i class="fas fa-th-list"></i></li>
+        </ul>
+      </nav>
+
+      <div class="content-wraper content-wraper0 hiddenContentWraper">
+        <div class="content-wraper-header d-lg-flex">
+          <h2>Dashboard</h2>
+          <div class="d-flex content-wraper-header-cl2">
+            <a href=""><p>Home</p></a>
+            <p>/</p>
+            <p class="gray">Dashboard v1</p>
+          </div>
+        </div>
+        <div class="content">
+          <div class="container-fluid">
+            <div class="More-infor d-flex flex-wrap text-align">
+              <div class="item-more-infor">
+                <div class="item-more-infor-small blue">
+                  <div class="inner d-flex">
+                    <div class="inner-text col-7">
+                      <p>150</p>
+                      <p>New Orders</p>
+                    </div>
+                    <div class="inner-icon">
+                      <i class="fas fa-shopping-bag"></i>
+                    </div>
+                  </div>
+                  <a href="">
+                    <div class="moreInfor d-flex">
+                      <p>More infor</p>
+                      <p><i class="fas fa-arrow-circle-right"></i></p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="item-more-infor">
+                <div class="item-more-infor-small green">
+                  <div class="inner d-flex">
+                    <div class="inner-text col-7">
+                      <p>150</p>
+                      <p>New Orders</p>
+                    </div>
+                    <div class="inner-icon">
+                      <i class="fas fa-signal"></i>
+                    </div>
+                  </div>
+                  <div class="moreInfor d-flex">
+                    <p>More infor</p>
+                    <p><i class="fas fa-arrow-circle-right"></i></p>
+                  </div>
+                </div>
+              </div>
+              <div class="item-more-infor">
+                <div class="item-more-infor-small yellow">
+                  <div class="inner d-flex">
+                    <div class="inner-text col-7">
+                      <p>150</p>
+                      <p>New Orders</p>
+                    </div>
+                    <div class="inner-icon">
+                      <i class="fas fa-user-plus"></i>
+                    </div>
+                  </div>
+                  <div class="moreInfor d-flex">
+                    <p>More infor</p>
+                    <p><i class="fas fa-arrow-circle-right"></i></p>
+                  </div>
+                </div>
+              </div>
+              <div class="item-more-infor">
+                <div class="item-more-infor-small red">
+                  <div class="inner d-flex">
+                    <div class="inner-text col-7">
+                      <p>150</p>
+                      <p>New Orders</p>
+                    </div>
+                    <div class="inner-icon">
+                      <i class="fas fa-clock"></i>
+                    </div>
+                  </div>
+                  <div class="moreInfor d-flex">
+                    <p>More infor</p>
+                    <p><i class="fas fa-arrow-circle-right"></i></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="Sale">
+              <div class="Sale-header d-flex">
+                <div class="Sale-header-title col-5 col-lg-7">
+                  <p><i class="fas fa-clock"></i> Sales</p>
+                </div>
+                <div class="Sale-header-op d-flex">
+                  <p class="sale-op sale-op-active">Area</p>
+                  <p class="gray sale-op">Dount</p>
+                </div>
+              </div>
+              <div class="Sale-infor">
+                <img
+                  src="img/sales.jpg"
+                  class="sale-img sale-img-active"
+                  alt=""
+                />
+                <img src="img/sales-2.jpg" class="sale-img" alt="" />
+              </div>
+            </div>
+            <div class="Dircet-Chat">
+              <div class="Dircet-Chat-header d-flex">
+                <div class="Dircet-Chat-title col-6 col-lg-8">
+                  <p>Dircet Chat</p>
+                </div>
+                <nav>
+                  <ul class="d-flex">
+                    <li>3</li>
+                    <li><i class="fas fa-minus"></i></li>
+                    <li><i class="fas fa-comments gray"></i></li>
+                    <li><i class="fas fa-times"></i></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="Dircet-Chat-content">
+                <div class="p-2">
+                  <div class="dircet-chat-msg">
+                    <div class="d-flex">
+                      <p class="name">Pham Duy Cute</p>
+                      <p class="time-chat">
+                        <span>23</span><span> Jan</span><span> 2:05</span
+                        ><span> pm</span>
+                      </p>
+                    </div>
+
+                    <div class="d-flex user-left">
+                      <img src="img/user.jpg" alt="" />
+                      <p>Mình quay lại nha em !</p>
+                    </div>
+                  </div>
+                  <div class="dircet-chat-msg-right">
+                    <div class="d-flex">
+                      <p class="time-chat">
+                        <span>23</span><span> Jan</span><span> 2:05</span
+                        ><span> pm</span>
+                      </p>
+                      <p class="name">Người Yêu Cũ</p>
+                    </div>
+                    <div class="d-flex user-right flex-row-reverse">
+                      <img src="img/user-me.jpg" alt="" />
+                      <p>Không ! Anh vừa nghèo vừa xấu</p>
+                    </div>
+                  </div>
+
+                  <div class="dircet-chat-msg">
+                    <div class="d-flex">
+                      <p class="name">Pham Duy Cute</p>
+                      <p class="time-chat">
+                        <span>23</span><span> Jan</span><span> 2:05</span
+                        ><span> pm</span>
+                      </p>
+                    </div>
+
+                    <div class="d-flex user-left">
+                      <img src="img/user.jpg" alt="" />
+                      <p>Mình quay lại nha em ! Đi mà...</p>
+                    </div>
+                  </div>
+                  <div class="dircet-chat-msg-right">
+                    <div class="d-flex">
+                      <p class="time-chat">
+                        <span>23</span><span> Jan</span><span> 2:05</span
+                        ><span> pm</span>
+                      </p>
+                      <p class="name">Người Yêu Cũ</p>
+                    </div>
+                    <div class="d-flex user-right flex-row-reverse">
+                      <img src="img/user-me.jpg" alt="" />
+                      <p>Không ! Cút</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="Dircet-Chat-send">
+                <form action="">
+                  <div class="p-4">
+                    <input
+                      type="text"
+                      name="Message"
+                      id="Message"
+                      placeholder="Type Message ..."
+                    />
+                    <button class="btn btn-primary">Send</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="Todo-list">
+              <div class="Todo-list-header d-flex">
+                <div class="Todo-list-title col-6 col-lg-8">
+                  <p><i class="fas fa-clipboard-list"></i> To Do List</p>
+                </div>
+                <nav>
+                  <ul class="d-flex">
+                    <li><i class="fas fa-angle-double-left"></i></li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li><i class="fas fa-angle-double-right"></i></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="Todo-list-content">
+                <ul class="mt-3">
+                  <li class="done d-flex">
+                    <span class="handel col-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary">
+                      <label for="todoCheck1">
+                        <input type="checkbox" name="todo1" id="todoCheck1" />
+                        <i class="fas fa-check-square"></i>
+                      </label>
+                    </div>
+                    <span class="text"
+                      >Design a nice theme<span class="del-text">
+                        <del>Design a nice theme</del>
+                      </span></span
+                    >
+                    <div class="time-tool d-lg-flex">
+                      <small class="time">
+                        <button class="btn btn-danger">
+                          <i class="far fa-clock"></i>
+                          2 mins
+                        </button>
+                      </small>
+                      <div class="tools">
+                        <i class="fas fa-edit fa-edit-none"></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="done d-flex mt-1">
+                    <span class="handel col-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary">
+                      <label for="todoCheck2">
+                        <input type="checkbox" name="todo2" id="todoCheck2" />
+                        <i class="fas fa-check-square"></i>
+                      </label>
+                    </div>
+                    <span class="text"
+                      >Make the theme responsive
+                      <span class="del-text">
+                        <del>Make the theme responsive</del></span
+                      ></span
+                    >
+                    <div class="time-tool d-lg-flex">
+                      <small class="time">
+                        <button class="btn btn-info">
+                          <i class="far fa-clock"></i>
+                          2 mins
+                        </button>
+                      </small>
+                      <div class="tools">
+                        <i class="fas fa-edit fa-edit-none"></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="done d-flex mt-1">
+                    <span class="handel col-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary">
+                      <label for="todoCheck3">
+                        <input type="checkbox" name="todo3" id="todoCheck3" />
+                        <i class="fas fa-check-square"></i>
+                      </label>
+                    </div>
+                    <span class="text"
+                      >Let theme shine like a star
+                      <span class="del-text">
+                        <del>Let theme shine like a star</del></span
+                      ></span
+                    >
+                    <div class="time-tool d-lg-flex">
+                      <small class="time">
+                        <button class="btn btn-success">
+                          <i class="far fa-clock"></i>
+                          2 mins
+                        </button>
+                      </small>
+                      <div class="tools">
+                        <i class="fas fa-edit fa-edit-none"></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="done d-flex mt-1">
+                    <span class="handel col-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary">
+                      <label for="todoCheck4">
+                        <input type="checkbox" name="todo4" id="todoCheck4" />
+                        <i class="fas fa-check-square"></i>
+                      </label>
+                    </div>
+                    <span class="text"
+                      >Let theme shine like a star
+                      <span class="del-text">
+                        <del>Let theme shine like a star</del></span
+                      ></span
+                    >
+
+                    <div class="time-tool d-lg-flex">
+                      <small class="time">
+                        <button class="btn btn-warning">
+                          <i class="far fa-clock"></i>
+                          2 mins
+                        </button>
+                      </small>
+                      <div class="tools">
+                        <i class="fas fa-edit fa-edit-none"></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="done d-flex mt-1">
+                    <span class="handel col-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary">
+                      <label for="todoCheck5">
+                        <input type="checkbox" name="todo5" id="todoCheck5" />
+                        <i class="fas fa-check-square"></i>
+                      </label>
+                    </div>
+                    <span class="text"
+                      >Check your messages and notifications<span
+                        class="del-text"
+                      >
+                        <del>Check your messages and notifications</del></span
+                      ></span
+                    >
+                    <div class="time-tool d-lg-flex">
+                      <small class="time">
+                        <button class="btn btn-danger">
+                          <i class="far fa-clock"></i>
+                          2 mins
+                        </button>
+                      </small>
+                      <div class="tools">
+                        <i class="fas fa-edit fa-edit-none"></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="done d-flex mt-1">
+                    <span class="handel col-1">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary">
+                      <label for="todoCheck6">
+                        <input type="checkbox" name="todo6" id="todoCheck6" />
+                        <i class="fas fa-check-square"></i>
+                      </label>
+                    </div>
+                    <span class="text"
+                      >Design a nice theme<span class="del-text">
+                        <del>Design a nice theme</del></span
+                      ></span
+                    >
+                    <div class="time-tool d-lg-flex">
+                      <small class="time">
+                        <button class="btn btn-danger">
+                          <i class="far fa-clock"></i>
+                          2 mins
+                        </button>
+                      </small>
+                      <div class="tools">
+                        <i class="fas fa-edit fa-edit-none"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="Todo-list-add">
+                <button><i class="fas fa-plus"></i> Add item</button>
+              </div>
+            </div>
+            <div class="all-content-con">
+              <div class="Visitor">
+                <div class="Visitor-header d-flex">
+                  <div class="Visitor-title col-6">
+                    <p><i class="fas fa-map-marker-alt"></i> Visitors</p>
+                  </div>
+                  <nav>
+                    <ul class="d-flex">
+                      <li><i class="fas fa-clipboard-list"></i></li>
+                      <li><i class="fas fa-minus"></i></li>
+                    </ul>
+                  </nav>
+                </div>
+                <div class="Visitor-content"></div>
+                <div class="d-flex Visitor-footer">
+                  <img src="img/visitors.jpg" alt="" />
+                  <img src="img/online.jpg" alt="" />
+                  <img src="img/vistor-sale.jpg" alt="" />
+                </div>
+              </div>
+              <div class="Sale-Draph">
+                <div class="Sale-Draph-header d-flex">
+                  <div class="Sale-Draph-title col-6">
+                    <p><i class="fas fa-th-list"></i> Sales Graph</p>
+                  </div>
+                  <nav>
+                    <ul class="d-flex">
+                      <li><i class="fas fa-minus"></i></li>
+                      <li><i class="fas fa-times"></i></li>
+                    </ul>
+                  </nav>
+                </div>
+                <div class="Sale-Draph-content">
+                  <img src="img/sale-draph.jpg" alt="" />
+                </div>
+                <div class="Sale-Draph-footer">
+                  <div class="p-3 d-flex">
+                    <div class="text-align text-white col-4">
+                      <div class="Sale-Draph-footer-input-img">
+                        <img src="img/mail-oder.jpg" alt="" />
+                        <input type="text" value="20" />
+                      </div>
+                      <p>Mail-Orders</p>
+                    </div>
+                    <div class="text-align text-white col-4">
+                      <div class="Sale-Draph-footer-input-img">
+                        <img src="img/sale-draph-online.jpg" alt="" />
+                        <input type="text" value="50" />
+                      </div>
+                      <p>Mail-Orders</p>
+                    </div>
+                    <div class="text-align text-white col-4">
+                      <div class="Sale-Draph-footer-input-img">
+                        <img src="img/in-store.jpg" alt="" />
+                        <input type="text" value="30" />
+                      </div>
+                      <p>Mail-Orders</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="Calendar">
+                <div class="calendar-header d-flex">
+                  <div class="calendar-title col-6">
+                    <p><i class="fas fa-calendar-alt"></i> Calendar</p>
+                  </div>
+                  <nav>
+                    <ul class="d-flex">
+                      <li><i class="fas fa-bars"></i></li>
+                      <li><i class="fas fa-minus"></i></li>
+                      <li><i class="fas fa-times"></i></li>
+                    </ul>
+                  </nav>
+                </div>
+                <div class="Calendar-content">
+                  <div class="container-fluid">
+                    <div class="calendar-content-month d-flex">
+                      <div class="col-3 calendar calendar-prev">
+                        <i class="fas fa-chevron-left"></i>
+                      </div>
+                      <div class="col-6 calendar calendar-month d-flex">
+                        <p class="calendar-month-text col-6">January</p>
+                        <span class="calendar-year"></span>
+                      </div>
+                      <div class="col-3 calendar calendar-next">
+                        <i class="fas fa-chevron-right"></i>
+                      </div>
+                    </div>
+                    <div class="calendar-content-table">
+                      <table
+                        class="table calendar-table table-borderless table-active mt-1"
+                      >
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-January">
+                          <tr>
+                            <td class="dayColor">28</td>
+                            <td class="dayColor">29</td>
+                            <td class="dayColor">30</td>
+                            <td class="dayColor">31</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                          </tr>
+                          <tr class="day">
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                          </tr>
+                          <tr>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>24</td>
+                          </tr>
+                          <tr>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                            <td>29</td>
+                            <td>30</td>
+                            <td>31</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-February">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                            <td class="dayColor">12</td>
+                            <td class="dayColor">13</td>
+                            <td class="dayColor">14</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-March">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-April">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-May">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-June">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-July">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-August">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-September">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-October">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-November">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table class="table calendar-table table-borderless mt-1">
+                        <thead>
+                          <th>Su</th>
+                          <th>Mo</th>
+                          <th>Tu</th>
+                          <th>We</th>
+                          <th>Th</th>
+                          <th>Fr</th>
+                          <th>Sa</th>
+                        </thead>
+                        <tbody class="calendar-table-December">
+                          <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                          </tr>
+                          <tr class="day">
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                          </tr>
+                          <tr>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>23</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                          </tr>
+                          <tr>
+                            <td>28</td>
+                            <td>30</td>
+                            <td>31</td>
+                            <td class="dayColor">1</td>
+                            <td class="dayColor">2</td>
+                            <td class="dayColor">3</td>
+                            <td class="dayColor">4</td>
+                          </tr>
+                          <tr>
+                            <td class="dayColor">5</td>
+                            <td class="dayColor">6</td>
+                            <td class="dayColor">7</td>
+                            <td class="dayColor">8</td>
+                            <td class="dayColor">9</td>
+                            <td class="dayColor">10</td>
+                            <td class="dayColor">11</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- //////////////////////////////////
+      ///////////////////////////////// -->
+      <div class="content-wraper content-wraper1">
+        <div class="content-wraper-header d-lg-flex">
+          <h2>General Form</h2>
+          <div class="d-flex content-wraper-header-cl2">
+            <a href=""><p>Home</p></a>
+            <p>/</p>
+            <p class="gray">General Form</p>
+          </div>
+        </div>
+        <div class="content">
+          <div class="container-fluid General-Form">
+            <div class="quick-Example">
+              <div class="quick-Example-header">
+                <p>Quick Example</p>
+              </div>
+              <form action="">
+                <div class="quick-Example-content">
+                  <div class="form-group">
+                    <label for="email">Email address </label>
+                    <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      placeholder="Enter email"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="pass">Password</label>
+                    <input
+                      type="password"
+                      name="pass"
+                      id="pass"
+                      placeholder="Password"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="file">File input </label>
+                    <input
+                      type="file"
+                      name="file"
+                      id="file"
+                      class="file-box"
+                      placeholder="Choose file"
+                    />
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      name="checkmeout"
+                      id="CheckMeOut"
+                      value="Check me out"
+                    />
+                    Check me out
+                  </div>
+                </div>
+                <div class="quick-Example-submit">
+                  <input type="submit" value="Submit" />
+                </div>
+              </form>
+            </div>
+            <div class="different-Styles">
+              <div class="different-Styles-header">
+                <p>Different Styles</p>
+              </div>
+              <div class="different-Styles-content">
+                <h4>Input</h4>
+                <div class="form-group">
+                  <label for="exampleInputBoder"
+                    >Bottom Boder only <code>.form-control-boder</code></label
+                  >
+                  <input
+                    type="text"
+                    id="exampleInputBoder"
+                    placeholder=".form-control-boder"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputBoderWidth2"
+                    >Bottom Border only 2px Border
+                    <code>.form-control-border.border-width-2</code></label
+                  >
+                  <input
+                    type="text"
+                    id="exampleInputBoderWidth2"
+                    placeholder=".form-control-border.border-width-2"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputFlat"
+                    >Flat <code>.rounded-0</code></label
+                  >
+                  <input
+                    type="text"
+                    id="exampleInputFlat"
+                    placeholder=".rounded-0"
+                  />
+                </div>
+                <h4>Custom Select</h4>
+                <div class="form-group">
+                  <label for="exampleSelectBoder"
+                    >Bottom Border only <code>.form-control-border</code></label
+                  >
+                  <select name="" id="exampleSelectBoder" placeholder="Value 1">
+                    <option value="Value 1">Value 1</option>
+                    <option value="Value 2">Value 2</option>
+                    <option value="Value 3">Value 3</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleSelectBoderWidth2"
+                    >Bottom Border only
+                    <code>.form-control-border.border-width-2</code></label
+                  >
+                  <select
+                    name=""
+                    id="exampleSelectBoderWidth2"
+                    placeholder="Value 1"
+                  >
+                    <option value="Value 1">Value 1</option>
+                    <option value="Value 2">Value 2</option>
+                    <option value="Value 3">Value 3</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleSelectFlat"
+                    >Flat <code>.rounded-0</code></label
+                  >
+                  <select name="" id="exampleSelectFlat" placeholder="Value 1">
+                    <option value="Value 1">Value 1</option>
+                    <option value="Value 2">Value 2</option>
+                    <option value="Value 3">Value 3</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="input-Addon">
+              <div class="input-Addon-header">
+                <p>Input Addon</p>
+              </div>
+              <div class="input-Addon-content">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span>@</span>
+                  </div>
+                  <input type="text" name="name" placeholder="Usename" />
+                </div>
+                <div class="input-group">
+                  <input type="text" />
+                  <div class="input-group-prepend">
+                    <span>.00</span>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span>$</span>
+                  </div>
+                  <input type="text" id="form-control1" />
+                  <div class="input-group-prepend">
+                    <span>.00</span>
+                  </div>
+                </div>
+                <h4>With icons</h4>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span><i class="far fa-envelope"></i></span>
+                  </div>
+                  <input type="text" name="email" placeholder="Email" />
+                </div>
+                <div class="input-group">
+                  <input type="text" />
+                  <div class="input-group-prepend">
+                    <span><i class="fas fa-check"></i></span>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span>$</span>
+                  </div>
+                  <input type="text" id="form-control2" />
+                  <div class="input-group-prepend">
+                    <span><i class="fas fa-car-side"></i></span>
+                  </div>
+                </div>
+                <h5>With checkbox and radio inputs</h5>
+                <div class="input-group">
+                  <div class="check-input-group-prepend d-flex">
+                    <div class="input-group-prepend">
+                      <span><input type="checkbox" /></span>
+                    </div>
+                    <input type="text" />
+                  </div>
+                  <div class="radio-input-group-prepend d-flex">
+                    <div class="input-group-prepend">
+                      <span><input type="radio" /></span>
+                    </div>
+                    <input type="text" />
+                  </div>
+                </div>
+                <h5>With buttons</h5>
+                <div class="input-group d-lg-flex flex-lg-column">
+                  <label for=""
+                    >Large <code>..input-group.input-group-lg</code></label
+                  >
+                  <div class="select-input1 d-flex">
+                    <select>
+                      <option value="Action">Action</option>
+                      <option value="Action 1">Action 1</option>
+                      <option value="Action 2">Action 2</option>
+                      <option value="Action 3">Action 3</option>
+                    </select>
+                    <input type="text" />
+                  </div>
+                </div>
+                <div class="input-group d-lg-flex flex-lg-column">
+                  <label for="">Normal </label>
+                  <div class="select-input2 d-flex">
+                    <button>Action</button>
+                    <input type="text" />
+                  </div>
+                </div>
+                <div class="input-group d-lg-flex flex-lg-column">
+                  <label for=""
+                    >Small <code>.input-group.input-group-sm</code>
+                  </label>
+                  <div class="select-input3">
+                    <input type="text" />
+                    <button>Go!</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="horizontal-Form">
+              <div class="quick-Example">
+                <div class="quick-Example-header">
+                  <p>Horizontal Form</p>
+                </div>
+                <form action="">
+                  <div class="quick-Example-content">
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input
+                        type="text"
+                        name="email"
+                        id="Email"
+                        placeholder=" Email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="pass">Password</label>
+                      <input
+                        type="password"
+                        name="pass"
+                        id="Pass"
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        name="RememberMe"
+                        id="RememberMe"
+                        value="RememberMe"
+                      />
+                      Remember me
+                    </div>
+                  </div>
+                  <div class="quick-Example-submit">
+                    <input type="submit" value="Sign in" />
+                    <input type="submit" name="cancel" value="Cancel" />
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="float-right">
+              <div class="different-Height">
+                <div class="different-Height-header">
+                  <p>Different Height</p>
+                </div>
+                <div class="different-Height-content">
+                  <div class="height-input-group1">
+                    <input type="text" placeholder=".form-control-lg" />
+                  </div>
+                  <div class="height-input-group2">
+                    <input type="text" placeholder="Default input" />
+                  </div>
+                  <div class="height-input-group3">
+                    <input type="text" placeholder=".form-control-sm" />
+                  </div>
+                </div>
+              </div>
+              <div class="different-Wight">
+                <div class="different-Wight-header">
+                  <p>Different Wight</p>
+                </div>
+                <div class="different-Wight-content">
+                  <div class="row col-12">
+                    <div class="col-3">
+                      <input type="text" placeholder=".col-3" />
+                    </div>
+                    <div class="col-4">
+                      <input type="text" placeholder=".col-4" />
+                    </div>
+                    <div class="col-5">
+                      <input type="text" placeholder=".col-5" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="general-Elements">
+                <div class="general-Elements-header">
+                  <p>General Elements</p>
+                </div>
+                <div class="general-Elements-content">
+                  <form action="">
+                    <div class="form-group d-flex flex-column">
+                      <label for="text">Text</label>
+                      <input
+                        type="text"
+                        name="text"
+                        id="text"
+                        placeholder="Enter..."
+                      />
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                      <label for="TextDisabled">Text Disabled</label>
+                      <input
+                        type="text"
+                        name="TextDisabled"
+                        id="TextDisabled"
+                        placeholder="Enter..."
+                      />
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                      <label for="Textarea">Textarea</label>
+                      <textarea
+                        id="Textarea"
+                        rows="4"
+                        name="Textarea"
+                        placeholder="Enter.."
+                      ></textarea>
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                      <label for="Textarea">Textarea Disabled</label>
+                      <textarea
+                        disabled
+                        rows="4"
+                        id="TextareaDisabled"
+                        name="TextareaDisabled"
+                        placeholder="Enter.."
+                      ></textarea>
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                      <label for="text"
+                        ><i class="fas fa-check"></i> Input with success</label
+                      >
+                      <div class="input-icon">
+                        <input
+                          type="text"
+                          name="success"
+                          id="success"
+                          placeholder="Enter..."
+                        />
+                        <i class="fas fa-check"></i>
+                      </div>
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                      <label for="text">
+                        <i class="far fa-bell"></i> Input with warning</label
+                      >
+                      <div class="input-icon">
+                        <input
+                          type="text"
+                          name="warning"
+                          id="warning"
+                          placeholder="Enter..."
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                      <label for="text"
+                        ><i class="far fa-times-circle"></i> Input with
+                        error</label
+                      >
+                      <div class="input-icon">
+                        <input
+                          type="text"
+                          name="error"
+                          id="error"
+                          placeholder="Enter..."
+                        />
+                        <i class="fas fa-exclamation-circle"></i>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="d-lg-flex">
+                        <div class="checkbox-items">
+                          <div class="item-checkbox">
+                            <input
+                              type="checkbox"
+                              name="Checkbox"
+                              id="Checkbox"
+                              value="Checkbox"
+                            />
+                            Custom Checkbox
+                          </div>
+                          <div class="item-checkbox">
+                            <input
+                              type="checkbox"
+                              name="CheckboxChecked"
+                              id="CheckboxChecked"
+                              value="CheckboxChecked"
+                              checked
+                            />
+                            Custom Checkbox checked
+                          </div>
+                          <div class="item-checkbox">
+                            <input type="checkbox" name="CheckboxDisabled"
+                            id="CheckboxDisabled" value=CheckboxDisabled""
+                            disabled> Custom Checkbox disabled
+                          </div>
+                        </div>
+                        <div class="radio-items">
+                          <div class="item-radio">
+                            <input
+                              type="radio"
+                              name="radio"
+                              id="Radio"
+                              value="Radio"
+                            />
+                            Radio
+                          </div>
+                          <div class="item-radio">
+                            <input
+                              type="radio"
+                              name="radio"
+                              id="RadioChecked"
+                              value="RadioChecked"
+                              checked
+                            />
+                            Radio checked
+                          </div>
+                          <div class="item-radio">
+                            <input
+                              type="radio"
+                              name="RadioDisabled"
+                              id="RadioDisabled"
+                              value="RadioDisabled"
+                              disabled
+                            />
+                            Radio disabled
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-lg-flex col-lg-12">
+                      <div class="form-group d-flex flex-column col-lg-6">
+                        <label for="select">Select Disabled</label>
+                        <select
+                          name="SelectDisabled"
+                          id="SelectDisabled"
+                          class="mt-2"
+                          disabled
+                        >
+                          <option value="option 1">option 1</option>
+                          <option value="option 2">option 2</option>
+                          <option value="option 3">option 3</option>
+                          <option value="option 4">option 4</option>
+                          <option value="option 5">option 5</option>
+                        </select>
+                      </div>
+                      <div class="form-group d-flex flex-column col-lg-6">
+                        <label for="select">Select</label>
+                        <select name="" id="" class="mt-2">
+                          <option value="option 1">option 1</option>
+                          <option value="option 2">option 2</option>
+                          <option value="option 3">option 3</option>
+                          <option value="option 4">option 4</option>
+                          <option value="option 5">option 5</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="d-lg-flex col-lg-12">
+                      <div class="form-group d-flex flex-column col-lg-6">
+                        <label for="select">Select Multiple</label>
+                        <select
+                          multiple
+                          name="SelectMultiple"
+                          id="SelectMultiple"
+                          class="mt-2"
+                        >
+                          <option value="option 1">option 1</option>
+                          <option value="option 2">option 2</option>
+                          <option value="option 3">option 3</option>
+                          <option value="option 4">option 4</option>
+                          <option value="option 5">option 5</option>
+                        </select>
+                      </div>
+                      <div class="form-group d-flex flex-column col-lg-6">
+                        <label for="select">Select Multiple Disabled</label>
+                        <select
+                          disabled
+                          multiple
+                          name="SelectMultipleDisabled"
+                          id="SelectMultipleDisabled"
+                          class="mt-2"
+                        >
+                          <option value="option 1">option 1</option>
+                          <option value="option 2">option 2</option>
+                          <option value="option 3">option 3</option>
+                          <option value="option 4">option 4</option>
+                          <option value="option 5">option 5</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="custom-Elements">
+                <div class="custom-Elements-header">
+                  <p>Custom Elements</p>
+                </div>
+                <div class="custom-Elements-content">
+                  <form action="">
+                    <div class="d-lg-flex col-lg-12">
+                      <div class="form-group col-lg-6">
+                        <div class="custom-checkbox">
+                          <input
+                            type="checkbox"
+                            name="CustomCheckbox"
+                            id="CustomCheckbox"
+                            value="CustomCheckbox"
+                          />
+                          <label for="CustomCheckbox">Custom Checkbox</label>
+                        </div>
+                        <div class="custom-checkbox">
+                          <input
+                            type="checkbox"
+                            name="CustomCheckboxChecked"
+                            id="CustomCheckboxChecked"
+                            value=" CustomCheckboxChecked"
+                            checked
+                          />
+                          <label for="CustomCheckboxChecked">
+                            Custom Checkbox checked</label
+                          >
+                        </div>
+                        <div class="custom-checkbox">
+                          <input
+                            type="checkbox"
+                            name="CustomCheckboxDisabled"
+                            id="CustomCheckboxDisabled"
+                            value=" CustomCheckboxDisabled"
+                            disabled
+                          />
+                          <label for="CustomCheckboxDisabled">
+                            Custom Checkbox disabled</label
+                          >
+                        </div>
+                        <div class="custom-checkbox custom-color-checkbox">
+                          <label for="CheckboxWithCustomColor">
+                            <input
+                              type="checkbox"
+                              name="CheckboxWithCustomColor"
+                              id="CheckboxWithCustomColor"
+                              value="CheckboxWithCustomColor"
+                              checked
+                            />
+                            <i class="fas fa-check check-one"></i>
+
+                            Custom Checkbox with custom color</label
+                          >
+                        </div>
+                        <div
+                          class="custom-checkbox custom-color-checkbox-outline"
+                        >
+                          <label for="CheckboxWithCustomColorOutline">
+                            <input
+                              type="checkbox"
+                              name="CheckboxWithCustomColorOutline"
+                              id="CheckboxWithCustomColorOutline"
+                              value="CheckboxWithCustomColorOutline"
+                              checked
+                            />
+                            <i class="fas fa-check check-two"></i>
+
+                            Custom Checkbox with custom color outline</label
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group cusRadio mt-lg-3">
+                        <div class="custom-radio">
+                          <input
+                            type="radio"
+                            name="radio"
+                            id="CustomRadio"
+                            class="form-check-input"
+                            value=" CustomRadio"
+                          />
+                          <label for="CustomRadio">CustomRadio</label>
+                        </div>
+                        <div class="custom-radio">
+                          <input
+                            type="radio"
+                            name="radio"
+                            id="CustomRadioChecked"
+                            class="form-check-input"
+                            value="CustomRadioChecked"
+                            checked
+                          />
+                          <label for="CustomRadioChecked">
+                            Custom Radio checked</label
+                          >
+                        </div>
+                        <div class="custom-radio">
+                          <input
+                            type="radio"
+                            name="radio"
+                            id="CustomRadioDisabled"
+                            value="CustomRadioDisabled"
+                            disabled
+                          />
+                          <label for="CustomRadioDisabled">
+                            Custom Radio disabled</label
+                          >
+                        </div>
+                        <div class="custom-radio custom-color-radio">
+                          <label for="CustomRadioWithCustomColor">
+                            <input
+                              type="radio"
+                              name="radio-color"
+                              id="CustomRadioWithCustomColor"
+                              checked
+                              value=" CustomRadioWithCustomColor"
+                            />
+                            <i class="far fa-dot-circle dot-one"></i>
+
+                            Custom Radio with custom color</label
+                          >
+                        </div>
+                        <div class="custom-radio custom-color-radio-outline">
+                          <label for="CustomRadioWithCustomColorOutline">
+                            <input
+                              type="radio"
+                              name="radio-color"
+                              id="CustomRadioWithCustomColorOutline"
+                              value="CustomRadioWithCustomColorOutline"
+                            />
+                            <i class="far fa-dot-circle dot-two"></i>
+
+                            Custom Radio with custom color outline</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group mt-lg-5">
+                      <div class="toggle d-flex">
+                        <div class="switch col-2">
+                          <input type="checkbox" id="check1" />
+                          <label
+                            for="check1"
+                            class="slider slider-check1"
+                          ></label>
+                        </div>
+                        <p>Toggle this custom switch element</p>
+                      </div>
+                      <div class="toggle d-flex">
+                        <div class="switch toggle col-2">
+                          <input type="checkbox" id="check2" />
+                          <label
+                            for="check2"
+                            class="slider slider-check2"
+                          ></label>
+                        </div>
+                        <p>
+                          Toggle this custom switch element with custom colors
+                          danger/success
+                        </p>
+                      </div>
+                      <div class="toggle d-flex">
+                        <div class="switch col-2">
+                          <input type="checkbox" id="check3" disabled />
+                          <label
+                            for="check3"
+                            class="slider slider-check3"
+                          ></label>
+                        </div>
+                        <p>Disabled custom switch element</p>
+                      </div>
+                    </div>
+                    <div class="form-group mt-lg-3">
+                      <div class="CustomRange">
+                        <p>Custom range</p>
+                        <input
+                          type="range"
+                          min="1"
+                          max="100"
+                          value="50"
+                          class="silder-ranger ranger1"
+                        />
+                      </div>
+                      <div class="CustomRange">
+                        <p>Custom range (custom-range-danger)</p>
+                        <input
+                          type="range"
+                          min="1"
+                          max="100"
+                          value="50"
+                          class="silder-ranger ranger2"
+                        />
+                      </div>
+                      <div class="CustomRange">
+                        <p>Custom range (custom-range-teal)</p>
+                        <input
+                          type="range"
+                          min="1"
+                          max="100"
+                          value="50"
+                          class="silder-ranger ranger3"
+                        />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 
+      ////////////////
+      /////////////////
+      ////////////////// -->
+      <div class="content-wraper content-wraper2">
+        <div class="content-wraper-header d-lg-flex">
+          <h2>Simple Tables</h2>
+          <div class="d-flex content-wraper-header-cl2">
+            <a href=""><p>Home</p></a>
+            <p>/</p>
+            <p class="gray">Simple Tables</p>
+          </div>
+        </div>
+        <div class="content">
+          <div class="container-fluid">
+            <div class="simple-triped">
+              <div class="bordered-Table">
+                <div class="bordered-Table-header">
+                  <p>Bordered Table</p>
+                </div>
+
+                <div class="bordered-Table-content">
+                  <div class="container-fluid">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Task</th>
+                          <th>Progress</th>
+                          <th>Label</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="bordered">
+                          <td>1.</td>
+                          <td>Update software</td>
+                          <td>
+                            <div class="progress" style="height: 7px">
+                              <div
+                                class="progress-bar"
+                                style="width: 55%"
+                              ></div>
+                            </div>
+                          </td>
+                          <td>
+                            <span class="badge bg-danger">55%</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2.</td>
+                          <td>Clean database</td>
+                          <td>
+                            <div class="progress" style="height: 7px">
+                              <div
+                                class="progress-bar bg-warning"
+                                style="width: 70%"
+                              ></div>
+                            </div>
+                            <br />
+                          </td>
+                          <td>
+                            <span class="badge bg-warning">70%</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>3.</td>
+                          <td>Cron job running</td>
+                          <td>
+                            <div class="progress" style="height: 7px">
+                              <div
+                                class="progress-bar"
+                                style="width: 30%"
+                              ></div>
+                            </div>
+                          </td>
+                          <td>
+                            <span class="badge bg-primary">30%</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>4.</td>
+                          <td>Fix and squish bugs</td>
+                          <td>
+                            <div class="progress" style="height: 7px">
+                              <div
+                                class="progress-bar bg-success"
+                                style="width: 90%"
+                              ></div>
+                            </div>
+                            <br />
+                          </td>
+                          <td>
+                            <span class="badge bg-success">90%</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <nav>
+                    <ul class="d-flex">
+                      <li><i class="fas fa-angle-double-left"></i></li>
+                      <li>1</li>
+                      <li>2</li>
+                      <li>3</li>
+                      <li><i class="fas fa-angle-double-right"></i></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+              <div class="condensed-Full-Width-Table">
+                <div class="bordered-Table">
+                  <div class="bordered-Table-header">
+                    <p>Condensed Full Width Table</p>
+                  </div>
+                  <div class="bordered-Table-content">
+                    <div class="container-fluid">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Task</th>
+                            <th>Progress</th>
+                            <th>Label</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="condensed">
+                            <td>1.</td>
+                            <td>Update software</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar"
+                                  style="width: 55%"
+                                ></div>
+                              </div>
+                            </td>
+                            <td>
+                              <span class="badge bg-danger">55%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>2.</td>
+                            <td>Clean database</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar bg-warning"
+                                  style="width: 70%"
+                                ></div>
+                              </div>
+                              <br />
+                            </td>
+                            <td>
+                              <span class="badge bg-warning">70%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>3.</td>
+                            <td>Cron job running</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar"
+                                  style="width: 30%"
+                                ></div>
+                              </div>
+                            </td>
+                            <td>
+                              <span class="badge bg-primary">30%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>4.</td>
+                            <td>Fix and squish bugs</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar bg-success"
+                                  style="width: 90%"
+                                ></div>
+                              </div>
+                              <br />
+                            </td>
+                            <td>
+                              <span class="badge bg-success">90%</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="simple-Full-Width-Table">
+                <div class="bordered-Table">
+                  <div class="bordered-Table-header d-flex">
+                    <p>Simple Full Width Table</p>
+                    <nav>
+                      <ul class="d-flex">
+                        <li><i class="fas fa-angle-double-left"></i></li>
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li><i class="fas fa-angle-double-right"></i></li>
+                      </ul>
+                    </nav>
+                  </div>
+                  <div class="bordered-Table-content">
+                    <div class="container-fluid">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Task</th>
+                            <th>Progress</th>
+                            <th>Label</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1.</td>
+                            <td>Update software</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar"
+                                  style="width: 55%"
+                                ></div>
+                              </div>
+                            </td>
+                            <td>
+                              <span class="badge bg-danger">55%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>2.</td>
+                            <td>Clean database</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar bg-warning"
+                                  style="width: 70%"
+                                ></div>
+                              </div>
+                              <br />
+                            </td>
+                            <td>
+                              <span class="badge bg-warning">70%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>3.</td>
+                            <td>Cron job running</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar"
+                                  style="width: 30%"
+                                ></div>
+                              </div>
+                            </td>
+                            <td>
+                              <span class="badge bg-primary">30%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>4.</td>
+                            <td>Fix and squish bugs</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar bg-success"
+                                  style="width: 90%"
+                                ></div>
+                              </div>
+                              <br />
+                            </td>
+                            <td>
+                              <span class="badge bg-success">90%</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="striped-Full-Width-Table">
+                <div class="bordered-Table">
+                  <div class="bordered-Table-header">
+                    <p>Striped Full Width Table</p>
+                  </div>
+                  <div class="bordered-Table-content">
+                    <div class="container-fluid">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Task</th>
+                            <th>Progress</th>
+                            <th>Label</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1.</td>
+                            <td>Update software</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar"
+                                  style="width: 55%"
+                                ></div>
+                              </div>
+                            </td>
+                            <td>
+                              <span class="badge bg-danger">55%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>2.</td>
+                            <td>Clean database</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar bg-warning"
+                                  style="width: 70%"
+                                ></div>
+                              </div>
+                              <br />
+                            </td>
+                            <td>
+                              <span class="badge bg-warning">70%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>3.</td>
+                            <td>Cron job running</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar"
+                                  style="width: 30%"
+                                ></div>
+                              </div>
+                            </td>
+                            <td>
+                              <span class="badge bg-primary">30%</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>4.</td>
+                            <td>Fix and squish bugs</td>
+                            <td>
+                              <div class="progress" style="height: 7px">
+                                <div
+                                  class="progress-bar bg-success"
+                                  style="width: 90%"
+                                ></div>
+                              </div>
+                              <br />
+                            </td>
+                            <td>
+                              <span class="badge bg-success">90%</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="responsive-Hover-Table">
+              <div class="bordered-Table">
+                <div class="bordered-Table-header d-flex">
+                  <p>Responsive Hover Table</p>
+                  <div class="search d-flex hidenText">
+                    <div class="search-input col-9 hidenText">
+                      <label for="search1">
+                        <input
+                          class="col-12"
+                          type="text"
+                          id="search1"
+                          placeholder="Search"
+                        />
+                      </label>
+                    </div>
+                    <div class="search-icon col-3 hidenText">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="bordered-Table-content table-responsive">
+                  <div class="container-fluid">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>User</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Reason</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="fixed-Header-Table">
+              <div class="bordered-Table">
+                <div class="bordered-Table-header d-flex">
+                  <p>Fixed Header Table</p>
+                  <div class="search d-flex hidenText">
+                    <div class="search-input col-9 hidenText">
+                      <label for="search2">
+                        <input
+                          class="col-12"
+                          type="text"
+                          id="search2"
+                          placeholder="Search"
+                        />
+                      </label>
+                    </div>
+                    <div class="search-icon col-3 hidenText">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="bordered-Table-content table-responsive">
+                  <div class="container-fluid">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>User</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Reason</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="expandable-Table">
+              <div class="bordered-Table">
+                <div class="bordered-Table-header">
+                  <p>Expandable Table</p>
+                </div>
+                <div class="bordered-Table-content">
+                  <div class="container-fluid">
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>User</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Reason</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="5">
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the
+                            industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book. It has
+                            survived not only five centuries, but also the leap
+                            into electronic typesetting, remaining essentially
+                            unchanged. It was popularised in the 1960s with the
+                            release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing
+                            software like Aldus PageMaker including versions of
+                            Lorem Ipsum.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="5">
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the
+                            industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book. It has
+                            survived not only five centuries, but also the leap
+                            into electronic typesetting, remaining essentially
+                            unchanged. It was popularised in the 1960s with the
+                            release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing
+                            software like Aldus PageMaker including versions of
+                            Lorem Ipsum.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>183</td>
+                          <td>John Doe</td>
+                          <td>11-7-2014</td>
+                          <td>Approved</td>
+                          <td>
+                            Bacon ipsum dolor sit amet salami venison chicken
+                            flank fatback doner.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="expandable-Table-Tree">
+              <div class="bordered-Table">
+                <div class="bordered-Table-header">
+                  <p>Fixed Header Table</p>
+                </div>
+                <div class="bordered-Table-content table-responsive">
+                  <div class="container-fluid">
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr>
+                          <td>183</td>
+                        </tr>
+                        <tr class="tree">
+                          <td><i class="fas fa-caret-right"></i> 219</td>
+                        </tr>
+                        <tr class="trees">
+                          <td>
+                            <div style="margin-left: 1rem">
+                              <table class="table table-hover">
+                                <tbody>
+                                  <tr class="tree">
+                                    <td>
+                                      <i class="fas fa-caret-right"></i> 219.1
+                                    </td>
+                                  </tr>
+                                  <tr class="trees">
+                                    <td>
+                                      <div style="margin-left: 1rem">
+                                        <table class="table table-hover">
+                                          <tbody>
+                                            <tr>
+                                              <td>219.1.1</td>
+                                            </tr>
+                                            <tr>
+                                              <td>219.1.2</td>
+                                            </tr>
+                                            <tr>
+                                              <td>219.1.3</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr class="tree">
+                                    <td>
+                                      <i class="fas fa-caret-right"></i> 219.2
+                                    </td>
+                                  </tr>
+                                  <tr class="trees">
+                                    <td>
+                                      <div style="margin-left: 1rem">
+                                        <table class="table table-hover">
+                                          <tbody>
+                                            <tr>
+                                              <td>219.2.1</td>
+                                            </tr>
+                                            <tr>
+                                              <td>219.2.2</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>679</td>
+                        </tr>
+                        <tr>
+                          <td>999</td>
+                        </tr>
+                        <tr>
+                          <td>789</td>
+                        </tr>
+                        <tr>
+                          <td>555</td>
+                        </tr>
+                        <tr>
+                          <td>666</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fly-box"></div>
+    <footer class="d-flex">
+      <p>
+        Copyright © 2014-2021
+        <span><a href="https://adminlte.io/">AdminLTE.io</a></span> . All rights
+        reserved.
+      </p>
+      <p>Version 3.2.0</p>
+    </footer>
+  </body>
+  <script src="admin.js"></script>
+</html>

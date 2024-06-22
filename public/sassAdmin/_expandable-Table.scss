@@ -1,0 +1,11 @@
+.expandable-Table{
+    .bordered-Table-content{
+        tbody{
+            tr{
+                td:nth-child(2){
+                    width: 6rem;
+                }
+            }
+        }
+    }
+}

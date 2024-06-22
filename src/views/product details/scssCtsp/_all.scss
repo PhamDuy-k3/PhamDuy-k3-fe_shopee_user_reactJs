@@ -1,0 +1,11 @@
+
+body{
+    background-color: #F5F5F5;
+}
+//pc
+@media only screen and (min-width: 1024px) {
+    .context-detal-product{
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+}

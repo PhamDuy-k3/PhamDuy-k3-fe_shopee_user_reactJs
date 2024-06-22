@@ -1,0 +1,138 @@
+@mixin white-bodernone {
+    border: none;
+    color: white;
+  }   
+.input-Addon{
+    @include formAll;
+    height: 60rem;
+    .input-Addon-header{
+        @include formAll-Header;
+        background-color: #17A2B8;
+    }
+    .input-Addon-content{
+        width: 100%;
+       .input-group{
+        display: flex;
+        flex-direction: row;
+        width: 19rem;
+        margin-top: 1rem;
+        margin-left: 1.5rem;
+        .input-group-prepend{
+            width: 2.5rem;
+            padding-top: 0.3rem;
+            text-align: center;
+            background-color: #E9ECEF;
+            border-radius: 5px;
+            border: 1px solid $boderContent;
+        }
+        input[type='text']{
+            width: 16.4rem;
+            outline: none;
+            border-radius: 5px;
+            height: 2.5rem;
+            border: 1px solid $boderContent;
+            padding-left: 0.5rem;
+        }
+        input[type='checkbox'],input[type='radio']{
+            width: 1rem;
+            height: 1rem;
+        }
+        #form-control1, #form-control2{
+            width: 14rem;
+            border: 1px solid $boderContent;
+        }
+        .select-input1,.select-input2,.select-input3{
+            margin-top: 1rem;
+        }
+        .select-input1{
+            select{
+                width: 6rem;
+                background-color: #FFC107;
+                padding-left: 0.6rem;
+                border: none;
+                font-size: 1.2rem;
+                outline: none;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                option{
+                    text-align: start;
+                    background-color: white;
+                }
+            }
+            >input{
+                width: 13rem;
+                height: 3rem;
+            }
+        }
+        .select-input2{
+            button{
+                width: 4rem;
+                @include white-bodernone; 
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                background-color: #DC3545;
+            }
+            input{
+                width: 15rem;
+            }
+        }
+        .select-input3{
+            button{
+                background-color: #17A2B8;
+                @include white-bodernone; 
+                height: 2.5rem;
+                width: 2rem;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                margin-left: -10px;
+            }
+        }
+       }
+       h4,h5{
+        padding-left: 1.5rem;
+        margin-top: 1rem;
+       }
+    }
+}
+@media (min-width:1080px) { 
+    .input-Addon{
+        @include formAll;
+        height: 60rem;
+        width: 50%;
+        .input-Addon-content{
+           .input-group{
+                width: 100%;
+                input[type='text']{
+                    width: 80%;
+                }
+                #form-control1, #form-control2{
+                    width: 72%;
+                }
+                .select-input1{
+                    >input{
+                        width: 68%;
+                    }
+                }
+                .select-input2{
+                    input{
+                        width: 75%;
+                        }
+                    }
+                .select-input3{
+                    input{
+                        width: 84%;
+                    }
+                }
+                .check-input-group-prepend,.radio-input-group-prepend{
+                        input{
+                            width: 60%;
+                        }
+                    }
+            }
+        }
+    }
+}
+
+
+
+ 

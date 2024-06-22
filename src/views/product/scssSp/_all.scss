@@ -1,0 +1,21 @@
+.box-product{
+    background-color: #F5F5F5;
+    height: 350rem;
+}
+.context-product{
+    width: 96%;
+    margin-left: 1.5rem;
+    padding-top: 50px;
+    a{
+        color: black;
+    }
+}
+@media (min-width:1080px) { 
+    .box-product{
+        background-color: #F5F5F5;
+        height: 250rem;
+    }
+    .context-product{
+        padding-top: 150px;
+    }
+}

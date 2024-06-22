@@ -1,0 +1,17 @@
+.fixed-Header-Table{
+    .bordered-Table-content{
+        height: 15rem;
+        table{
+            width: 53rem;
+       }
+    }
+}
+@media (min-width:1080px) { 
+    .fixed-Header-Table{
+        .bordered-Table-content{
+            table{
+                width: 100%;
+           }
+        }
+    }
+ }

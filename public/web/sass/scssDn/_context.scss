@@ -1,0 +1,149 @@
+.context{
+    height: 40rem;
+    form{
+        border-radius: 1px;
+        width: 30rem;
+        padding: 2rem;
+        height: 35rem;
+        margin-left: 50%;
+        margin-top: 3rem;
+        background-color: white;
+       
+        .infor-login{
+            position: relative;
+            .infor-login-title{ 
+                position: relative;
+                height: 5rem;
+                >p{
+                    padding-top: 1rem;
+                    font-size: 1.5rem;
+                }
+                .login-with-qr{
+                    width: 12rem;
+                    height: 4rem;
+                    background-color:#FEFAEC ;
+                    color: #FFBF00;
+                    margin-left: 1rem;
+                    padding: 0.5rem 1rem 1rem 1rem;
+                    border: 1px solid #FFBF00;
+                    p{
+                        width: 9rem;
+                    }
+
+                }
+                #triangle-right {
+                    position: absolute;
+                    left: 20.5rem;
+                    top: 1.5rem;
+                    width: 0;
+                    height: 0;
+                    border-top: 1rem solid transparent;
+                    border-left: 1rem solid #eecd6b;
+                    border-bottom: 1rem solid transparent;
+            
+                  }
+                img{
+                    width: 5rem;
+                    height: 4rem;
+                    padding-left: 1rem;
+                }
+            }
+            .infor-login-input{
+                input{
+                    
+                    width: 26rem;
+                    border-radius: 1px;
+                    margin-top: 2rem;
+                    height: 3rem;
+                    border: 1px solid $boder;
+                    padding-left: 1rem;
+                    outline: none;
+                }
+                input:focus{
+                    border: 1px solid black;
+                    box-shadow: 1px 1px 1px rgb(227, 224, 224) ;
+
+                }
+                #login{
+                    background-color: #F3826C;
+                    color: white;
+                }
+                .pass{
+                    position: relative;
+                    .eye{
+                        position: absolute;
+                        top: 2.7rem;
+                        right: 1rem;
+                        color: #bebdb6;
+                        .fa-eye{
+                            display: none;
+                        }
+                    }
+                }
+                #error_pass{
+                    position: absolute;
+                    color: red;
+                }
+                .name{
+                    position: relative;
+                    #error_name{
+                        position: absolute;
+                        color: red;
+                    }
+                }
+                #login{
+                    cursor: no-drop;
+                }
+            }
+            .infor-login-forget{
+                justify-content: space-between;
+                padding-top: 0.6rem;
+            }
+            hr{
+                margin-top: 0rem;
+            }
+            .or{
+                position: absolute;
+                top: 21.4rem;
+                left: 11rem;
+                p{
+                    background-color: white;
+                    padding: 1rem;
+                    color: rgb(153, 157, 157);
+                }
+            }
+            .fb-gg{
+                margin-top: 2rem;
+                button{
+                    border: 1px solid $boder;
+                    background-color: white;
+                    padding: 0.5rem 3rem 0.5rem 3rem;
+                    
+                }
+                button:last-child{
+                    padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+                    margin-left: 1.9rem;
+                }
+            }
+            .new-now-shopee{
+                padding:1rem 0rem 0rem 5rem;
+                p{
+                    color: #bebdb6;
+                }
+                p:last-child a{
+                    color: $redColor;
+                    padding-left: 0.5rem;
+                }
+            }
+        }
+    }
+}
+@media (min-width:1080px) { 
+    .context{
+        form{
+            border-radius: 3px;
+            margin-left:60%;
+        }
+    }
+    
+}

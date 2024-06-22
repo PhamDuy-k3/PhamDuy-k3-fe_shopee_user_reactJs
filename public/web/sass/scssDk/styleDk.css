@@ -1,0 +1,21 @@
+.infor-login .infor-login-input {
+  margin-top: -10px;
+}
+.infor-login .or {
+  margin-top: -7rem;
+}
+.infor-login .Angree {
+  text-align: center;
+  margin-top: 1rem;
+}
+.infor-login .Angree a {
+  color: red;
+}
+
+@media (min-width: 1080px) {
+  .infor-login .or {
+    margin-top: -6rem;
+  }
+}
+
+/*# sourceMappingURL=styleDk.css.map */

@@ -1,0 +1,118 @@
+.general-Elements{
+    @include formAll;
+    height: 97rem;
+    .general-Elements-header{
+        @include formAll-Header;
+        color: black;
+        background-color: #FFC107;
+    }
+    .general-Elements-content{
+        padding-left: 1.5rem;
+        .form-group{
+            margin-top: 1rem;
+            textarea{
+                margin-top: 0.8rem;
+                width: 18rem;
+                border: 1px solid $boderContent;
+                outline: none;
+                padding-left: 0.5rem;
+                border-radius: 5px;
+            }
+            label{
+                font-weight: bold;
+            }
+            input ,select{
+                width: 18rem;
+                outline: none;
+                border-radius: 5px;
+                height: 2.5rem;
+                margin-top: 0.8rem;
+                border: 1px solid $boderContent;
+                padding-left: 0.5rem;
+            }
+            input[type='checkbox'],input[type='radio']{
+                width: 0.9rem;
+                height: 0.9rem;
+            }
+            .input-icon{
+                i{
+                    margin-left: -10%;
+                }
+                .fa-check{
+                    color: green;
+                }
+                .fa-exclamation-circle{
+                    color: #ea152b;
+                }
+            }
+            #SelectDisabled{
+                background-color: #E9ECEF;
+            }
+            #SelectMultiple, #SelectMultipleDisabled{
+                height: 6rem;
+                padding: 0.5rem 0.5rem 1rem 1rem;
+            }
+            #SelectMultipleDisabled{
+                background-color: #E9ECEF;
+            }
+            .radio-items{
+                margin-top: 1rem;
+            }
+        }
+    }
+}
+#success{
+    border: 1px solid green;
+}
+#warning{
+    border: 1px solid #FFDF82;
+}
+#error{
+    border: 1px solid #ea152b;
+
+}
+@media (min-width:1080px) { 
+    .general-Elements{
+        width: 96%;
+        height: 75rem;
+        .general-Elements-content{
+            .form-group{
+                textarea{
+                    width: 90%;
+                }
+                label{
+                    font-weight: bold;
+                }
+                input ,select{
+                    width: 90%;
+                }
+                .input-icon{
+                    i{
+                        margin-left: -10%;
+                    }
+                    .fa-check{
+                        color: green;
+                    }
+                    .fa-exclamation-circle{
+                        color: #ea152b;
+                    }
+                }
+                #SelectDisabled{
+                    background-color: #E9ECEF;
+                }
+                #SelectMultiple, #SelectMultipleDisabled{
+                    height: 6rem;
+                    padding: 0.5rem 0.5rem 1rem 1rem;
+                }
+                #SelectMultipleDisabled{
+                    background-color: #E9ECEF;
+                }
+                .radio-items{
+                    margin-top: 0;
+                    margin-left: 2rem;
+                }
+            }
+        }
+    }
+}
+    

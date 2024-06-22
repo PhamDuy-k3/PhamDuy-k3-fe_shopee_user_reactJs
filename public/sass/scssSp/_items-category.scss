@@ -1,0 +1,94 @@
+.suggest-sp{
+    height: 107rem;
+   
+    .suggest-products{
+        width: 96%;
+        margin-top: 2rem;
+        margin-left: 2rem;
+        margin-bottom: 1000px;
+        .suggest-product{
+            width: 12.7rem;
+            margin-left: 1%;
+            height: 24rem;
+            margin-top: 1rem;
+            position: relative;
+            .search-product{
+                position: absolute;
+                width: 100%;
+                height: 2rem;
+                z-index: 2;
+                left: 0;
+                bottom: -2rem;
+                display: none;
+                background-color: #EE4D2D;
+                p{
+                    color: white;
+                    padding-top: 0.1rem;
+                }
+            }
+            .suggest-product-img{
+                width: 100%;
+                height: 60%;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .suggest-product-text, .suggest-product-price-sold {
+                padding-left: 0.3rem;
+              }
+              .suggest-product-sale {
+                margin-top: -0.6rem;
+                width: 50%;
+                padding: 0.2rem 0.1rem 0rem 0.5rem;
+                margin-left: 0.3rem;
+                background-color: #F69113;
+                color: white;
+            }
+            .suggest-product-text p{
+                padding-top: 0.2rem;
+                color: black ;
+            }
+            .suggest-product-price-sold{
+                justify-content: space-between;
+                .suggest-product-price{
+                    color: red;
+                }
+                .suggest-product-sold{
+                    color: #aeaaaa;
+                    padding-right: 1rem;
+                }
+            }
+        }
+        .suggest-product:hover .search-product{
+            display: block;
+        }
+        .suggest-product:hover{
+            cursor: pointer;
+            cursor: pointer;
+            border: 1px solid #EE4D2D ;
+        }
+        
+    }
+}
+
+@media (min-width:1080px) { 
+    .suggest-sp{
+        .suggest-products{
+            .suggest-product{
+                width: 12.82rem;
+            }
+            .suggest-product-sale {
+                height: 2rem;
+                padding: 0.2rem 0.1rem 0px 0.5rem;
+            }
+            .suggest-product-price-sold{
+                padding-top: 1rem;
+            }
+            .suggest-product-text p{
+                padding-top: 0.3rem;
+            }
+        }
+        
+    }
+}

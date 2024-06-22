@@ -1,0 +1,65 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-size: 16px;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+.fly-box{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    display: none;
+}
+.open-start{
+    position: fixed;
+    z-index: 200;
+    background-color: #f5f4f4;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    animation-name: start;
+    animation-duration: 0.5s;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+        img{
+            width: 3rem;
+            margin-left: 50%;
+            margin-top: 20rem;
+            height: 3rem;
+            position: relative;
+            animation-name: startImg;
+            animation-duration: 1s;
+            animation-delay: 1s;
+            animation-iteration-count: infinite;
+        }
+ @keyframes startImg {
+    from{transform:rotate(20deg)}
+        to{
+            transform:rotate(-20deg); 
+        }
+ }
+    @keyframes start {
+        from{top:0rem;}
+        to{
+            top:-100%;  
+            }
+        }   
+}
+@media (min-width:1080px) { 
+    .box{
+     padding-left: 16rem;
+     z-index: 100;
+    }
+ }
+ 

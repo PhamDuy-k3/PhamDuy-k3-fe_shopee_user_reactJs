@@ -1,0 +1,192 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 5px;
+}
+
+body {
+  background-color: #F5F5F5;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+@media (min-width: 1080px) {
+  html {
+    font-size: 13.5px;
+  }
+  .context {
+    max-width: 1700px;
+    margin: 0 auto;
+  }
+}
+header {
+  height: 6rem;
+  background-color: white;
+}
+header .title img {
+  width: 14rem;
+  height: 5rem;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+header .title p {
+  font-size: 2rem;
+  padding-top: 1.6rem;
+  padding-left: 1rem;
+}
+header .help {
+  padding-top: 2rem;
+  color: red;
+}
+
+.context {
+  height: 40rem;
+}
+.context form {
+  border-radius: 1px;
+  width: 30rem;
+  padding: 2rem;
+  height: 35rem;
+  margin-left: 50%;
+  margin-top: 3rem;
+  background-color: white;
+}
+.context form .infor-login {
+  position: relative;
+}
+.context form .infor-login .infor-login-title {
+  position: relative;
+  height: 5rem;
+}
+.context form .infor-login .infor-login-title > p {
+  padding-top: 1rem;
+  font-size: 1.5rem;
+}
+.context form .infor-login .infor-login-title .login-with-qr {
+  width: 12rem;
+  height: 4rem;
+  background-color: #FEFAEC;
+  color: #FFBF00;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
+  border: 1px solid #FFBF00;
+}
+.context form .infor-login .infor-login-title .login-with-qr p {
+  width: 9rem;
+}
+.context form .infor-login .infor-login-title #triangle-right {
+  position: absolute;
+  left: 20.5rem;
+  top: 1.5rem;
+  width: 0;
+  height: 0;
+  border-top: 1rem solid transparent;
+  border-left: 1rem solid #eecd6b;
+  border-bottom: 1rem solid transparent;
+}
+.context form .infor-login .infor-login-title img {
+  width: 5rem;
+  height: 4rem;
+  padding-left: 1rem;
+}
+.context form .infor-login .infor-login-input input {
+  width: 26rem;
+  border-radius: 1px;
+  margin-top: 2rem;
+  height: 3rem;
+  border: 1px solid rgb(233, 231, 229);
+  padding-left: 1rem;
+  outline: none;
+}
+.context form .infor-login .infor-login-input input:focus {
+  border: 1px solid black;
+  box-shadow: 1px 1px 1px rgb(227, 224, 224);
+}
+.context form .infor-login .infor-login-input #login {
+  background-color: #F3826C;
+  color: white;
+}
+.context form .infor-login .infor-login-input .pass {
+  position: relative;
+}
+.context form .infor-login .infor-login-input .pass .eye {
+  position: absolute;
+  top: 2.7rem;
+  right: 1rem;
+  color: #bebdb6;
+}
+.context form .infor-login .infor-login-input .pass .eye .fa-eye {
+  display: none;
+}
+.context form .infor-login .infor-login-input #error_pass {
+  position: absolute;
+  color: red;
+}
+.context form .infor-login .infor-login-input .name {
+  position: relative;
+}
+.context form .infor-login .infor-login-input .name #error_name {
+  position: absolute;
+  color: red;
+}
+.context form .infor-login .infor-login-input #login {
+  cursor: no-drop;
+}
+.context form .infor-login .infor-login-forget {
+  justify-content: space-between;
+  padding-top: 0.6rem;
+}
+.context form .infor-login hr {
+  margin-top: 0rem;
+}
+.context form .infor-login .or {
+  position: absolute;
+  top: 21.4rem;
+  left: 11rem;
+}
+.context form .infor-login .or p {
+  background-color: white;
+  padding: 1rem;
+  color: rgb(153, 157, 157);
+}
+.context form .infor-login .fb-gg {
+  margin-top: 2rem;
+}
+.context form .infor-login .fb-gg button {
+  border: 1px solid rgb(233, 231, 229);
+  background-color: white;
+  padding: 0.5rem 3rem 0.5rem 3rem;
+}
+.context form .infor-login .fb-gg button:last-child {
+  padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+  margin-left: 1.9rem;
+}
+.context form .infor-login .new-now-shopee {
+  padding: 1rem 0rem 0rem 5rem;
+}
+.context form .infor-login .new-now-shopee p {
+  color: #bebdb6;
+}
+.context form .infor-login .new-now-shopee p:last-child a {
+  color: red;
+  padding-left: 0.5rem;
+}
+
+@media (min-width: 1080px) {
+  .context form {
+    border-radius: 3px;
+    margin-left: 60%;
+  }
+}
+
+/*# sourceMappingURL=styleDn.css.map */

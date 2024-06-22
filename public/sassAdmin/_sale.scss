@@ -1,0 +1,47 @@
+.Sale{
+    width: 22rem;
+    height: 20rem;
+    background-color: white;
+    border: 1px solid $boderContent;
+    .Sale-header{
+     height: 3rem;
+     border-bottom: 1px solid $boderContent;
+         .Sale-header-title{
+             padding-top: 0.5rem;
+             padding-left: 1rem;
+         }
+         .Sale-header-op{
+             padding-top: 0.5rem;
+             padding-left: 4rem;
+             p{
+                cursor: pointer;
+                 margin-left: 1rem;
+             }
+             .sale-op-active{
+                 background-color: #007BFF;
+                 color: white;
+                 border-radius: 5px;
+                 padding: 0.1rem 0.5rem 2rem 0.5rem;
+              }
+         }
+     }
+     .Sale-infor{
+        width: 100%;
+        height: 100%;
+        img{
+            width: 100%;
+            height: 80%;
+            margin-top: 1rem;
+        }
+        .sale-img:not(.sale-img-active){
+            display: none;
+        }
+     }
+ }
+ @media (min-width:1080px) { 
+         .Sale{
+             width: 55%;
+             height: 27rem;
+          }
+ }
+ 

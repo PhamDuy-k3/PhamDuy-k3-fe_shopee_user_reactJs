@@ -1,0 +1,53 @@
+@mixin formAll{
+    width: 100%;
+    border: 1px solid $boderContent;
+    margin-top: 1rem;
+    border-radius: 5px;
+    background-color: white;
+}
+@mixin formAll-Header{
+    height: 3rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: white;
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+    font-size: 1.1rem;
+}
+input:focus ,textarea:focus{
+    border: 1px solid rgb(112, 112, 241) !important;
+}
+.content-wraper1{
+    background-color: #F4F6F9;
+    height: 350rem;
+    border-bottom: 1px solid $boderContent;
+   
+    @import '_quick-Example';
+    @import '_different-Styles';
+    @import '_input-Addon';
+    @import '_horizontal-Form';
+    @import '_different-Height';
+    @import '_different-Wight';
+    @import '_general-Elements';
+    @import '_custom-Elements';
+  
+}
+
+@media (min-width:1080px) { 
+   .content-wraper1{
+        width: 100%;
+        height: 173rem;
+        .content{
+            .General-Form{
+                position: relative;
+                .float-right{
+                    width: 50%;
+                    float: right;
+                    position: absolute;
+                    top: -15px;
+                    right: 0px;
+                    padding-left: 1rem;
+                }
+            }
+        }
+   }
+}

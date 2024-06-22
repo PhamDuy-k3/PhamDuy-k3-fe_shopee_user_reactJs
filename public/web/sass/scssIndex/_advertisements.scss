@@ -1,0 +1,23 @@
+.advertisements{
+    width: 96%;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    background-color: #F54E31;
+    height: 13rem;
+}
+.advertisement{
+    height:90% ;
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+.advertisement img{
+    width: 95%;
+    border-radius: 10px;
+    height: 100%;
+}
+@media (min-width:1080px) { 
+    .advertisements{
+        height: 9rem;
+        background-color: #F54E31;
+    }
+}

@@ -1,0 +1,24 @@
+@import '/public/sass/scssCtsp/varibal';
+.infor-login{
+    .infor-login-input{
+        margin-top: -10px;
+    }
+    .or{
+        margin-top: -7rem;
+    }
+    .Angree{
+        text-align: center;
+        margin-top: 1rem;
+        a{
+            color: $redColor;
+        }
+    }
+}
+@media (min-width:1080px) { 
+    .infor-login{
+        .or{
+            margin-top: -6rem;
+        }
+        
+    }
+}
