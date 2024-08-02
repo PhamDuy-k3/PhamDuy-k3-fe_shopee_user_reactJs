@@ -6,6 +6,7 @@ import Search from "../views/search/search";
 import Cart from "../views/cart/cart";
 import Login from "../views/login/login";
 import { Register } from "../views/register/register";
+import CartOder from "../views/cart/cartOder";
 function AppRouter() {
   return (
     <>
@@ -13,9 +14,13 @@ function AppRouter() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/Product/:category_id" element={<IndexProduct />} />
-          <Route path="/ProductDetail/:product_id" element={<ProductDetails />} />
+          <Route
+            path="/ProductDetail/:product_id"
+            element={<ProductDetails />}
+          />
           <Route path="/search" element={<Search />} />
           <Route path="/Cart" element={<Cart />} />
+          <Route path="/CartOder" element={<CartOder />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
         </Routes>

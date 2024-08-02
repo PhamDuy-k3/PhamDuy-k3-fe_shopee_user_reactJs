@@ -13,6 +13,8 @@ function ComponentHeader() {
   const [cookies, setCookie, removeCookies] = useCookies();
   const [isInfor, setIsInfor] = useState(false);
   const [user, setUser] = useState();
+  const [length_cart, setLength_cart] = useState();
+
   const {
     register,
     handleSubmit,
@@ -26,8 +28,9 @@ function ComponentHeader() {
     navigate(`/search?keyword=${data.search}`);
   };
 
-  //danh sách sản phẩm trong cart
-  const cartItems = useSelector((state) => state.cart.items);
+  useEffect(() => {
+    setLength_cart(cookies.length_cart);
+  }, [cookies.length_cart]);
 
   // lấy user qua phone
   useEffect(() => {
@@ -167,25 +170,27 @@ function ComponentHeader() {
               <>
                 <li>
                   <ul id="img-name-user" className="d-flex">
-                    <img src={user && user.avatar} />
+                    <img src={user && user.avatar} alt="User Avatar" />
                     <li onMouseOver={handleIsInfo} style={{ color: "white" }}>
-                      {user && user.name}
+                      {user && user.name
+                        ? user.name
+                        : cookies.email_token
+                        ? cookies.email_token.split("@")[0]
+                        : ""}
+                      ...
                     </li>
                   </ul>
+
                   {isInfor && (
                     <div>
                       <ul id="sub-menu" onMouseLeave={handleIsInfoDisplay}>
                         <NavLink id="" href="/">
                           <li>Tài khoản của tôi</li>
                         </NavLink>
-                        <NavLink id="" href="/">
+                        <NavLink to="/CartOder">
                           <li>Đơn mua của tôi</li>
                         </NavLink>
-                        <NavLink
-                          id=""
-                          href="/"
-                          onClick={(e) => logout(e)}
-                        >
+                        <NavLink id="" href="/" onClick={(e) => logout(e)}>
                           <li>Đăng xuất</li>
                         </NavLink>
                       </ul>
@@ -256,7 +261,7 @@ function ComponentHeader() {
           <Link to="/Cart">
             <i className="fas fa-cart-plus"></i>
             <p style={{ color: "white" }} className="quantityCart">
-              {cartItems.length || ""}
+              {length_cart || ""}
             </p>
           </Link>
         </div>

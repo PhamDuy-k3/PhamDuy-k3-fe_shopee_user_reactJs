@@ -9,6 +9,7 @@ import bgImage from "../../assets/images/img/imgDn/banner.jpg";
 import qr from "../../assets/images/img/imgDn/qr.jpg";
 import { useCookies } from "react-cookie";
 import moment from "moment";
+import LoginGg from "./loginGG";
 
 function Login() {
   const [cursor, setCursor] = useState("no-drop");
@@ -40,6 +41,7 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         if (res.user_token) {
           setCookie("user_token", res.user_token, {
             path: "/",
@@ -47,6 +49,10 @@ function Login() {
             expires: moment().add(1, "months").toDate(),
           });
           setCookie("phone_user", res.phone_user, {
+            path: "/",
+            expires: moment().add(1, "months").toDate(),
+          });
+          setCookie("id_user", res.id_user, {
             path: "/",
             expires: moment().add(1, "months").toDate(),
           });
@@ -168,10 +174,7 @@ function Login() {
                 ></i>{" "}
                 Facebook
               </button>
-              <button>
-                <i className="fab fa-google" style={{ color: "#c91d50" }}></i>{" "}
-                Google
-              </button>
+              <LoginGg />
             </div>
             <div className="new-now-shopee d-flex">
               <p>Bặn mới biết đến Shopee?</p>

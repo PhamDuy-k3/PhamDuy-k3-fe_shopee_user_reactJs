@@ -2,27 +2,47 @@ import { useDispatch, useSelector } from "react-redux";
 import "./scssCart/styleCart.scss";
 import { useEffect, useState } from "react";
 import {
-  deleteProductList,
-  removeFromCart,
+  deleteCarts,
+  deleteToCartsAsync,
   updateProductList,
 } from "../../redux/action";
-import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import axios from "axios";
+import { NavLink, useNavigate } from "react-router-dom";
 
 // chưa chek trùng sản phẩm
 
 function Cart() {
-  const [productsFromLocalStorage, setProductsFromLocalStorage] = useState([]);
   const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
-  const dispatch = useDispatch();
+  const [carts, setCarts] = useState([]);
+  const [status, setStatus] = useState(false);
+  const [cookies, setCookie] = useCookies();
+  const [id_user_oder, setIdUserOder] = useState();
 
-  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5050/carts/?id_user=${cookies.id_user}`
+      );
+      const data = await response.json();
+      setCarts(data.data);
+      console.log(data.data);
+    } catch (error) {
+      console.error("Error fetching API:", error);
+    }
+  };
 
   useEffect(() => {
-    setProductsFromLocalStorage(cartItems);
-    setSumSp(cartItems.length);
-  }, [cartItems]);
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    setIdUserOder(cookies.id_user);
+  }, []);
 
   const VND = new Intl.NumberFormat("vi-VN", {
     currency: "VND",
@@ -30,35 +50,45 @@ function Cart() {
 
   // tính tổng tiền các sản phẩm có trong gio hàng
   useEffect(() => {
-    const totalSum = productsFromLocalStorage.reduce((accumulator, product) => {
+    setSumSp(carts.length);
+    setCookie("length_cart", carts.length);
+    const totalSum = carts.reduce((accumulator, product) => {
       return accumulator + parseFloat(product.sum);
     }, 0);
     setTotal(VND.format(totalSum * 1000));
-  }, [productsFromLocalStorage]);
+  }, [carts]);
 
-  // xóa sản phẩm
-  const deleteProduct = (id) => {
-    dispatch(removeFromCart(id));
+  const updateToCartsAsync = async (_id, quantity, sum) => {
+    try {
+      const response = await axios.put(`http://localhost:5050/carts/${_id}`, {
+        quantity,
+        sum,
+      });
+      console.log("Update successful:", response.data);
+      fetchProducts();
+      return response.data;
+    } catch (error) {
+      console.error("Error updating cart:", error.message);
+      return null;
+    }
   };
 
-  // xóa tất cả các sản phẩm
-  const handelDeleteProductList = () => {
-    const array = [];
-    dispatch(deleteProductList(array));
-  };
-
-  // tăng số lượng sản phẩm
+  // Tăng số lượng sản phẩm
   const handleQuantity = (id, a) => {
-    const updatedProducts = productsFromLocalStorage.map((product) => {
-      if (product.id === id) {
+    const updatedProducts = carts.map((product) => {
+      if (product._id === id) {
         const quantity_new = product.quantity + parseFloat(a);
         if (quantity_new < 0) {
           return product;
         }
+        const quantity = quantity_new;
+        const _id = product._id;
+        const sum = VND.format(quantity_new * +product.price * 1000);
+        updateToCartsAsync(_id, quantity, sum);
         return {
           ...product,
-          quantity: quantity_new,
-          sum: VND.format(quantity_new * +product.price * 1000),
+          quantity: quantity,
+          sum: sum,
         };
       }
       return product;
@@ -66,28 +96,80 @@ function Cart() {
     dispatch(updateProductList(updatedProducts));
   };
 
-  // thay đổi số lượng khi khách hàng nhập tay
+  // Thay đổi số lượng khi khách hàng nhập tay
   const handleChangeQuantity = (id, event) => {
-    const updatedProducts = productsFromLocalStorage.map((product) => {
-      if (product.id === id) {
-        if (product.quantity == "") {
-          product.sum = 0;
-        } else {
-          return {
-            ...product,
-            quantity: parseFloat(event.target.value),
-            sum: VND.format(
-              parseFloat(event.target.value) * +product.price * 1000 || 0
-            ),
-          };
-        }
+    const newQuantity = parseFloat(event.target.value) || 0;
+    const updatedProducts = carts.map((product) => {
+      if (product._id === id) {
+        const quantity = newQuantity;
+        const _id = product._id;
+        const sum = VND.format(quantity * +product.price * 1000);
+        updateToCartsAsync(_id, quantity, sum);
+        return {
+          ...product,
+          quantity: quantity,
+          sum: sum,
+        };
       }
       return product;
     });
     dispatch(updateProductList(updatedProducts));
   };
-  const acceptBuy = () => {
-    alert("mua hàng thành công");
+
+  const deleteToCartAsync = async (cartId) => {
+    try {
+      await axios.delete(`http://localhost:5050/carts/${cartId}`);
+      fetchProducts();
+      dispatch(deleteCarts(cartId));
+    } catch (error) {}
+  };
+  // xóa sản phẩm
+  const deleteProduct = (id) => {
+    deleteToCartAsync(id);
+  };
+
+  const deleteToCartsAsync = async (array) => {
+    try {
+      await axios.delete("http://localhost:5050/carts");
+      fetchProducts();
+      dispatch(deleteCarts(array));
+    } catch (error) {}
+  };
+  // xóa tất cả các sản phẩm
+  const handelDeleteProductList = () => {
+    const array = [];
+    deleteToCartsAsync(array);
+  };
+
+  const createCartOder = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5050/cartsOder",
+        data
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error creating cart order:", error);
+      throw error;
+    }
+  };
+  const deleteCartsByUserId = async (userId) => {
+    try {
+      await axios.delete(
+        `http://localhost:5050/carts/deleteCartsByUserId/${userId}`
+      );
+    } catch (error) {
+      console.error("Error deleting carts:", error);
+    }
+  };
+
+  const handleBuy = async () => {
+    if (id_user_oder !== "") {
+      const data = { carts, status, id_user_oder };
+      await createCartOder(data);
+      await deleteCartsByUserId(id_user_oder);
+      navigate("/CartOder");
+    }
   };
   return (
     <div className="box_cart">
@@ -109,7 +191,7 @@ function Cart() {
           </div>
           <div className="body-product bg-white mt-3">
             <div className="list-products">
-              {productsFromLocalStorage.map((product, index) => {
+              {carts.map((product, index) => {
                 return (
                   <div
                     key={index}
@@ -179,20 +261,20 @@ function Cart() {
                       </div>
                       <div className="quantity col-2 pt-5">
                         <input
-                          onClick={() => handleQuantity(product.id, -1)}
+                          onClick={() => handleQuantity(product._id, -1)}
                           className="cart-down-quantity"
                           type="button"
                           value="-"
                         />
                         <input
-                          onChange={(e) => handleChangeQuantity(product.id, e)}
+                          onChange={(e) => handleChangeQuantity(product._id, e)}
                           className="quantity_value"
                           type="number"
                           min="1"
                           value={product.quantity}
                         />
                         <input
-                          onClick={() => handleQuantity(product.id, 1)}
+                          onClick={() => handleQuantity(product._id, 1)}
                           className="cart-up-quantity"
                           type="button"
                           value="+"
@@ -205,7 +287,7 @@ function Cart() {
                         </p>
                       </div>
                       <div
-                        onClick={() => deleteProduct(product.id)}
+                        onClick={() => deleteProduct(product._id)}
                         className="remove-item col-1 pt-5"
                       >
                         <p>Xóa</p>
@@ -247,7 +329,7 @@ function Cart() {
                   </p>
                 </div>
               </div>
-              <button onClick={acceptBuy}>Mua Hàng</button>
+              <button onClick={handleBuy}>Mua Hàng</button>
             </div>
           </div>
         </div>

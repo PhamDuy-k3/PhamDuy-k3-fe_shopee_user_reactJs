@@ -1,5 +1,8 @@
+import axios from "axios";
 import {
   ADD_TO_CART,
+  ADD_TO_CART_FAILURE,
+  ADD_TO_CART_SUCCESS,
   FETCH_PRODUCT_ERROR,
   FETCH_PRODUCT_REQUEST,
   FETCH_PRODUCT_SUCCESS,
@@ -13,18 +16,28 @@ export const addToCart = (product) => ({
   payload: product,
 });
 
-export const removeFromCart = (productId) => ({
+export const addToCartAsync = (product) => async (dispatch) => {
+  dispatch(addToCart(product));
+  try {
+    const response = await axios.post("http://localhost:5050/carts", product);
+    dispatch({ type: ADD_TO_CART_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: ADD_TO_CART_FAILURE, payload: error.message });
+  }
+};
+
+export const removeFromCart = (cartId) => ({
   type: REMOVE_FROM_CART,
-  payload: productId,
+  payload: cartId,
 });
-export const deleteProductList = (deleteListProduct) => ({
+export const deleteCarts = (carts) => ({
   type: REMOVE_ALL_FROM_CART,
-  payload: deleteListProduct,
+  payload: carts,
 });
 
-export const updateProductList = (updatListProduct) => ({
+export const updateProductList = (updatedProduct) => ({
   type: UPDATE_FROM_CART,
-  payload: updatListProduct,
+  payload: updatedProduct,
 });
 
 export const fetchAllProducts = () => {

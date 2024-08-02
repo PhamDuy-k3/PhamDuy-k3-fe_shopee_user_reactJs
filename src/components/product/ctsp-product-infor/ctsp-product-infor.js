@@ -13,7 +13,8 @@ import UpDownQuantity from "./up_down_quantity";
 import imgSmall2 from "..//..//../assets/images/img/imgctsp/banner-con-2.jpg";
 import imgSmall3 from "..//..//../assets/images/img/imgctsp/banner-con-3.jpg";
 import imgSmall4 from "..//..//../assets/images/img/imgctsp/banner-con-4.jpg";
-import { addToCart } from "../../../redux/action";
+import { addToCart, addToCartAsync } from "../../../redux/action";
+import { useCookies } from "react-cookie";
 
 function CtspProductInfor(props) {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ function CtspProductInfor(props) {
   const [quantity, setQuantity] = useState(1);
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const url_id = useParams();
+  const [cookies, setCookie] = useCookies();
+  const [carts, setCarts] = useState([]);
 
   let img_one = props.product && props.product.image;
   let title = props.product && props.product.name;
@@ -34,21 +37,29 @@ function CtspProductInfor(props) {
     currency: "VND",
   });
 
-  //id
-  function generateUniqueId() {
-    const timestamp = new Date().getTime();
-    return timestamp;
-  }
   // tổng tiền
   const total = quantity * priceSaleFormatted;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(`http://localhost:5050/carts`);
+        const data = await response.json();
+        setCarts(data.data);
+        console.log(data.data);
+      } catch (error) {
+        console.error("Error fetching API:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   // data product
   const data = () => {
     // navigate("/ProductDetail/:id");
 
-    const uniqueId = generateUniqueId();
-
     const newProduct = {
-      id: uniqueId,
+      id_user: cookies.id_user,
       name: title.toLocaleUpperCase(),
       color: colorProduct,
       image: "",
@@ -83,8 +94,9 @@ function CtspProductInfor(props) {
       newProduct.size = "X";
     }
     // kiểm tra sản phẩm đã có trong giỏ hàng chua
-    const isProductInCart = cartItems.some(
-      (pd) => pd.image === newProduct.image
+
+    const isProductInCart = carts.some(
+      (pd) => pd.image === "http://localhost:5050/" + newProduct.image
     );
 
     if (isProductInCart) {
@@ -95,7 +107,8 @@ function CtspProductInfor(props) {
       toast.success(() => (
         <p style={{ paddingTop: "1rem" }}>Đã thêm vào giỏ hàng!</p>
       ));
-      dispatch(addToCart(newProduct));
+      
+      dispatch(addToCartAsync(newProduct));
     }
   };
   const buy = () => {

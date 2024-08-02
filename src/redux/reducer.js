@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import {
   ADD_TO_CART,
+  ADD_TO_CART_FAILURE,
+  ADD_TO_CART_SUCCESS,
   FETCH_PRODUCT_ERROR,
   FETCH_PRODUCT_REQUEST,
   FETCH_PRODUCT_SUCCESS,
@@ -22,6 +24,17 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         items: [...state.items, action.payload],
+      };
+    case ADD_TO_CART_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case ADD_TO_CART_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     case REMOVE_FROM_CART:
       return {
