@@ -7,6 +7,7 @@ import Cart from "../views/cart/cart";
 import Login from "../views/login/login";
 import { Register } from "../views/register/register";
 import CartOder from "../views/cart/cartOder";
+import Profile from "../views/infoAccount/infoAcc";
 function AppRouter() {
   return (
     <>
@@ -20,6 +21,7 @@ function AppRouter() {
           />
           <Route path="/search" element={<Search />} />
           <Route path="/Cart" element={<Cart />} />
+          <Route path="/Profile" element={<Profile />} />
           <Route path="/CartOder" element={<CartOder />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />

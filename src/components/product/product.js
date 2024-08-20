@@ -33,7 +33,7 @@ function Product(props) {
         </ul>
       </section>
       <section className="ctsp-product d-flex">
-        <CtspProductImg product={props.product} />
+        <CtspProductImg product={props.product}/>
         <CtspProductInfor product={props.product} />
       </section>
     </div>

@@ -16,7 +16,7 @@ function Cart() {
   const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
   const [carts, setCarts] = useState([]);
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState("unconfirmed");
   const [cookies, setCookie] = useCookies();
   const [id_user_oder, setIdUserOder] = useState();
 
@@ -153,6 +153,7 @@ function Cart() {
       throw error;
     }
   };
+  // xóa cart
   const deleteCartsByUserId = async (userId) => {
     try {
       await axios.delete(

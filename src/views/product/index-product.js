@@ -17,9 +17,16 @@ function IndexProduct() {
   const productList = useSelector((state) => state.product.products);
   const [limit, setLimit] = useState(1); // Số lượng sản phẩm trên mỗi trang
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState("");
   const url_id = useParams();
 
-  const urlApi = `http://localhost:5050/products?limit=${limit}&page=${currentPage}&category_id=${url_id.category_id}`;
+  console.log(sortOrder);
+  const urlApi = `http://localhost:5050/products?limit=${limit}&page=${currentPage}&category_id=${url_id.category_id}&sortOrder=${sortOrder}`;
+  console.log(urlApi);
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+  };
+
   return (
     <>
       <div className="box-product">
@@ -45,13 +52,14 @@ function IndexProduct() {
                     style={{ border: "navajowhite" }}
                     name="gia"
                     id="price"
-                    selected
+                    value={sortOrder}
+                    onChange={handleSortChange}
                   >
-                    <option disabled value="gia">
+                    <option disabled value="">
                       Giá
                     </option>
-                    <option value="giaUp">Giá : Từ thấp đến cao</option>
-                    <option value="giaDown">Giá : Từ cao đến thấp</option>
+                    <option value="asc">Giá : Từ thấp đến cao</option>
+                    <option value="desc">Giá : Từ cao đến thấp</option>
                   </select>
                 </ul>
               </div>
@@ -59,6 +67,7 @@ function IndexProduct() {
                 urlApi={urlApi}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
+                sortOrder={sortOrder}
               ></SuggestSP>
             </div>
           </section>

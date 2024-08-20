@@ -184,7 +184,7 @@ function ComponentHeader() {
                   {isInfor && (
                     <div>
                       <ul id="sub-menu" onMouseLeave={handleIsInfoDisplay}>
-                        <NavLink id="" href="/">
+                        <NavLink to="/Profile">
                           <li>Tài khoản của tôi</li>
                         </NavLink>
                         <NavLink to="/CartOder">
@@ -270,4 +270,4 @@ function ComponentHeader() {
   );
 }
 
-export default memo(ComponentHeader);
+export default ComponentHeader;

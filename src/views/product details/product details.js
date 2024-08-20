@@ -32,7 +32,7 @@ function ProductDetails() {
       <ComponentHeader />
       <AutoLoadPage />
       <div className="context-detal-product">
-        <Product product={product} />
+        <Product product={product}  />
         <InforShop />
         <ProductDetailsDescribe product={product} />
         <FeedBack />

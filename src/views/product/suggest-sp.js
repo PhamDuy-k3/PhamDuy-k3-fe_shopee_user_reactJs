@@ -23,7 +23,7 @@ const SuggestSP = (props) => {
       }
     };
     fetchProducts();
-  }, [props.currentPage, props.textSearch]);
+  }, [props.currentPage, props.textSearch, props.sortOrder]);
 
   console.log(responseData);
 

@@ -9,7 +9,7 @@ function CartOder() {
   const [total, setTotal] = useState(0);
   const [carts, setCarts] = useState([]);
   const [res, setRes] = useState([]);
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState("unconfirmed");
   const [cookies, setCookie] = useCookies();
 
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ function CartOder() {
                     style={{ color: "#00b9a0" }}
                     className="fas fa-shuttle-van"
                   ></i>
-                  {item.status ? (
+                  {item.status != "unconfirmed" ? (
                     <p>Đơn hàng của bạn đã được người bán xác nhận !!!</p>
                   ) : (
                     <p>Đơn hàng của bạn đang chờ người bán xác nhận !!!</p>
@@ -173,8 +173,14 @@ function CartOder() {
                       </p>
                     </div>
                   </div>
-                  {item.status ? (
+                  {item.status == "confirmed" ? (
                     <button style={{ marginLeft: "40%" }}>Chuẩn bị hàng</button>
+                  ) : item.status == "delivered" ? (
+                    <button
+                      style={{ backgroundColor: "gray", marginLeft: "40%" }}
+                    >
+                      Đã thanh toán
+                    </button>
                   ) : (
                     <button
                       style={{ backgroundColor: "gray", marginLeft: "40%" }}
@@ -186,7 +192,9 @@ function CartOder() {
               </div>
             ))
           ) : (
-            <p>Lôi</p>
+            <p style={{ fontSize: "2rem", color: "red" }}>
+              Chưa có đơn hàng nào
+            </p>
           )}
         </div>
       </div>
