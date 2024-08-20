@@ -13,8 +13,8 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
       {/* <ReduxCounter /> */}
-      {/* <App /> */}
-      <MenPage />
+      <App />
+      {/* <MenPage /> */}
     </React.StrictMode>
   </Provider>
 );

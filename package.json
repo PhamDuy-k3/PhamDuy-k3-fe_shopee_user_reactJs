@@ -2,8 +2,7 @@
   "name": "reactjsdemo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://PhamDuy-k3.github.io/fe_shopee_user_reactJs"
-,
+
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
     "@redux-devtools/extension": "^3.3.0",
