@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import IndexProduct from "../views/product/index-product";
 import Index from "../views/index/index";
 import ProductDetails from "../views/product details/product details";
@@ -8,6 +8,7 @@ import Login from "../views/login/login";
 import { Register } from "../views/register/register";
 import CartOder from "../views/cart/cartOder";
 import Profile from "../views/infoAccount/infoAcc";
+
 function AppRouter() {
   return (
     <>
@@ -30,4 +31,5 @@ function AppRouter() {
     </>
   );
 }
+
 export default AppRouter;
