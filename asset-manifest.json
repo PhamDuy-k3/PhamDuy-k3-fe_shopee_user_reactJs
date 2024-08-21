@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fe_shopee_user_reactJs/static/css/main.6b569c7e.css",
-    "main.js": "/fe_shopee_user_reactJs/static/js/main.cd30eddc.js",
+    "main.js": "/fe_shopee_user_reactJs/static/js/main.36e0611d.js",
     "static/js/787.71ccb58d.chunk.js": "/fe_shopee_user_reactJs/static/js/787.71ccb58d.chunk.js",
     "static/media/video.mp4": "/fe_shopee_user_reactJs/static/media/video.d80781159f1e3c13b08f.mp4",
     "static/media/banner-shop.png": "/fe_shopee_user_reactJs/static/media/banner-shop.dde6cbbf1a55d1bbabe7.png",
@@ -31,11 +31,11 @@
     "static/media/slick.woff": "/fe_shopee_user_reactJs/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/fe_shopee_user_reactJs/index.html",
     "main.6b569c7e.css.map": "/fe_shopee_user_reactJs/static/css/main.6b569c7e.css.map",
-    "main.cd30eddc.js.map": "/fe_shopee_user_reactJs/static/js/main.cd30eddc.js.map",
+    "main.36e0611d.js.map": "/fe_shopee_user_reactJs/static/js/main.36e0611d.js.map",
     "787.71ccb58d.chunk.js.map": "/fe_shopee_user_reactJs/static/js/787.71ccb58d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6b569c7e.css",
-    "static/js/main.cd30eddc.js"
+    "static/js/main.36e0611d.js"
   ]
 }
