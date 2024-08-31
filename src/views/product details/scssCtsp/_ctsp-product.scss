@@ -26,6 +26,7 @@
 .ctsp-product-infor{
     padding: 1rem;
     h1{
+       
         font-size: 1.3rem;
     }
     .ctsp-product-infor-star{
@@ -173,8 +174,15 @@
     }
    .ctsp-product-infor{
      h1{
+        width: 50rem;
         font-size: 1.8rem;
         font-weight: 400;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+        line-height: 1.2;
+        max-height: 2.6em;
      }
      .ctsp-product-infor-star{
         p{

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CtspProductImg from "./ctsp-product-img/ctsp-product-img";
 import CtspProductInfor from "./ctsp-product-infor/ctsp-product-infor";
 function Product(props) {
-  const title = props.product && props.product.name;
+  let title = props.product?.name || "";
 
   return (
     <div className="product">
@@ -29,11 +29,15 @@ function Product(props) {
               <i className="fas fa-angle-right"></i>
             </a>
           </li>
-          <li>{title}</li>
+          {title.length > 65 ? (
+            <td>{title.substring(0, 65)} ...</td>
+          ) : (
+            <td>{title}</td>
+          )}
         </ul>
       </section>
       <section className="ctsp-product d-flex">
-        <CtspProductImg product={props.product}/>
+        <CtspProductImg product={props.product} />
         <CtspProductInfor product={props.product} />
       </section>
     </div>

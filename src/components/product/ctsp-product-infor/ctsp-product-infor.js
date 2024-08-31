@@ -23,15 +23,12 @@ function CtspProductInfor(props) {
   const [selectSize, setSelectSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
-  const url_id = useParams();
   const [cookies, setCookie] = useCookies();
   const [carts, setCarts] = useState([]);
 
-  let img_one = props.product && props.product.image;
-  let title = props.product && props.product.name;
-
-  const cartItems = useSelector((state) => state.cart.items);
-
+  let img_one = props.product?.image;
+  let title = props.product?.name || "";
+  console.log(img_one);
   const VND = new Intl.NumberFormat("vi-VN", {
     // style: 'currency',
     currency: "VND",
@@ -40,17 +37,19 @@ function CtspProductInfor(props) {
   // tổng tiền
   const total = quantity * priceSaleFormatted;
 
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5050/carts/?id_user=${cookies.id_user}`
+      );
+      const data = await response.json();
+      setCarts(data.data);
+    } catch (error) {
+      console.error("Error fetching API:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(`http://localhost:5050/carts`);
-        const data = await response.json();
-        setCarts(data.data);
-        console.log(data.data);
-      } catch (error) {
-        console.error("Error fetching API:", error);
-      }
-    };
     fetchProducts();
   }, []);
 
@@ -87,17 +86,14 @@ function CtspProductInfor(props) {
     }
     // check khi user ko chọn thì sẽ cho mặc định
 
-    if (newProduct.color == "") {
+    if (newProduct.color === "") {
       newProduct.color = "Màu Trắng";
     }
-    if (newProduct.size == "") {
+    if (newProduct.size === "") {
       newProduct.size = "X";
     }
     // kiểm tra sản phẩm đã có trong giỏ hàng chua
-
-    const isProductInCart = carts.some(
-      (pd) => pd.image === "http://localhost:5050/" + newProduct.image
-    );
+    const isProductInCart = carts.some((pd) => pd.image === newProduct.image);
 
     if (isProductInCart) {
       toast.error(() => (
@@ -107,7 +103,6 @@ function CtspProductInfor(props) {
       toast.success(() => (
         <p style={{ paddingTop: "1rem" }}>Đã thêm vào giỏ hàng!</p>
       ));
-      
       dispatch(addToCartAsync(newProduct));
     }
   };
@@ -168,6 +163,7 @@ function CtspProductInfor(props) {
           </div>
         </div>
         <PriceSaleProduct
+          product={props.product}
           priceSaleFormatted={priceSaleFormatted}
           setPriceSaleFormatted={setPriceSaleFormatted}
         />
@@ -193,7 +189,11 @@ function CtspProductInfor(props) {
           <div className="number-title col-2">
             <p>Số Lượng</p>
           </div>
-          <UpDownQuantity quantity={quantity} setQuantity={setQuantity} />
+          <UpDownQuantity
+            product={props.product}
+            quantity={quantity}
+            setQuantity={setQuantity}
+          />
         </section>
         <section className="cart d-flex">
           <div className="cart-insert">

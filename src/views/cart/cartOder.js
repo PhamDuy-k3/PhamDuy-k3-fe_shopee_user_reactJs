@@ -3,6 +3,7 @@ import "./scssCart/styleCart.scss";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 
 function CartOder() {
   const [sumSp, setSumSp] = useState(0);
@@ -117,12 +118,11 @@ function CartOder() {
                             </div>
                           </div>
                           <div className="d-flex price-info col-2 pt-5 text-center">
-                            <p style={{ color: "gray" }}>
-                              <sup>đ</sup> <del>100000</del>
-                            </p>
                             <p>
                               <sup>đ</sup>{" "}
-                              <span className="price">{product.price}</span>
+                              <span className="price">
+                                {VND.format(product.price * 1000)}
+                              </span>
                             </p>
                           </div>
                           <div className="quantity col-2 pt-5">
@@ -192,9 +192,9 @@ function CartOder() {
               </div>
             ))
           ) : (
-            <p style={{ fontSize: "2rem", color: "red" }}>
-              Chưa có đơn hàng nào
-            </p>
+            <div className="img-no-order">
+              <img src={imgNoOder} />
+            </div>
           )}
         </div>
       </div>

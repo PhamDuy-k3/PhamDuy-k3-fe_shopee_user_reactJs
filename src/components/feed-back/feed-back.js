@@ -4,12 +4,21 @@ import imgFbackSmaill from "../../assets/images/img/imgctsp/img-fback-con.jpg";
 import imgFbackBig from "../../assets/images/img/imgctsp/img-fback-to.jpg";
 import imgVideo from "../../assets/images/img/product-4.jpg";
 import video from "../../assets/audio/video.mp4";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
+import FormComment from "./form";
 
 function FeedBack() {
   const [isImgOrVideo, setIsImgOrVideo] = useState(true);
   const [isDisplay, setIsDisplay] = useState(false);
   const [imgFb, setImgFb] = useState("");
+  const [comments, setComments] = useState([]);
+  const [cookies, setCookie, removeCookies] = useCookies();
+
+  const urlProductID = useParams();
+
   const handleOnClick = (value) => {
     if (value === "video") {
       setIsImgOrVideo(false);
@@ -19,95 +28,117 @@ function FeedBack() {
     setImgFb(value);
     setIsDisplay(true);
   };
+  const fetchDataComment = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5050/comments?productId=${urlProductID.product_id}`
+      );
+      setComments(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataComment();
+  }, []);
+
   return (
     <section id="feedBack" className="feed-back">
       <h1>ĐÁNH GIÁ SẢN PHẨM</h1>
       <FeedBackHeader />
+      <FormComment
+        fetchDataComment={fetchDataComment}
+        productID={urlProductID.product_id}
+        userID={cookies.id_user}
+      />
       <div className="feed-back-content">
-        <div className="feed-back-content-products">
-          <div className="item-feed-back-product d-flex">
-            <div className="img-product col-1">
-              <img src={imgUser} alt="" />
-            </div>
-            <div className="col-11">
-              <p className="name-product">Phạm Đỗ Duy</p>
-              <div className="d-flex">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-              </div>
-              <div className="fback d-flex mt-3">
-                <p>Chất liệu:</p>
-                <p>Tốt</p>
-              </div>
-              <div className="fback d-flex">
-                <p>Màu sắc:</p>
-                <p>Cam</p>
-              </div>
-              <div className="fback d-flex">
-                <p>Đúng với mô tả:</p>
-                <p>Đúng với mô tả</p>
-              </div>
-              <p className="product-cmt">
-                Chất lượng sản phẩm tuyệt vời,Đóng gói sản phẩm rất đẹp và chắc
-                chắn,Shop phục vụ rất tốt,Rất đáng tiền, Thời gian giao hàng rất
-                nhanh
-              </p>
-              <div className="feed-back-img-video">
-                <div className="feed-back-img-video-noClick d-flex flex-wrap">
-                  <img
-                    onClick={() => handleOnClick("imgFbackSmaill")}
-                    className={`img-video-one ${
-                      imgFb === "imgFbackSmaill" ? "active-img-video-one" : ""
-                    }`}
-                    src={imgFbackSmaill}
-                    alt=""
-                  />
-                  <div
-                    onClick={() => handleOnClick("video")}
-                    className={`img-video-one ${
-                      imgFb === "video" ? "active-img-video-one" : ""
-                    }`}
-                  >
-                    <img src={imgVideo} alt="" />
-                    <div className="d-flex icon-video">
-                      <i className="fas fa-video"></i>
-                      <p>0.21</p>
+        {comments.length > 0
+          ? comments.map((comment) => (
+              <div className="feed-back-content-products">
+                <div className="item-feed-back-product d-flex">
+                  <div className="img-product col-1">
+                    <img src={imgUser} alt="" />
+                  </div>
+                  <div className="col-11">
+                    <p className="name-product">{comment.name_user}</p>
+                    <div className="d-flex">
+                      {[...Array(comment.rating)].map((_, i) => (
+                        <i key={i} className="fas fa-star"></i>
+                      ))}
+                    </div>
+
+                    <div className="fback d-flex mt-3">
+                      <p>Chất liệu:</p>
+                      {comment.material}
+                    </div>
+                    <div className="fback d-flex">
+                      <p>Màu sắc:</p>
+                      {comment.color}
+                    </div>
+                    <div className="fback d-flex">
+                      <p>Đúng với mô tả:</p>
+                      {comment.describe}
+                    </div>
+                    <p className="product-cmt">{comment.content}</p>
+                    <div className="feed-back-img-video">
+                      {/* <div className="feed-back-img-video-noClick d-flex flex-wrap">
+                        <img
+                          onClick={() => handleOnClick("imgFbackSmaill")}
+                          className={`img-video-one ${
+                            imgFb === "imgFbackSmaill"
+                              ? "active-img-video-one"
+                              : ""
+                          }`}
+                          src={imgFbackSmaill}
+                          alt=""
+                        />
+                        <div
+                          onClick={() => handleOnClick("video")}
+                          className={`img-video-one ${
+                            imgFb === "video" ? "active-img-video-one" : ""
+                          }`}
+                        >
+                          <img src={imgVideo} alt="" />
+                          <div className="d-flex icon-video">
+                            <i className="fas fa-video"></i>
+                            <p>0.21</p>
+                          </div>
+                        </div>
+                      </div>
+                      {isDisplay && (
+                        <div className="feed-back-video-onClick">
+                          {isImgOrVideo ? (
+                            <img
+                              className="img-video-two "
+                              src={imgFbackBig}
+                              alt=""
+                            />
+                          ) : (
+                            <video className="img-video-two" controls loop>
+                              <source src={video} />
+                            </video>
+                          )}
+                        </div>
+                      )} */}
+                      <img src={comment.image} alt="anh" />
+                    </div>
+                    <div className="shop-feed-back">
+                      <p>Phản Hồi Của Người Bán</p>
+                      <p>
+                        LEVENTS cảm ơn bạn đã đồng hành và tin dùng sản phẩm của
+                        brand.Levents hi vọng sẽ được cùng bạn trải nghiệm nhiều
+                        sản phẩm mới hơn
+                      </p>
+                    </div>
+                    <div className="fback-like">
+                      <i className="far fa-thumbs-up"></i> <span>1</span>
                     </div>
                   </div>
                 </div>
-                {isDisplay && (
-                  <div className="feed-back-video-onClick">
-                    {isImgOrVideo ? (
-                      <img
-                        className="img-video-two "
-                        src={imgFbackBig}
-                        alt=""
-                      />
-                    ) : (
-                      <video className="img-video-two" controls loop>
-                        <source src={video} />
-                      </video>
-                    )}
-                  </div>
-                )}
               </div>
-              <div className="shop-feed-back">
-                <p>Phản Hồi Của Người Bán</p>
-                <p>
-                  LEVENTS cảm ơn bạn đã đồng hành và tin dùng sản phẩm của
-                  brand.Levents hi vọng sẽ được cùng bạn trải nghiệm nhiều sản
-                  phẩm mới hơn
-                </p>
-              </div>
-              <div className="fback-like">
-                <i className="far fa-thumbs-up"></i> <span>1</span>
-              </div>
-            </div>
-          </div>
-        </div>
+            ))
+          : ""}
       </div>
     </section>
   );
