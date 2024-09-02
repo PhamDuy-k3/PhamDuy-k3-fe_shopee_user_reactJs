@@ -5,11 +5,13 @@ import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import io from "socket.io-client";
 
-function FormComment({ productID, userID, fetchDataComment }) {
+function FormComment({ productID, userID, fetchDataComment, setComments }) {
   const [show, setShow] = useState(false);
   const [cookies, setCookie, removeCookies] = useCookies();
   const [user, setUser] = useState();
+  const socketRef = useRef(null);
   const {
     register,
     handleSubmit,
@@ -24,6 +26,22 @@ function FormComment({ productID, userID, fetchDataComment }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    const socket = io("http://localhost:5050");
+    socketRef.current = socket;
+
+    socket.on("comments", (cmt) => {
+      setComments((prevCommnets) => [
+        ...prevCommnets,
+        { ...cmt, sender: "server" },
+      ]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
@@ -41,38 +59,42 @@ function FormComment({ productID, userID, fetchDataComment }) {
   }, [cookies.phone_user]);
 
   let name = user?.name || "";
-  
+
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
-      if (productID) {
-        formData.append("productId", productID);
-      }
-      if (name) {
-        formData.append("name_user", name);
-      }
-      if (userID) {
-        formData.append("userId", userID);
-      }
-      if (data.material) {
-        formData.append("material", data.material);
-      }
-      if (data.color) {
-        formData.append("color", data.color);
-      }
-      if (data.describe) {
-        formData.append("describe", data.describe);
-      }
-      if (data.content) {
-        formData.append("content", data.content);
-      }
-      if (data.rating) {
-        formData.append("rating", data.rating);
-      }
-      if (imageInputRef.current.files[0]) {
+
+      if (productID) formData.append("productId", productID);
+      if (name) formData.append("name_user", name);
+      if (userID) formData.append("userId", userID);
+      if (data.material) formData.append("material", data.material);
+      if (data.color) formData.append("color", data.color);
+      if (data.describe) formData.append("describe", data.describe);
+      if (data.content) formData.append("content", data.content);
+      if (data.rating) formData.append("rating", data.rating);
+      if (imageInputRef.current?.files[0]) {
         formData.append("image", imageInputRef.current.files[0]);
       }
+      // Kiểm tra và thêm ảnh vào formData nếu có
+      let imageBase64 = null;
+      if (imageInputRef.current?.files[0]) {
+        const file = imageInputRef.current.files[0];
+        imageBase64 = await convertFileToBase64(file); // Chuyển đổi ảnh sang base64
+      }
 
+      // Tạo dữ liệu comment và bao gồm chuỗi base64 của ảnh
+      const commentData = {
+        ...data,
+        name_user: name,
+        productId: productID,
+        userId: userID,
+        image: imageBase64, // Thêm ảnh vào dữ liệu gửi qua socket
+      };
+
+      // Gửi dữ liệu qua socket bao gồm cả ảnh dưới dạng base64
+      socketRef.current.emit("comments", commentData);
+
+      // Gửi dữ liệu (không bao gồm ảnh) tới API
       await axios.post("http://localhost:5050/comments", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -82,10 +104,25 @@ function FormComment({ productID, userID, fetchDataComment }) {
       handleClose();
       fetchDataComment();
       reset();
-      imageInputRef.current.value = "";
+
+      // Đặt lại giá trị của input ảnh sau khi gửi
+      if (imageInputRef.current) {
+        imageInputRef.current.value = "";
+      }
     } catch (error) {
       console.error("Error submitting comment:", error);
     }
+  };
+
+  // Hàm chuyển file thành chuỗi base64
+
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   return (

@@ -42,12 +42,13 @@ function FeedBack() {
   useEffect(() => {
     fetchDataComment();
   }, []);
-
+  console.log(comments)
   return (
     <section id="feedBack" className="feed-back">
       <h1>ĐÁNH GIÁ SẢN PHẨM</h1>
       <FeedBackHeader />
       <FormComment
+        setComments={setComments}
         fetchDataComment={fetchDataComment}
         productID={urlProductID.product_id}
         userID={cookies.id_user}

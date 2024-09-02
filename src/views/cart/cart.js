@@ -23,7 +23,8 @@ function Cart() {
   const [cookies, setCookie] = useCookies();
   const [id_user_oder, setIdUserOder] = useState();
   const [note, setNote] = useState("");
-
+  const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
+  const [a, setA] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -145,6 +146,19 @@ function Cart() {
     deleteToCartsAsync(array);
   };
 
+  const OrderConfirmationViaGmail = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5050/cartsOder/SendOrderInformationViaGmail",
+        data
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error creating cart order:", error);
+      throw error;
+    }
+  };
+  console.log(a);
   const createCartOder = async (data) => {
     try {
       const response = await axios.post(
@@ -174,7 +188,9 @@ function Cart() {
   const handleBuy = async () => {
     if (id_user_oder !== "") {
       let total_prices = total * 1000;
-      const data = { carts, status, id_user_oder, total_prices, note };
+      const data = { carts, status, id_user_oder, total_prices, note, gmail };
+      // xác nhận đơn hàng qua gmail
+      await OrderConfirmationViaGmail(data);
       await createCartOder(data);
       await deleteCartsByUserId(id_user_oder);
       navigate("/CartOder");
