@@ -7,7 +7,10 @@ import sale_deal_soc from "../../assets/images/img/sale-deal-soc.jpg";
 import sale_outlet from "../../assets/images/img/sale-outlet.jpg";
 import sale_nap from "../../assets/images/img/sale-nap.jpg";
 import sale_quoc_te from "../../assets/images/img/sale-quoc-te.jpg";
+import { useTranslation } from "react-i18next";
 export function Sale() {
+  const { t } = useTranslation(["home"]);
+
   return (
     <div className="sale bg-white d-flex">
       <div className="sale-item text-align">
@@ -16,7 +19,7 @@ export function Sale() {
             <img src={sale_time} alt="" />
           </div>
           <div className="sale-item-text">
-            <p>Khung Giờ Săn Sale</p>
+            <p>{t("aside sale.flash_sale_hours")}</p>
           </div>
         </a>
       </div>
@@ -25,7 +28,7 @@ export function Sale() {
           <img src={sale_free_ship} alt="" />
         </div>
         <div className="sale-item-text">
-          <p>Miễn Phí Ship - Có Shopee</p>
+          <p>{t("aside sale.free_shipping_shopee")}</p>
         </div>
       </div>
       <div className="sale-item text-align">
@@ -33,7 +36,7 @@ export function Sale() {
           <img src={sale_giam_gia} alt="" />
         </div>
         <div className="sale-item-text">
-          <p>Voucher Giảm Đến 500.000Đ</p>
+          <p>{t("aside sale.voucher_discount")}</p>
         </div>
       </div>
       <div className="sale-item text-align">
@@ -41,7 +44,7 @@ export function Sale() {
           <img src={sale_deal} alt="" />
         </div>
         <div className="sale-item-text">
-          <p>Gì Cung Rẻ - Deal Sốc 9.000Đ</p>
+          <p>{t("aside sale.cheap_deals")}</p>
         </div>
       </div>
       <div className="sale-item text-align">
@@ -49,7 +52,7 @@ export function Sale() {
           <img src={sale_re} alt="" />
         </div>
         <div className="sale-item-text">
-          <p>Mã Giảm Giá</p>
+          <p>{t("aside sale.discount_code")}</p>
         </div>
       </div>
       <div className="sale-item text-align">
@@ -57,7 +60,7 @@ export function Sale() {
           <img src={sale_deal_soc} alt="" />
         </div>
         <div className="sale-item-text">
-          <p>Bắt Trend - Giá Sốc</p>
+          <p>{t("aside sale.trend_alert")}</p>
         </div>
       </div>
       <div className="sale-item text-align">
@@ -65,7 +68,7 @@ export function Sale() {
           <img src={sale_outlet} alt="" />
         </div>
         <div className="sale-item-text">
-          <p>Hàng Hiệu Outlet Giảm 50%</p>
+          <p>{t("aside sale.branded_outlet_discount")}</p>
         </div>
       </div>
       <div className="sale-item text-align">
@@ -73,7 +76,7 @@ export function Sale() {
           <img src={sale_nap} alt="" />
         </div>
         <div className="sale-item-text">
-          <p>Nạp Thẻ , Dịch Vụ & Data</p>
+          <p>{t("aside sale.top_up_services")}</p>
         </div>
       </div>
       <div className="sale-item text-align">
@@ -81,7 +84,7 @@ export function Sale() {
           <img src={sale_quoc_te} alt="" />
         </div>
         <div className="sale-item-text">
-          <p>Hàng Quốc Tế</p>
+          <p>{t("aside sale.International_products")}</p>
         </div>
       </div>
     </div>

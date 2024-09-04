@@ -49,9 +49,32 @@ ul li {
     margin-left: 3px;
 }
 .nav-two ul{
+    position: relative;
     margin-left: 13rem;
     a:hover{
         color: #F4C0BA;
+    }
+    li:hover{
+        color: #F4C0BA;
+    }
+    li{
+        cursor: pointer;
+    }
+    #multilingual{
+        width: 14rem;
+        border-radius: 3px;
+        padding:  0rem 1rem 0.5rem 1rem;
+        background-color: white;
+        position: absolute;
+        top: 2rem;
+        left: 10rem;
+        li{
+            margin-top: 1rem;
+        }
+        li:hover{
+           color: #F6402D; 
+           cursor: pointer;
+        }
     }
     li:first-child{
         position: relative;

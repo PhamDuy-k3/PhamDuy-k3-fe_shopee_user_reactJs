@@ -7,6 +7,7 @@ import store from "./redux/store";
 import { Provider } from "react-redux";
 import { MenPage } from "./components/menPage";
 // import ReduxCounter from "./redux";
+import "../src/i18n/i18n";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

@@ -1,0 +1,43 @@
+{
+    "aside categories":{
+        "categories": "DANH MỤC",
+        "Quần":"Quần",
+        "Áo":"Áp",
+        "Điện Thoại" :"Điện Thoại",
+        "Khác":"Khác"
+    },
+    "aside header":{
+        "Seller_channel":"Kênh người bán",
+        "Become_a_shopee_seller" :"Trở thành người bán Shopee",
+        "Download":"Tải xuống",
+        "Follow_us_on" :"Kết nối",
+        "Notifications":"Thông báo",
+        "Help":"Hỗ trợ",
+        "Search":"Tìm kiếm",
+        "my_account":"Tài khoản của tối",
+        "my_purchase":"Đơn mua của tôi",
+        "logout":"Đăng xuất",
+        "sportswear": "Đồ thể thao",
+            "phone": "Điện Thoại",
+            "women_jacket": "Áo Khoác Nữ",
+            "sandals": "Dép",
+            "trousers": "Quần Âu",
+            "badminton_racket": "Vợt Cầu Lông",
+            "outfit_set": "Set Đồ",
+            "t_shirt": "Áo thun",
+            "hoodie": "Hoodie",
+            "Men_shoes":"Giày nam"
+    },
+    "aside sale":{
+        "flash_sale_hours": "Khung Giờ Săn Sale",
+        "free_shipping_shopee": "Miễn Phí Ship - Có Shopee",
+        "voucher_discount": "Voucher Giảm Đến 500.000Đ",
+        "cheap_deals": "Gì Cung Rẻ - Deal Sốc 9.000Đ",
+        "discount_code": "Mã Giảm Giá",
+        "trend_alert": "Bắt Trend - Giá Sốc",
+        "branded_outlet_discount": "Hàng Hiệu Outlet Giảm 50%",
+        "top_up_services": "Nạp Thẻ , Dịch Vụ & Data ",
+        "International_products":"Hàng Quốc Tế"
+
+    }
+}

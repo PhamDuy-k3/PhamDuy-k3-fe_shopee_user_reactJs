@@ -1,0 +1,42 @@
+{
+    "aside categories":{
+        "categories": "Categories",
+        "Quần":"Trousers",
+        "Áo":"Shirt",
+        "Điện Thoại" :"Phone",
+        "Khác":"Other"
+    },
+    "aside header":{
+        "Seller_channel":"Seller channel",
+        "Become_a_shopee_seller" :"Become a shopee seller",
+        "Download":"Download",
+        "Follow_us_on" :"Follow us on",
+        "Notifications":"Notifications",
+        "Help":"Help",
+        "Search":"Search",
+        "my_account":"My Account",
+        "my_purchase":"My Purchase",
+        "logout":"Logout",
+        "sportswear": "Sportswear",
+            "phone": "Phones",
+            "women_jacket": "Women's Jackets",
+            "sandals": "Sandals",
+            "trousers": "Trousers",
+            "badminton_racket": "Badminton Racket",
+            "outfit_set": "Outfit Set",
+            "t_shirt": "T-Shirt",
+            "hoodie": "Hoodie",
+            "Men_shoes":"Men shoes"
+    },
+    "aside sale":{
+        "flash_sale_hours": "Flash Sale Hours",
+        "free_shipping_shopee": "Free Shipping - Available on Shopee",
+        "voucher_discount": "Voucher Discount Up to 500,000 VND",
+        "cheap_deals": "Everything Cheap - Shock Deal 9,000 VND",
+        "discount_code": "Discount Code",
+        "trend_alert": "Trend Alert - Shocking Prices",
+        "branded_outlet_discount": "Branded Outlet 50% Off",
+        "top_up_services": "Top-Up, Services & Data",
+        "International_products":" International Products"
+    }
+}

@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 function Category(props) {
   const listProduct = props.list.slice(0, 20);
-
+  const { t } = useTranslation(["home"]);
   const category = listProduct.map((product) => (
     <Link key={product._id} to={`/Product/${product._id}`}>
       <div className="category-product">
@@ -10,7 +11,7 @@ function Category(props) {
           <img src={product.image} alt={product.name} />
         </div>
         <div className="category-product-text">
-          <p>{product.name}</p>
+          <p>{t(`aside categories.${product.name}`)} </p>
         </div>
       </div>
     </Link>
@@ -19,7 +20,7 @@ function Category(props) {
   return (
     <section className="category bg-white">
       <div className="category-title">
-        <h1>DANH MUC</h1>
+        <h1> {t("aside categories.categories")}</h1>
       </div>
       <div className="category-products d-flex flex-wrap text-align">
         {category}

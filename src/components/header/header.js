@@ -7,6 +7,8 @@ import logo from "../../assets/images/img/logo.png";
 import imgTb from "../../assets/images/img/tbao.jpg";
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
+import { useTranslation } from "react-i18next";
+import { locales } from "../../i18n/i18n";
 
 function ComponentHeader() {
   const navigate = useNavigate();
@@ -14,6 +16,10 @@ function ComponentHeader() {
   const [isInfor, setIsInfor] = useState(false);
   const [user, setUser] = useState();
   const [length_cart, setLength_cart] = useState();
+  const { i18n } = useTranslation();
+  const [isChangeLag, setIsChangeLag] = useState(false);
+  const currentLanguage = locales[i18n.language];
+  const { t } = useTranslation(["home"]);
 
   const {
     register,
@@ -22,6 +28,11 @@ function ComponentHeader() {
     formState: { errors },
   } = useForm();
 
+  // thay đổi ngông ngữ
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+    setIsChangeLag(false);
+  };
   const searchProduct = (data) => {
     //console.log(data);
     localStorage.setItem("text_search", JSON.stringify(data.search));
@@ -63,6 +74,13 @@ function ComponentHeader() {
     setIsInfor(false);
   };
 
+  //
+  const handelMultilingual = () => {
+    setIsChangeLag(true);
+  };
+  const handelDisplayMultilingual = () => {
+    setIsChangeLag(false);
+  };
   return (
     <header className="col-12">
       <div className="infor d-flex">
@@ -70,17 +88,19 @@ function ComponentHeader() {
           <ul className="d-flex">
             <li>
               <a href="">
-                Kênh Người Bán <span className="vertical"></span>
+                {t("aside header.Seller_channel")}
+                <span className="vertical"></span>
               </a>
             </li>
             <li>
               <a href="">
-                Trở thành Người bán Shopee <span className="vertical"></span>
+                {t("aside header.Become_a_shopee_seller")}
+                <span className="vertical"></span>
               </a>
             </li>
             <li>
               <a href="">
-                Tải ứng dụng <span className="vertical"></span>{" "}
+                {t("aside header.Download")} <span className="vertical"></span>{" "}
               </a>
               <div style={{ position: "absolute" }} className="download">
                 <img style={{ width: "10px" }} src="img/downlload.jpg" alt="" />
@@ -89,7 +109,7 @@ function ComponentHeader() {
               </div>
             </li>
             <li>
-              <a href="">Kết nối</a>
+              <a href=""> {t("aside header.Follow_us_on")}</a>
               &nbsp;
               <Link to="https://www.facebook.com/duyphamk3">
                 <i className="fab fa-facebook" style={{ color: "#ffffff" }}></i>
@@ -109,7 +129,7 @@ function ComponentHeader() {
             <li>
               <a href="">
                 <p className="far fa-bell"></p>
-                &nbsp; Thông báo
+                &nbsp; {t("aside header.Notifications")}
               </a>
               <div className="Notification-triangle">
                 <div id="triangle-up"></div>
@@ -144,18 +164,24 @@ function ComponentHeader() {
             </li>
             <li>
               <a href="">
-                <i className="far fa-question-circle"></i> Hỗ trợ
+                <i className="far fa-question-circle"></i>{" "}
+                {t("aside header.Help")}
               </a>
             </li>
-            <li>
-              <a href="">
-                <i className="fas fa-globe"></i> Tiếng Việt
-              </a>
+            <li onMouseOver={handelMultilingual} style={{ color: "white" }}>
+              <i className="fas fa-globe"></i> {currentLanguage}
               <i
                 className="fas fa-chevron-down"
                 style={{ marginLeft: "3px", cursor: "pointer" }}
               ></i>
             </li>
+            {isChangeLag && (
+              <div onMouseLeave={handelDisplayMultilingual} id="multilingual">
+                <li onClick={() => changeLanguage("vi")}>Tiếng Việt</li>
+                <li onClick={() => changeLanguage("en")}>English</li>
+              </div>
+            )}
+
             {!cookies.user_token ? (
               <>
                 <li>
@@ -185,13 +211,13 @@ function ComponentHeader() {
                     <div>
                       <ul id="sub-menu" onMouseLeave={handleIsInfoDisplay}>
                         <NavLink to="/Profile">
-                          <li>Tài khoản của tôi</li>
+                          <li>{t("aside header.my_account")}</li>
                         </NavLink>
                         <NavLink to="/CartOder">
-                          <li>Đơn mua của tôi</li>
+                          <li>{t("aside header.my_purchase")}</li>
                         </NavLink>
                         <NavLink id="" href="/" onClick={(e) => logout(e)}>
-                          <li>Đăng xuất</li>
+                          <li>{t("aside header.logout")}</li>
                         </NavLink>
                       </ul>
                     </div>
@@ -213,7 +239,7 @@ function ComponentHeader() {
                 id="search-input"
                 className="col-11"
                 type="text"
-                placeholder=" Tìm kiếm"
+                placeholder={t("aside header.Search")}
                 {...register("search")}
               />
 
@@ -225,34 +251,34 @@ function ComponentHeader() {
           <nav className="nav-three col-12">
             <ul className="d-flex">
               <li>
-                <a href="">Iphone</a>
+                <a href="">{t("aside header.Men_shoes")}</a>
               </li>
               <li>
-                <a href="">Đồ thể thao</a>
+                <a href="">{t("aside header.sportswear")}</a>
               </li>
               <li>
-                <a href="">Điện Thoại</a>
+                <a href="">{t("aside header.sandals")}</a>
               </li>
               <li>
-                <a href="">Áo Khoác Nữ</a>
+                <a href="">{t("aside header.trousers")}</a>
               </li>
               <li>
-                <a href="">Dép</a>
+                <a href="">{t("aside header.badminton_racket")}</a>
               </li>
               <li>
-                <a href="">Quần Âu</a>
+                <a href="">{t("aside header.outfit_set")}</a>
               </li>
               <li>
-                <a href="">Vợt Cầu Lông</a>
+                <a href="">{t("aside header.t_shirt")}</a>
               </li>
               <li>
-                <a href="">Set Đồ</a>
+                <a href="">{t("aside header.hoodie")}</a>
               </li>
               <li>
-                <a href="">Áo thun</a>
+                <a href="">{t("aside header.phone")}</a>
               </li>
               <li>
-                <a href="">Hoodie</a>
+                <a href="">{t("aside header.women_jacket")}</a>
               </li>
             </ul>
           </nav>
