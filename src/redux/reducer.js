@@ -39,7 +39,7 @@ const cartReducer = (state = initialState, action) => {
     case REMOVE_FROM_CART:
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
+        items: state.items.filter((item) => item._id !== action.payload),
       };
     case REMOVE_ALL_FROM_CART:
       return {

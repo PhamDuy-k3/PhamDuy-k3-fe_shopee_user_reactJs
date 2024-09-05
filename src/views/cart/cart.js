@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   deleteCarts,
   deleteToCartsAsync,
+  removeFromCart,
   updateProductList,
 } from "../../redux/action";
 import { useCookies } from "react-cookie";
@@ -124,8 +125,8 @@ function Cart() {
   const deleteToCartAsync = async (cartId) => {
     try {
       await axios.delete(`http://localhost:5050/carts/${cartId}`);
+      dispatch(removeFromCart(cartId));
       fetchProducts();
-      dispatch(deleteCarts(cartId));
     } catch (error) {}
   };
   // xóa sản phẩm
@@ -221,7 +222,7 @@ function Cart() {
             </div>
             <div className="body-product bg-white mt-3">
               <div className="list-products">
-                {carts.map((product, index) => {
+                {carts.map((cart, index) => {
                   return (
                     <div
                       key={index}
@@ -254,10 +255,10 @@ function Cart() {
                           <img
                             style={{ height: "7rem" }}
                             className="col-2"
-                            src={product.image}
+                            src={cart.image}
                             alt=""
                           />
-                          <p className="col-5 product-name">{product.name}</p>
+                          <p className="col-5 product-name">{cart.name}</p>
                           <div className="d-flex flex-column">
                             <select
                               className="mt-3"
@@ -270,13 +271,13 @@ function Cart() {
                               </option>
                               <option
                                 style={{ color: "red" }}
-                                value={product.color}
+                                value={cart.color}
                               >
-                                {product.color}
+                                {cart.color}
                               </option>
                               <option value="white">Màu Trắng</option>
                             </select>
-                            <p>Size : {product.size}</p>
+                            <p>Size : {cart.size}</p>
                           </div>
                         </div>
                         <div className="d-flex price-info col-2 pt-5 text-center">
@@ -284,28 +285,26 @@ function Cart() {
                             {" "}
                             <sup>đ</sup>{" "}
                             <span className="price">
-                              {VND.format(product.price)}
+                              {VND.format(cart.price)}
                             </span>
                           </p>
                         </div>
                         <div className="quantity col-2 pt-5">
                           <input
-                            onClick={() => handleQuantity(product._id, -1)}
+                            onClick={() => handleQuantity(cart._id, -1)}
                             className="cart-down-quantity"
                             type="button"
                             value="-"
                           />
                           <input
-                            onChange={(e) =>
-                              handleChangeQuantity(product._id, e)
-                            }
+                            onChange={(e) => handleChangeQuantity(cart._id, e)}
                             className="quantity_value"
                             type="number"
                             min="1"
-                            value={product.quantity}
+                            value={cart.quantity}
                           />
                           <input
-                            onClick={() => handleQuantity(product._id, 1)}
+                            onClick={() => handleQuantity(cart._id, 1)}
                             className="cart-up-quantity"
                             type="button"
                             value="+"
@@ -314,13 +313,11 @@ function Cart() {
                         <div className="total-price col-2 pt-5">
                           <p>
                             <sup>đ</sup>{" "}
-                            <span className="sum">
-                              {VND.format(product.sum)}
-                            </span>
+                            <span className="sum">{VND.format(cart.sum)}</span>
                           </p>
                         </div>
                         <div
-                          onClick={() => deleteProduct(product._id)}
+                          onClick={() => deleteProduct(cart._id)}
                           className="remove-item col-1 pt-5"
                         >
                           <p>Xóa</p>

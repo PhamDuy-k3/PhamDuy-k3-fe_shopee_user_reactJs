@@ -37,7 +37,7 @@ function CtspProductImg(props) {
       });
       const data = await res.json();
 
-      if (data.data.likedBy.length == 0) {
+      if (data.data.likedBy.length === 0) {
         setIsLike(false);
       }
       setProduct(data.data);

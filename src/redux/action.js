@@ -16,16 +16,6 @@ export const addToCart = (product) => ({
   payload: product,
 });
 
-export const addToCartAsync = (product) => async (dispatch) => {
-  dispatch(addToCart(product));
-  try {
-    const response = await axios.post("http://localhost:5050/carts", product);
-    dispatch({ type: ADD_TO_CART_SUCCESS, payload: response.data });
-  } catch (error) {
-    dispatch({ type: ADD_TO_CART_FAILURE, payload: error.message });
-  }
-};
-
 export const removeFromCart = (cartId) => ({
   type: REMOVE_FROM_CART,
   payload: cartId,

@@ -13,9 +13,11 @@ import UpDownQuantity from "./up_down_quantity";
 import imgSmall2 from "..//..//../assets/images/img/imgctsp/banner-con-2.jpg";
 import imgSmall3 from "..//..//../assets/images/img/imgctsp/banner-con-3.jpg";
 import imgSmall4 from "..//..//../assets/images/img/imgctsp/banner-con-4.jpg";
-import { addToCart, addToCartAsync } from "../../../redux/action";
+import { addToCart } from "../../../redux/action";
 import { useCookies } from "react-cookie";
 import io from "socket.io-client";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 function CtspProductInfor(props) {
   const navigate = useNavigate();
@@ -27,6 +29,9 @@ function CtspProductInfor(props) {
   const [cookies, setCookie] = useCookies();
   const [carts, setCarts] = useState([]);
   const socketRef = useRef(null);
+
+  const carts_store = useSelector((state) => state.cart.items) ;
+  console.log(carts_store);
 
   let img_one = props.product?.image;
   let title = props.product?.name || "";
@@ -63,11 +68,29 @@ function CtspProductInfor(props) {
       socket.disconnect();
     };
   }, []);
+
+  // thêm cart
+  const addToCartAsync = async (product) => {
+    try {
+      const response = await axios.post("http://localhost:5050/carts", product);
+      if (response.data.status_code === 200) {
+        toast.success(() => (
+          <p style={{ paddingTop: "1rem" }}>Đã thêm vào giỏ hàng!</p>
+        ));
+      } else {
+        toast.error(() => <p style={{ paddingTop: "1rem" }}>Thêm thất bại!</p>);
+      }
+    } catch (error) {}
+  };
+  const generateRandomId = () => {
+    return uuidv4();
+  };
   // data product
   const data = () => {
     // navigate("/ProductDetail/:id");
 
     const newProduct = {
+      _id: generateRandomId(),
       id_user: cookies.id_user,
       name: title.toLocaleUpperCase(),
       color: colorProduct,
@@ -103,17 +126,17 @@ function CtspProductInfor(props) {
       newProduct.size = "X";
     }
     // kiểm tra sản phẩm đã có trong giỏ hàng chua
-    const isProductInCart = carts.some((pd) => pd.image === newProduct.image);
+    const isProductInCart = carts_store.some(
+      (pd) => pd.image === newProduct.image
+    );
 
     if (isProductInCart) {
       toast.error(() => (
         <p style={{ paddingTop: "1rem" }}>Sản phẩm này đã có trong giỏ hàng!</p>
       ));
     } else {
-      toast.success(() => (
-        <p style={{ paddingTop: "1rem" }}>Đã thêm vào giỏ hàng!</p>
-      ));
-      dispatch(addToCartAsync(newProduct));
+      addToCartAsync(newProduct);
+      dispatch(addToCart(newProduct));
       socketRef.current.emit("cart", newProduct);
     }
   };
@@ -128,7 +151,7 @@ function CtspProductInfor(props) {
       </section>
       <ToastContainer
         position="top-right"
-        autoClose={500}
+        autoClose={100}
         hideProgressBar={false}
         newestOnTop={true}
         closeOnClick
