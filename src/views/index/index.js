@@ -14,6 +14,7 @@ import "./scssIndex/index.scss";
 import Phone from "../../components/advertisement/phone";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
   const [listProduct, setListProduct] = useState([]);
@@ -22,6 +23,7 @@ const Index = () => {
   const [cookies, setCookie] = useCookies();
   const [categorys, setCategorys] = useState([]);
   const navigate = useNavigate();
+  const { t } = useTranslation(["home"]);
 
   useEffect(() => {
     if (!cookies.user_token) {
@@ -87,7 +89,7 @@ const Index = () => {
         <ShopeeMaill list={listProduct} />
         <section className="suggest">
           <div className="suggest-title text-align sticky-top">
-            <h4>GỢI Ý HÔM NAY</h4>
+            <h4>{t("suggest.today_suggestion")}</h4>
             <div className="gach"></div>
           </div>
           <div className="suggest-products d-flex flex-wrap">
@@ -96,7 +98,7 @@ const Index = () => {
           </div>
 
           <div className="see-more">
-            <button>Xem Thêm</button>
+            <button>{t("suggest.see_more")}</button>
           </div>
         </section>
       </section>

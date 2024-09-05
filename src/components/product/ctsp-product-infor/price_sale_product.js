@@ -23,7 +23,7 @@ function PriceSaleProduct({
   useEffect(() => {
     const calculatePrice = () => {
       const price_sale = cost - cost * (sale / 100);
-      setPriceSaleFormatted(VND.format(price_sale));
+      setPriceSaleFormatted(price_sale);
     };
 
     calculatePrice();
@@ -39,7 +39,7 @@ function PriceSaleProduct({
       </p>
       <p>
         <sup>đ</sup>
-        <span className="price-sale">{priceSaleFormatted}</span>
+        <span className="price-sale">{VND.format(priceSaleFormatted)}</span>
       </p>
       <p>
         <span className="sale">{sale}</span>% GIẢM

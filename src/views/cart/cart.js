@@ -56,12 +56,12 @@ function Cart() {
   // tính tổng tiền các sản phẩm có trong gio hàng
   useEffect(() => {
     setSumSp(carts.length);
-    setCookie("length_cart", carts.length);
     const totalSum = carts.reduce((accumulator, product) => {
       return accumulator + parseFloat(product.sum);
     }, 0);
-    setTotal(VND.format(totalSum * 1000));
+    setTotal(totalSum);
   }, [carts]);
+  console.log(total);
 
   const updateToCartsAsync = async (_id, quantity, sum) => {
     try {
@@ -88,7 +88,7 @@ function Cart() {
         }
         const quantity = quantity_new;
         const _id = product._id;
-        const sum = VND.format(quantity_new * +product.price * 1000);
+        const sum = quantity_new * +product.price;
         updateToCartsAsync(_id, quantity, sum);
         return {
           ...product,
@@ -108,7 +108,7 @@ function Cart() {
       if (product._id === id) {
         const quantity = newQuantity;
         const _id = product._id;
-        const sum = VND.format(quantity * +product.price * 1000);
+        const sum = quantity * +product.price;
         updateToCartsAsync(_id, quantity, sum);
         return {
           ...product,
@@ -187,7 +187,7 @@ function Cart() {
 
   const handleBuy = async () => {
     if (id_user_oder !== "") {
-      let total_prices = total * 1000;
+      let total_prices = total;
       const data = { carts, status, id_user_oder, total_prices, note, gmail };
       // xác nhận đơn hàng qua gmail
       await OrderConfirmationViaGmail(data);
@@ -284,7 +284,7 @@ function Cart() {
                             {" "}
                             <sup>đ</sup>{" "}
                             <span className="price">
-                              {VND.format(product.price * 1000)}
+                              {VND.format(product.price)}
                             </span>
                           </p>
                         </div>
@@ -314,7 +314,9 @@ function Cart() {
                         <div className="total-price col-2 pt-5">
                           <p>
                             <sup>đ</sup>{" "}
-                            <span className="sum">{product.sum}</span>
+                            <span className="sum">
+                              {VND.format(product.sum)}
+                            </span>
                           </p>
                         </div>
                         <div
@@ -329,7 +331,7 @@ function Cart() {
                 })}
               </div>
               <PaymentForm />
-              <DiscountCode total={total} />
+              <DiscountCode total={VND.format(total)} />
               <div id="noteOder">
                 <label htmlFor="noteOders">Ghi chú :</label>
                 <input
@@ -368,7 +370,7 @@ function Cart() {
                   >
                     <sub>đ</sub>
                     <p style={{ paddingLeft: "1rem" }} className="sum-price">
-                      {total}
+                      {VND.format(total)}
                     </p>
                   </div>
                 </div>

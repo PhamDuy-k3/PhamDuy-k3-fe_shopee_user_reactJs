@@ -1,10 +1,6 @@
 {
     "aside categories":{
-        "categories": "DANH MỤC",
-        "Quần":"Quần",
-        "Áo":"Áp",
-        "Điện Thoại" :"Điện Thoại",
-        "Khác":"Khác"
+        "categories": "DANH MỤC"
     },
     "aside header":{
         "Seller_channel":"Kênh người bán",
@@ -39,5 +35,15 @@
         "top_up_services": "Nạp Thẻ , Dịch Vụ & Data ",
         "International_products":"Hàng Quốc Tế"
 
+    },
+    "shopee mail":{
+        "7_days_free_returns" :"7 Ngày Miễn Phí Trả Hàng",
+        "100%_genuine_product":"Hàng Chính Hãng 100%",
+        "free_shipping":"Miễn Phí Vận Chuyển",
+        "see_all":"Xem tất cả"
+    },
+    "suggest":{
+        "today_suggestion":"GỢI Ý HÔM NAY",
+        "see_more":"Xem Thêm"
     }
 }

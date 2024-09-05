@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -9,17 +9,20 @@ import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 import { locales } from "../../i18n/i18n";
+import io from "socket.io-client";
 
 function ComponentHeader() {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookies] = useCookies();
   const [isInfor, setIsInfor] = useState(false);
   const [user, setUser] = useState();
-  const [length_cart, setLength_cart] = useState();
+  const [length_cart, setLength_cart] = useState([]);
   const { i18n } = useTranslation();
   const [isChangeLag, setIsChangeLag] = useState(false);
   const currentLanguage = locales[i18n.language];
   const { t } = useTranslation(["home"]);
+  const socketRef = useRef(null);
+  const [cart, setCart] = useState([]);
 
   const {
     register,
@@ -38,10 +41,39 @@ function ComponentHeader() {
     localStorage.setItem("text_search", JSON.stringify(data.search));
     navigate(`/search?keyword=${data.search}`);
   };
+  
+  useEffect(() => {
+    const socket = io("http://localhost:5050");
+    socketRef.current = socket;
+
+    socket.on("cart", (cart) => {
+      setCart((prevCommnets) => [
+        ...prevCommnets,
+        { ...cart, sender: "server" },
+      ]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5050/carts/?id_user=${cookies.id_user}`
+      );
+      const data = await response.json();
+      setLength_cart(data.data.length);
+      console.log(data.data);
+    } catch (error) {
+      console.error("Error fetching API:", error);
+    }
+  };
 
   useEffect(() => {
-    setLength_cart(cookies.length_cart);
-  }, [cookies.length_cart]);
+    fetchProducts();
+  }, [cart]);
 
   // lấy user qua phone
   useEffect(() => {

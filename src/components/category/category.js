@@ -11,7 +11,7 @@ function Category(props) {
           <img src={product.image} alt={product.name} />
         </div>
         <div className="category-product-text">
-          <p>{t(`aside categories.${product.name}`)} </p>
+          <p>{product.name} </p>
         </div>
       </div>
     </Link>

@@ -1,10 +1,6 @@
 {
     "aside categories":{
-        "categories": "Categories",
-        "Quần":"Trousers",
-        "Áo":"Shirt",
-        "Điện Thoại" :"Phone",
-        "Khác":"Other"
+        "categories": "Categories"
     },
     "aside header":{
         "Seller_channel":"Seller channel",
@@ -38,5 +34,16 @@
         "branded_outlet_discount": "Branded Outlet 50% Off",
         "top_up_services": "Top-Up, Services & Data",
         "International_products":" International Products"
+    },
+     "shopee mail":{
+        "7_days_free_returns" :"7 days free returns",
+        "100%_genuine_product":"100% genuine product",
+        "free_shipping":"Free shipping",
+        "see_all":"See all"
+    },
+    "suggest":{
+       "today_suggestion":"TODAY'S SUGGESTION",
+       "see_more":"See More"
     }
+   
 }

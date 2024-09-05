@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
@@ -15,6 +15,7 @@ import imgSmall3 from "..//..//../assets/images/img/imgctsp/banner-con-3.jpg";
 import imgSmall4 from "..//..//../assets/images/img/imgctsp/banner-con-4.jpg";
 import { addToCart, addToCartAsync } from "../../../redux/action";
 import { useCookies } from "react-cookie";
+import io from "socket.io-client";
 
 function CtspProductInfor(props) {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function CtspProductInfor(props) {
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const [cookies, setCookie] = useCookies();
   const [carts, setCarts] = useState([]);
+  const socketRef = useRef(null);
 
   let img_one = props.product?.image;
   let title = props.product?.name || "";
@@ -53,6 +55,14 @@ function CtspProductInfor(props) {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const socket = io("http://localhost:5050");
+    socketRef.current = socket;
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   // data product
   const data = () => {
     // navigate("/ProductDetail/:id");
@@ -65,7 +75,7 @@ function CtspProductInfor(props) {
       quantity: quantity,
       price: priceSaleFormatted,
       size: selectSize,
-      sum: VND.format(total * 1000),
+      sum: total,
     };
     switch (colorProduct) {
       case "Màu Trắng":
@@ -104,6 +114,7 @@ function CtspProductInfor(props) {
         <p style={{ paddingTop: "1rem" }}>Đã thêm vào giỏ hàng!</p>
       ));
       dispatch(addToCartAsync(newProduct));
+      socketRef.current.emit("cart", newProduct);
     }
   };
   const buy = () => {

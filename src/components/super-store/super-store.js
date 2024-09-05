@@ -1,4 +1,8 @@
+import { useTranslation } from "react-i18next";
+
 function SuperStore(props) {
+  const { t } = useTranslation(["product"]);
+
   const listProduct = props.listSp.slice(13, 18);
   const item_super_shop = listProduct.map((product) => {
     return (
@@ -20,7 +24,7 @@ function SuperStore(props) {
   return (
     <section className="super-store">
       <div className="super-store-titel">
-        <h1>SIÊU SHOP THỊNH HÀNH - BUNG DEAL SIÊU PHẨM</h1>
+        <h1>{t('super store.TRENDING_SUPER_SHOP_BUNNING_SUPER_PRODUCTS')}</h1>
       </div>
       <div className="items-super-shop d-flex flex-wrap text-align">
         {item_super_shop}

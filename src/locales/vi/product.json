@@ -1,0 +1,31 @@
+{
+    "super store":{
+        "TRENDING_SUPER_SHOP_BUNNING_SUPER_PRODUCTS":"SIÊU SHOP THỊNH HÀNH - BUNG DEAL SIÊU PHẨM"
+    },
+    "nav":{
+        "sort_by":"Sắp xếp theo",
+        "popular":"Phổ biến",
+        "latest":"Mới nhất",
+        "selling_well":"Bán chạy",
+        "price":"Giá",
+        "from_low_to_high":"Từ thấp đến cao",
+        "from_high_to_low":"Từ cao đến thấp"
+    }
+    ,"side bar": {
+        "Men_Clothing": "Thời Trang Nam",
+        "Women_Clothing": "Thời Trang Nữ",
+        "Accessories": "Phụ Kiện",
+        "Shirts": "Áo Sơ Mi",
+        "Pants": "Quần",
+        "Jackets": "Áo Khoác",
+        "Suits": "Bộ Vest",
+        "Dresses": "Váy",
+        "Skirts": "Chân Váy",
+        "Blouses": "Áo Blouse",
+        "Coats": "Áo Khoác Dài",
+        "Hats": "Mũ",
+        "Bags": "Túi Xách",
+        "Belts": "Thắt Lưng",
+        "Scarves": "Khăn Choàng"
+  }
+}
