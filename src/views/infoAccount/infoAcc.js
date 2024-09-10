@@ -4,20 +4,19 @@ import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Header } from "antd/es/layout/layout";
 import ComponentHeader from "../../components/header/header";
 
 const Profile = () => {
-  const [cookies, setCookie, removeCookies] = useCookies();
-  const [user, setUser] = useState();
+  const [cookies] = useCookies();
+  const [user, setUser] = useState(null);
   const [id_user, setIdUser] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
   } = useForm({
-    // giá trị mặc định cho data
     defaultValues: {
       name: "",
       phone: "",
@@ -29,26 +28,35 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.user_token,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setUser(res.data[0]);
-        setIdUser(res.data[0]._id);
-        setValue("name", res.data[0].name);
-        setValue("phone", res.data[0].phone);
-        setValue("email", res.data[0].email);
-        setValue("gender", res.data[0].gender === 1 ? "male" : "female");
-      });
-  }, [cookies.phone_user, setValue]);
-
-  console.log(id_user);
+    if (cookies.phone_user && cookies.user_token) {
+      fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.user_token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.data && res.data.length > 0) {
+            const userData = res.data[0];
+            setUser(userData);
+            setIdUser(userData._id);
+            setValue("name", userData.name);
+            setValue("phone", userData.phone);
+            setValue("email", userData.email);
+            setValue("gender", userData.gender === 1 ? "male" : "female");
+          }
+        })
+        .catch((error) => {
+          toast.error("Không thể tải dữ liệu người dùng.");
+          console.error(error);
+        });
+    } else {
+      toast.error("Thiếu thông tin xác thực.");
+    }
+  }, [cookies, setValue]);
 
   function formatDate(isoDate) {
     const date = new Date(isoDate);
@@ -57,61 +65,59 @@ const Profile = () => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
+
   const urlApiUpdateUser = `http://localhost:5050/users/${id_user}`;
 
   const CreatUpdateuser = (data, method, urlApi, success, error) => {
     const formData = new FormData();
-    if (data.name) {
-      formData.append("name", data.name);
-    }
-    if (data.email) {
-      formData.append("email", data.email);
-    }
-    if (data.phone) {
-      formData.append("phone", data.phone);
-    }
+
+    if (data.name) formData.append("name", data.name);
+    if (data.email) formData.append("email", data.email);
+    if (data.phone) formData.append("phone", data.phone);
     if (data.gender) {
-      data.gender = data.gender === "male" ? 1 : 2;
-      formData.append("gender", data.gender);
+      formData.append("gender", data.gender === "male" ? 1 : 2);
     }
-    if (data.birthday) {
-      formData.append("birthday", data.birthday);
-    }
-    if (data.address) {
-      formData.append("address", data.address);
-    }
+    if (data.birthday) formData.append("birthday", data.birthday);
+    if (data.address) formData.append("address", data.address);
+
     if (data.avatar && data.avatar.length > 0) {
-      formData.append("avatar", data.avatar[0]);
+      formData.append("avatar", data.avatar[0]); // Phải kiểm tra nếu avatar được chọn
     }
-    // Chú ý: data.avatar là một mảng, chúng ta cần lấy phần tử đầu tiên
-    console.log(formData);
+
     fetch(urlApi, {
       method: method,
       body: formData,
       headers: {
         Accept: "application/json",
-        Authorization: "Bearer " + cookies.user_token,
       },
     })
       .then((res) => res.json())
       .then((res) => {
         if (res.status_code === 200) {
-          toast.success(() => <p style={{ paddingTop: "1rem" }}>{success}</p>);
+          toast.success(success);
         } else {
-          toast.error(() => <p style={{ paddingTop: "1rem" }}>{error}</p>);
+          toast.error(error);
         }
+      })
+      .catch(() => {
+        toast.error("Có lỗi xảy ra khi cập nhật.");
       });
   };
-  const updateUser = async (data) => {
-    console.log(data);
-    CreatUpdateuser(
-      data,
-      "PUT",
-      urlApiUpdateUser,
-      "Cập nhật thành công",
-      "Cập nhật thất bại"
-    );
+
+  const updateUser = (data) => {
+    if (id_user) {
+      CreatUpdateuser(
+        data,
+        "PUT",
+        urlApiUpdateUser,
+        "Cập nhật thành công",
+        "Cập nhật thất bại"
+      );
+    } else {
+      toast.error("Không thể cập nhật người dùng.");
+    }
   };
+
   const onSubmit = (data) => {
     updateUser(data);
   };
@@ -121,19 +127,12 @@ const Profile = () => {
       <ComponentHeader />
       <ToastContainer
         position="top-right"
-        autoClose={300}
+        autoClose={500}
         hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        style={{ width: "300px" }}
       />
-      {user && (
-        <div className="profile-container ">
+
+      {user ? (
+        <div className="profile-container">
           <form className="d-flex" onSubmit={handleSubmit(onSubmit)}>
             <div style={{ width: "600px" }}>
               <h1>Hồ Sơ Của Tôi</h1>
@@ -178,16 +177,17 @@ const Profile = () => {
                     value="female"
                   />
                   <label htmlFor="female">Nữ</label>
-                  {/* Trong đoạn mã này, giá trị của các radio button (gender) được quản lý bởi useForm mà không cần sử dụng thuộc tính checked. useForm sẽ tự động đồng bộ hóa các giá trị input khi chúng thay đổi. */}
                 </div>
               </div>
               <div className="form-group">
                 <label>Ngày sinh</label>
-                <p>{formatDate(user.birthday)}</p>
+                <p>
+                  {user.birthday ? formatDate(user.birthday) : "Chưa cập nhật"}
+                </p>
               </div>
               <div className="form-group">
                 <label>Địa chỉ</label>
-                <p>{user.address}</p>
+                <p>{user.address || "Chưa cập nhật"}</p>
               </div>
               <button style={{ backgroundColor: "#FA5230" }} type="submit">
                 Lưu
@@ -202,6 +202,8 @@ const Profile = () => {
             </div>
           </form>
         </div>
+      ) : (
+        <p>Đang tải thông tin người dùng...</p>
       )}
     </>
   );

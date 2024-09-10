@@ -30,7 +30,7 @@ function CtspProductInfor(props) {
   const [carts, setCarts] = useState([]);
   const socketRef = useRef(null);
 
-  const carts_store = useSelector((state) => state.cart.items) ;
+  const carts_store = useSelector((state) => state.cart.items);
   console.log(carts_store);
 
   let img_one = props.product?.image;
@@ -135,9 +135,9 @@ function CtspProductInfor(props) {
         <p style={{ paddingTop: "1rem" }}>Sản phẩm này đã có trong giỏ hàng!</p>
       ));
     } else {
+      socketRef.current.emit("cart", newProduct);
       addToCartAsync(newProduct);
       dispatch(addToCart(newProduct));
-      socketRef.current.emit("cart", newProduct);
     }
   };
   const buy = () => {

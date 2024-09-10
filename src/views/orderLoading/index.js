@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import "./scssCart/styleCart.scss";
+import "../cart/scssCart/styleCart.scss";
 import { useEffect, useState } from "react";
 import {
   deleteCarts,
@@ -11,20 +11,24 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
-import DiscountCode from "./discountcode";
-import PaymentForm from "../../payment";
+import DiscountCode from "../cart/discountcode";
 import ComponentHeader from "../../components/header/header";
+import SelectPay from "./selectPay";
+import { PaymentForm } from "../../payment";
 
 // chưa chek trùng sản phẩm
 
-function Cart() {
+function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
   const [carts, setCarts] = useState([]);
   const [status, setStatus] = useState("unconfirmed");
   const [cookies, setCookie] = useCookies();
   const [id_user_oder, setIdUserOder] = useState();
+  const [note, setNote] = useState("");
   const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
+  const [pay, setPay] = useState();
+  const [orderInfo, setOrderInfo] = useState("pay with MoMo");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -146,8 +150,61 @@ function Cart() {
     deleteToCartsAsync(array);
   };
 
+  const OrderConfirmationViaGmail = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5050/cartsOder/SendOrderInformationViaGmail",
+        data
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error creating cart order:", error);
+      throw error;
+    }
+  };
+  const createCartOder = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5050/cartsOder",
+        data
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error creating cart order:", error);
+      throw error;
+    }
+  };
+  // xóa cart
+  const deleteCartsByUserId = async (userId) => {
+    try {
+      await axios.delete(
+        `http://localhost:5050/carts/deleteCartsByUserId/${userId}`
+      );
+    } catch (error) {
+      console.error("Error deleting carts:", error);
+    }
+  };
+  const handleNote = (e) => {
+    setNote(e.target.value);
+  };
+
   const handleBuy = async () => {
-    navigate("/OrderLoading");
+    if (id_user_oder !== "") {
+      let total_prices = total; // Tổng giá tiền
+      const data = { carts, status, id_user_oder, total_prices, note, gmail };
+      if (pay == 1) {
+        // Trường hợp thanh toán qua MoMo
+        await PaymentForm(total_prices, orderInfo);
+      }
+
+      // Dù thanh toán MoMo hay COD, vẫn thực hiện các bước dưới đây
+      await OrderConfirmationViaGmail(data); // Xác nhận đơn hàng qua gmail
+      await createCartOder(data); // Tạo đơn hàng
+      await deleteCartsByUserId(id_user_oder); // Xóa giỏ hàng sau khi đặt hàng thành công
+
+      // Điều hướng về trang "CartOder"
+      navigate("/CartOder");
+    }
   };
 
   return (
@@ -285,6 +342,16 @@ function Cart() {
                     );
                   })}
                 </div>
+                <DiscountCode total={VND.format(total)} />
+                <SelectPay setPay={setPay} />
+                <div id="noteOder">
+                  <label htmlFor="noteOders">Ghi chú :</label>
+                  <input
+                    onChange={(e) => handleNote(e)}
+                    id="noteOders"
+                    placeholder="Nhập..."
+                  />
+                </div>
 
                 <div className="d-flex mt-3 colum-4">
                   <div className="col-2">
@@ -319,7 +386,7 @@ function Cart() {
                       </p>
                     </div>
                   </div>
-                  <button onClick={handleBuy}>Mua Hàng</button>
+                  <button onClick={handleBuy}>Đặt hàng</button>
                 </div>
               </div>
             </div>
@@ -333,4 +400,4 @@ function Cart() {
     </>
   );
 }
-export default Cart;
+export default OrderLoading;

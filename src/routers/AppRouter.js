@@ -8,6 +8,7 @@ import Login from "../views/login/login";
 import { Register } from "../views/register/register";
 import CartOder from "../views/cart/cartOder";
 import Profile from "../views/infoAccount/infoAcc";
+import OrderLoading from "../views/orderLoading";
 
 function AppRouter() {
   return (
@@ -24,6 +25,7 @@ function AppRouter() {
           <Route path="/Cart" element={<Cart />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/CartOder" element={<CartOder />} />
+          <Route path="/OrderLoading" element={<OrderLoading />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
         </Routes>

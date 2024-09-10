@@ -76,7 +76,7 @@ const Index = () => {
     <div className="box">
       <ComponentHeader />
       <Advertisement />
-      <Phone />
+      {/* <Phone /> */}
       <Chat />
       <section className="context">
         <section className="banner-sale">

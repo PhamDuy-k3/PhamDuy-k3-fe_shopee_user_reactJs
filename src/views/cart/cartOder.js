@@ -23,7 +23,12 @@ function CartOder() {
         `http://localhost:5050/cartsOder/?id_user_oder=${cookies.id_user}&status=${status}`
       );
       const data = await response.json();
-      setRes(data.data);
+      const sortedOrders = data.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      setRes(sortedOrders);
+
       setCarts(data.data[0]?.carts || []);
     } catch (error) {
       console.error("Error fetching API:", error);
@@ -188,7 +193,7 @@ function CartOder() {
                         Chờ thanh toán
                       </button>
                     ) : item.status == "processing" ? (
-                      <button style={{ marginLeft: "30%" , width:'25rem' }}>
+                      <button style={{ marginLeft: "30%", width: "25rem" }}>
                         Đang giao hàng cho đơn vị vận chuyển
                       </button>
                     ) : item.status == "shipped" ? (
@@ -214,7 +219,9 @@ function CartOder() {
                         Trả hàng
                       </button>
                     ) : (
-                      ""
+                      <button style={{ marginLeft: "40%" }}>
+                        Chờ xác nhận
+                      </button>
                     )}
                   </div>
                 </div>

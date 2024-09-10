@@ -53,6 +53,7 @@
       .item-product{
         border-bottom: 2px solid #F3F3F3;
         padding: 1rem;
+      
         .store-name{
           border-bottom: 2px solid #F3F3F3;
           padding-bottom: 1rem;
@@ -122,6 +123,28 @@
         }
       }
       
+    }
+    :where(.css-dev-only-do-not-override-11xg00t).ant-space-gap-col-small{
+      margin-left: 76%;
+      color: #EE4D2D;
+    }
+    .ant-space-item{
+      width: 20rem;
+    }
+    :where(.css-dev-only-do-not-override-11xg00t).ant-select-single{
+      width: 20rem !important;
+    }
+    .ant-select-selector{
+      border: none;
+    }
+    :where(.css-dev-only-do-not-override-11xg00t).ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
+      border: 1px solid white;
+    }
+    .ant-select-selection-item{
+      color: #EE4D2D
+    }
+    .ant-select-arrow{
+      color: #EE4D2D
     }
     @import '_discountcode.scss';
     .colum-4{

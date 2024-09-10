@@ -9,7 +9,7 @@
         animation-name: chat-big-up;
         animation-duration: 0.25s;
         .chat{
-            width: 45rem;
+            width: 30rem;
             height: 35rem;
             background-color: #F3F3F3;
             border: 1px solid rgb(236, 236, 231);
@@ -70,13 +70,13 @@
         height: 0rem;
 
     }to{
-        width: 45rem;
+        width: 30rem;
         height: 35rem;
     }
 }
 @keyframes chat-big-down {
     from{
-        width: 45rem;
+        width: 30rem;
         height: 35rem;
 
     }to{

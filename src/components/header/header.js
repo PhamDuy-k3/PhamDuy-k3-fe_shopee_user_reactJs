@@ -41,7 +41,7 @@ function ComponentHeader() {
     localStorage.setItem("text_search", JSON.stringify(data.search));
     navigate(`/search?keyword=${data.search}`);
   };
-  
+
   useEffect(() => {
     const socket = io("http://localhost:5050");
     socketRef.current = socket;

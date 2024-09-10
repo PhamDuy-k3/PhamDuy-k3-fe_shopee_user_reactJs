@@ -1,11 +1,14 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./style.scss";
 import ChatRealTime from "../../views/chat/chat";
+import { useEffect } from "react";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 function Chat() {
   const chat_big = useRef();
   const chat_small = useRef();
-
+ 
   const displayChatBigUp = () => {
     chat_big.current.style.display = "block";
     chat_small.current.style.display = "none";
@@ -24,6 +27,7 @@ function Chat() {
       { once: true }
     );
   };
+
 
   return (
     <div className="Chat">
@@ -44,7 +48,7 @@ function Chat() {
             </div>
           </div>
           <div className="chat-text">
-            <ChatRealTime/>
+            <ChatRealTime />
           </div>
         </div>
       </div>
