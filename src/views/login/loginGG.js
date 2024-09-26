@@ -9,7 +9,7 @@ const LoginGg = () => {
   const navigate = useNavigate();
 
   const clientId =
-    "757038478487-vk3ht3iqv5hplosjkse866rs8nhbfgjh.apps.googleusercontent.com"; // Thay thế bằng Client ID của bạn
+    "757038478487-vk3ht3iqv5hplosjkse866rs8nhbfgjh.apps.googleusercontent.com";
 
   const onSuccess = (response) => {
     console.log("Login Success:", response);
@@ -18,6 +18,7 @@ const LoginGg = () => {
 
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+
     const jsonPayload = decodeURIComponent(
       atob(base64)
         .split("")
@@ -39,8 +40,6 @@ const LoginGg = () => {
       path: "/",
       expires: moment().add(1, "months").toDate(),
     });
-
-    console.log(`Logged in as: ${name} (${email})`);
   };
 
   useEffect(() => {

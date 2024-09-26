@@ -9,6 +9,7 @@ import { Register } from "../views/register/register";
 import CartOder from "../views/cart/cartOder";
 import Profile from "../views/infoAccount/infoAcc";
 import OrderLoading from "../views/orderLoading";
+import ComfirmCode from "../views/register/comfirmCode";
 
 function AppRouter() {
   return (
@@ -28,6 +29,10 @@ function AppRouter() {
           <Route path="/OrderLoading" element={<OrderLoading />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
+          <Route
+            path="/Register/confirmCode/:id_user"
+            element={<ComfirmCode />}
+          />
         </Routes>
       </Router>
     </>

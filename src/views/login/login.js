@@ -30,7 +30,6 @@ function Login() {
   }, []);
 
   const login = (data) => {
-    console.log(data);
     fetch("http://localhost:5050/auth/login", {
       method: "POST",
       body: JSON.stringify(data),
@@ -41,23 +40,27 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        if (res.user_token) {
-          setCookie("user_token", res.user_token, {
-            path: "/",
-            // path: "/", Điều này chỉ định rằng cookie có sẵn trên tất cả các đường dẫn trong trang web.
-            expires: moment().add(1, "months").toDate(),
-          });
-          setCookie("phone_user", res.phone_user, {
-            path: "/",
-            expires: moment().add(1, "months").toDate(),
-          });
-          setCookie("id_user", res.id_user, {
-            path: "/",
-            expires: moment().add(1, "months").toDate(),
-          });
-          navigate("/");
+        if (res.isVerified == true) {
+          if (res.user_token) {
+            setCookie("user_token", res.user_token, {
+              path: "/",
+              // path: "/", Điều này chỉ định rằng cookie có sẵn trên tất cả các đường dẫn trong trang web.
+              expires: moment().add(1, "months").toDate(),
+            });
+            setCookie("phone_user", res.phone_user, {
+              path: "/",
+              expires: moment().add(1, "months").toDate(),
+            });
+            setCookie("id_user", res.id_user, {
+              path: "/",
+              expires: moment().add(1, "months").toDate(),
+            });
+            navigate("/");
+          }
+        } else {
+          alert("Tài khoản chưa xác thực!");
         }
+
         //console.log(res);
       });
   };

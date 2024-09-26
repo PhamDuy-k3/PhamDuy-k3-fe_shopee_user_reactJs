@@ -50,7 +50,7 @@ function CartOder() {
     const totalSum = carts.reduce((accumulator, product) => {
       return accumulator + parseFloat(product.sum);
     }, 0);
-    setTotal(VND.format(totalSum * 1000));
+    setTotal(VND.format(totalSum));
   }, [carts]);
 
   return (
@@ -133,7 +133,7 @@ function CartOder() {
                               <p>
                                 <sup>đ</sup>{" "}
                                 <span className="price">
-                                  {VND.format(product.price * 1000)}
+                                  {VND.format(product.price)}
                                 </span>
                               </p>
                             </div>
@@ -158,7 +158,9 @@ function CartOder() {
                             <div className="total-price col-2 pt-5">
                               <p>
                                 <sup>đ</sup>{" "}
-                                <span className="sum">{product.sum}</span>
+                                <span className="sum">
+                                  {VND.format(product.sum)}
+                                </span>
                               </p>
                             </div>
                           </div>

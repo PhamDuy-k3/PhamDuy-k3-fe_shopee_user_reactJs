@@ -8,7 +8,7 @@ import { useCookies } from "react-cookie";
 function Chat() {
   const chat_big = useRef();
   const chat_small = useRef();
- 
+
   const displayChatBigUp = () => {
     chat_big.current.style.display = "block";
     chat_small.current.style.display = "none";
@@ -27,8 +27,6 @@ function Chat() {
       { once: true }
     );
   };
-
-
   return (
     <div className="Chat">
       <div ref={chat_big} className="chat-big">

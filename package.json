@@ -4,6 +4,10 @@
   "private": true,
   "homepage": "https://PhamDuy-k3.github.io/fe_shopee_user_reactJs/",
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.0",
+    "@mui/material": "^6.1.0",
     "@react-google-maps/api": "^2.19.3",
     "@react-oauth/google": "^0.12.1",
     "@redux-devtools/extension": "^3.3.0",

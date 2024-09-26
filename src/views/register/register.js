@@ -1,113 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import HeaderLoginRegister from "../../components/headerLogin-Register/headerLogin-Register";
 import "./scssDk/styleDk.scss";
 import "./scssDn/styleDn.scss";
 import bgImage from "..//..//assets/images/img/imgDn/banner-shop.png";
 import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
+import axios from "axios";
 
 export function Register() {
-  const [cursor, setCursor] = useState("no-drop");
-  const [isCheckIcon, setIsCheckIcon] = useState(false);
+  const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  function validateSurveyForm(event) {
-    event.preventDefault();
-    // Reset error elements
-    resetErrorElements();
-
-    const errors = [];
-    const validateNameInput = validateInput("surveyForm", "Phone", [
-      { type: "email_or_sdt" },
-      { type: "required" },
-    ]);
-
-    if (validateNameInput) {
-      errors.push(validateNameInput);
-    }
-
-    // const validatePassInput = validateInput("surveyForm", "pass", [
-    //   { type: "minLength", value: 10 },
-    //   { type: "required" },
-    // ]);
-
-    // if (validatePassInput) {
-    //   errors.push(validatePassInput);
-    // }
-
-    if (errors.length === 0) {
-      console.log("Form is valid");
-      setCursor("pointer");
-      setIsCheckIcon(true);
-      return true;
-    } else {
-      for (const error of errors) {
-        setCursor("no-drop");
-        setIsCheckIcon(false);
-        document.getElementById("error_" + error.name).innerHTML =
-          error.message;
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post("http://localhost:5050/users", data);
+      if (response.data.status_code == 200) {
+        let id_user = response.data.data._id;
+        confirmRegistration(gmail, id_user);
       }
-      document.forms["surveyForm"][errors[0].name].focus();
+    } catch (error) {
+      console.error("Đăng ký thất bại", error);
     }
-    return false;
-  }
+  };
 
-  function validateInput(form, input, validations) {
-    const formElement = document.forms[form];
-    const inputElement = formElement[input];
-    let error = null;
-
-    for (const validation of validations) {
-      switch (validation.type) {
-        case "required":
-          if (!inputElement.value.trim()) {
-            error = {
-              name: input,
-              message: "Vui lòng điền vào mục này.",
-            };
-            inputElement.style.backgroundColor = "#FFF6F7";
-            inputElement.style.border = "1px solid red";
-          } else {
-            inputElement.style.backgroundColor = "white";
-          }
-          break;
-        case "minLength":
-          if (inputElement.value.length < validation.value) {
-            error = {
-              name: input,
-              message: " Không được ít hơn " + validation.value + " ký tự",
-            };
-          } else {
-            inputElement.style.border = "1px solid green";
-          }
-          break;
-        case "email_or_sdt":
-          if (
-            !inputElement.value.trim() ||
-            (!inputElement.value.match(
-              /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            ) &&
-              !inputElement.value.match(/^(\d{10,11})$/))
-          ) {
-            error = {
-              name: input,
-              message: "Email hoặc Số điện thoại không đúng định dạng !!!",
-            };
-          } else {
-            inputElement.style.border = "1px solid green";
-          }
-          break;
+  const confirmRegistration = async (gmail, id_user) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5050/users/sendCodeToGmail",
+        { gmail, id_user }
+      );
+      if (response.data.status_code == 200) {
+        navigate(`/Register/confirmCode/${id_user}`);
       }
+      return response.data;
+    } catch (error) {
+      console.error("Error creating cart order:", error);
+      throw error;
     }
-    return error;
-  }
-  function resetErrorElements() {
-    // Reset error messages
-    const errorElements = document.querySelectorAll("[id^='error_']");
-    for (const errorElement of errorElements) {
-      errorElement.innerHTML = "";
-    }
-  }
-
+  };
   return (
     <>
       <AutoLoadPage />
@@ -120,73 +56,109 @@ export function Register() {
             backgroundSize: "cover",
           }}
         >
-          <form
-            name="surveyForm"
-            onSubmit={(event) => validateSurveyForm(event)}
-            action=""
-          >
+          <form name="registerForm" onSubmit={handleSubmit(onSubmit)}>
             <div className="infor-login">
               <div className="infor-login-title d-flex">
                 <p>Đăng Ký</p>
               </div>
+
               <div className="infor-login-input">
+                {/* Email */}
+                <div className="Email d-flex">
+                  <label htmlFor="Email">
+                    <input
+                      type="email"
+                      id="Email"
+                      placeholder="Email"
+                      {...register("email", {
+                        required: "Email không được bỏ trống",
+                        pattern: {
+                          value: /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                          message: "Email không hợp lệ",
+                        },
+                      })}
+                    />
+                  </label>
+                </div>
+                {errors.email && (
+                  <p style={{ position: "absolute", color: "red" }}>
+                    {errors.email.message}
+                  </p>
+                )}
+                {/* Phone */}
                 <div className="Phone d-flex">
                   <label htmlFor="Phone">
                     <input
-                      onInput={validateSurveyForm}
                       type="text"
                       id="Phone"
                       placeholder="Số điện thoại"
+                      {...register("phone", {
+                        required: "Số điện thoại không được bỏ trống",
+                        pattern: {
+                          value: /^[0-9]{10}$/,
+                          message: "Số điện thoại phải có 10 chữ số",
+                        },
+                      })}
                     />
                   </label>
-                  {isCheckIcon && <i class="fas fa-check"></i>}
                 </div>
-                <p
-                  id="error_Phone"
-                  style={{ position: "absolute", color: "red" }}
-                ></p>
+                {errors.phone && (
+                  <p style={{ position: "absolute", color: "red" }}>
+                    {errors.phone.message}
+                  </p>
+                )}
+
+                {/* Name */}
+                <div className="Name d-flex">
+                  <label htmlFor="Name">
+                    <input
+                      type="text"
+                      id="Name"
+                      placeholder="Tên"
+                      {...register("name", {
+                        required: "Tên không được bỏ trống",
+                        minLength: {
+                          value: 3,
+                          message: "Tên phải có ít nhất 3 ký tự",
+                        },
+                      })}
+                    />
+                  </label>
+                </div>
+                {errors.name && (
+                  <p style={{ position: "absolute", color: "red" }}>
+                    {errors.name.message}
+                  </p>
+                )}
+
+                {/* Password */}
+                <div className="Password d-flex">
+                  <label htmlFor="Password">
+                    <input
+                      type="password"
+                      id="Password"
+                      placeholder="Mật khẩu"
+                      {...register("password", {
+                        required: "Mật khẩu không được bỏ trống",
+                        minLength: {
+                          value: 6,
+                          message: "Mật khẩu phải có ít nhất 6 ký tự",
+                        },
+                      })}
+                    />
+                  </label>
+                </div>
+                {errors.password && (
+                  <p style={{ position: "absolute", color: "red" }}>
+                    {errors.password.message}
+                  </p>
+                )}
+                {/* Submit */}
                 <div className="login">
                   <label htmlFor="login">
-                    <input
-                      className={cursor}
-                      type="submit"
-                      id="login"
-                      value="ĐĂNG KÝ"
-                    />
+                    <input type="submit" id="login" value="ĐĂNG KÝ" />
                   </label>
                 </div>
-              </div>
-              <div className="or-dk">
-                <hr />
-                <div className="or-dk-text">
-                  <p>HOẶC</p>
-                </div>
-              </div>
-              <div className="fb-gg">
-                <button>
-                  <i
-                    className="fab fa-facebook"
-                    style={{ color: "#0b5be5" }}
-                  ></i>{" "}
-                  Facebook
-                </button>
-                <button>
-                  <i className="fab fa-google" style={{ color: "#c91d50" }}></i>{" "}
-                  Google
-                </button>
-              </div>
-              <div className="Angree">
-                <p>Bằng việc đăng ký, bạn đã đồng ý với Shopee về</p>
-                <p>
-                  <a href="">Điều khoản dịch vụ</a> &{" "}
-                  <a href="">Chính sách bảo mật</a>
-                </p>
-              </div>
-              <div className="new-now-shopee d-flex">
-                <p>Bạn mới biết đến Shopee?</p>
-                <p>
-                  <Link to="/Login">Đăng Nhập</Link>
-                </p>
               </div>
             </div>
           </form>

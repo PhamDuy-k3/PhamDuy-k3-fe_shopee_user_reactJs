@@ -61,7 +61,6 @@ function Cart() {
     }, 0);
     setTotal(totalSum);
   }, [carts]);
-  console.log(total);
 
   const updateToCartsAsync = async (_id, quantity, sum) => {
     try {

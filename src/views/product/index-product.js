@@ -22,12 +22,13 @@ function IndexProduct() {
   const url_id = useParams();
   const { t } = useTranslation(["product"]);
 
-  console.log(sortOrder);
   const urlApi = `http://localhost:5050/products?limit=${limit}&page=${currentPage}&category_id=${url_id.category_id}&sortOrder=${sortOrder}`;
-  console.log(urlApi);
+
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
   };
+
+
 
   return (
     <>
@@ -62,11 +63,11 @@ function IndexProduct() {
                     </option>
                     <option value="asc">
                       {" "}
-                      {t("nav.price")} :  {t("nav.from_low_to_high")}
+                      {t("nav.price")} : {t("nav.from_low_to_high")}
                     </option>
                     <option value="desc">
                       {" "}
-                      {t("nav.price")} :  {t("nav.from_high_to_low")}
+                      {t("nav.price")} : {t("nav.from_high_to_low")}
                     </option>
                   </select>
                 </ul>
