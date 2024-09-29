@@ -40,7 +40,8 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.isVerified == true) {
+        console.log(res);
+        if (res.isVerified === true) {
           if (res.user_token) {
             setCookie("user_token", res.user_token, {
               path: "/",

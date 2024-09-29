@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import { Cookies } from "react-cookie";
+import { Cookies, useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function ComfirmCode() {
   const [code, setCode] = useState(["", "", "", ""]);
   const [user, setUser] = useState(null); // Khởi tạo là null để kiểm tra tình trạng tìm người dùng
-  const prams = useParams();
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies();
 
   useEffect(() => {
     searchUser(); // Gọi hàm tìm người dùng khi component được tải
-  }, [prams.id_user]);
+  }, [cookies.id_user_register]);
 
   const handleChange = (index, value) => {
     const newCode = [...code];
@@ -48,7 +48,7 @@ export default function ComfirmCode() {
   };
 
   const searchUser = () => {
-    fetch(`http://localhost:5050/users/${prams.id_user}`, {
+    fetch(`http://localhost:5050/users/${cookies.id_user_register}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -70,7 +70,7 @@ export default function ComfirmCode() {
   };
 
   const updateUser = () => {
-    fetch(`http://localhost:5050/users/${prams.id_user}`, {
+    fetch(`http://localhost:5050/auth/verify/${cookies.id_user_register}`, {
       method: "PUT", // PUT hoặc PATCH để cập nhật thông tin người dùng
       headers: {
         Accept: "application/json",

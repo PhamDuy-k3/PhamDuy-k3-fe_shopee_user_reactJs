@@ -7,10 +7,14 @@ import "./scssDn/styleDn.scss";
 import bgImage from "..//..//assets/images/img/imgDn/banner-shop.png";
 import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
 import axios from "axios";
+import { useCookies } from "react-cookie";
+import moment from "moment";
 
 export function Register() {
   const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies();
+
   const {
     register,
     handleSubmit,
@@ -19,29 +23,20 @@ export function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5050/users", data);
+      const response = await axios.post(
+        "http://localhost:5050/auth/register",
+        data
+      );
       if (response.data.status_code == 200) {
-        let id_user = response.data.data._id;
-        confirmRegistration(gmail, id_user);
+        alert("Đăng kí thành công");
+        setCookie("id_user_register", response.data.data, {
+          path: "/",
+          expires: moment().add(1, "months").toDate(),
+        });
+        navigate("/Register/confirmCode");
       }
     } catch (error) {
       console.error("Đăng ký thất bại", error);
-    }
-  };
-
-  const confirmRegistration = async (gmail, id_user) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:5050/users/sendCodeToGmail",
-        { gmail, id_user }
-      );
-      if (response.data.status_code == 200) {
-        navigate(`/Register/confirmCode/${id_user}`);
-      }
-      return response.data;
-    } catch (error) {
-      console.error("Error creating cart order:", error);
-      throw error;
     }
   };
   return (

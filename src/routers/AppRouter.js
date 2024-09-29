@@ -29,10 +29,7 @@ function AppRouter() {
           <Route path="/OrderLoading" element={<OrderLoading />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
-          <Route
-            path="/Register/confirmCode/:id_user"
-            element={<ComfirmCode />}
-          />
+          <Route path="/Register/confirmCode" element={<ComfirmCode />} />
         </Routes>
       </Router>
     </>
