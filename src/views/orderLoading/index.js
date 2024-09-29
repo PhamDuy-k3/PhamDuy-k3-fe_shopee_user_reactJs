@@ -150,18 +150,6 @@ function OrderLoading() {
     deleteToCartsAsync(array);
   };
 
-  const OrderConfirmationViaGmail = async (data) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:5050/cartsOder/SendOrderInformationViaGmail",
-        data
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error creating cart order:", error);
-      throw error;
-    }
-  };
   const createCartOder = async (data) => {
     try {
       const response = await axios.post(
@@ -188,22 +176,33 @@ function OrderLoading() {
     setNote(e.target.value);
   };
 
-  const handleBuy = async () => {
+  const handleBuy = () => {
     if (id_user_oder !== "") {
-      let total_prices = total; // Tổng giá tiền
+      let total_prices = total;
       const data = { carts, status, id_user_oder, total_prices, note, gmail };
+
+      let paymentPromise = Promise.resolve();
+
+      // Kiểm tra hình thức thanh toán
       if (pay == 1) {
-        // Trường hợp thanh toán qua MoMo
-        await PaymentForm(total_prices, orderInfo);
+        paymentPromise = PaymentForm(total_prices, orderInfo);
       }
 
-      // Dù thanh toán MoMo hay COD, vẫn thực hiện các bước dưới đây
-      await OrderConfirmationViaGmail(data); // Xác nhận đơn hàng qua gmail
-      await createCartOder(data); // Tạo đơn hàng
-      await deleteCartsByUserId(id_user_oder); // Xóa giỏ hàng sau khi đặt hàng thành công
-
-      // Điều hướng về trang "CartOder"
-      navigate("/CartOder");
+      // Xử lý promise cho PaymentForm
+      paymentPromise
+        .then(() => {
+          return createCartOder(data); // Tạo đơn hàng
+        })
+        .then(() => {
+          return deleteCartsByUserId(id_user_oder); // Xóa giỏ hàng sau khi đặt hàng thành công
+        })
+        .then(() => {
+          // Điều hướng về trang "CartOder"
+          navigate("/CartOder");
+        })
+        .catch((error) => {
+          console.error("Error during the order process:", error);
+        });
     }
   };
 
