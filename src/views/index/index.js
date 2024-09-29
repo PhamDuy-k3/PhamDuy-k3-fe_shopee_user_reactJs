@@ -61,7 +61,14 @@ const Index = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5050/products?&limit=${limit}`
+          `http://localhost:5050/products?&limit=${limit}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${cookies.user_token}`,
+            },
+          }
         );
         const data = await response.json();
         setListProduct2(data.data);

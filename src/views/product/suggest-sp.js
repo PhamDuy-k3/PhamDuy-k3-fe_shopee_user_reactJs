@@ -3,17 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Pagination } from "antd";
 import { fetchAllProducts } from "../../redux/action";
 import Suggest from "../../components/suggest/suggest";
+import { useCookies } from "react-cookie";
 
 const SuggestSP = (props) => {
   const dispatch = useDispatch();
   const [sumPage, setSumtPage] = useState(1);
   const [responseData, setResponseData] = useState({});
   const [listProduct, setListProduct] = useState([]);
+  const [cookies, setCookie] = useCookies();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(props.urlApi);
+        const response = await fetch(props.urlApi, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.user_token}`,
+          },
+        });
         const data = await response.json();
         setResponseData(data);
         setListProduct(data.data);

@@ -8,9 +8,11 @@ import Footer from "../../components/footer/footer";
 import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 function ProductDetails() {
   const [product, setProduct] = useState();
   const url_id = useParams();
+  const [cookies, setCookie] = useCookies();
 
   useEffect(() => {
     fetch(`http://localhost:5050/products/${url_id.product_id}`, {
@@ -18,7 +20,7 @@ function ProductDetails() {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        // Authorization: "Bearer " + cookies.Products_token,
+        Authorization: "Bearer " + cookies.user_token,
       },
     })
       .then((res) => res.json())
@@ -32,7 +34,7 @@ function ProductDetails() {
       <ComponentHeader />
       <AutoLoadPage />
       <div className="context-detal-product">
-        <Product product={product}  />
+        <Product product={product} />
         <InforShop />
         <ProductDetailsDescribe product={product} />
         <FeedBack />

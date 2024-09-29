@@ -35,11 +35,24 @@ function OrderLoading() {
   const fetchProducts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5050/carts/?id_user=${cookies.id_user}`
+        `http://localhost:5050/carts/?id_user=${cookies.id_user}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.user_token}`,
+          },
+        }
       );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      setCarts(data.data);
+      setCarts(data.data || []);
       console.log(data.data);
+      
     } catch (error) {
       console.error("Error fetching API:", error);
     }

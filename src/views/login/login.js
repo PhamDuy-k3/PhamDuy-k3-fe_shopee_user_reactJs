@@ -10,6 +10,7 @@ import qr from "../../assets/images/img/imgDn/qr.jpg";
 import { useCookies } from "react-cookie";
 import moment from "moment";
 import LoginGg from "./loginGG";
+import dayjs from "dayjs";
 
 function Login() {
   const [cursor, setCursor] = useState("no-drop");
@@ -41,30 +42,39 @@ function Login() {
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
-        if (res.isVerified === true) {
-          if (res.user_token) {
-            setCookie("user_token", res.user_token, {
-              path: "/",
-              // path: "/", Điều này chỉ định rằng cookie có sẵn trên tất cả các đường dẫn trong trang web.
-              expires: moment().add(1, "months").toDate(),
-            });
-            setCookie("phone_user", res.phone_user, {
-              path: "/",
-              expires: moment().add(1, "months").toDate(),
-            });
-            setCookie("id_user", res.id_user, {
-              path: "/",
-              expires: moment().add(1, "months").toDate(),
-            });
-            navigate("/");
-          }
-        } else {
+
+        // Kiểm tra xác thực
+        if (res.isVerified !== true) {
           alert("Tài khoản chưa xác thực!");
+          return;
+        }
+        if (res.codeExpired) {
+          // Kiểm tra xem mã hết hạn hay không
+          if (dayjs().isAfter(res.codeExpired)) {
+            alert("Mã xác thực đã hết hạn!");
+            return;
+          }
         }
 
-        //console.log(res);
+        // Kiểm tra token người dùng và lưu cookie
+        if (res.user_token) {
+          setCookie("user_token", res.user_token, {
+            path: "/",
+            expires: moment().add(1, "months").toDate(),
+          });
+          setCookie("phone_user", res.phone_user, {
+            path: "/",
+            expires: moment().add(1, "months").toDate(),
+          });
+          setCookie("id_user", res.id_user, {
+            path: "/",
+            expires: moment().add(1, "months").toDate(),
+          });
+          navigate("/"); // Chuyển hướng về trang chủ
+        }
       });
   };
+
   const nameValue = watch("name");
   const passValue = watch("password");
 

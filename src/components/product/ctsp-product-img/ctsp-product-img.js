@@ -31,8 +31,8 @@ function CtspProductImg(props) {
       const res = await fetch(`http://localhost:5050/products/${productId}`, {
         method: "GET",
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.user_token}`,
         },
       });
       const data = await res.json();
@@ -77,6 +77,7 @@ function CtspProductImg(props) {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.user_token}`,
           },
         }
       );
