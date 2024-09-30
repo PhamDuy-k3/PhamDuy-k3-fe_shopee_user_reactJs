@@ -23,7 +23,7 @@ function SuperStore(props) {
             </div>
           );
         })
-      : "";
+      : <p>Không có sản phẩm</p>;
   return (
     <section className="super-store">
       <div className="super-store-titel">

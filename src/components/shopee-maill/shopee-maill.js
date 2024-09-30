@@ -24,7 +24,7 @@ function ShopeeMaill(props) {
             </div>
           );
         })
-      : "";
+      : <p>Không có sản phẩm</p>;
 
   return (
     <section className="shopee-maill col-12 bg-white">

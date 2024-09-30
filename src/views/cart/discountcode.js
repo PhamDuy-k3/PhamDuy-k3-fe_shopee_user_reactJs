@@ -8,7 +8,7 @@ const DiscountCode = (props) => {
   const [selectedDiscountCodes, setSelectedDiscountCodes] = useState([]);
   const [response, setRespone] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
-  
+
   // Hàm lấy dữ liệu mã giảm giá
   const fetchDataDiscountcode = async () => {
     try {
@@ -65,9 +65,11 @@ const DiscountCode = (props) => {
         <p onClick={handelIsDisplay}>Chọn hoặc nhập mã</p>
       </div>
       <div>
-        {response.length > 0
-          ? response.map((item) => <p key={item._id}>{item.discountValue}</p>)
-          : ""}
+        {response.length > 0 ? (
+          response.map((item) => <p key={item._id}>{item.discountValue}</p>)
+        ) : (
+          <p>Không có discount</p>
+        )}
       </div>
       {isDisplay && (
         <div id="DiscountCode">

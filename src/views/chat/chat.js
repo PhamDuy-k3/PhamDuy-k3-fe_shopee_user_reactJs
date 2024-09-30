@@ -233,31 +233,23 @@ const ChatRealTime = () => {
   };
 
   const messagesList =
-    messages && messages.length > 0 ? (
-      messages.map((msg) => {
-        if (!msg.type || (!msg.data && msg.type === "image")) {
-          return null;
-        }
-        return (
-          <div
-            key={msg.id || msg.timestamp}
-            className={`message ${msg.sender}`}
-          >
-            {msg.type === "image" ? (
-              <img
-                style={{ width: "10rem", height: "10rem" }}
-                src={msg.data}
-                alt="sent"
-              />
-            ) : (
-              <div>{msg.content}</div>
-            )}
-            <div className="timestamp-hidden">{formatTime(msg.timestamp)}</div>
-          </div>
-        );
-      })
+    messages.length > 0 ? (
+      messages.map((msg, index) => (
+        <div key={index} className={`message ${msg.sender}`}>
+          {msg.type === "image" ? (
+            <img
+              style={{ width: "10rem", height: "10rem" }}
+              src={msg.data}
+              alt="sent"
+            />
+          ) : (
+            <div>{msg.content}</div>
+          )}
+          <div className="timestamp-hidden">{formatTime(msg.timestamp)}</div>
+        </div>
+      ))
     ) : (
-      <div className="no-messages">Không có tin nhắn nào để hiển thị.</div>
+      <p>ko co mess</p>
     );
 
   return (

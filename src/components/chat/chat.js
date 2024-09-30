@@ -1,9 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import "./style.scss";
 import ChatRealTime from "../../views/chat/chat";
-import { useEffect } from "react";
-import axios from "axios";
-import { useCookies } from "react-cookie";
 
 function Chat() {
   const chat_big = useRef();
@@ -46,7 +43,7 @@ function Chat() {
             </div>
           </div>
           <div className="chat-text">
-            <ChatRealTime />
+            <ChatRealTime  />
           </div>
         </div>
       </div>

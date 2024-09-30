@@ -42,7 +42,7 @@ function FeedBack() {
   useEffect(() => {
     fetchDataComment();
   }, []);
-  console.log(comments)
+  console.log(comments);
   return (
     <section id="feedBack" className="feed-back">
       <h1>ĐÁNH GIÁ SẢN PHẨM</h1>
@@ -54,36 +54,36 @@ function FeedBack() {
         userID={cookies.id_user}
       />
       <div className="feed-back-content">
-        {comments.length > 0
-          ? comments.map((comment) => (
-              <div className="feed-back-content-products">
-                <div className="item-feed-back-product d-flex">
-                  <div className="img-product col-1">
-                    <img src={imgUser} alt="" />
+        {comments.length > 0 ? (
+          comments.map((comment) => (
+            <div className="feed-back-content-products">
+              <div className="item-feed-back-product d-flex">
+                <div className="img-product col-1">
+                  <img src={imgUser} alt="" />
+                </div>
+                <div className="col-11">
+                  <p className="name-product">{comment.name_user}</p>
+                  <div className="d-flex">
+                    {[...Array(comment.rating)].map((_, i) => (
+                      <i key={i} className="fas fa-star"></i>
+                    ))}
                   </div>
-                  <div className="col-11">
-                    <p className="name-product">{comment.name_user}</p>
-                    <div className="d-flex">
-                      {[...Array(comment.rating)].map((_, i) => (
-                        <i key={i} className="fas fa-star"></i>
-                      ))}
-                    </div>
 
-                    <div className="fback d-flex mt-3">
-                      <p>Chất liệu:</p>
-                      {comment.material}
-                    </div>
-                    <div className="fback d-flex">
-                      <p>Màu sắc:</p>
-                      {comment.color}
-                    </div>
-                    <div className="fback d-flex">
-                      <p>Đúng với mô tả:</p>
-                      {comment.describe}
-                    </div>
-                    <p className="product-cmt">{comment.content}</p>
-                    <div className="feed-back-img-video">
-                      {/* <div className="feed-back-img-video-noClick d-flex flex-wrap">
+                  <div className="fback d-flex mt-3">
+                    <p>Chất liệu:</p>
+                    {comment.material}
+                  </div>
+                  <div className="fback d-flex">
+                    <p>Màu sắc:</p>
+                    {comment.color}
+                  </div>
+                  <div className="fback d-flex">
+                    <p>Đúng với mô tả:</p>
+                    {comment.describe}
+                  </div>
+                  <p className="product-cmt">{comment.content}</p>
+                  <div className="feed-back-img-video">
+                    {/* <div className="feed-back-img-video-noClick d-flex flex-wrap">
                         <img
                           onClick={() => handleOnClick("imgFbackSmaill")}
                           className={`img-video-one ${
@@ -122,24 +122,26 @@ function FeedBack() {
                           )}
                         </div>
                       )} */}
-                      <img src={comment.image} alt="anh" />
-                    </div>
-                    <div className="shop-feed-back">
-                      <p>Phản Hồi Của Người Bán</p>
-                      <p>
-                        LEVENTS cảm ơn bạn đã đồng hành và tin dùng sản phẩm của
-                        brand.Levents hi vọng sẽ được cùng bạn trải nghiệm nhiều
-                        sản phẩm mới hơn
-                      </p>
-                    </div>
-                    <div className="fback-like">
-                      <i className="far fa-thumbs-up"></i> <span>1</span>
-                    </div>
+                    <img src={comment.image} alt="anh" />
+                  </div>
+                  <div className="shop-feed-back">
+                    <p>Phản Hồi Của Người Bán</p>
+                    <p>
+                      LEVENTS cảm ơn bạn đã đồng hành và tin dùng sản phẩm của
+                      brand.Levents hi vọng sẽ được cùng bạn trải nghiệm nhiều
+                      sản phẩm mới hơn
+                    </p>
+                  </div>
+                  <div className="fback-like">
+                    <i className="far fa-thumbs-up"></i> <span>1</span>
                   </div>
                 </div>
               </div>
-            ))
-          : ""}
+            </div>
+          ))
+        ) : (
+          <p>không có comment nào</p>
+        )}
       </div>
     </section>
   );
