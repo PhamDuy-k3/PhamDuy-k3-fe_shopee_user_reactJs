@@ -2,20 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 function Category(props) {
-  const listProduct = props.list.slice(0, 20);
+  const listProduct = props?.list.slice(0, 20);
   const { t } = useTranslation(["home"]);
-  const category = listProduct.map((product) => (
-    <Link key={product._id} to={`/Product/${product._id}`}>
-      <div className="category-product">
-        <div className="category-product-img">
-          <img src={product.image} alt={product.name} />
-        </div>
-        <div className="category-product-text">
-          <p>{product.name} </p>
-        </div>
-      </div>
-    </Link>
-  ));
+  const category =
+    listProduct.length > 0
+      ? listProduct.map((product) => (
+          <Link key={product._id} to={`/Product/${product._id}`}>
+            <div className="category-product">
+              <div className="category-product-img">
+                <img src={product.image} alt={product.name} />
+              </div>
+              <div className="category-product-text">
+                <p>{product.name}</p>
+              </div>
+            </div>
+          </Link>
+        ))
+      : "";
 
   return (
     <section className="category bg-white">

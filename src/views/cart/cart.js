@@ -33,9 +33,19 @@ function Cart() {
       const response = await fetch(
         `http://localhost:5050/carts/?id_user=${cookies.id_user}`
       );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
-      setCarts(data.data);
-      console.log(data.data);
+
+      if (data && data.data) {
+        setCarts(data.data);
+        console.log(data.data);
+      } else {
+        console.warn("No data found:", data);
+      }
     } catch (error) {
       console.error("Error fetching API:", error);
     }
@@ -79,29 +89,36 @@ function Cart() {
 
   // Tăng số lượng sản phẩm
   const handleQuantity = (id, a) => {
+    if (!Array.isArray(carts) || carts.length === 0) {
+      return;
+    }
     const updatedProducts = carts.map((product) => {
       if (product._id === id) {
         const quantity_new = product.quantity + parseFloat(a);
         if (quantity_new < 0) {
-          return product;
+          return product; // Trả lại sản phẩm cũ nếu số lượng mới nhỏ hơn 0
         }
         const quantity = quantity_new;
         const _id = product._id;
         const sum = quantity_new * +product.price;
-        updateToCartsAsync(_id, quantity, sum);
+        updateToCartsAsync(_id, quantity, sum); // Cập nhật giỏ hàng không đồng bộ
         return {
           ...product,
           quantity: quantity,
           sum: sum,
         };
       }
-      return product;
+      return product; // Trả lại sản phẩm không thay đổi
     });
-    dispatch(updateProductList(updatedProducts));
+
+    dispatch(updateProductList(updatedProducts)); // Cập nhật danh sách sản phẩm
   };
 
   // Thay đổi số lượng khi khách hàng nhập tay
   const handleChangeQuantity = (id, event) => {
+    if (!Array.isArray(carts) || carts.length === 0) {
+      return;
+    }
     const newQuantity = parseFloat(event.target.value) || 0;
     const updatedProducts = carts.map((product) => {
       if (product._id === id) {

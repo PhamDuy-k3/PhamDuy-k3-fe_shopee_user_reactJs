@@ -1,14 +1,18 @@
-function ShopeeMaillSp(props) {
-   const listProduct = props.listSp.slice(0,12)
-   const items_shopee_mail  = listProduct.map((product)=>{
-    return(
+function ShopeeMailSp(props) {
+  const listProduct = props?.listSp.slice(0, 12);
+  const items_shopee_mail =
+    listProduct.length > 0 ? (
+      listProduct.map((product) => (
         <div key={product.id} className="item-shopee-mail">
-          <img src={product.thumbnail} alt="" />
+          <img src={product.thumbnail} alt={product.title || "Sản phẩm"} />
         </div>
-    );
-   })
+      ))
+    ) : (
+      <p>Không có sản phẩm</p>
+    ); 
+
   return (
-    <section className="shopee-Mail-sp">
+    <section className="shopee-mail-sp">
       <div className="item-shopee-mail-title">
         <h1>SHOPEE MAIL</h1>
       </div>
@@ -18,4 +22,5 @@ function ShopeeMaillSp(props) {
     </section>
   );
 }
-export default ShopeeMaillSp;
+
+export default ShopeeMailSp;

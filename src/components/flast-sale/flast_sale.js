@@ -41,27 +41,33 @@ function FlastSale(props) {
     return (soldQuantity / targetQuantity) * 100;
   };
 
-  const listProduct = props.list.slice(10, 22);
-  const flast_sale = listProduct.map((product) => (
-    <div key={product.id} className="item-fl-sale">
-      <div className="item-fl-sale-image">
-        <img src={product.thumbnail} alt={product.title} />
-      </div>
-      <div className="item-fl-sale-text">
-        <p>
-          <sup>đ</sup>62.000
-        </p>
-      </div>
-      <div className="progress">
-        <div
-          className="progress-bar"
-          style={{ width: `${progress(2000, 3000)}%` }}
-        >
-          Đã bán 2000 k
+  const listProduct = props?.list.slice(10, 22);
+  let flast_sale;
+
+  if (listProduct.length > 0) {
+    flast_sale = listProduct.map((product) => (
+      <div key={product.id} className="item-fl-sale">
+        <div className="item-fl-sale-image">
+          <img src={product.thumbnail} alt={product.title} />
+        </div>
+        <div className="item-fl-sale-text">
+          <p>
+            <sup>đ</sup>62.000
+          </p>
+        </div>
+        <div className="progress">
+          <div
+            className="progress-bar"
+            style={{ width: `${progress(2000, 3000)}%` }}
+          >
+            Đã bán 2000 k
+          </div>
         </div>
       </div>
-    </div>
-  ));
+    ));
+  } else {
+    flast_sale = <p>Không có sản phẩm nào để hiển thị.</p>;
+  }
 
   return (
     <section className="flast-sale bg-white">
@@ -70,7 +76,7 @@ function FlastSale(props) {
         <Time />
       </div>
       <div className="items-flast-sale d-flex text-align">
-        <Slider {...settings}>{flast_sale} </Slider>
+        <Slider {...settings}>{flast_sale}</Slider>
       </div>
     </section>
   );

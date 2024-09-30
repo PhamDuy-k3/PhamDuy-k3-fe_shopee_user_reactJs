@@ -52,7 +52,6 @@ function OrderLoading() {
       const data = await response.json();
       setCarts(data.data || []);
       console.log(data.data);
-      
     } catch (error) {
       console.error("Error fetching API:", error);
     }
@@ -97,6 +96,10 @@ function OrderLoading() {
 
   // Tăng số lượng sản phẩm
   const handleQuantity = (id, a) => {
+    if (!Array.isArray(carts) || carts.length === 0) {
+      console.warn("Carts is empty or not an array.");
+      return;
+    }
     const updatedProducts = carts.map((product) => {
       if (product._id === id) {
         const quantity_new = product.quantity + parseFloat(a);
@@ -120,6 +123,10 @@ function OrderLoading() {
 
   // Thay đổi số lượng khi khách hàng nhập tay
   const handleChangeQuantity = (id, event) => {
+    if (!Array.isArray(carts) || carts.length === 0) {
+      console.warn("Carts is empty or not an array.");
+      return;
+    }
     const newQuantity = parseFloat(event.target.value) || 0;
     const updatedProducts = carts.map((product) => {
       if (product._id === id) {

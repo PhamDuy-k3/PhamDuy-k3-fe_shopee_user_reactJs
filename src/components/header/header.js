@@ -87,7 +87,7 @@ function ComponentHeader() {
     })
       .then((res) => res.json())
       .then((res) => {
-        setUser(res.data[0]);
+        setUser(res.data[0] || []);
       });
   }, [cookies.phone_user]);
 
