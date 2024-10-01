@@ -89,6 +89,7 @@ const Profile = () => {
       body: formData,
       headers: {
         Accept: "application/json",
+        Authorization: "Bearer " + cookies.user_token,
       },
     })
       .then((res) => res.json())

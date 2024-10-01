@@ -96,7 +96,7 @@ function ComponentHeader() {
     e.preventDefault();
     removeCookies("user_token");
     removeCookies("phone_user");
-    window.location.href = "http://localhost:3000/login";
+    window.location.href = "http://localhost:3000/#/login";
   };
   //handel info
   const handleIsInfo = () => {

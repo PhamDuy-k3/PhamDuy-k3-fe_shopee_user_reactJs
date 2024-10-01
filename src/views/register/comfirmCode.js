@@ -10,7 +10,7 @@ export default function ComfirmCode() {
   const [cookies, setCookie] = useCookies();
 
   useEffect(() => {
-    searchUser(); // Gọi hàm tìm người dùng khi component được tải
+    searchUser();
   }, [cookies.id_user_register]);
 
   const handleChange = (index, value) => {
@@ -37,7 +37,7 @@ export default function ComfirmCode() {
     console.log(user.verificationCode);
 
     if (codes.length === 4) {
-      if (user && codes == user.verificationCode) {
+      if (user && codes == user?.verificationCode) {
         updateUser(); // Cập nhật thông tin khi mã xác nhận đúng
       } else {
         alert("Mã xác nhận không đúng. Vui lòng thử lại!");
@@ -48,14 +48,16 @@ export default function ComfirmCode() {
   };
 
   const searchUser = () => {
-    fetch(`http://localhost:5050/users/${cookies.id_user_register}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        // Authorization: "Bearer " + cookies.get("user_token"), // Nếu cần token
-      },
-    })
+    fetch(
+      `http://localhost:5050/auth/searchRegister/${cookies.id_user_register}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((res) => {
         if (res) {
@@ -75,7 +77,6 @@ export default function ComfirmCode() {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        // Authorization: "Bearer " + cookies.get("user_token"), // Nếu cần token
       },
       body: JSON.stringify({
         isVerified: true, // Cập nhật trạng thái xác nhận

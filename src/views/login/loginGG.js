@@ -16,6 +16,7 @@ const LoginGg = () => {
 
     const token = response.credential;
 
+    // Decode JWT token để lấy thông tin payload
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
 
@@ -34,17 +35,20 @@ const LoginGg = () => {
 
     setCookie("user_token", token, {
       path: "/",
-      expires: moment().add(1, "months").toDate(),
+      exp: moment().add(1, "months").toDate(),
     });
+
     setCookie("email_token", email, {
       path: "/",
-      expires: moment().add(1, "months").toDate(),
+      exp: moment().add(1, "months").toDate(),
     });
+
+     navigate("/");
   };
 
   useEffect(() => {
     if (cookies.user_token) {
-      navigate("/");
+      navigate("/"); // Điều hướng nếu đã có token trong cookie
     }
   }, [cookies, navigate]);
 

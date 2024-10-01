@@ -10,7 +10,7 @@ function Time() {
   });
 
   useEffect(() => {
-    const endDate = new Date("9/13/2024 00:00:00").getTime();
+    const endDate = new Date("10/11/2024 00:00:00").getTime();
     console.log("mouting");
     const intervalId = setInterval(() => {
       const now = new Date().getTime();
