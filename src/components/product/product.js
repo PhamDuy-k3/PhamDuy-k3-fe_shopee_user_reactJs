@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import CtspProductImg from "./ctsp-product-img/ctsp-product-img";
 import CtspProductInfor from "./ctsp-product-infor/ctsp-product-infor";
 function Product(props) {

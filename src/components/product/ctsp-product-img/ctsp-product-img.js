@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FlyZoom from "./fly-zoom";
 import imgBig2 from "../../../assets/images/img/imgctsp/banner-to-2.jpg";
 import imgBig3 from "../../../assets/images/img/imgctsp/banner-to-3.jpg";
@@ -12,8 +12,11 @@ import imgSmall5 from "../../../assets/images/img/imgctsp/banner-con-5.jpg";
 import video from "../../../assets/audio/video.mp4";
 import ZoomIn from "./zoom_in";
 import { useCookies } from "react-cookie";
+import { ProductContext } from "../../../views/product details/product details";
 
 function CtspProductImg(props) {
+  const productContext = useContext(ProductContext);
+ // console.log("productContex", productContext);
   const [imgBig, setImgBig] = useState();
   const [imgBigZoom, setImgBigZoom] = useState();
   const [isImgVideo, setIsImgVideo] = useState(true);

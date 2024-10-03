@@ -16,8 +16,6 @@ import ComponentHeader from "../../components/header/header";
 import SelectPay from "./selectPay";
 import { PaymentForm } from "../../payment";
 
-// chưa chek trùng sản phẩm
-
 function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
@@ -29,7 +27,6 @@ function OrderLoading() {
   const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
   const [pay, setPay] = useState();
   const [orderInfo, setOrderInfo] = useState("pay with MoMo");
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fetchProducts = async () => {
@@ -79,97 +76,6 @@ function OrderLoading() {
   }, [carts]);
   console.log(total);
 
-  const updateToCartsAsync = async (_id, quantity, sum) => {
-    try {
-      const response = await axios.put(`http://localhost:5050/carts/${_id}`, {
-        quantity,
-        sum,
-      });
-      console.log("Update successful:", response.data);
-      fetchProducts();
-      return response.data;
-    } catch (error) {
-      console.error("Error updating cart:", error.message);
-      return null;
-    }
-  };
-
-  // Tăng số lượng sản phẩm
-  const handleQuantity = (id, a) => {
-    if (!Array.isArray(carts) || carts.length === 0) {
-      console.warn("Carts is empty or not an array.");
-      return;
-    }
-    const updatedProducts = carts.map((product) => {
-      if (product._id === id) {
-        const quantity_new = product.quantity + parseFloat(a);
-        if (quantity_new < 0) {
-          return product;
-        }
-        const quantity = quantity_new;
-        const _id = product._id;
-        const sum = quantity_new * +product.price;
-        updateToCartsAsync(_id, quantity, sum);
-        return {
-          ...product,
-          quantity: quantity,
-          sum: sum,
-        };
-      }
-      return product;
-    });
-    dispatch(updateProductList(updatedProducts));
-  };
-
-  // Thay đổi số lượng khi khách hàng nhập tay
-  const handleChangeQuantity = (id, event) => {
-    if (!Array.isArray(carts) || carts.length === 0) {
-      console.warn("Carts is empty or not an array.");
-      return;
-    }
-    const newQuantity = parseFloat(event.target.value) || 0;
-    const updatedProducts = carts.map((product) => {
-      if (product._id === id) {
-        const quantity = newQuantity;
-        const _id = product._id;
-        const sum = quantity * +product.price;
-        updateToCartsAsync(_id, quantity, sum);
-        return {
-          ...product,
-          quantity: quantity,
-          sum: sum,
-        };
-      }
-      return product;
-    });
-    dispatch(updateProductList(updatedProducts));
-  };
-
-  const deleteToCartAsync = async (cartId) => {
-    try {
-      await axios.delete(`http://localhost:5050/carts/${cartId}`);
-      dispatch(removeFromCart(cartId));
-      fetchProducts();
-    } catch (error) {}
-  };
-  // xóa sản phẩm
-  const deleteProduct = (id) => {
-    deleteToCartAsync(id);
-  };
-
-  const deleteToCartsAsync = async (array) => {
-    try {
-      await axios.delete("http://localhost:5050/carts");
-      fetchProducts();
-      dispatch(deleteCarts(array));
-    } catch (error) {}
-  };
-  // xóa tất cả các sản phẩm
-  const handelDeleteProductList = () => {
-    const array = [];
-    deleteToCartsAsync(array);
-  };
-
   const createCartOder = async (data) => {
     try {
       const response = await axios.post(
@@ -182,6 +88,7 @@ function OrderLoading() {
       throw error;
     }
   };
+
   // xóa cart
   const deleteCartsByUserId = async (userId) => {
     try {
@@ -321,22 +228,17 @@ function OrderLoading() {
                           </div>
                           <div className="quantity col-2 pt-5">
                             <input
-                              onClick={() => handleQuantity(cart._id, -1)}
                               className="cart-down-quantity"
                               type="button"
                               value="-"
                             />
                             <input
-                              onChange={(e) =>
-                                handleChangeQuantity(cart._id, e)
-                              }
                               className="quantity_value"
                               type="number"
                               min="1"
                               value={cart.quantity}
                             />
                             <input
-                              onClick={() => handleQuantity(cart._id, 1)}
                               className="cart-up-quantity"
                               type="button"
                               value="+"
@@ -349,12 +251,6 @@ function OrderLoading() {
                                 {VND.format(cart.sum)}
                               </span>
                             </p>
-                          </div>
-                          <div
-                            onClick={() => deleteProduct(cart._id)}
-                            className="remove-item col-1 pt-5"
-                          >
-                            <p>Xóa</p>
                           </div>
                         </div>
                       </div>
@@ -373,23 +269,7 @@ function OrderLoading() {
                 </div>
 
                 <div className="d-flex mt-3 colum-4">
-                  <div className="col-2">
-                    <input type="checkbox" id="masterCheckbox" /> Chọn tất Cả (
-                    <span className="quantityCart-one">{sumSp}</span>)
-                  </div>
-
-                  <div className="col-1">
-                    <p
-                      onClick={handelDeleteProductList}
-                      style={{ cursor: " pointer" }}
-                    >
-                      Xóa Tất Cả
-                    </p>
-                  </div>
-                  <div className="col-2">
-                    <p style={{ color: "#ee4d2d" }}>Lưu vào mục Đã Th...</p>
-                  </div>
-                  <div className="col-4 d-flex">
+                  <div className="col-9 d-flex">
                     <p>
                       Tổng thanh toán (
                       <span className="quantityCart-two">{sumSp}</span>) sản

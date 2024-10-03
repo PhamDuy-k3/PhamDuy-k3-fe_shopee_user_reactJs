@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./scssCart/styleCart.scss";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   deleteCarts,
   deleteToCartsAsync,
@@ -64,13 +64,18 @@ function Cart() {
   });
 
   // tính tổng tiền các sản phẩm có trong gio hàng
-  useEffect(() => {
-    setSumSp(carts.length);
-    const totalSum = carts.reduce((accumulator, product) => {
+  const sum_sp = useMemo(() => carts.length, [carts]);
+
+  const totalSum = useMemo(() => {
+    return carts.reduce((accumulator, product) => {
       return accumulator + parseFloat(product.sum);
     }, 0);
-    setTotal(totalSum);
   }, [carts]);
+
+  useEffect(() => {
+    setSumSp(sum_sp);
+    setTotal(totalSum);
+  }, [sum_sp, totalSum]);
 
   const updateToCartsAsync = async (_id, quantity, sum) => {
     try {
@@ -87,55 +92,62 @@ function Cart() {
     }
   };
 
-  // Tăng số lượng sản phẩm
-  const handleQuantity = (id, a) => {
-    if (!Array.isArray(carts) || carts.length === 0) {
-      return;
-    }
-    const updatedProducts = carts.map((product) => {
-      if (product._id === id) {
-        const quantity_new = product.quantity + parseFloat(a);
-        if (quantity_new < 0) {
-          return product; // Trả lại sản phẩm cũ nếu số lượng mới nhỏ hơn 0
-        }
-        const quantity = quantity_new;
-        const _id = product._id;
-        const sum = quantity_new * +product.price;
-        updateToCartsAsync(_id, quantity, sum); // Cập nhật giỏ hàng không đồng bộ
-        return {
-          ...product,
-          quantity: quantity,
-          sum: sum,
-        };
+  const handleQuantity = useCallback(
+    (id, a) => {
+      if (!Array.isArray(carts) || carts.length === 0) {
+        return;
       }
-      return product; // Trả lại sản phẩm không thay đổi
-    });
 
-    dispatch(updateProductList(updatedProducts)); // Cập nhật danh sách sản phẩm
-  };
+      const updatedProducts = carts.map((product) => {
+        if (product._id === id) {
+          const quantity_new = product.quantity + parseFloat(a);
+          if (quantity_new < 1) {
+            return product;
+          }
+          const quantity = quantity_new;
+          const _id = product._id;
+          const sum = quantity_new * +product.price;
+          updateToCartsAsync(_id, quantity, sum);
+          return {
+            ...product,
+            quantity: quantity,
+            sum: sum,
+          };
+        }
+        return product;
+      });
+
+      dispatch(updateProductList(updatedProducts));
+    },
+    [carts, dispatch]
+  );
 
   // Thay đổi số lượng khi khách hàng nhập tay
-  const handleChangeQuantity = (id, event) => {
-    if (!Array.isArray(carts) || carts.length === 0) {
-      return;
-    }
-    const newQuantity = parseFloat(event.target.value) || 0;
-    const updatedProducts = carts.map((product) => {
-      if (product._id === id) {
-        const quantity = newQuantity;
-        const _id = product._id;
-        const sum = quantity * +product.price;
-        updateToCartsAsync(_id, quantity, sum);
-        return {
-          ...product,
-          quantity: quantity,
-          sum: sum,
-        };
+  const handleChangeQuantity = useCallback(
+    (id, event) => {
+      if (!Array.isArray(carts) || carts.length === 0) {
+        return;
       }
-      return product;
-    });
-    dispatch(updateProductList(updatedProducts));
-  };
+      const newQuantity = parseFloat(event.target.value) || 0;
+
+      const updatedProducts = carts.map((product) => {
+        if (product._id === id) {
+          const quantity = newQuantity;
+          const _id = product._id;
+          const sum = quantity * +product.price;
+          updateToCartsAsync(_id, quantity, sum);
+          return {
+            ...product,
+            quantity: quantity,
+            sum: sum,
+          };
+        }
+        return product;
+      });
+      dispatch(updateProductList(updatedProducts));
+    },
+    [carts, dispatch]
+  );
 
   const deleteToCartAsync = async (cartId) => {
     try {

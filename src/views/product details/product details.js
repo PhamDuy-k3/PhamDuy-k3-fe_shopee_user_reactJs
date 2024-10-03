@@ -6,9 +6,12 @@ import ProductDetailsDescribe from "../../components/product-details-describe/pr
 import FeedBack from "../../components/feed-back/feed-back";
 import Footer from "../../components/footer/footer";
 import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+
+export const ProductContext = createContext();
+
 function ProductDetails() {
   const [product, setProduct] = useState();
   const url_id = useParams();
@@ -30,17 +33,19 @@ function ProductDetails() {
   }, [url_id.product_id]);
 
   return (
-    <div style={{ maxWidth: "1280px", margin: "auto" }}>
-      <ComponentHeader />
-      <AutoLoadPage />
-      <div className="context-detal-product">
-        <Product product={product} />
-        <InforShop />
-        <ProductDetailsDescribe product={product} />
-        <FeedBack />
+    <ProductContext.Provider value={product}>
+      <div style={{ maxWidth: "1280px", margin: "auto" }}>
+        <ComponentHeader />
+        <AutoLoadPage />
+        <div className="context-detal-product">
+          <Product product={product} />
+          <InforShop />
+          <ProductDetailsDescribe product={product} />
+          <FeedBack />
+        </div>
+        <Footer></Footer>
       </div>
-      <Footer></Footer>
-    </div>
+    </ProductContext.Provider>
   );
 }
 
