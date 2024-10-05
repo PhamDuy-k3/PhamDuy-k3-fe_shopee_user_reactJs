@@ -1,7 +1,7 @@
 import axios from "axios";
 import "./scssCart/styleCart.scss";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { VND } from "../../components/VND/vnd";
 
 const DiscountCode = (props) => {
   const [discountcodes, setDiscountcode] = useState([]);
@@ -22,6 +22,7 @@ const DiscountCode = (props) => {
       console.error("Error fetching data:", error);
     }
   };
+  
   const fetchDataDiscountcodeChoese = async () => {
     try {
       const response = await axios.get(
@@ -54,9 +55,7 @@ const DiscountCode = (props) => {
     fetchDataDiscountcodeChoese();
     setIsDisplay(false);
   };
-  const VND = new Intl.NumberFormat("vi-VN", {
-    currency: "VND",
-  });
+
   console.log(props.total);
   return (
     <>

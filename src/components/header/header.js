@@ -16,20 +16,19 @@ function ComponentHeader() {
   const [cookies, setCookie, removeCookies] = useCookies();
   const [isInfor, setIsInfor] = useState(false);
   const [user, setUser] = useState();
-  const [length_cart, setLength_cart] = useState([]);
   const { i18n } = useTranslation();
   const [isChangeLag, setIsChangeLag] = useState(false);
   const currentLanguage = locales[i18n.language];
   const { t } = useTranslation(["home"]);
-  const socketRef = useRef(null);
-  const [cart, setCart] = useState([]);
-
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+
+  // lấy danh sách cart trog store
+  const carts_store = useSelector((state) => state.cart.items);
 
   // thay đổi ngông ngữ
   const changeLanguage = (language) => {
@@ -41,39 +40,6 @@ function ComponentHeader() {
     localStorage.setItem("text_search", JSON.stringify(data.search));
     navigate(`/search?keyword=${data.search}`);
   };
-
-  useEffect(() => {
-    const socket = io("http://localhost:5050");
-    socketRef.current = socket;
-
-    socket.on("cart", (cart) => {
-      setCart((prevCommnets) => [
-        ...prevCommnets,
-        { ...cart, sender: "server" },
-      ]);
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:5050/carts/?id_user=${cookies.id_user}`
-      );
-      const data = await response.json();
-      setLength_cart(data.data.length);
-      console.log(data.data);
-    } catch (error) {
-      console.error("Error fetching API:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, [cart]);
 
   // lấy user qua phone
   useEffect(() => {
@@ -319,7 +285,7 @@ function ComponentHeader() {
           <Link to="/Cart">
             <i className="fas fa-cart-plus"></i>
             <p style={{ color: "white" }} className="quantityCart">
-              {length_cart || ""}
+              {carts_store?.length || ""}
             </p>
           </Link>
         </div>

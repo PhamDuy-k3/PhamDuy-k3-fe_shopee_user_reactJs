@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
+import { VND } from "../VND/vnd";
 
 function Suggest(props) {
-  const VND = new Intl.NumberFormat("vi-VN", {
-    currency: "VND",
-  });
   const suggest = props?.list.map((product) => {
     return (
       <div key={product._id} className="suggest-product bg-white">

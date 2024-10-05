@@ -3,31 +3,31 @@ import "./scssCart/styleCart.scss";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   deleteCarts,
-  deleteToCartsAsync,
   removeFromCart,
   updateProductList,
 } from "../../redux/action";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
-import DiscountCode from "./discountcode";
-import PaymentForm from "../../payment";
 import ComponentHeader from "../../components/header/header";
+import { VND } from "../../components/VND/vnd";
+import { deleteToCartAsync, deleteToCartsAsync } from "../../api/delete";
 
 // chưa chek trùng sản phẩm
 
 function Cart() {
-  const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
   const [carts, setCarts] = useState([]);
-  const [status, setStatus] = useState("unconfirmed");
   const [cookies, setCookie] = useCookies();
   const [id_user_oder, setIdUserOder] = useState();
-  const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // lấy danh sách cart trog store
+  const carts_store = useSelector((state) => state.cart.items);
+
+  //danh sách sản phẩm người dùng chọn
   const fetchProducts = async () => {
     try {
       const response = await fetch(
@@ -59,12 +59,7 @@ function Cart() {
     setIdUserOder(cookies.id_user);
   }, []);
 
-  const VND = new Intl.NumberFormat("vi-VN", {
-    currency: "VND",
-  });
-
   // tính tổng tiền các sản phẩm có trong gio hàng
-  const sum_sp = useMemo(() => carts.length, [carts]);
 
   const totalSum = useMemo(() => {
     return carts.reduce((accumulator, product) => {
@@ -73,9 +68,8 @@ function Cart() {
   }, [carts]);
 
   useEffect(() => {
-    setSumSp(sum_sp);
     setTotal(totalSum);
-  }, [sum_sp, totalSum]);
+  }, [carts]);
 
   const updateToCartsAsync = async (_id, quantity, sum) => {
     try {
@@ -149,29 +143,17 @@ function Cart() {
     [carts, dispatch]
   );
 
-  const deleteToCartAsync = async (cartId) => {
-    try {
-      await axios.delete(`http://localhost:5050/carts/${cartId}`);
-      dispatch(removeFromCart(cartId));
-      fetchProducts();
-    } catch (error) {}
-  };
-  // xóa sản phẩm
+  // xóa sản phẩm theo id
   const deleteProduct = (id) => {
-    deleteToCartAsync(id);
+    deleteToCartAsync(id, fetchProducts);
+    dispatch(removeFromCart(id));
   };
 
-  const deleteToCartsAsync = async (array) => {
-    try {
-      await axios.delete("http://localhost:5050/carts");
-      fetchProducts();
-      dispatch(deleteCarts(array));
-    } catch (error) {}
-  };
-  // xóa tất cả các sản phẩm
+  //xóa tất cả các sản phẩm trong giỏ hàng dựa vào id khách hàng
   const handelDeleteProductList = () => {
     const array = [];
-    deleteToCartsAsync(array);
+    deleteToCartsAsync(fetchProducts, cookies.id_user);
+    dispatch(deleteCarts(array));
   };
 
   const handleBuy = async () => {
@@ -317,7 +299,10 @@ function Cart() {
                 <div className="d-flex mt-3 colum-4">
                   <div className="col-2">
                     <input type="checkbox" id="masterCheckbox" /> Chọn tất Cả (
-                    <span className="quantityCart-one">{sumSp}</span>)
+                    <span className="quantityCart-one">
+                      {carts_store.length}
+                    </span>
+                    )
                   </div>
 
                   <div className="col-1">
@@ -334,8 +319,10 @@ function Cart() {
                   <div className="col-4 d-flex">
                     <p>
                       Tổng thanh toán (
-                      <span className="quantityCart-two">{sumSp}</span>) sản
-                      phẩm :
+                      <span className="quantityCart-two">
+                        {carts_store.length}
+                      </span>
+                      ) sản phẩm :
                     </p>
                     <div
                       style={{ color: "#ee4d2d", fontSize: "1.5rem" }}

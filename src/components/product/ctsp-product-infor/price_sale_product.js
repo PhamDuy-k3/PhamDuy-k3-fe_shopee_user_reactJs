@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { VND } from "../../VND/vnd";
 
 function PriceSaleProduct({
   priceSaleFormatted,
@@ -7,11 +8,6 @@ function PriceSaleProduct({
 }) {
   const [sale, setSale] = useState(10);
   const [cost, setCost] = useState(0);
-
-  const VND = new Intl.NumberFormat("vi-VN", {
-    //style: "currency",
-    currency: "VND",
-  });
 
   useEffect(() => {
     const price = product?.prices || 0;

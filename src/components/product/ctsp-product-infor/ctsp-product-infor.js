@@ -28,18 +28,11 @@ function CtspProductInfor(props) {
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const [cookies, setCookie] = useCookies();
   const [carts, setCarts] = useState([]);
-  const socketRef = useRef(null);
 
   const carts_store = useSelector((state) => state.cart.items);
-  console.log(carts_store);
 
   let img_one = props.product?.image;
   let title = props.product?.name || "";
-  console.log(img_one);
-  const VND = new Intl.NumberFormat("vi-VN", {
-    // style: 'currency',
-    currency: "VND",
-  });
 
   // tổng tiền
   const total = quantity * priceSaleFormatted;
@@ -58,15 +51,6 @@ function CtspProductInfor(props) {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    const socket = io("http://localhost:5050");
-    socketRef.current = socket;
-
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
   // thêm cart
@@ -135,9 +119,8 @@ function CtspProductInfor(props) {
         <p style={{ paddingTop: "1rem" }}>Sản phẩm này đã có trong giỏ hàng!</p>
       ));
     } else {
-      socketRef.current.emit("cart", newProduct);
-      addToCartAsync(newProduct);
       dispatch(addToCart(newProduct));
+      addToCartAsync(newProduct);
     }
   };
   const buy = () => {

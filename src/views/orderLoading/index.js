@@ -1,20 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "../cart/scssCart/styleCart.scss";
 import { useEffect, useState } from "react";
-import {
-  deleteCarts,
-  deleteToCartsAsync,
-  removeFromCart,
-  updateProductList,
-} from "../../redux/action";
+import { deleteCarts } from "../../redux/action";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 import DiscountCode from "../cart/discountcode";
 import ComponentHeader from "../../components/header/header";
 import SelectPay from "./selectPay";
 import { PaymentForm } from "../../payment";
+import { VND } from "../../components/VND/vnd";
+import { deleteToCartsAsync } from "../../api/delete";
 
 function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
@@ -28,6 +25,7 @@ function OrderLoading() {
   const [pay, setPay] = useState();
   const [orderInfo, setOrderInfo] = useState("pay with MoMo");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const fetchProducts = async () => {
     try {
@@ -62,10 +60,6 @@ function OrderLoading() {
     setIdUserOder(cookies.id_user);
   }, []);
 
-  const VND = new Intl.NumberFormat("vi-VN", {
-    currency: "VND",
-  });
-
   // tính tổng tiền các sản phẩm có trong gio hàng
   useEffect(() => {
     setSumSp(carts.length);
@@ -76,6 +70,7 @@ function OrderLoading() {
   }, [carts]);
   console.log(total);
 
+  //tạo đơn hàng
   const createCartOder = async (data) => {
     try {
       const response = await axios.post(
@@ -89,20 +84,18 @@ function OrderLoading() {
     }
   };
 
-  // xóa cart
+  // xóa cart theo id người dùng
   const deleteCartsByUserId = async (userId) => {
-    try {
-      await axios.delete(
-        `http://localhost:5050/carts/deleteCartsByUserId/${userId}`
-      );
-    } catch (error) {
-      console.error("Error deleting carts:", error);
-    }
+    const array = [];
+    deleteToCartsAsync( fetchProducts, cookies.id_user);
+    dispatch(deleteCarts(array));
   };
+  // ghi chú
   const handleNote = (e) => {
     setNote(e.target.value);
   };
 
+  // đặt hàng
   const handleBuy = () => {
     if (id_user_oder !== "") {
       let total_prices = total;

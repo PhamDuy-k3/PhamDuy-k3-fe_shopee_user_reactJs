@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FlyZoom from "../ctsp-product-img/fly-zoom";
+import { VND } from "../../VND/vnd";
 
 function AddresTransport(props) {
   const [textInput, setTextInput] = useState("");
@@ -62,11 +63,6 @@ function TranSport() {
   const [transportFee, setTransportFee] = useState(12);
   const [isAddressVisible, setIsAddressVisible] = useState(false);
 
-  const VND = new Intl.NumberFormat("vi-VN", {
-    currency: "VND",
-  });
-
-  
   useEffect(() => {
     setTransportFee(VND.format(transportFee * 1000));
   }, [transportFee, VND]);

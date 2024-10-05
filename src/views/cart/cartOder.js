@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import "./scssCart/styleCart.scss";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import axios from "axios";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 import Menu from "./menu";
 import ComponentHeader from "../../components/header/header";
@@ -10,13 +9,12 @@ import ComponentHeader from "../../components/header/header";
 function CartOder() {
   const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
-  const [carts, setCarts] = useState([]);
+  const [cartsOder, setCartsOrder] = useState([]);
   const [res, setRes] = useState([]);
   const [status, setStatus] = useState("");
   const [cookies, setCookie] = useCookies();
 
-  const dispatch = useDispatch();
-
+  //danh sách sản phẩm người dùng order
   const fetchCartsOder = async () => {
     try {
       const response = await fetch(
@@ -29,7 +27,7 @@ function CartOder() {
 
       setRes(sortedOrders);
 
-      setCarts(data.data[0]?.carts || []);
+      setCartsOrder(data.data[0]?.carts || []);
     } catch (error) {
       console.error("Error fetching API:", error);
     }
@@ -45,13 +43,12 @@ function CartOder() {
   });
 
   useEffect(() => {
-    setSumSp(carts.length);
-    setCookie("length_cart", carts.length);
-    const totalSum = carts.reduce((accumulator, product) => {
+    setSumSp(cartsOder.length);
+    const totalSum = cartsOder.reduce((accumulator, product) => {
       return accumulator + parseFloat(product.sum);
     }, 0);
     setTotal(VND.format(totalSum));
-  }, [carts]);
+  }, [cartsOder]);
 
   return (
     <>
