@@ -22,7 +22,6 @@ function Advertisement() {
     // thì nó chạy useEffect dưới 1 lần sau mouting
     // sau khi close thì isAdvertisementClosed = true nhận từ sessionStorage
     // và ko chạy code useEffect lần nào nữa
-    console.log(isAdvertisementClosed);
     if (!isAdvertisementClosed) {
       let timeoutId;
 

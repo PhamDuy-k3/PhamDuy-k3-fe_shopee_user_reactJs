@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import { Cookies, useCookies } from "react-cookie";
-import { useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function ComfirmCode() {
   const [code, setCode] = useState(["", "", "", ""]);
   const [user, setUser] = useState(null); // Khởi tạo là null để kiểm tra tình trạng tìm người dùng
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies();
+  const [cookies] = useCookies();
 
   useEffect(() => {
     searchUser();
@@ -33,9 +33,6 @@ export default function ComfirmCode() {
 
   const handleVerify = () => {
     const codes = code.join("");
-    console.log(codes);
-    console.log(user.verificationCode);
-
     if (codes.length === 4) {
       if (user && codes == user?.verificationCode) {
         updateUser(); // Cập nhật thông tin khi mã xác nhận đúng
@@ -89,7 +86,6 @@ export default function ComfirmCode() {
       .then((res) => {
         alert("Xác nhận thành công!");
         navigate("/login");
-        console.log(res.data.status_code);
       })
       .catch((error) => {
         console.error("Error updating user:", error);

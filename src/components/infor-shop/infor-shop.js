@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import imgShop from "../../assets/images/img/imgctsp/logo-shop.jpg";
 function InforShop() {
   return (
@@ -16,11 +17,11 @@ function InforShop() {
             <button>
               <i className="fas fa-comments"></i> Chat Ngay
             </button>
-            <a href="https://www.facebook.com/duyphamk3">
-              <button style={{marginLeft:"1rem"}}>
+            <Link href="https://www.facebook.com/duyphamk3">
+              <button style={{ marginLeft: "1rem" }}>
                 <i className="far fa-eye"></i> Xem Shope
               </button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -15,7 +15,6 @@ export const FetchCartsByIdUser = async (setCarts, id_user) => {
 
     if (data && data.data) {
       setCarts(data.data);
-      console.log(data.data);
     } else {
       console.warn("No data found:", data);
     }

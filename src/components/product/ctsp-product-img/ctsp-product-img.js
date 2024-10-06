@@ -13,10 +13,10 @@ import video from "../../../assets/audio/video.mp4";
 import ZoomIn from "./zoom_in";
 import { useCookies } from "react-cookie";
 import { ProductContext } from "../../../views/product details/product details";
+import { Link } from "react-router-dom";
 
 function CtspProductImg(props) {
   const productContext = useContext(ProductContext);
-  // console.log("productContex", productContext);
   const [imgBig, setImgBig] = useState();
   const [imgBigZoom, setImgBigZoom] = useState();
   const [isImgVideo, setIsImgVideo] = useState(true);
@@ -153,27 +153,27 @@ function CtspProductImg(props) {
         </div>
         <div className="chiase d-flex">
           <p>Chia sẻ:</p>
-          <a href="https://www.facebook.com/duyphamk3">
+          <Link to="https://www.facebook.com/duyphamk3">
             <i
               className="fab fa-facebook"
               style={{ color: "rgb(11, 11, 174)" }}
             ></i>
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i
               className="fab fa-facebook-messenger"
               style={{ color: "blue" }}
             ></i>
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i className="fab fa-instagram-square" style={{ color: "red" }}></i>
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i
               className="fas fa-dove"
               style={{ color: "rgb(18, 217, 217)" }}
             ></i>
-          </a>
+          </Link>
           <input
             id="like"
             type="checkbox"

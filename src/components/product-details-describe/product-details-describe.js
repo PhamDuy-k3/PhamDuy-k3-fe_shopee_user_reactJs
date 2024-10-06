@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import imgsidebar from "../../assets/images/img/imgctsp/sidebar.jpg";
+import { Link } from "react-router-dom";
 function ProductDetailsDescribe({ product }) {
   let brand_id = product && product.brand_id;
   let category_id = product && product.category_id;
@@ -55,15 +56,15 @@ function ProductDetailsDescribe({ product }) {
                 <tr>
                   <td>Danh Mục</td>
                   <td>
-                    <a href="">
+                    <Link to="">
                       Shopee <i className="fas fa-angle-right"></i>
-                    </a>
-                    <a href="">
+                    </Link>
+                    <Link to="">
                       Thời Trang Nam <i className="fas fa-angle-right"></i>
-                    </a>
-                    <a href="">
+                    </Link>
+                    <Link to="">
                       Áo <i className="fas fa-angle-right"></i> Áo Phông Vip
-                    </a>
+                    </Link>
                   </td>
                 </tr>
                 <tr>

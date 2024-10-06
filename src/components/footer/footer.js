@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer>
@@ -28,14 +30,14 @@ function Footer() {
             giản hơn. Bạn có thể trò chuyện trực tiếp với nhà bán hàng để hỏi
             trực tiếp về mặt hàng cần mua. Còn nếu bạn muốn tìm mua những dòng
             sản phẩm chính hãng, uy tín,
-            <a href="https://shopee.vn/mall/">
+            <Link to="https://shopee.vn/mall/">
               <b>Shopee Mall</b>
-            </a>
+            </Link>
             chính là sự lựa chọn lí tưởng dành cho bạn. Để bạn có thể dễ dàng
             khi tìm hiểu và sử dụng sản phẩm,
-            <a href="https://shopee.vn/blog/">
+            <Link to="https://shopee.vn/blog/">
               <b>Shopee Blog - trang blog thông tin chính thức của Shopee -</b>
-            </a>
+            </Link>
             sẽ giúp bạn có thể tìm được cho mình các kiến thức về xu hướng thời
             trang, review công nghệ, mẹo làm đẹp, tin tức tiêu dùng và deal giá
             tốt bất ngờ.
@@ -45,9 +47,9 @@ function Footer() {
             giờ hết. Chỉ với vài thao tác trên ứng dụng, bạn đã có thể đăng bán
             ngay những sản phẩm của mình. Không những thế, các nhà bán hàng có
             thể tự
-            <a href="https://banhang.shopee.vn/edu/article/119">
+            <Link to="https://banhang.shopee.vn/edu/article/119">
               <b>tạo chương trình khuyến mãi trên Shopee</b>
-            </a>
+            </Link>
             để thu hút người mua với những sản phẩm có mức giá hấp dẫn. Khi đăng
             nhập tại Shopee Kênh người bán, bạn có thể dễ dàng phân loại sản
             phẩm, theo dõi đơn hàng, chăm sóc khách hàng và cập nhập ngay các
@@ -75,9 +77,9 @@ function Footer() {
             </li>
             <li>
               Cập nhập thông tin khuyến mãi,
-              <a href="https://shopee.vn/flash_sale/">
+              <Link to="https://shopee.vn/flash_sale/">
                 <b> Shopee Flash Sale</b>
-              </a>
+              </Link>
               nhanh chóng và liên tục.
             </li>
           </ol>

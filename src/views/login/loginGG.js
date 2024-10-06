@@ -12,8 +12,6 @@ const LoginGg = () => {
     "757038478487-vk3ht3iqv5hplosjkse866rs8nhbfgjh.apps.googleusercontent.com";
 
   const onSuccess = (response) => {
-    console.log("Login Success:", response);
-
     const token = response.credential;
 
     // Decode JWT token để lấy thông tin payload
@@ -43,7 +41,7 @@ const LoginGg = () => {
       exp: moment().add(1, "months").toDate(),
     });
 
-     navigate("/");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -52,9 +50,7 @@ const LoginGg = () => {
     }
   }, [cookies, navigate]);
 
-  const onFailure = (error) => {
-    console.log("Login Failed:", error);
-  };
+  const onFailure = (error) => {};
 
   return (
     <GoogleOAuthProvider clientId={clientId}>

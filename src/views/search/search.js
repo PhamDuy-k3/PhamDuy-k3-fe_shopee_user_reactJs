@@ -1,21 +1,16 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import SearchFilters from "../../components/SearchFilters/SearchFilters";
 import Footer from "../../components/footer/footer";
 import ComponentHeader from "../../components/header/header";
-import Suggest from "../../components/suggest/suggest";
 import "../../views/product/scssSp/styleSP.scss";
 import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
-import img from "..//../assets/images/img/goiy-2.jpg";
 import "./search.scss";
-import { Pagination } from "antd";
 import SuggestSP from "../product/suggest-sp";
 
 function Search() {
   const [textSearch, setTextSearch] = useState("");
   const [sumPage, setSumtPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  console.log("duy", currentPage);
   // Lấy giá trị từ localStorage
 
   useEffect(() => {
@@ -23,7 +18,6 @@ function Search() {
     setTextSearch(storedTextSearch);
   }, []);
   const urlApi = `http://localhost:5050/products?&page=${currentPage}&name=${textSearch}`;
- // console.log(urlApi);
   return (
     <div className="box-search">
       <AutoLoadPage />

@@ -8,20 +8,21 @@ import sale_outlet from "../../assets/images/img/sale-outlet.jpg";
 import sale_nap from "../../assets/images/img/sale-nap.jpg";
 import sale_quoc_te from "../../assets/images/img/sale-quoc-te.jpg";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 export function Sale() {
   const { t } = useTranslation(["home"]);
 
   return (
     <div className="sale bg-white d-flex">
       <div className="sale-item text-align">
-        <a href="https://shopee.vn/m/khung-gio-san-sale">
+        <Link to="https://shopee.vn/m/khung-gio-san-sale">
           <div className="sale-item-image">
             <img src={sale_time} alt="" />
           </div>
           <div className="sale-item-text">
             <p>{t("aside sale.flash_sale_hours")}</p>
           </div>
-        </a>
+        </Link>
       </div>
       <div className="sale-item text-align">
         <div className="sale-item-image">

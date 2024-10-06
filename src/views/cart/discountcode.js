@@ -22,7 +22,7 @@ const DiscountCode = (props) => {
       console.error("Error fetching data:", error);
     }
   };
-  
+
   const fetchDataDiscountcodeChoese = async () => {
     try {
       const response = await axios.get(
@@ -37,10 +37,10 @@ const DiscountCode = (props) => {
   useEffect(() => {
     fetchDataDiscountcode();
   }, []);
+
   const handelIsDisplay = () => {
     setIsDisplay(true);
   };
-  console.log(response);
   const handleDiscountcode = (code) => {
     if (selectedDiscountCodes.includes(code)) {
       setSelectedDiscountCodes(
@@ -56,7 +56,6 @@ const DiscountCode = (props) => {
     setIsDisplay(false);
   };
 
-  console.log(props.total);
   return (
     <>
       <div className="d-flex" id="discountCode">

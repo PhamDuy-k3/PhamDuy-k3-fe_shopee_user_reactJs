@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import imgFlastSale from "../../../assets/images/img/imgctsp/logo-sale.jpg";
 import Time from "../../timer/time";
@@ -157,9 +157,9 @@ function CtspProductInfor(props) {
         </p>
 
         <p>
-          <a style={{ color: "#9b9997" }} href="#feedBack">
+          <Link style={{ color: "#9b9997" }} to="#feedBack">
             <span>565</span>&nbsp; Đánh Giá
-          </a>
+          </Link>
         </p>
         <p>
           <span>3,2</span>

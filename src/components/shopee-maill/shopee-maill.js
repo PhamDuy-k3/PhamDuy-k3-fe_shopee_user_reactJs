@@ -1,30 +1,33 @@
 import { useTranslation } from "react-i18next";
 import sidebar from "../../assets/images/img/sidebar.jpg";
+import { Link } from "react-router-dom";
 
 function ShopeeMaill(props) {
   const listProduct = props?.list.slice(20, 28);
   const { t } = useTranslation(["home"]);
 
   const shopee_maill =
-    listProduct.length > 0
-      ? listProduct.map((product) => {
-          return (
-            <div key={product.id} className="shopee-maill-poduct">
-              <a href="">
-                <div className="shopee-maill-poduct-img">
-                  <img src={product.thumbnail} alt={product.title} />
-                </div>
-                <div className="shopee-maill-poduct-logo">
-                  <img src={product.thumbnail} alt={product.title} />
-                </div>
-              </a>
-              <div className="shopee-maill-poduct-text">
-                <p>Mua là có quà</p>
+    listProduct.length > 0 ? (
+      listProduct.map((product) => {
+        return (
+          <div key={product.id} className="shopee-maill-poduct">
+            <Link href="">
+              <div className="shopee-maill-poduct-img">
+                <img src={product.thumbnail} alt={product.title} />
               </div>
+              <div className="shopee-maill-poduct-logo">
+                <img src={product.thumbnail} alt={product.title} />
+              </div>
+            </Link>
+            <div className="shopee-maill-poduct-text">
+              <p>Mua là có quà</p>
             </div>
-          );
-        })
-      : <p>Không có sản phẩm</p>;
+          </div>
+        );
+      })
+    ) : (
+      <p>Không có sản phẩm</p>
+    );
 
   return (
     <section className="shopee-maill col-12 bg-white">

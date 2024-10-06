@@ -9,7 +9,6 @@ export const updateToCartsAsync = async (_id, quantity, sum, fetchProducts) => {
       quantity,
       sum,
     });
-    console.log("Update successful:", response.data);
     fetchProducts();
     return response.data;
   } catch (error) {

@@ -56,7 +56,6 @@ const cartReducer = (state = initialState, action) => {
   }
 };
 const productsReducer = (state = initialStateProduct, action) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_PRODUCT_REQUEST:
       return {

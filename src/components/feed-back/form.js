@@ -134,6 +134,7 @@ function FormComment({ productID, userID, fetchDataComment, setComments }) {
         style={{
           marginLeft: "70%",
           marginTop: "1rem",
+          marginBottom: "1rem",
           backgroundColor: "#FC5A31",
           border: "none",
         }}

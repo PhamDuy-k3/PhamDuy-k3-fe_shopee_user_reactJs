@@ -44,8 +44,6 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-
         // Kiểm tra xác thực
         if (res.isVerified !== true) {
           alert("Tài khoản chưa xác thực!");
@@ -173,10 +171,10 @@ function Login() {
             </div>
             <div className="infor-login-forget d-flex">
               <p>
-                <a href="">Quên mật khẩu</a>
+                <Link to="">Quên mật khẩu</Link>
               </p>
               <p>
-                <a href="">Đăng nhập với SMS</a>
+                <Link to="">Đăng nhập với SMS</Link>
               </p>
             </div>
             <hr />

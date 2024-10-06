@@ -45,7 +45,6 @@ function FeedBack() {
   useEffect(() => {
     fetchDataComment();
   }, []);
-  console.log(comments);
   return (
     <section id="feedBack" className="feed-back">
       <h1>ĐÁNH GIÁ SẢN PHẨM</h1>
@@ -143,7 +142,7 @@ function FeedBack() {
             </div>
           ))
         ) : (
-          <p>không có comment nào</p>
+          <p></p>
         )}
       </div>
     </section>

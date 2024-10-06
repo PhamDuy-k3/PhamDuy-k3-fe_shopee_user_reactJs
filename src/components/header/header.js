@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/img/logo.png";
 import imgTb from "../../assets/images/img/tbao.jpg";
+import avatarDefault from "../../assets/images/img/avatar_default.jpg";
 import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
@@ -35,7 +36,6 @@ function ComponentHeader() {
     setIsChangeLag(false);
   };
   const searchProduct = (data) => {
-    //console.log(data);
     localStorage.setItem("text_search", JSON.stringify(data.search));
     navigate(`/search?keyword=${data.search}`);
   };
@@ -64,7 +64,7 @@ function ComponentHeader() {
     e.preventDefault();
     removeCookies("user_token");
     removeCookies("phone_user");
-    window.location.href = "http://localhost:3000/#/login";
+    window.location.to = "http://localhost:3000/#/login";
   };
   //handel info
   const handleIsInfo = () => {
@@ -87,21 +87,21 @@ function ComponentHeader() {
         <nav className="nav-one col-6">
           <ul className="d-flex">
             <li>
-              <a href="">
+              <Link to="">
                 {t("aside header.Seller_channel")}
                 <span className="vertical"></span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="">
+              <Link to="">
                 {t("aside header.Become_a_shopee_seller")}
                 <span className="vertical"></span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="">
+              <Link to="">
                 {t("aside header.Download")} <span className="vertical"></span>{" "}
-              </a>
+              </Link>
               <div style={{ position: "absolute" }} className="download">
                 <img style={{ width: "10px" }} src="img/downlload.jpg" alt="" />
                 <p>appStore</p>
@@ -109,7 +109,7 @@ function ComponentHeader() {
               </div>
             </li>
             <li>
-              <a href=""> {t("aside header.Follow_us_on")}</a>
+              <Link to=""> {t("aside header.Follow_us_on")}</Link>
               &nbsp;
               <Link to="https://www.facebook.com/duyphamk3">
                 <i className="fab fa-facebook" style={{ color: "#ffffff" }}></i>
@@ -127,10 +127,10 @@ function ComponentHeader() {
         <nav className="nav-two col-6">
           <ul className="d-flex">
             <li>
-              <a href="">
+              <Link to="">
                 <p className="far fa-bell"></p>
                 &nbsp; {t("aside header.Notifications")}
-              </a>
+              </Link>
               <div className="Notification-triangle">
                 <div id="triangle-up"></div>
 
@@ -163,10 +163,10 @@ function ComponentHeader() {
               </div>
             </li>
             <li>
-              <a href="">
+              <Link to="">
                 <i className="far fa-question-circle"></i>{" "}
                 {t("aside header.Help")}
-              </a>
+              </Link>
             </li>
             <li onMouseOver={handelMultilingual} style={{ color: "white" }}>
               <i className="fas fa-globe"></i> {currentLanguage}
@@ -196,7 +196,11 @@ function ComponentHeader() {
               <>
                 <li>
                   <ul id="img-name-user" className="d-flex">
-                    <img src={user && user.avatar} alt="User Avatar" />
+                    {user && user.avatar ? (
+                      <img src={user && user.avatar} alt="User Avatar" />
+                    ) : (
+                      <img src={avatarDefault} alt="User Avatar" />
+                    )}
                     <li onMouseOver={handleIsInfo} style={{ color: "white" }}>
                       {user && user.name
                         ? user.name
@@ -216,7 +220,7 @@ function ComponentHeader() {
                         <NavLink to="/CartOder">
                           <li>{t("aside header.my_purchase")}</li>
                         </NavLink>
-                        <NavLink id="" href="/" onClick={(e) => logout(e)}>
+                        <NavLink id="" to="/" onClick={(e) => logout(e)}>
                           <li>{t("aside header.logout")}</li>
                         </NavLink>
                       </ul>
@@ -251,34 +255,34 @@ function ComponentHeader() {
           <nav className="nav-three col-12">
             <ul className="d-flex">
               <li>
-                <a href="">{t("aside header.Men_shoes")}</a>
+                <Link to="">{t("aside header.Men_shoes")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.sportswear")}</a>
+                <Link to="">{t("aside header.sportswear")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.sandals")}</a>
+                <Link to="">{t("aside header.sandals")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.trousers")}</a>
+                <Link to="">{t("aside header.trousers")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.badminton_racket")}</a>
+                <Link to="">{t("aside header.badminton_racket")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.outfit_set")}</a>
+                <Link to="">{t("aside header.outfit_set")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.t_shirt")}</a>
+                <Link to="">{t("aside header.t_shirt")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.hoodie")}</a>
+                <Link to="">{t("aside header.hoodie")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.phone")}</a>
+                <Link to="">{t("aside header.phone")}</Link>
               </li>
               <li>
-                <a href="">{t("aside header.women_jacket")}</a>
+                <Link to="">{t("aside header.women_jacket")}</Link>
               </li>
             </ul>
           </nav>

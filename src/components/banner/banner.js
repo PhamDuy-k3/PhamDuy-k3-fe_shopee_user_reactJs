@@ -5,7 +5,7 @@ import banner_big1 from "../../assets/images/img/banner-to-1.jfif";
 import banner_big4 from "../../assets/images/img/banner-to-4.jfif";
 import banner_small_1 from "../../assets/images/img/banner-small-one.jfif";
 import banner_small_2 from "../../assets/images/img/banner-small-two.jfif";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Banner() {
   return (
@@ -13,24 +13,24 @@ function Banner() {
       <div className="banner d-flex col-12">
         <Carousel className="baner-big col-8" id="myCarousel">
           <Carousel.Item>
-            <a href="https://shopee.vn/m/11-11">
+            <Link to="">
               <img className="banner-img " src={banner_big1} alt="" />
-            </a>
+            </Link>
           </Carousel.Item>
           <Carousel.Item>
-            <a href="https://shopee.vn/m/11-11">
+            <Link to="">
               <img className="banner-img" src={banner_big2} alt="" />
-            </a>
+            </Link>
           </Carousel.Item>
           <Carousel.Item>
-            <a href="https://shopee.vn/m/11-11">
+            <Link to="">
               <img className="banner-img" src={banner_big3} alt="" />
-            </a>
+            </Link>
           </Carousel.Item>
           <Carousel.Item>
-            <a href="https://shopee.vn/m/11-11">
+            <Link to="">
               <img className="banner-img" src={banner_big4} alt="" />
-            </a>
+            </Link>
           </Carousel.Item>
         </Carousel>
         <div className="baner-small col-4">

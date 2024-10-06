@@ -59,16 +59,6 @@ function Cart() {
     FetchCartsByIdUser(setCarts, cookies.id_user);
   };
 
-  useEffect(() => {
-    fetchProducts();
-    setIdUserOder(cookies.id_user);
-  }, []);
-
-  useEffect(() => {
-    if (carts.length > 0) {
-      localStorage.setItem("carts_length", carts.length);
-    }
-  }, [carts]);
   // tính tổng tiền các sản phẩm có trong gio hàng
 
   const totalSum = useMemo(() => {
@@ -76,6 +66,11 @@ function Cart() {
       return accumulator + parseFloat(product.sum);
     }, 0);
   }, [carts]);
+
+  useEffect(() => {
+    fetchProducts();
+    setIdUserOder(cookies.id_user);
+  }, []);
 
   useEffect(() => {
     setTotal(totalSum);
