@@ -27,10 +27,12 @@ function OrderLoading() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const ids_product = sessionStorage.getItem("ids_product");
+
   const fetchProducts = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5050/carts/?id_user=${cookies.id_user}`,
+        `http://localhost:5050/carts/getCartsByUserIdAndIdProduct/?id_user=${cookies.id_user}&ids_product=${ids_product}`,
         {
           method: "GET",
           headers: {
@@ -39,14 +41,11 @@ function OrderLoading() {
           },
         }
       );
-
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
       const data = await response.json();
       setCarts(data.data || []);
-      console.log(data.data);
     } catch (error) {
       console.error("Error fetching API:", error);
     }
@@ -68,7 +67,6 @@ function OrderLoading() {
     }, 0);
     setTotal(totalSum);
   }, [carts]);
-  console.log(total);
 
   //tạo đơn hàng
   const createCartOder = async (data) => {
@@ -87,7 +85,7 @@ function OrderLoading() {
   // xóa cart theo id người dùng
   const deleteCartsByUserId = async (userId) => {
     const array = [];
-    deleteToCartsAsync( fetchProducts, cookies.id_user);
+    deleteToCartsAsync(fetchProducts, cookies.id_user);
     dispatch(deleteCarts(array));
   };
   // ghi chú
@@ -165,6 +163,8 @@ function OrderLoading() {
                             type="checkbox"
                             name="check-store"
                             id="check-store"
+                            checked={true}
+                            disabled
                           />
                           Name-store
                         </div>
@@ -181,6 +181,8 @@ function OrderLoading() {
                               className="Checkbox"
                               type="checkbox"
                               name="check-sp"
+                              checked={true}
+                              disabled
                             />
                             <img
                               style={{ height: "7rem" }}

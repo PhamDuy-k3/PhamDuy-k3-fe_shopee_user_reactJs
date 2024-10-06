@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 import Menu from "./menu";
 import ComponentHeader from "../../components/header/header";
+import { VND } from "../../components/VND/vnd";
 
 function CartOder() {
   const [sumSp, setSumSp] = useState(0);
@@ -36,11 +37,6 @@ function CartOder() {
   useEffect(() => {
     fetchCartsOder();
   }, [status]);
-
-  const VND = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
 
   useEffect(() => {
     setSumSp(cartsOder.length);

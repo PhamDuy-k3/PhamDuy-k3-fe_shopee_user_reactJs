@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./scssCart/styleCart.scss";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   deleteCarts,
   removeFromCart,
   updateProductList,
 } from "../../redux/action";
 import { useCookies } from "react-cookie";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 import ComponentHeader from "../../components/header/header";
 import { VND } from "../../components/VND/vnd";
 import { deleteToCartAsync, deleteToCartsAsync } from "../../api/delete";
+import { updateToCartsAsync } from "../../api/update";
 
 // chưa chek trùng sản phẩm
 
@@ -21,11 +21,37 @@ function Cart() {
   const [carts, setCarts] = useState([]);
   const [cookies, setCookie] = useCookies();
   const [id_user_oder, setIdUserOder] = useState();
+  const [idProductChooses, setIdProductChooses] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const checkboxRef = useRef(null);
   // lấy danh sách cart trog store
-  const carts_store = useSelector((state) => state.cart.items);
+
+  // Chọn từng checkbox
+  const handleChosesCheckbox = (id) => {
+    const updatedChoices = idProductChooses.includes(id)
+      ? idProductChooses.filter((item) => item !== id)
+      : [...idProductChooses, id];
+
+    setIdProductChooses(updatedChoices);
+
+    if (updatedChoices.length !== carts.length) {
+      checkboxRef.current.checked = false;
+    } else {
+      checkboxRef.current.checked = true;
+    }
+  };
+
+  // Chọn tất cả checkbox
+  const handleChosesCheckboxAll = (event) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      const allProductIds = carts.map((cart) => cart._id);
+      setIdProductChooses(allProductIds);
+    } else {
+      setIdProductChooses([]);
+    }
+  };
 
   //danh sách sản phẩm người dùng chọn
   const fetchProducts = async () => {
@@ -53,9 +79,6 @@ function Cart() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
-
-  useEffect(() => {
     setIdUserOder(cookies.id_user);
   }, []);
 
@@ -70,21 +93,6 @@ function Cart() {
   useEffect(() => {
     setTotal(totalSum);
   }, [carts]);
-
-  const updateToCartsAsync = async (_id, quantity, sum) => {
-    try {
-      const response = await axios.put(`http://localhost:5050/carts/${_id}`, {
-        quantity,
-        sum,
-      });
-      console.log("Update successful:", response.data);
-      fetchProducts();
-      return response.data;
-    } catch (error) {
-      console.error("Error updating cart:", error.message);
-      return null;
-    }
-  };
 
   const handleQuantity = useCallback(
     (id, a) => {
@@ -101,7 +109,7 @@ function Cart() {
           const quantity = quantity_new;
           const _id = product._id;
           const sum = quantity_new * +product.price;
-          updateToCartsAsync(_id, quantity, sum);
+          updateToCartsAsync(_id, quantity, sum, fetchProducts);
           return {
             ...product,
             quantity: quantity,
@@ -110,7 +118,6 @@ function Cart() {
         }
         return product;
       });
-
       dispatch(updateProductList(updatedProducts));
     },
     [carts, dispatch]
@@ -123,13 +130,12 @@ function Cart() {
         return;
       }
       const newQuantity = parseFloat(event.target.value) || 0;
-
       const updatedProducts = carts.map((product) => {
         if (product._id === id) {
           const quantity = newQuantity;
           const _id = product._id;
           const sum = quantity * +product.price;
-          updateToCartsAsync(_id, quantity, sum);
+          updateToCartsAsync(_id, quantity, sum, fetchProducts);
           return {
             ...product,
             quantity: quantity,
@@ -144,19 +150,20 @@ function Cart() {
   );
 
   // xóa sản phẩm theo id
-  const deleteProduct = (id) => {
-    deleteToCartAsync(id, fetchProducts);
+  const deleteProduct = async (id) => {
+    await deleteToCartAsync(id, fetchProducts);
     dispatch(removeFromCart(id));
   };
 
   //xóa tất cả các sản phẩm trong giỏ hàng dựa vào id khách hàng
-  const handelDeleteProductList = () => {
+  const handelDeleteProductList = async () => {
     const array = [];
-    deleteToCartsAsync(fetchProducts, cookies.id_user);
+    await deleteToCartsAsync(fetchProducts, cookies.id_user);
     dispatch(deleteCarts(array));
   };
 
   const handleBuy = async () => {
+    sessionStorage.setItem("ids_product", idProductChooses);
     navigate("/OrderLoading");
   };
 
@@ -214,6 +221,8 @@ function Cart() {
                             <input
                               className="Checkbox"
                               type="checkbox"
+                              checked={idProductChooses.includes(cart._id)}
+                              onChange={() => handleChosesCheckbox(cart._id)}
                               name="check-sp"
                             />
                             <img
@@ -298,11 +307,14 @@ function Cart() {
 
                 <div className="d-flex mt-3 colum-4">
                   <div className="col-2">
-                    <input type="checkbox" id="masterCheckbox" /> Chọn tất Cả (
-                    <span className="quantityCart-one">
-                      {carts_store.length}
-                    </span>
-                    )
+                    <input
+                      onChange={handleChosesCheckboxAll}
+                      type="checkbox"
+                      id="masterCheckbox"
+                      ref={checkboxRef}
+                    />{" "}
+                    Chọn tất Cả (
+                    <span className="quantityCart-one">{carts.length}</span>)
                   </div>
 
                   <div className="col-1">
@@ -319,10 +331,8 @@ function Cart() {
                   <div className="col-4 d-flex">
                     <p>
                       Tổng thanh toán (
-                      <span className="quantityCart-two">
-                        {carts_store.length}
-                      </span>
-                      ) sản phẩm :
+                      <span className="quantityCart-two">{carts.length}</span>)
+                      sản phẩm :
                     </p>
                     <div
                       style={{ color: "#ee4d2d", fontSize: "1.5rem" }}
