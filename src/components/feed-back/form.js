@@ -44,6 +44,9 @@ function FormComment({ productID, userID, fetchDataComment, setComments }) {
   }, []);
 
   useEffect(() => {
+    if (!cookies.phone_user) {
+      return;
+    }
     fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
       method: "GET",
       headers: {

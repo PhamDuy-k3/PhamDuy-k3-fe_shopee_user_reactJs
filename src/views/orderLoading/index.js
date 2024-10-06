@@ -31,6 +31,9 @@ function OrderLoading() {
 
   const fetchProducts = async () => {
     try {
+      if (!cookies.id_user && !ids_product) {
+        return;
+      }
       const response = await fetch(
         `http://localhost:5050/carts/getCartsByUserIdAndIdProduct/?id_user=${cookies.id_user}&ids_product=${ids_product}`,
         {

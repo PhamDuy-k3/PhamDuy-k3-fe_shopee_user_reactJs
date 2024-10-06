@@ -48,6 +48,9 @@ export default function ComfirmCode() {
   };
 
   const searchUser = () => {
+    if (!cookies.id_user_register) {
+      return;
+    }
     fetch(
       `http://localhost:5050/auth/searchRegister/${cookies.id_user_register}`,
       {

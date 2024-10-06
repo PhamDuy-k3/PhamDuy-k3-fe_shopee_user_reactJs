@@ -28,35 +28,34 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (cookies.phone_user && cookies.user_token) {
-      fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.user_token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.data && res.data.length > 0) {
-            const userData = res.data[0];
-            setUser(userData);
-            setIdUser(userData._id);
-            setValue("name", userData.name);
-            setValue("phone", userData.phone);
-            setValue("email", userData.email);
-            setValue("gender", userData.gender === 1 ? "male" : "female");
-          }
-        })
-        .catch((error) => {
-          toast.error("Không thể tải dữ liệu người dùng.");
-          console.error(error);
-        });
-    } else {
-      toast.error("Thiếu thông tin xác thực.");
+    if (!cookies.phone_user && !cookies.user_token) {
+      return;
     }
-  }, [cookies, setValue]);
+    fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.user_token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          const userData = res.data[0];
+          setUser(userData);
+          setIdUser(userData._id);
+          setValue("name", userData.name);
+          setValue("phone", userData.phone);
+          setValue("email", userData.email);
+          setValue("gender", userData.gender === 1 ? "male" : "female");
+        }
+      })
+      .catch((error) => {
+        toast.error("Không thể tải dữ liệu người dùng.");
+        console.error(error);
+      });
+  }, [cookies]);
 
   function formatDate(isoDate) {
     const date = new Date(isoDate);

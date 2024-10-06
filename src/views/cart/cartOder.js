@@ -18,6 +18,9 @@ function CartOder() {
   //danh sách sản phẩm người dùng order
   const fetchCartsOder = async () => {
     try {
+      if (!cookies.id_user && !status) {
+        return;
+      }
       const response = await fetch(
         `http://localhost:5050/cartsOder/?id_user_oder=${cookies.id_user}&status=${status}`
       );

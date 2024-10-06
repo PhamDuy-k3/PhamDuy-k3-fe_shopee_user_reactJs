@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import imgFlastSale from "../../../assets/images/img/imgctsp/logo-sale.jpg";
 import Time from "../../timer/time";
@@ -15,7 +15,6 @@ import imgSmall3 from "..//..//../assets/images/img/imgctsp/banner-con-3.jpg";
 import imgSmall4 from "..//..//../assets/images/img/imgctsp/banner-con-4.jpg";
 import { addToCart } from "../../../redux/action";
 import { useCookies } from "react-cookie";
-import io from "socket.io-client";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
@@ -39,6 +38,9 @@ function CtspProductInfor(props) {
 
   const fetchProducts = async () => {
     try {
+      if (!cookies.id_user) {
+        return;
+      }
       const response = await fetch(
         `http://localhost:5050/carts/?id_user=${cookies.id_user}`
       );

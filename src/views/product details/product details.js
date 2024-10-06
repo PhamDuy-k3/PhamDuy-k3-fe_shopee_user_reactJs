@@ -18,6 +18,9 @@ function ProductDetails() {
   const [cookies, setCookie] = useCookies();
 
   useEffect(() => {
+    if (!url_id.product_id) {
+      return;
+    }
     fetch(`http://localhost:5050/products/${url_id.product_id}`, {
       method: "GET",
       headers: {

@@ -13,6 +13,7 @@ import ComponentHeader from "../../components/header/header";
 import { VND } from "../../components/VND/vnd";
 import { deleteToCartAsync, deleteToCartsAsync } from "../../api/delete";
 import { updateToCartsAsync } from "../../api/update";
+import { FetchCartsByIdUser } from "../../api/fetchCartByIdUser";
 
 // chưa chek trùng sản phẩm
 
@@ -55,26 +56,7 @@ function Cart() {
 
   //danh sách sản phẩm người dùng chọn
   const fetchProducts = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:5050/carts/?id_user=${cookies.id_user}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data && data.data) {
-        setCarts(data.data);
-        console.log(data.data);
-      } else {
-        console.warn("No data found:", data);
-      }
-    } catch (error) {
-      console.error("Error fetching API:", error);
-    }
+    FetchCartsByIdUser(setCarts, cookies.id_user);
   };
 
   useEffect(() => {
@@ -82,6 +64,11 @@ function Cart() {
     setIdUserOder(cookies.id_user);
   }, []);
 
+  useEffect(() => {
+    if (carts.length > 0) {
+      localStorage.setItem("carts_length", carts.length);
+    }
+  }, [carts]);
   // tính tổng tiền các sản phẩm có trong gio hàng
 
   const totalSum = useMemo(() => {

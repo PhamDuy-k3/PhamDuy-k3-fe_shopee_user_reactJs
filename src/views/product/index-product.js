@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Pagination } from "antd";
-import { fetchAllProducts } from "../../redux/action";
-import { Outlet, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import ComponentHeader from "../../components/header/header";
 import banner from "../../assets/images/img/imgSp/banner1.jpg";
 import ShopeeMaillSp from "../../components/shopee-Mail-sp/shopee-Mail-sp";
 import SuperStore from "../../components/super-store/super-store";
 import CategoryTitleSp from "../../components/category-title-sp/category-title-sp";
 import Footer from "../../components/footer/footer";
-import Suggest from "../../components/suggest/suggest";
 import "./scssSp/styleSP.scss";
 import SuggestSP from "./suggest-sp";
 import { useTranslation } from "react-i18next";
@@ -27,8 +24,6 @@ function IndexProduct() {
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
   };
-
-
 
   return (
     <>

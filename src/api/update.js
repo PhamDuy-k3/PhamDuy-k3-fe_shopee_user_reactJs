@@ -2,6 +2,9 @@ import axios from "axios";
 
 export const updateToCartsAsync = async (_id, quantity, sum, fetchProducts) => {
   try {
+    if (!_id) {
+      return;
+    }
     const response = await axios.put(`http://localhost:5050/carts/${_id}`, {
       quantity,
       sum,

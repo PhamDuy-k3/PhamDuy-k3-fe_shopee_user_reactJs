@@ -31,6 +31,9 @@ function Login() {
   }, []);
 
   const login = (data) => {
+    if (!data) {
+      return;
+    }
     fetch("http://localhost:5050/auth/login", {
       method: "POST",
       body: JSON.stringify(data),

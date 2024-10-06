@@ -30,6 +30,9 @@ function FeedBack() {
   };
   const fetchDataComment = async () => {
     try {
+      if (!urlProductID.product_id) {
+        return;
+      }
       const response = await axios.get(
         `http://localhost:5050/comments?productId=${urlProductID.product_id}`
       );

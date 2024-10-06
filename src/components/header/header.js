@@ -1,6 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { memo } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/img/logo.png";
@@ -9,13 +8,13 @@ import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 import { locales } from "../../i18n/i18n";
-import io from "socket.io-client";
 
 function ComponentHeader() {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookies] = useCookies();
   const [isInfor, setIsInfor] = useState(false);
   const [user, setUser] = useState();
+  const [carts, setCarts] = useState([]);
   const { i18n } = useTranslation();
   const [isChangeLag, setIsChangeLag] = useState(false);
   const currentLanguage = locales[i18n.language];
@@ -43,6 +42,9 @@ function ComponentHeader() {
 
   // lấy user qua phone
   useEffect(() => {
+    if (!cookies.phone_user) {
+      return;
+    }
     fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
       method: "GET",
       headers: {

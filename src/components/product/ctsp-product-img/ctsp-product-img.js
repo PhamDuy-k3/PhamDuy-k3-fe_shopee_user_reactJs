@@ -16,7 +16,7 @@ import { ProductContext } from "../../../views/product details/product details";
 
 function CtspProductImg(props) {
   const productContext = useContext(ProductContext);
- // console.log("productContex", productContext);
+  // console.log("productContex", productContext);
   const [imgBig, setImgBig] = useState();
   const [imgBigZoom, setImgBigZoom] = useState();
   const [isImgVideo, setIsImgVideo] = useState(true);
@@ -31,6 +31,9 @@ function CtspProductImg(props) {
 
   const fetchProducts = async () => {
     try {
+      if (!productId) {
+        return;
+      }
       const res = await fetch(`http://localhost:5050/products/${productId}`, {
         method: "GET",
         headers: {
@@ -38,12 +41,24 @@ function CtspProductImg(props) {
           Authorization: `Bearer ${cookies.user_token}`,
         },
       });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
       const data = await res.json();
 
-      if (data.data.likedBy.length === 0) {
+      const likedBy = data?.data?.likedBy || [];
+
+      if (likedBy.length === 0) {
         setIsLike(false);
       }
-      setProduct(data.data);
+
+      if (data?.data) {
+        setProduct(data.data);
+      } else {
+        console.error("Product data is undefined");
+      }
     } catch (error) {
       console.error("Error fetching product:", error);
     }

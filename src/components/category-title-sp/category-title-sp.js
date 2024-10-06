@@ -14,10 +14,22 @@ const getCategoryItems = (t) => [
     icon: <MailOutlined />,
     label: t("side bar.Men_Clothing"),
     children: [
-      { key: "11", label: t("side bar.Shirts"), link: "/mens/shirts" },
-      { key: "12", label: t("side bar.Pants"), link: "/mens/pants" },
-      { key: "13", label: t("side bar.Jackets"), link: "/mens/jackets" },
-      { key: "14", label: t("side bar.Suits"), link: "/mens/suits" },
+      {
+        key: "11",
+        label: <NavLink to="/mens/shirts">{t("side bar.Shirts")}</NavLink>,
+      },
+      {
+        key: "12",
+        label: <NavLink to="/mens/pants">{t("side bar.Pants")}</NavLink>,
+      },
+      {
+        key: "13",
+        label: <NavLink to="/mens/jackets">{t("side bar.Jackets")}</NavLink>,
+      },
+      {
+        key: "14",
+        label: <NavLink to="/mens/suits">{t("side bar.Suits")}</NavLink>,
+      },
     ],
   },
   {
@@ -25,10 +37,22 @@ const getCategoryItems = (t) => [
     icon: <AppstoreOutlined />,
     label: t("side bar.Women_Clothing"),
     children: [
-      { key: "21", label: t("side bar.Dresses"), link: "/womens/dresses" },
-      { key: "22", label: t("side bar.Skirts"), link: "/womens/skirts" },
-      { key: "23", label: t("side bar.Blouses"), link: "/womens/blouses" },
-      { key: "24", label: t("side bar.Coats"), link: "/womens/coats" },
+      {
+        key: "21",
+        label: <NavLink to="/womens/dresses">{t("side bar.Dresses")}</NavLink>,
+      },
+      {
+        key: "22",
+        label: <NavLink to="/womens/skirts">{t("side bar.Skirts")}</NavLink>,
+      },
+      {
+        key: "23",
+        label: <NavLink to="/womens/blouses">{t("side bar.Blouses")}</NavLink>,
+      },
+      {
+        key: "24",
+        label: <NavLink to="/womens/coats">{t("side bar.Coats")}</NavLink>,
+      },
     ],
   },
   {
@@ -36,10 +60,24 @@ const getCategoryItems = (t) => [
     icon: <SettingOutlined />,
     label: t("side bar.Accessories"),
     children: [
-      { key: "31", label: t("side bar.Hats"), link: "/accessories/hats" },
-      { key: "32", label: t("side bar.Bags"), link: "/accessories/bags" },
-      { key: "33", label: t("side bar.Belts"), link: "/accessories/belts" },
-      { key: "34", label: t("side bar.Scarves"), link: "/accessories/scarves" },
+      {
+        key: "31",
+        label: <NavLink to="/accessories/hats">{t("side bar.Hats")}</NavLink>,
+      },
+      {
+        key: "32",
+        label: <NavLink to="/accessories/bags">{t("side bar.Bags")}</NavLink>,
+      },
+      {
+        key: "33",
+        label: <NavLink to="/accessories/belts">{t("side bar.Belts")}</NavLink>,
+      },
+      {
+        key: "34",
+        label: (
+          <NavLink to="/accessories/scarves">{t("side bar.Scarves")}</NavLink>
+        ),
+      },
     ],
   },
 ];
@@ -60,21 +98,8 @@ const CategoryTitleSp = () => {
         openKeys={stateOpenKeys}
         onOpenChange={onOpenChange}
         style={{ width: 200 }}
-      >
-        {getCategoryItems(t).map((category) => (
-          <Menu.SubMenu
-            key={category.key}
-            icon={category.icon}
-            title={category.label}
-          >
-            {category.children.map((item) => (
-              <Menu.Item key={item.key}>
-                <NavLink to={item.link}>{item.label}</NavLink>
-              </Menu.Item>
-            ))}
-          </Menu.SubMenu>
-        ))}
-      </Menu>
+        items={getCategoryItems(t)} // Sử dụng thuộc tính items
+      />
       {/* <SearchFilters /> */}
     </div>
   );

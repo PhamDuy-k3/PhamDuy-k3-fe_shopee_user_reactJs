@@ -3,33 +3,54 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function UpDownQuantity({ quantity, setQuantity, product }) {
-  //const [quantity, setQuantity] = useState(1);
-  const [totalProducts, setTotalProducts] = useState(123);
+  const [totalProducts, setTotalProducts] = useState(0);
 
   useEffect(() => {
-    setTotalProducts(product?.stock);
-  }, [product]);
+    if (product) {
+      setTotalProducts(product.stock);
+      // Đặt lại quantity nếu lớn hơn số lượng sản phẩm có sẵn
+      if (quantity > product.stock) {
+        setQuantity(product.stock);
+      }
+    }
+  }, [product, quantity, setQuantity]);
 
-  const handelUpQuantity = () => {
+  const handleUpQuantity = () => {
     if (quantity >= totalProducts) {
-      setQuantity(totalProducts);
-      toast.error(() => (
-        <p style={{ paddingTop: "1rem" }}>Quá số lượng sản phẩm có sẵn!</p>
-      ));
+      toast.error("Quá số lượng sản phẩm có sẵn!");
     } else {
       setQuantity(quantity + 1);
     }
   };
-  const handelDownQuantity = () => {
+
+  const handleDownQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
     } else {
-      setQuantity(1);
+      toast.error("Số lượng tối thiểu là 1");
     }
   };
-  function handelChange(e) {
-    setQuantity(e.target.value);
-  }
+
+  const handleChange = (e) => {
+    const quantity_ = e.target.value;
+
+    if (quantity_ === "") {
+      setQuantity("");
+      return;
+    }
+
+    const quantityNumber = parseInt(quantity_, 10);
+    if (quantityNumber > totalProducts) {
+      toast.error("Quá số lượng sản phẩm có sẵn!");
+      setQuantity(totalProducts);
+    } else if (quantityNumber < 1 || isNaN(quantityNumber)) {
+      toast.error("Số lượng tối thiểu là 1");
+      setQuantity(1);
+    } else {
+      setQuantity(quantityNumber);
+    }
+  };
+
   return (
     <div className="number-text d-flex">
       <ToastContainer
@@ -45,18 +66,17 @@ function UpDownQuantity({ quantity, setQuantity, product }) {
         theme="light"
         style={{ width: "350px" }}
       />
-      <button onClick={handelDownQuantity} className="down">
+      <button onClick={handleDownQuantity} className="down">
         -
       </button>
       <input
-        // onChange={(e) => setQuantity(e.target.value)}
-        onChange={(e) => handelChange(e)}
-        className="quanty"
+        onChange={handleChange}
+        className="quantity"
         type="number"
         min="1"
         value={quantity}
       />
-      <button onClick={handelUpQuantity} className="up">
+      <button onClick={handleUpQuantity} className="up">
         +
       </button>
       <p>
@@ -65,4 +85,5 @@ function UpDownQuantity({ quantity, setQuantity, product }) {
     </div>
   );
 }
+
 export default UpDownQuantity;

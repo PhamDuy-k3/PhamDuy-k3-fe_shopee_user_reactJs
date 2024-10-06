@@ -7,6 +7,9 @@ function ProductDetailsDescribe({ product }) {
   const [category, setCategory] = useState();
 
   useEffect(() => {
+    if (!brand_id) {
+      return;
+    }
     fetch(`http://localhost:5050/brands/${brand_id}`, {
       method: "GET",
       headers: {
@@ -22,6 +25,9 @@ function ProductDetailsDescribe({ product }) {
   }, [brand_id]);
 
   useEffect(() => {
+    if (!category_id) {
+      return;
+    }
     fetch(`http://localhost:5050/categories/${category_id}`, {
       method: "GET",
       headers: {
