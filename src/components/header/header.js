@@ -64,7 +64,7 @@ function ComponentHeader() {
     e.preventDefault();
     removeCookies("user_token");
     removeCookies("phone_user");
-    window.location.to = "http://localhost:3000/#/login";
+    window.location.href = "http://localhost:3000/#/login";
   };
   //handel info
   const handleIsInfo = () => {
@@ -220,9 +220,9 @@ function ComponentHeader() {
                         <NavLink to="/CartOder">
                           <li>{t("aside header.my_purchase")}</li>
                         </NavLink>
-                        <NavLink id="" to="/" onClick={(e) => logout(e)}>
+                        <Link id="" href="/" onClick={(e) => logout(e)}>
                           <li>{t("aside header.logout")}</li>
-                        </NavLink>
+                        </Link>
                       </ul>
                     </div>
                   )}

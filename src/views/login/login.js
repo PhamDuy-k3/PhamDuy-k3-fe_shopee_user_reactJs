@@ -34,7 +34,7 @@ function Login() {
     if (!data) {
       return;
     }
-    fetch("http://localhost:5050/auth/login", {
+    fetch(`${process.env.REACT_APP_LOCALHOST}/auth/login`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
