@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import CheckboxList from "../checkboxs/checkbox";
 
 const getCategoryItems = (t) => [
   {
@@ -82,7 +83,7 @@ const getCategoryItems = (t) => [
   },
 ];
 
-const CategoryTitleSp = () => {
+const CategoryTitleSp = ({ setProductWithBrands }) => {
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
   const { t } = useTranslation(["product"]);
 
@@ -100,7 +101,7 @@ const CategoryTitleSp = () => {
         style={{ width: 200 }}
         items={getCategoryItems(t)} // Sử dụng thuộc tính items
       />
-      {/* <SearchFilters /> */}
+      <CheckboxList setProductWithBrands={setProductWithBrands} />
     </div>
   );
 };

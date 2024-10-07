@@ -18,8 +18,9 @@ function IndexProduct() {
   const [sortOrder, setSortOrder] = useState("");
   const url_id = useParams();
   const { t } = useTranslation(["product"]);
-
-  const urlApi = `http://localhost:5050/products?limit=${limit}&page=${currentPage}&category_id=${url_id.category_id}&sortOrder=${sortOrder}`;
+  const [productWithBrands, setProductWithBrands] = useState([]);
+  console.log(productWithBrands);
+  const urlApi = `http://localhost:5050/products?limit=${limit}&page=${currentPage}&category_id=${url_id.category_id}&sortOrder=${sortOrder}&idsBrand=${productWithBrands}`;
 
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
@@ -38,7 +39,7 @@ function IndexProduct() {
           <SuperStore listSp={productList} />
 
           <section className="category-all d-flex col-12">
-            <CategoryTitleSp />
+            <CategoryTitleSp setProductWithBrands={setProductWithBrands} />
             <div className="items-category col-10">
               <div className="items-category-title">
                 <ul className="d-flex col-12">
@@ -72,6 +73,7 @@ function IndexProduct() {
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 sortOrder={sortOrder}
+                productWithBrands={productWithBrands}
               ></SuggestSP>
             </div>
           </section>

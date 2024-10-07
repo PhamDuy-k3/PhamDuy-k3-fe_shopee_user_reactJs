@@ -31,7 +31,12 @@ const SuggestSP = (props) => {
       }
     };
     fetchProducts();
-  }, [props.currentPage, props.textSearch, props.sortOrder]);
+  }, [
+    props.currentPage,
+    props.textSearch,
+    props.sortOrder,
+    props.productWithBrands,
+  ]);
 
   useEffect(() => {
     dispatch(fetchAllProducts());
