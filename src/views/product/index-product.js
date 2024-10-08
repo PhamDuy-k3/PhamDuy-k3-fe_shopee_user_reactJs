@@ -18,13 +18,38 @@ function IndexProduct() {
   const [sortOrder, setSortOrder] = useState("");
   const url_id = useParams();
   const { t } = useTranslation(["product"]);
+  const [filter, setFilter] = useState(t("nav.popular"));
+  const [createdAt, setCreatedAt] = useState();
   const [productWithBrands, setProductWithBrands] = useState([]);
-  console.log(productWithBrands);
-  const urlApi = `http://localhost:5050/products?limit=${limit}&page=${currentPage}&category_id=${url_id.category_id}&sortOrder=${sortOrder}&idsBrand=${productWithBrands}`;
+
+  const urlApi = `http://localhost:5050/products?limit=${limit}&page=${currentPage}&category_id=${url_id.category_id}&sortOrder=${sortOrder}&idsBrand=${productWithBrands}&createdAt=${createdAt}`;
 
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
   };
+  const handleCreatedAt = (item) => {
+    setFilter(item);
+    if (item === t("nav.latest")) {
+      setCreatedAt("new");
+    } else {
+      setCreatedAt("");
+    }
+  };
+  const array = [t("nav.popular"), t("nav.latest"), t("nav.selling_well")];
+
+  const list_filter = array.map((item, index) => {
+    return (
+      <li
+        style={{ cursor: "pointer" }}
+        key={index}
+        className={item === filter ? "active" : ""}
+        onClick={() => handleCreatedAt(item)}
+      >
+        {item}
+      </li>
+    );
+  });
+  //console.log(filter === t("nav.latest"));
 
   return (
     <>
@@ -44,9 +69,7 @@ function IndexProduct() {
               <div className="items-category-title">
                 <ul className="d-flex col-12">
                   <li>{t("nav.sort_by")}</li>
-                  <li className="active">{t("nav.popular")}</li>
-                  <li>{t("nav.latest")}</li>
-                  <li>{t("nav.selling_well")}</li>
+                  {list_filter}
                   <select
                     style={{ border: "navajowhite" }}
                     name="gia"
@@ -74,6 +97,7 @@ function IndexProduct() {
                 currentPage={currentPage}
                 sortOrder={sortOrder}
                 productWithBrands={productWithBrands}
+                filter={filter}
               ></SuggestSP>
             </div>
           </section>

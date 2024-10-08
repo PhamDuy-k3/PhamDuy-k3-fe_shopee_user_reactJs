@@ -11,13 +11,30 @@ function Search() {
   const [textSearch, setTextSearch] = useState("");
   const [sumPage, setSumtPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filter, setFilter] = useState("Phổ Biến");
+
   // Lấy giá trị từ localStorage
 
   useEffect(() => {
     const storedTextSearch = JSON.parse(localStorage.getItem("text_search"));
     setTextSearch(storedTextSearch);
   }, []);
+
   const urlApi = `http://localhost:5050/products?&page=${currentPage}&name=${textSearch}`;
+  const array = ["Phổ Biến", "Mới Nhất", "Bán chạy"];
+
+  const list_filter = array.map((item, index) => {
+    return (
+      <li
+        style={{ cursor: "pointer" }}
+        key={index}
+        className={item === filter ? "active" : ""}
+        onClick={() => setFilter(item)}
+      >
+        {item}
+      </li>
+    );
+  });
   return (
     <div className="box-search">
       <AutoLoadPage />
@@ -40,9 +57,7 @@ function Search() {
             <div className="items-category-title">
               <ul className="d-flex col-12">
                 <li>Sắp xếp theo</li>
-                <li className="active">Phổ Biến</li>
-                <li>Mới Nhất</li>
-                <li>Bán chạy</li>
+                {list_filter}
                 <select style={{ border: "navajowhite" }} name="gia" id="price">
                   <option disabled value="gia">
                     Giá

@@ -32,6 +32,7 @@ const SuggestSP = (props) => {
     };
     fetchProducts();
   }, [
+    props.filter,
     props.currentPage,
     props.textSearch,
     props.sortOrder,
