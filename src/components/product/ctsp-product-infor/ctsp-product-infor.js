@@ -26,7 +26,6 @@ function CtspProductInfor(props) {
   const [quantity, setQuantity] = useState(1);
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const [cookies, setCookie] = useCookies();
-  const [carts, setCarts] = useState([]);
 
   const carts_store = useSelector((state) => state.cart.items);
 
@@ -36,29 +35,19 @@ function CtspProductInfor(props) {
   // tổng tiền
   const total = quantity * priceSaleFormatted;
 
-  const fetchProducts = async () => {
-    try {
-      if (!cookies.id_user) {
-        return;
-      }
-      const response = await fetch(
-        `http://localhost:5050/carts/?id_user=${cookies.id_user}`
-      );
-      const data = await response.json();
-      setCarts(data.data);
-    } catch (error) {
-      console.error("Error fetching API:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   // thêm cart
   const addToCartAsync = async (product) => {
     try {
-      const response = await axios.post("http://localhost:5050/carts", product);
+      const response = await axios.post(
+        "http://localhost:5050/carts",
+        product,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.user_token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.data.status_code === 200) {
         toast.success(() => (
           <p style={{ paddingTop: "1rem" }}>Đã thêm vào giỏ hàng!</p>
@@ -77,7 +66,6 @@ function CtspProductInfor(props) {
 
     const newProduct = {
       _id: generateRandomId(),
-      id_user: cookies.id_user,
       name: title.toLocaleUpperCase(),
       color: colorProduct,
       image: "",

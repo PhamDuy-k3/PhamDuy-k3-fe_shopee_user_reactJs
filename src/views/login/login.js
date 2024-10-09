@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
+import moment from "moment";
+import dayjs from "dayjs";
 
 import Footer from "../../components/footer/footer";
 import HeaderLoginRegister from "../../components/headerLogin-Register/headerLogin-Register";
 import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
 import bgImage from "../../assets/images/img/imgDn/banner.jpg";
 import qr from "../../assets/images/img/imgDn/qr.jpg";
-import { useCookies } from "react-cookie";
-import moment from "moment";
 import LoginGg from "./loginGG";
-import dayjs from "dayjs";
 
 function Login() {
-  const [cursor, setCursor] = useState("no-drop");
-  // const [text, setText] = useState("");
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -28,12 +28,13 @@ function Login() {
     if (cookies.user_token) {
       navigate("/");
     }
-  }, []);
+  }, [cookies, navigate]);
 
   const login = (data) => {
     if (!data) {
       return;
     }
+
     fetch(`${process.env.REACT_APP_LOCALHOST}/auth/login`, {
       method: "POST",
       body: JSON.stringify(data),
@@ -44,60 +45,32 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
-        // Kiểm tra xác thực
         if (res.isVerified !== true) {
           alert("Tài khoản chưa xác thực!");
           return;
         }
         if (res.codeExpired) {
-          // Kiểm tra xem mã hết hạn hay không
           if (dayjs().isAfter(res.codeExpired)) {
             alert("Mã xác thực đã hết hạn!");
             return;
           }
         }
-
-        // Kiểm tra token người dùng và lưu cookie
         if (res.user_token) {
           setCookie("user_token", res.user_token, {
             path: "/",
             expires: moment().add(1, "months").toDate(),
           });
-          setCookie("phone_user", res.phone_user, {
-            path: "/",
-            expires: moment().add(1, "months").toDate(),
-          });
-          setCookie("id_user", res.id_user, {
-            path: "/",
-            expires: moment().add(1, "months").toDate(),
-          });
-          navigate("/"); // Chuyển hướng về trang chủ
+          navigate("/");
         }
       });
   };
 
-  const nameValue = watch("name");
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const nameValue = watch("phone");
   const passValue = watch("password");
-
-  useEffect(() => {
-    const nameElement = document.querySelector("#name");
-    const passElement = document.querySelector("#pass");
-
-    if (
-      nameValue &&
-      nameValue.trim() !== "" &&
-      passValue &&
-      passValue.trim() !== ""
-    ) {
-      setCursor("pointer");
-      nameElement.style.backgroundColor = "white";
-      passElement.style.backgroundColor = "white";
-    } else {
-      setCursor("no-drop");
-      nameElement.style.backgroundColor = "#FFF6F7";
-      passElement.style.backgroundColor = "#FFF6F7";
-    }
-  }, [nameValue, passValue]);
 
   return (
     <div className="box_">
@@ -118,7 +91,7 @@ function Login() {
                 <p>Đăng nhập với mã Qr</p>
               </div>
               <div id="triangle-right"></div>
-              <img src={qr} alt="" />
+              <img src={qr} alt="QR Code" />
             </div>
             <div className="infor-login-input">
               <div className="name">
@@ -142,7 +115,7 @@ function Login() {
               <div className="pass d-flex">
                 <label htmlFor="pass">
                   <input
-                    type="password"
+                    type={isPasswordVisible ? "text" : "password"}
                     id="pass"
                     placeholder="Mật khẩu"
                     {...register("password", {
@@ -151,8 +124,12 @@ function Login() {
                   />
                 </label>
                 <div className="eye">
-                  <i className="fas fa-eye-slash"></i>
-                  <i className="far fa-eye"></i>
+                  <i
+                    onClick={togglePasswordVisibility}
+                    className={
+                      isPasswordVisible ? "far fa-eye" : "fas fa-eye-slash"
+                    }
+                  ></i>
                 </div>
               </div>
               {errors.password && (
@@ -161,7 +138,9 @@ function Login() {
               <div className="login">
                 <label htmlFor="login">
                   <input
-                    className={cursor}
+                    style={
+                      !nameValue || !passValue ? { cursor: "no-drop" } : {}
+                    }
                     type="submit"
                     id="login"
                     value="ĐĂNG NHẬP"
@@ -183,16 +162,13 @@ function Login() {
             </div>
             <div className="fb-gg">
               <button>
-                <i
-                  className="fab fa-facebook"
-                  style={{ color: " #0b5be5" }}
-                ></i>{" "}
+                <i className="fab fa-facebook" style={{ color: "#0b5be5" }}></i>{" "}
                 Facebook
               </button>
               <LoginGg />
             </div>
             <div className="new-now-shopee d-flex">
-              <p>Bặn mới biết đến Shopee?</p>
+              <p>Bạn mới biết đến Shopee?</p>
               <p>
                 <Link to="/Register">Đăng Ký</Link>
               </p>

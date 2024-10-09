@@ -4,14 +4,11 @@ import { VND } from "../../VND/vnd";
 
 function AddresTransport(props) {
   const [textInput, setTextInput] = useState("");
-  const [cursor, setCusor] = useState("no-drop");
+
   function HendelChangeAdress() {
     if (textInput !== "") {
-      setCusor("pointer-cursor");
       props.setAddress(textInput);
       props.toggleAddressVisibility();
-    } else {
-      setCusor("no-drop");
     }
   }
   function Close() {
@@ -40,7 +37,11 @@ function AddresTransport(props) {
             onChange={(e) => setTextInput(e.target.value)}
             placeholder="Tìm Thành phố, Quận/Huyện"
           />
-          <p onClick={HendelChangeAdress} className={`Used ${cursor}`}>
+          <p
+            style={!textInput ? { cursor: "no-drop" } : { cursor: "pointer" }}
+            onClick={HendelChangeAdress}
+            className="Used"
+          >
             Sử Dụng
           </p>
         </div>

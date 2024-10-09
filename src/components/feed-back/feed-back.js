@@ -14,8 +14,8 @@ function FeedBack() {
   const [isImgOrVideo, setIsImgOrVideo] = useState(true);
   const [isDisplay, setIsDisplay] = useState(false);
   const [imgFb, setImgFb] = useState("");
-  const [comments, setComments] = useState([]);
   const [cookies, setCookie, removeCookies] = useCookies();
+  const [comments, setComments] = useState([]);
 
   const urlProductID = useParams();
 
@@ -28,13 +28,21 @@ function FeedBack() {
     setImgFb(value);
     setIsDisplay(true);
   };
+
   const fetchDataComment = async () => {
     try {
       if (!urlProductID.product_id) {
         return;
       }
       const response = await axios.get(
-        `http://localhost:5050/comments?productId=${urlProductID.product_id}`
+        `http://localhost:5050/comments?productId=${urlProductID.product_id}`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + cookies.user_token,
+          },
+        }
       );
       setComments(response.data.data);
     } catch (error) {
@@ -53,7 +61,6 @@ function FeedBack() {
         setComments={setComments}
         fetchDataComment={fetchDataComment}
         productID={urlProductID.product_id}
-        userID={cookies.id_user}
       />
       <div className="feed-back-content">
         {comments.length > 0 ? (

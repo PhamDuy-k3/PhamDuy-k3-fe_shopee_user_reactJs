@@ -7,7 +7,7 @@
     .suggest-title{
         position: sticky;
         top: 0;
-        z-index: 102;
+        z-index: 9;
         height: 4rem;
         background-color: white;
         h4{
@@ -131,7 +131,7 @@
 @media (min-width:1080px) { 
     .suggest{
         .suggest-title{
-            top: 21.6%;
+            top: 20.4%;
         } 
         .suggest-product{
             width: 14rem;

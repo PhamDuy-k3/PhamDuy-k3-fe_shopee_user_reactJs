@@ -8,8 +8,8 @@ import ComponentHeader from "../../components/header/header";
 
 const Profile = () => {
   const [cookies] = useCookies();
+
   const [user, setUser] = useState(null);
-  const [id_user, setIdUser] = useState("");
 
   const {
     register,
@@ -28,10 +28,10 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (!cookies.phone_user && !cookies.user_token) {
+    if (!cookies.user_token) {
       return;
     }
-    fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
+    fetch(`http://localhost:5050/users/profile/user`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -41,10 +41,9 @@ const Profile = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.data && res.data.length > 0) {
-          const userData = res.data[0];
+        if (res.data) {
+          const userData = res.data;
           setUser(userData);
-          setIdUser(userData._id);
           setValue("name", userData.name);
           setValue("phone", userData.phone);
           setValue("email", userData.email);
@@ -65,7 +64,7 @@ const Profile = () => {
     return `${day}/${month}/${year}`;
   }
 
-  const urlApiUpdateUser = `http://localhost:5050/users/${id_user}`;
+  const urlApiUpdateUser = `http://localhost:5050/users/update/user`;
 
   const CreatUpdateuser = (data, method, urlApi, success, error) => {
     const formData = new FormData();
@@ -105,7 +104,7 @@ const Profile = () => {
   };
 
   const updateUser = (data) => {
-    if (id_user) {
+    if (cookies.user_token) {
       CreatUpdateuser(
         data,
         "PUT",

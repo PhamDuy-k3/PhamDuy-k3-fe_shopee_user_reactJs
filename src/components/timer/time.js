@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./time.scss";
 
-function Time() {
+function Time({ setIsTimeUp }) {
   const [countdown, setCountdown] = useState({
-    day: "05",
-    hour: "12",
-    minute: "30",
-    seconds: "12",
+    day: "00",
+    hour: "00",
+    minute: "00",
+    seconds: "00",
   });
 
   useEffect(() => {
-    const endDate = new Date("10/11/2024 00:00:00").getTime();
+    const endDate = new Date("10/10/2024 00:00:00").getTime();
     const intervalId = setInterval(() => {
       const now = new Date().getTime();
       const distance = endDate - now;
       if (distance <= 0) {
+        setIsTimeUp(true);
         clearInterval(intervalId);
       } else {
         const day = Math.floor(distance / (24 * 60 * 60 * 1000));

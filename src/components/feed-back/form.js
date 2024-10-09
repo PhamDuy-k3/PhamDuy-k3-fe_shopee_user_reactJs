@@ -7,11 +7,12 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import io from "socket.io-client";
 
-function FormComment({ productID, userID, fetchDataComment, setComments }) {
+function FormComment({ productID, fetchDataComment, setComments }) {
   const [show, setShow] = useState(false);
   const [cookies, setCookie, removeCookies] = useCookies();
   const [user, setUser] = useState();
   const socketRef = useRef(null);
+
   const {
     register,
     handleSubmit,
@@ -44,10 +45,10 @@ function FormComment({ productID, userID, fetchDataComment, setComments }) {
   }, []);
 
   useEffect(() => {
-    if (!cookies.phone_user) {
+    if (!cookies.user_token) {
       return;
     }
-    fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
+    fetch(`http://localhost:5050/users/profile/user`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -57,19 +58,17 @@ function FormComment({ productID, userID, fetchDataComment, setComments }) {
     })
       .then((res) => res.json())
       .then((res) => {
-        setUser(res.data[0]);
+        if (res.data) {
+          setUser(res.data);
+        }
       });
-  }, [cookies.phone_user]);
-
-  let name = user?.name || "";
-
+  }, [cookies.user_token]);
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
 
       if (productID) formData.append("productId", productID);
-      if (name) formData.append("name_user", name);
-      if (userID) formData.append("userId", userID);
+      if (user?.name) formData.append("name_user", user?.name);
       if (data.material) formData.append("material", data.material);
       if (data.color) formData.append("color", data.color);
       if (data.describe) formData.append("describe", data.describe);
@@ -88,9 +87,7 @@ function FormComment({ productID, userID, fetchDataComment, setComments }) {
       // Tạo dữ liệu comment và bao gồm chuỗi base64 của ảnh
       const commentData = {
         ...data,
-        name_user: name,
         productId: productID,
-        userId: userID,
         image: imageBase64, // Thêm ảnh vào dữ liệu gửi qua socket
       };
 
@@ -101,6 +98,7 @@ function FormComment({ productID, userID, fetchDataComment, setComments }) {
       await axios.post("http://localhost:5050/comments", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${cookies.user_token}`,
         },
       });
 

@@ -2,8 +2,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Time from "../timer/time";
+import { useState } from "react";
 
 function FlastSale(props) {
+  const [isTimeUp, setIsTimeUp] = useState(false);
+
   const settings = {
     dots: false,
     infinite: false,
@@ -69,15 +72,21 @@ function FlastSale(props) {
     );
 
   return (
-    <section className="flast-sale bg-white">
-      <div className="flast-sale-title d-flex">
-        <h1>FLASH SALE</h1>
-        <Time />
-      </div>
-      <div className="items-flast-sale d-flex text-align">
-        <Slider {...settings}>{flast_sale} </Slider>
-      </div>
-    </section>
+    <>
+      {isTimeUp ? (
+        ""
+      ) : (
+        <section className="flast-sale bg-white">
+          <div className="flast-sale-title d-flex">
+            <h1>FLASH SALE</h1>
+            <Time setIsTimeUp={setIsTimeUp} />
+          </div>
+          <div className="items-flast-sale d-flex text-align">
+            <Slider {...settings}>{flast_sale} </Slider>
+          </div>
+        </section>
+      )}
+    </>
   );
 }
 

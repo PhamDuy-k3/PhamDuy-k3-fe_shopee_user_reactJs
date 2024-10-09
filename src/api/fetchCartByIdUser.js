@@ -1,11 +1,15 @@
-export const FetchCartsByIdUser = async (setCarts, id_user) => {
+export const FetchCartsByIdUser = async (setCarts, user_token) => {
   try {
-    if (!id_user) {
+    if (!user_token) {
       return;
     }
-    const response = await fetch(
-      `http://localhost:5050/carts/?id_user=${id_user}`
-    );
+    const response = await fetch(`http://localhost:5050/carts/cartUser`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user_token}`,
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

@@ -42,10 +42,10 @@ function ComponentHeader() {
 
   // lấy user qua phone
   useEffect(() => {
-    if (!cookies.phone_user) {
+    if (!cookies.user_token) {
       return;
     }
-    fetch(`http://localhost:5050/users?phone=${cookies.phone_user}`, {
+    fetch(`http://localhost:5050/users/profile/user`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -55,15 +55,16 @@ function ComponentHeader() {
     })
       .then((res) => res.json())
       .then((res) => {
-        setUser(res.data[0] || []);
+        if (res.data) {
+          setUser(res.data);
+        }
       });
-  }, [cookies.phone_user]);
+  }, [cookies.user_token]);
 
   // đăng xuất
   const logout = (e) => {
     e.preventDefault();
     removeCookies("user_token");
-    removeCookies("phone_user");
     window.location.href = "http://localhost:3000/#/login";
   };
   //handel info

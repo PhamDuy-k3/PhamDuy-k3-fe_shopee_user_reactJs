@@ -54,6 +54,12 @@ function CtspProductImg(props) {
         setIsLike(false);
       }
 
+      if (data.status_code === 201) {
+        setIsLike(false);
+      } else {
+        setIsLike(true);
+      }
+
       if (data?.data) {
         setProduct(data.data);
       } else {
@@ -90,7 +96,7 @@ function CtspProductImg(props) {
   const handleLike = async (action) => {
     try {
       const res = await fetch(
-        `http://localhost:5050/products/${action}/${productId}/${cookies.id_user}`,
+        `http://localhost:5050/products/${action}/${productId}`,
         {
           method: "PUT",
           headers: {

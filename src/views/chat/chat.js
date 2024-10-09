@@ -35,7 +35,6 @@ const ChatRealTime = () => {
   const createRoomChat = async () => {
     if (!idAdmin) return; // Kiểm tra idAdmin trước khi gọi API
     const data = {
-      userId: cookies.id_user,
       adminId: idAdmin,
     };
 
@@ -47,7 +46,7 @@ const ChatRealTime = () => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            // Authorization: 'Bearer ' + cookies.user_token,
+            Authorization: "Bearer " + cookies.user_token,
           },
         }
       );
@@ -63,12 +62,12 @@ const ChatRealTime = () => {
   const getRoom = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5050/chats/chat-room?user_id=${cookies.id_user}`,
+        `http://localhost:5050/chats/chat-room`,
         {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            // Authorization: 'Bearer ' + cookies.user_token,
+            Authorization: "Bearer " + cookies.user_token,
           },
         }
       );
@@ -87,12 +86,12 @@ const ChatRealTime = () => {
   const getRoomF = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5050/chats/chat-room?user_id=${cookies.id_user}`,
+        `http://localhost:5050/chats/chat-room`,
         {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            // Authorization: 'Bearer ' + cookies.user_token,
+            Authorization: "Bearer " + cookies.user_token,
           },
         }
       );
@@ -109,6 +108,7 @@ const ChatRealTime = () => {
   useEffect(() => {
     getRoomF();
   }, []);
+
   // Tạo tin nhắn trong phòng chat
   const createMessInRoomChat = async (chatRoomId) => {
     if (!chatRoomId) return; // Kiểm tra idRoom trước khi gọi API

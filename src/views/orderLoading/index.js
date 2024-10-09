@@ -19,7 +19,6 @@ function OrderLoading() {
   const [carts, setCarts] = useState([]);
   const [status, setStatus] = useState("unconfirmed");
   const [cookies, setCookie] = useCookies();
-  const [id_user_oder, setIdUserOder] = useState();
   const [note, setNote] = useState("");
   const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
   const [pay, setPay] = useState();
@@ -31,11 +30,11 @@ function OrderLoading() {
 
   const fetchProducts = async () => {
     try {
-      if (!cookies.id_user && !ids_product) {
+      if (!cookies.user_token && !ids_product) {
         return;
       }
       const response = await fetch(
-        `http://localhost:5050/carts/getCartsByUserIdAndIdProduct/?id_user=${cookies.id_user}&ids_product=${ids_product}`,
+        `http://localhost:5050/carts/getCartsByUserIdAndIdProduct/?ids_product=${ids_product}`,
         {
           method: "GET",
           headers: {
@@ -58,10 +57,6 @@ function OrderLoading() {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    setIdUserOder(cookies.id_user);
-  }, []);
-
   // tính tổng tiền các sản phẩm có trong gio hàng
   useEffect(() => {
     setSumSp(carts.length);
@@ -76,7 +71,13 @@ function OrderLoading() {
     try {
       const response = await axios.post(
         "http://localhost:5050/cartsOder",
-        data
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.user_token}`,
+          },
+        }
       );
       return response.data;
     } catch (error) {
@@ -86,9 +87,9 @@ function OrderLoading() {
   };
 
   // xóa cart theo id người dùng
-  const deleteCartsByUserId = async (userId) => {
+  const deleteCartsByUserId = async () => {
     const array = [];
-    deleteToCartsAsync(fetchProducts, cookies.id_user);
+    deleteToCartsAsync(fetchProducts, cookies.user_token);
     dispatch(deleteCarts(array));
   };
   // ghi chú
@@ -98,9 +99,9 @@ function OrderLoading() {
 
   // đặt hàng
   const handleBuy = () => {
-    if (id_user_oder !== "") {
+    if (cookies.user_token !== "") {
       let total_prices = total;
-      const data = { carts, status, id_user_oder, total_prices, note, gmail };
+      const data = { carts, status, total_prices, note, gmail };
 
       let paymentPromise = Promise.resolve();
 
@@ -115,7 +116,7 @@ function OrderLoading() {
           return createCartOder(data); // Tạo đơn hàng
         })
         .then(() => {
-          return deleteCartsByUserId(id_user_oder); // Xóa giỏ hàng sau khi đặt hàng thành công
+          return deleteCartsByUserId(); // Xóa giỏ hàng sau khi đặt hàng thành công
         })
         .then(() => {
           // Điều hướng về trang "CartOder"

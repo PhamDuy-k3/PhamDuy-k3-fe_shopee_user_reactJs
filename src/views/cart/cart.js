@@ -14,14 +14,14 @@ import { VND } from "../../components/VND/vnd";
 import { deleteToCartAsync, deleteToCartsAsync } from "../../api/delete";
 import { updateToCartsAsync } from "../../api/update";
 import { FetchCartsByIdUser } from "../../api/fetchCartByIdUser";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // chưa chek trùng sản phẩm
 
 function Cart() {
   const [total, setTotal] = useState(0);
   const [carts, setCarts] = useState([]);
   const [cookies, setCookie] = useCookies();
-  const [id_user_oder, setIdUserOder] = useState();
   const [idProductChooses, setIdProductChooses] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ function Cart() {
 
   //danh sách sản phẩm người dùng chọn
   const fetchProducts = async () => {
-    FetchCartsByIdUser(setCarts, cookies.id_user);
+    FetchCartsByIdUser(setCarts, cookies.user_token);
   };
 
   // tính tổng tiền các sản phẩm có trong gio hàng
@@ -69,7 +69,6 @@ function Cart() {
 
   useEffect(() => {
     fetchProducts();
-    setIdUserOder(cookies.id_user);
   }, []);
 
   useEffect(() => {
@@ -140,17 +139,36 @@ function Cart() {
   //xóa tất cả các sản phẩm trong giỏ hàng dựa vào id khách hàng
   const handelDeleteProductList = async () => {
     const array = [];
-    await deleteToCartsAsync(fetchProducts, cookies.id_user);
+    await deleteToCartsAsync(fetchProducts, cookies.user_token);
     dispatch(deleteCarts(array));
   };
 
   const handleBuy = async () => {
     sessionStorage.setItem("ids_product", idProductChooses);
+    if (idProductChooses.length === 0) {
+      toast.error(() => (
+        <p style={{ paddingTop: "1rem" }}>Vui lòng chọn ít nhất 1 sản phẩm!</p>
+      ));
+      return;
+    }
     navigate("/OrderLoading");
   };
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{ width: "300px" }}
+      />
       <ComponentHeader />
       <div className="box_cart">
         <div className="body">
@@ -326,7 +344,16 @@ function Cart() {
                       </p>
                     </div>
                   </div>
-                  <button onClick={handleBuy}>Mua Hàng</button>
+                  <button
+                    style={
+                      idProductChooses.length === 0
+                        ? { backgroundColor: "gray", cursor: "no-drop" }
+                        : {}
+                    }
+                    onClick={handleBuy}
+                  >
+                    Mua Hàng
+                  </button>
                 </div>
               </div>
             </div>
