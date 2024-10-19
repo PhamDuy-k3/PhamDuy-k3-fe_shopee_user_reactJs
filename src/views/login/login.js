@@ -45,6 +45,10 @@ function Login() {
     })
       .then((res) => res.json())
       .then((res) => {
+        if (res.error) {
+          alert(`${res.error.message}`);
+          return;
+        }
         if (res.isVerified !== true) {
           alert("Tài khoản chưa xác thực!");
           return;
@@ -57,6 +61,10 @@ function Login() {
         }
         if (res.user_token) {
           setCookie("user_token", res.user_token, {
+            path: "/",
+            expires: moment().add(1, "months").toDate(),
+          });
+          setCookie("user_refreshToken", res.refresh_token, {
             path: "/",
             expires: moment().add(1, "months").toDate(),
           });

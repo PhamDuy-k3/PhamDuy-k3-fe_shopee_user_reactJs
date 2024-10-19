@@ -49,7 +49,9 @@ const cartReducer = (state = initialState, action) => {
     case UPDATE_FROM_CART:
       return {
         ...state,
-        items: action.payload,
+        items: state.items.map((item) =>
+          item.id === action.payload._id ? { ...item, ...action.payload } : item
+        ),
       };
     default:
       return state;

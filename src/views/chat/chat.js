@@ -3,15 +3,45 @@ import io from "socket.io-client";
 import "./ChatRealTime.scss";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import moment from "moment";
 
 const ChatRealTime = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [imageFile, setImageFile] = useState(null); // State để lưu trữ file ảnh
   const socketRef = useRef(null);
-  const [cookies] = useCookies();
+  const [cookies, setCookie] = useCookies();
   const [idAdmin, setIdAdmin] = useState(""); // Thay đổi kiểu dữ liệu
   const [idRoom, setIdRoom] = useState();
+
+  const isTokenExpired = (token) => {
+    if (!token) return true;
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const exp = payload.exp * 1000;
+    return Date.now() > exp;
+  };
+  //
+  const refreshAccessToken = async () => {
+    const refreshToken = cookies.user_refreshToken;
+    if (!refreshToken) {
+      throw new Error("No refresh token available");
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5050/auth/refreshToken",
+        { refreshToken }
+      );
+      const { accessToken } = response.data;
+      setCookie("user_token", accessToken, {
+        path: "/",
+        expires: moment().add(1, "months").toDate(),
+      });
+      return accessToken;
+    } catch (error) {
+      throw new Error("Failed to refresh token");
+    }
+  };
 
   // Lấy thông tin admin
   const getAdmin = async () => {
@@ -51,8 +81,8 @@ const ChatRealTime = () => {
         }
       );
       const newRoomId = response.data.data._id;
-      await createMessInRoomChat(newRoomId); // Gọi hàm với idRoom mới
-      await getMessInRoomChat(newRoomId); // Gọi hàm với idRoom mới
+      await createMessInRoomChat(newRoomId);
+      await getMessInRoomChat(newRoomId);
     } catch (error) {
       console.error("Lỗi khi tạo phòng chat:", error);
     }
@@ -61,6 +91,17 @@ const ChatRealTime = () => {
   // Tìm phòng chat
   const getRoom = async () => {
     try {
+      // Kiểm tra token và làm mới nếu hết hạn
+      if (isTokenExpired(cookies.user_token)) {
+        const newToken = await refreshAccessToken();
+        if (newToken) {
+          cookies.user_token = newToken;
+        } else {
+          throw new Error("Không thể làm mới token");
+        }
+      }
+
+      // Gọi API để lấy phòng chat
       const response = await axios.get(
         `http://localhost:5050/chats/chat-room`,
         {
@@ -71,12 +112,13 @@ const ChatRealTime = () => {
           },
         }
       );
+
       const data = response.data.data;
       if (response.data.status_code === 201) {
-        await createRoomChat();
+        await createRoomChat(); // Tạo phòng chat nếu không tồn tại
       } else {
-        await createMessInRoomChat(data._id);
-        await getMessInRoomChat(data._id);
+        await createMessInRoomChat(data._id); // Gửi tin nhắn vào phòng chat
+        await getMessInRoomChat(data._id); // Lấy tin nhắn trong phòng chat
       }
     } catch (error) {
       console.error("Lỗi khi tìm phòng chat:", error);
@@ -123,7 +165,7 @@ const ChatRealTime = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          // Authorization: 'Bearer ' + cookies.user_token,
+          Authorization: "Bearer " + cookies.user_token,
         },
       });
     } catch (error) {
@@ -141,7 +183,7 @@ const ChatRealTime = () => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            // Authorization: 'Bearer ' + cookies.user_token,
+            Authorization: "Bearer " + cookies.user_token,
           },
         }
       );
@@ -257,6 +299,7 @@ const ChatRealTime = () => {
       <div className="messages">{messagesList}</div>
       <div className="input-container">
         <input type="file" onChange={handleFileInputChange} />
+
         <input
           type="text"
           value={message}

@@ -29,6 +29,10 @@ function Category(props) {
       </div>
       <div className="category-products d-flex flex-wrap text-align">
         {category}
+        {category}
+        {category}
+        {category}
+
         <div className="transport">
           <i className="fas fa-angle-right"></i>
         </div>

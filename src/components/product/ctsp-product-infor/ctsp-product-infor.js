@@ -26,6 +26,7 @@ function CtspProductInfor(props) {
   const [quantity, setQuantity] = useState(1);
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const [cookies, setCookie] = useCookies();
+  const [isTimeUp, setIsTimeUp] = useState(false);
 
   const carts_store = useSelector((state) => state.cart.items);
 
@@ -165,7 +166,7 @@ function CtspProductInfor(props) {
               <i className="far fa-clock"></i>KẾT THÚC TRONG &nbsp;
             </p>
             <div className="mt-2">
-              <Time />
+              <Time setIsTimeUp={setIsTimeUp} />
             </div>
           </div>
         </div>
