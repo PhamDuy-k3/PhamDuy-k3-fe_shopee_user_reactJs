@@ -43,7 +43,8 @@
     },
     "suggest":{
        "today_suggestion":"TODAY'S SUGGESTION",
-       "see_more":"See More"
+       "see_more":"See More",
+       "hide_less":"Hide less"
     }
    
 }

@@ -157,7 +157,7 @@ function ComponentHeader() {
                     </div>
                   ) : (
                     <>
-                      <p>Thông báo</p>
+                      <p style={{ textAlign: "center" , paddingTop:"40%" }}>Thông báo</p>
                     </>
                   )}
                 </div>

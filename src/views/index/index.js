@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import ComponentHeader from "../../components/header/header";
 import Banner from "../../components/banner/banner";
 import { Sale } from "../../components/sale/sale";
@@ -16,19 +16,21 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const Index = () => {
-  const [listProduct, setListProduct] = useState([]);
-  const [limit] = useState(20); // Số lượng sản phẩm trên mỗi trang
-  const [listProduct2, setListProduct2] = useState([]);
-  const [cookies, , removeCookies] = useCookies(["user_token"]);
-  const [categorys, setCategorys] = useState([]);
-  const [isTokenValid, setIsTokenValid] = useState(null); // Trạng thái token
+  const [listProduct, setListProduct] = useState([]); // Danh sách sản phẩm
+  const [limit, setLimit] = useState(6); // Giới hạn số lượng sản phẩm hiển thị ban đầu
+  const [listProduct2, setListProduct2] = useState([]); // Danh sách sản phẩm của người dùng
+  const [cookies, , removeCookies] = useCookies(["user_token"]); // Quản lý cookie
+  const [categorys, setCategorys] = useState([]); // Danh sách danh mục
+  const [isTokenValid, setIsTokenValid] = useState(null); // Trạng thái xác thực token
   const navigate = useNavigate();
-  const { t } = useTranslation(["home"]);
-
+  const { t } = useTranslation(["home"]); // Sử dụng đa ngôn ngữ
+  const suggestRef = useRef(null);
+  // Kiểm tra tính hợp lệ của token khi component được render lần đầu
   useEffect(() => {
     checkToken();
   }, []);
 
+  // Hàm kiểm tra token
   const checkToken = async () => {
     try {
       const response = await fetch(`http://localhost:5050/auth/checkToken`, {
@@ -50,10 +52,11 @@ const Index = () => {
       }
     } catch (error) {
       console.error("Lỗi kiểm tra token:", error);
-      setIsTokenValid(false); // Đặt trạng thái token thành không hợp lệ nếu có lỗi
+      setIsTokenValid(false); // Đặt trạng thái token không hợp lệ nếu có lỗi
     }
   };
 
+  // Hàm gọi API lấy danh sách danh mục
   const fetchCategories = async () => {
     try {
       const response = await fetch("http://localhost:5050/categories");
@@ -68,6 +71,7 @@ const Index = () => {
     }
   };
 
+  // Hàm gọi API lấy danh sách sản phẩm giả lập
   const fetchProducts = async () => {
     try {
       const response = await fetch("https://dummyjson.com/products");
@@ -82,7 +86,8 @@ const Index = () => {
     }
   };
 
-  const fetchUserProducts = async () => {
+  // Hàm lấy danh sách sản phẩm của người dùng, phụ thuộc vào token
+  const fetchUserProducts = useCallback(async () => {
     if (isTokenValid === false) return;
     try {
       const response = await fetch(
@@ -104,15 +109,33 @@ const Index = () => {
     } catch (error) {
       console.error("Error fetching user products API:", error);
     }
-  };
+  }, [limit, cookies.user_token, isTokenValid]);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    fetchUserProducts();
+  }, [fetchUserProducts]);
+
+  const handleViewProduct = (count) => {
+    setLimit(count);
+    if (count === 6) {
+      if (suggestRef.current) {
+        window.scrollTo({
+          top:
+            suggestRef.current.getBoundingClientRect().top +
+            window.scrollY -
+            130,
+        });
+      }
+    }
+  };
+
   return (
     <>
-      {isTokenValid === true && ( // Kiểm tra nếu token hợp lệ
+      {isTokenValid === true && (
         <div className="box">
           <ComponentHeader />
           <Advertisement />
@@ -126,7 +149,7 @@ const Index = () => {
             <FlastSale list={listProduct} />
             <Advertisements />
             <ShopeeMaill list={listProduct} />
-            <section className="suggest">
+            <section ref={suggestRef} className="suggest">
               <div className="suggest-title text-align sticky-top">
                 <h4>{t("suggest.today_suggestion")}</h4>
                 <div className="gach"></div>
@@ -135,7 +158,15 @@ const Index = () => {
                 <Suggest list={listProduct2} />
               </div>
               <div className="see-more">
-                <button>{t("suggest.see_more")}</button>
+                {limit === 6 ? (
+                  <button onClick={() => handleViewProduct(20)}>
+                    {t("suggest.see_more")}
+                  </button>
+                ) : (
+                  <button onClick={() => handleViewProduct(6)}>
+                    {t("suggest.hide_less")}
+                  </button>
+                )}
               </div>
             </section>
           </section>

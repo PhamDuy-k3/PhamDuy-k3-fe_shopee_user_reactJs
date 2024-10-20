@@ -30,47 +30,56 @@ function Login() {
     }
   }, [cookies, navigate]);
 
-  const login = (data) => {
+  const login = async (data) => {
     if (!data) {
       return;
     }
 
-    fetch(`${process.env.REACT_APP_LOCALHOST}/auth/login`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.error) {
-          alert(`${res.error.message}`);
-          return;
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_LOCALHOST}/auth/login`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
         }
-        if (res.isVerified !== true) {
-          alert("Tài khoản chưa xác thực!");
-          return;
-        }
-        if (res.codeExpired) {
-          if (dayjs().isAfter(res.codeExpired)) {
-            alert("Mã xác thực đã hết hạn!");
-            return;
-          }
-        }
-        if (res.user_token) {
-          setCookie("user_token", res.user_token, {
-            path: "/",
-            expires: moment().add(1, "months").toDate(),
-          });
-          setCookie("user_refreshToken", res.refresh_token, {
-            path: "/",
-            expires: moment().add(1, "months").toDate(),
-          });
-          navigate("/");
-        }
-      });
+      );
+
+      const res = await response.json();
+
+      if (res.error) {
+        alert(`${res.error.message}`);
+        return;
+      }
+
+      if (!res.isVerified) {
+        alert("Tài khoản chưa xác thực!");
+        return;
+      }
+
+      if (res.codeExpired && dayjs().isAfter(res.codeExpired)) {
+        alert("Mã xác thực đã hết hạn!");
+        return;
+      }
+
+      if (res.user_token) {
+        setCookie("user_token", res.user_token, {
+          path: "/",
+          expires: moment().add(1, "months").toDate(),
+        });
+        setCookie("user_refreshToken", res.refresh_token, {
+          path: "/",
+          expires: moment().add(1, "months").toDate(),
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Đã xảy ra lỗi:", error);
+      alert("Đã xảy ra lỗi khi đăng nhập.");
+    }
   };
 
   const togglePasswordVisibility = () => {

@@ -44,6 +44,8 @@
     },
     "suggest":{
         "today_suggestion":"GỢI Ý HÔM NAY",
-        "see_more":"Xem Thêm"
+        "see_more":"Xem Thêm",
+        "hide_less":"Ẩn bớt"
+
     }
 }
