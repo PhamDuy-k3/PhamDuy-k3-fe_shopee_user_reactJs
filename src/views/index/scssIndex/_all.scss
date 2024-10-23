@@ -1,0 +1,19 @@
+.box{
+    background-color:#F5F5F5;
+    height: 280rem;
+}
+.context{
+    margin-bottom: 6rem;
+}
+
+
+@media (min-width:1080px) { 
+    html{
+        font-size: 13.5px;
+    }
+    .box{
+        background-color:#F5F5F5;
+        height: 210rem;
+    }
+    
+}

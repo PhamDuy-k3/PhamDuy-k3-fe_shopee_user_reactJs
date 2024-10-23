@@ -1,0 +1,103 @@
+.color-bg{
+    color: white;
+    background-color: #EE4D2D;
+}
+.disabled {
+  pointer-events: none; 
+  opacity: 0.5; 
+  background-color: rgb(228, 224, 224); 
+}
+$boderColor: rgb(222, 217, 217);
+#discountCode{
+    margin-left: 70%;
+    p{
+      font-size: 1.1rem;
+      margin-left: 3rem;
+    }
+    p:last-child{
+      color: #0055AA;
+      cursor: pointer;
+    }
+    
+  }
+  #DiscountCode{
+    padding: 10px;
+    width: 35rem;
+    height: 40rem;
+    border: 1px solid $boderColor;
+    position: absolute;
+    left: 33%;
+    top: 20%;
+    z-index: 1;
+    background-color: white;
+    #items-discount-code>div{
+      margin-bottom: 1rem;
+      border: 1px solid $boderColor;
+      height: 8rem;
+      .info-shop{
+        border-right: 1px solid $boderColor;
+          img{
+            margin-left: 2rem;
+            margin-top: 1rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 100%;
+          }
+          p{
+            width: 80%;
+            margin-top: 2px;
+            text-align: center;
+            padding: 2px;
+            @extend .color-bg
+          }
+      }
+      .detail-code{
+        padding: 10px;
+        position: relative;
+        >p:nth-child(1), >p:nth-child(2){
+          font-size: 1.2rem;
+        }
+        .save{
+          right: 1.5rem;
+          top:3rem;
+          position: absolute;
+          input{
+            width: 1.2rem;
+            height: 1.2rem;
+          }
+        }
+        .usageLimit{
+          top:0.2rem;
+          right: 0;
+          color: #EE4D2D;
+          border-top-left-radius:10px ;
+          border-bottom-left-radius: 10px;
+          background-color: #FFEAEA;
+          padding: 0.1rem 1rem 0.1rem 1.5rem;
+          position: absolute;
+        }
+      }
+      .detail-code>div{
+        font-size: 0.9rem;
+        color: grey;
+        p{
+          margin-right: 5px;
+        }
+      }
+    }
+    #items-discount-code{
+      overflow: scroll;
+      height: 30rem;
+    }
+    #action-discountcode{
+        margin-left: 50%;
+      button{
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        margin-left: 4rem;
+        border: 1px solid $boderColor;
+      }
+      button:last-child{
+        @extend .color-bg;
+      }
+    }
+  }

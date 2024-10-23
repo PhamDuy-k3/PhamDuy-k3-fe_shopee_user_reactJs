@@ -1,0 +1,69 @@
+$redColor:red;
+$boder:rgb(233, 231, 229);
+$orangeColoer:#EE4D2D;
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.box ,.box_ ,.box_cart ,.box-product{
+    margin: 0 auto;
+    height: auto;
+    max-width: 1280px;
+}
+html{
+    font-size: 4px;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+.bg-white{
+    background-color: white;
+}
+.slick-slider {
+    .slick-dots li.slick-active button:before {
+        opacity: 0.75;
+        color: #f40808;
+    }
+    .slick-dots li button:before { 
+        font-size: 30px;
+        color: #eb7b7b;
+    }
+    .slick-dots li  { // khoảng cách cách dot
+       margin-right: 1rem;
+    }
+    .slick-dots { //list dots cách top
+        top: 14rem;
+    }
+    .slick-next,.slick-prev {
+       height: 5rem;
+       background-color: rgba($color: #000000, $alpha:0.2) !important;
+    }
+    .slick-next:hover,.slick-prev:hover {
+        background-color: rgb(203, 200, 200) !important;
+    }
+    .slick-prev:before {
+        content: "\f053"; 
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900; 
+    }
+    .slick-next:before{
+        content: "\f054"; 
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900; 
+    }
+}
+
+@media (min-width:1080px) { 
+    html{
+        font-size: 13.5px;
+    }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    html{
+        font-size: 8px;
+    }
+}

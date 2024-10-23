@@ -1,0 +1,36 @@
+.loading__ {
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .ball {
+    --size: 5px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 11px;
+    margin: 0 5px;
+    background-color: black;
+    animation: 1s bounce ease infinite;
+  }
+
+  .black_two {
+    animation-delay: 0.25s;
+  }
+  
+  .black_three {
+    animation-delay: 0.5s;
+  }
+  
+  .black_four {
+    animation-delay: 0.75s;
+  }
+  
+  @keyframes bounce {
+    50% {
+      transform: translateY(10px);
+    }
+  }
+  

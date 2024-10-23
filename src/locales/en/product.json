@@ -1,0 +1,31 @@
+{
+    "super store":{
+        "TRENDING_SUPER_SHOP_BUNNING_SUPER_PRODUCTS":"TRENDING SUPER SHOP - BUNNING SUPER PRODUCTS"
+    },
+    "nav":{
+        "sort_by":"Sort by",
+        "popular":"Popular",
+        "latest":"Latest",
+        "selling_well":"Selling well",
+        "price":"Price",
+        "from_low_to_high":"From low to high",
+        "from_high_to_low":"From high to low"
+    },
+    "side bar": {
+        "Men_Clothing": "Men's Clothing",
+        "Women_Clothing": "Women's Clothing",
+        "Accessories": "Accessories",
+        "Shirts": "Shirts",
+        "Pants": "Pants",
+        "Jackets": "Jackets",
+        "Suits": "Suits",
+        "Dresses": "Dresses",
+        "Skirts": "Skirts",
+        "Blouses": "Blouses",
+        "Coats": "Coats",
+        "Hats": "Hats",
+        "Bags": "Bags",
+        "Belts": "Belts",
+        "Scarves": "Scarves"
+    }
+}

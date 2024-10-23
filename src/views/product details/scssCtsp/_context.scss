@@ -1,0 +1,15 @@
+.context-detal-product{
+    width: 96%;
+    margin-left: 1.5rem;
+    padding-top: 45px;
+    height: auto;
+}
+img{
+    width: 1rem;
+}
+@media (min-width:1080px) { 
+    .context-detal-product{
+        padding-top: 120px;
+    }
+}
+
