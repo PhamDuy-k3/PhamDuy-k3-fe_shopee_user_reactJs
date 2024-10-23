@@ -56,7 +56,7 @@ function Search() {
 
             <div className="items-category-title">
               <ul className="d-flex col-12">
-                <li>Sắp xếp theo </li>
+                <li>Sắp xếp theo</li>
                 {list_filter}
                 <select style={{ border: "navajowhite" }} name="gia" id="price">
                   <option disabled value="gia">
