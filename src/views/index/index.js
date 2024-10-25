@@ -10,25 +10,39 @@ import Suggest from "../../components/suggest/suggest";
 import Footer from "../../components/footer/footer";
 import Advertisement from "../../components/advertisement/advertisement";
 import Chat from "../../components/chat/chat";
-import "./scssIndex/index.scss";
+import Loading from "../../components/loading/loading";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Loading from "../../components/loading/loading";
+import { useInView } from "react-intersection-observer";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import "./scssIndex/index.scss";
 
 const Index = () => {
   const [listProduct, setListProduct] = useState([]);
-  const [limit, setLimit] = useState(6);
   const [listProduct2, setListProduct2] = useState([]);
   const [cookies, , removeCookies] = useCookies(["user_token"]);
   const [categorys, setCategorys] = useState([]);
   const [isTokenValid, setIsTokenValid] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [limit, setLimit] = useState(6);
   const navigate = useNavigate();
   const { t } = useTranslation(["home"]);
   const suggestRef = useRef(null);
+  const progressRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  // Kiểm tra tính hợp lệ của token khi component được render lần đầu
+  // Intersection Observer
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   useEffect(() => {
     checkToken();
   }, []);
@@ -55,7 +69,7 @@ const Index = () => {
       }
     } catch (error) {
       console.error("Lỗi kiểm tra token:", error);
-      setIsTokenValid(false); // Đặt trạng thái token không hợp lệ nếu có lỗi
+      setIsTokenValid(false);
     }
   };
 
@@ -74,7 +88,7 @@ const Index = () => {
     }
   };
 
-  // Hàm gọi API lấy danh sách sản phẩm giả lập
+  // Hàm lấy danh sách sản phẩm giả lập
   const fetchProducts = async () => {
     try {
       const response = await fetch("https://dummyjson.com/products");
@@ -89,7 +103,7 @@ const Index = () => {
     }
   };
 
-  // Hàm lấy danh sách sản phẩm của người dùng, phụ thuộc vào token
+  // Hàm lấy danh sách sản phẩm của người dùng
   const fetchUserProducts = useCallback(async () => {
     if (isTokenValid === false) return;
     try {
@@ -139,6 +153,30 @@ const Index = () => {
     }
   };
 
+  // Theo dõi thanh cuộn ngang
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true); // Kích hoạt khi vào viewport
+        } else {
+          setIsVisible(false); // Có thể thiết lập lại nếu muốn
+        }
+      });
+    });
+
+    // Kiểm tra xem progressRef có giá trị hay không trước khi quan sát
+    if (progressRef.current) {
+      observer.observe(progressRef.current); // Bắt đầu theo dõi thanh trượt
+    }
+
+    return () => {
+      if (progressRef.current) {
+        observer.unobserve(progressRef.current); // Ngừng theo dõi khi component bị hủy
+      }
+    };
+  }, [progressRef.current]);
+
   return (
     <>
       {isTokenValid === true && (
@@ -146,6 +184,7 @@ const Index = () => {
           <ComponentHeader />
           <Advertisement />
           <Chat />
+
           <section className="context">
             <section className="banner-sale">
               <Banner />
@@ -153,8 +192,19 @@ const Index = () => {
             </section>
             <Category list={categorys} />
             <FlastSale list={listProduct} />
-            <Advertisements />
-            <ShopeeMaill list={listProduct} />
+            <div className="progress-container">
+              <div
+                ref={progressRef}
+                className="progress"
+                style={{ width: isVisible ? "10%" : "0%" }}
+              ></div>
+            </div>
+            <div ref={ref} className={`box__ ${inView ? "animate" : ""}`}>
+              <Advertisements />
+            </div>
+            <div data-aos="fade-in">
+              <ShopeeMaill list={listProduct} />
+            </div>
             <section ref={suggestRef} className="suggest">
               <div className="suggest-title text-align sticky-top">
                 <h4>{t("suggest.today_suggestion")}</h4>

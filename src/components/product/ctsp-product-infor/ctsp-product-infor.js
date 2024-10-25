@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import imgFlastSale from "../../../assets/images/img/imgctsp/logo-sale.jpg";
 import Time from "../../timer/time";
@@ -27,6 +27,7 @@ function CtspProductInfor(props) {
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const [cookies, setCookie] = useCookies();
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const productId = useParams();
 
   const carts_store = useSelector((state) => state.cart.items);
 
@@ -58,15 +59,13 @@ function CtspProductInfor(props) {
       }
     } catch (error) {}
   };
-  const generateRandomId = () => {
-    return uuidv4();
-  };
+
   // data product
   const data = () => {
     // navigate("/ProductDetail/:id");
-
+    
     const newProduct = {
-      _id: generateRandomId(),
+      _id: productId.product_id,
       name: title.toLocaleUpperCase(),
       color: colorProduct,
       image: "",

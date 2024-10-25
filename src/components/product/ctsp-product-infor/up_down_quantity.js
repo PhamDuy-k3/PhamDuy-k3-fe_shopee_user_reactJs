@@ -1,14 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import io from "socket.io-client";
 
 function UpDownQuantity({ quantity, setQuantity, product }) {
   const [totalProducts, setTotalProducts] = useState(0);
+  const socketRef = useRef(null);
+
+  console.log(product);
+  useEffect(() => {
+    const socket = io("http://localhost:5050");
+
+    socket.on("stockUpdated", (updatedProduct) => {
+      if (updatedProduct._id === product._id) {
+        setTotalProducts(updatedProduct.stock);
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [product]);
 
   useEffect(() => {
     if (product) {
       setTotalProducts(product.stock);
-      // Đặt lại quantity nếu lớn hơn số lượng sản phẩm có sẵn
       if (quantity > product.stock) {
         setQuantity(product.stock);
       }
