@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import io from "socket.io-client";
+import { memo } from "react";
 
 function UpDownQuantity({ quantity, setQuantity, product }) {
   const [totalProducts, setTotalProducts] = useState(0);
@@ -102,4 +103,4 @@ function UpDownQuantity({ quantity, setQuantity, product }) {
   );
 }
 
-export default UpDownQuantity;
+export default memo(UpDownQuantity);

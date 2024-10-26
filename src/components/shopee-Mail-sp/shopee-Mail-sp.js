@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 function ShopeeMailSp(props) {
   const listProduct = props?.listSp.slice(0, 12);
   const items_shopee_mail =
@@ -9,8 +11,8 @@ function ShopeeMailSp(props) {
       ))
     ) : (
       <p>Không có sản phẩm</p>
-    ); 
-
+    );
+  console.log("rendering ");
   return (
     <section className="shopee-mail-sp">
       <div className="item-shopee-mail-title">
@@ -23,4 +25,4 @@ function ShopeeMailSp(props) {
   );
 }
 
-export default ShopeeMailSp;
+ export default memo(ShopeeMailSp);

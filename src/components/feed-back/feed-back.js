@@ -53,6 +53,7 @@ function FeedBack() {
   useEffect(() => {
     fetchDataComment();
   }, []);
+  
   return (
     <section id="feedBack" className="feed-back">
       <h1>ĐÁNH GIÁ SẢN PHẨM</h1>

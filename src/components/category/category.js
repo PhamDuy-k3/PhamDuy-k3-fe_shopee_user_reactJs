@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { memo } from "react";
 function Category(props) {
   const listProduct = props?.list.slice(0, 20);
   const { t } = useTranslation(["home"]);
@@ -41,4 +42,4 @@ function Category(props) {
   );
 }
 
-export default Category;
+export default memo(Category);

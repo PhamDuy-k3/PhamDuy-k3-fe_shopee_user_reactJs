@@ -158,21 +158,20 @@ const Index = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setIsVisible(true); // Kích hoạt khi vào viewport
+          setIsVisible(true);
         } else {
-          setIsVisible(false); // Có thể thiết lập lại nếu muốn
+          setIsVisible(false);
         }
       });
     });
 
-    // Kiểm tra xem progressRef có giá trị hay không trước khi quan sát
     if (progressRef.current) {
-      observer.observe(progressRef.current); // Bắt đầu theo dõi thanh trượt
+      observer.observe(progressRef.current);
     }
 
     return () => {
       if (progressRef.current) {
-        observer.unobserve(progressRef.current); // Ngừng theo dõi khi component bị hủy
+        observer.unobserve(progressRef.current);
       }
     };
   }, [progressRef.current]);

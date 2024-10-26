@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { memo } from "react";
 function SizeProduct({ selectSize, setSelectSize }) {
   //const [selectSize, setSelectSize] = useState("");
   const HandleSizeClick = (size) => {
@@ -27,4 +27,4 @@ function SizeProduct({ selectSize, setSelectSize }) {
     </section>
   );
 }
-export default SizeProduct;
+export default memo(SizeProduct);

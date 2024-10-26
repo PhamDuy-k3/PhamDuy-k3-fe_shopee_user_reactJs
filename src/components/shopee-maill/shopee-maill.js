@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import sidebar from "../../assets/images/img/sidebar.jpg";
 import { Link } from "react-router-dom";
-
+import { memo } from "react";
 function ShopeeMaill(props) {
   const listProduct = props?.list.slice(20, 28);
   const { t } = useTranslation(["home"]);
@@ -60,4 +60,4 @@ function ShopeeMaill(props) {
     </section>
   );
 }
-export default ShopeeMaill;
+export default memo(ShopeeMaill);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { memo } from "react";
 function ColorProduct({ colorProduct, setColorProduct }) {
   //const [colorProduct, setColorProduct] = useState("");
 
@@ -33,4 +33,4 @@ function ColorProduct({ colorProduct, setColorProduct }) {
   );
 }
 
-export default ColorProduct;
+export default memo(ColorProduct);

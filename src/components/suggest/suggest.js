@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { VND } from "../VND/vnd";
+import { memo } from "react";
 
 function Suggest(props) {
   const suggest = props?.list.map((product) => {
@@ -40,4 +41,4 @@ function Suggest(props) {
   return suggest;
 }
 
-export default Suggest;
+export default memo(Suggest);

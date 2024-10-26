@@ -159,7 +159,7 @@ function Login() {
               )}
               <div className="login__">
                 <label htmlFor="login">
-                  {loadingIcon && <i class="fas fa-sync fa-spin"></i>}
+                  {loadingIcon && <i className="fas fa-sync fa-spin"></i>}
                   <input
                     style={
                       !nameValue || !passValue ? { cursor: "no-drop" } : {}

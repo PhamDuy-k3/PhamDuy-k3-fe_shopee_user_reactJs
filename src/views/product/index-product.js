@@ -49,7 +49,6 @@ function IndexProduct() {
       </li>
     );
   });
-  //console.log(filter === t("nav.latest"));
 
   return (
     <>

@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Time from "../timer/time";
 import { useState } from "react";
-
+import { memo } from "react";
 function FlastSale(props) {
   const [isTimeUp, setIsTimeUp] = useState(false);
 
@@ -90,4 +90,4 @@ function FlastSale(props) {
   );
 }
 
-export default FlastSale;
+export default memo(FlastSale);
