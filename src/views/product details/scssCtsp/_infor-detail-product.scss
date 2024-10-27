@@ -124,6 +124,10 @@
             padding-top: 1rem;
         }
         .number-text {
+            .disabled {
+                opacity: 0.5; 
+                pointer-events: none; 
+            }
             button{
                 width: 3rem;
                 background-color: #FAFAFA;

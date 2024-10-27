@@ -4,17 +4,17 @@ import "react-toastify/dist/ReactToastify.css";
 import io from "socket.io-client";
 import { memo } from "react";
 
-function UpDownQuantity({ quantity, setQuantity, product }) {
+function UpDownQuantity({ quantity, setQuantity, product, setStockRTime }) {
   const [totalProducts, setTotalProducts] = useState(0);
   const socketRef = useRef(null);
 
-  console.log(product);
   useEffect(() => {
     const socket = io("http://localhost:5050");
 
     socket.on("stockUpdated", (updatedProduct) => {
       if (updatedProduct._id === product._id) {
         setTotalProducts(updatedProduct.stock);
+        setStockRTime(updatedProduct.stock);
       }
     });
 
@@ -83,17 +83,23 @@ function UpDownQuantity({ quantity, setQuantity, product }) {
         theme="light"
         style={{ width: "350px" }}
       />
-      <button onClick={handleDownQuantity} className="down">
+      <button
+        onClick={handleDownQuantity}
+        className={`down ${totalProducts === 0 ? "disabled" : ""}`}
+      >
         -
       </button>
       <input
         onChange={handleChange}
-        className="quantity"
+        className={`quantity ${totalProducts === 0 ? "disabled" : ""}`}
         type="number"
-        min="1"
+        min={totalProducts === 0 ? "0" : "1"}
         value={quantity}
       />
-      <button onClick={handleUpQuantity} className="up">
+      <button
+        className={`up ${totalProducts === 0 ? "disabled" : ""}`}
+        onClick={handleUpQuantity}
+      >
         +
       </button>
       <p>

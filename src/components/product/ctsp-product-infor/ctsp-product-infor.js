@@ -16,7 +16,6 @@ import imgSmall4 from "..//..//../assets/images/img/imgctsp/banner-con-4.jpg";
 import { addToCart } from "../../../redux/action";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 import Button from "../../button/button";
 
 function CtspProductInfor(props) {
@@ -27,13 +26,21 @@ function CtspProductInfor(props) {
   const [quantity, setQuantity] = useState(1);
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const [cookies, setCookie] = useCookies();
+  const [stockRTime, setStockRTime] = useState(0);
+
   const [isTimeUp, setIsTimeUp] = useState(false);
   const productId = useParams();
-
   const carts_store = useSelector((state) => state.cart.items);
 
   let img_one = props.product?.image;
   let title = props.product?.name || "";
+  const stock = props.product?.stock;
+
+  useEffect(() => {
+    if (props.product) {
+      setStockRTime(stock);
+    }
+  }, [stock, props.product]);
 
   // tổng tiền
   const total = quantity * priceSaleFormatted;
@@ -118,6 +125,7 @@ function CtspProductInfor(props) {
     data();
     navigate("/Cart");
   };
+
   return (
     <div className="ctsp-product-infor col-7">
       <section className="ctsp-product-infor-title">
@@ -212,19 +220,30 @@ function CtspProductInfor(props) {
             <p>Số Lượng</p>
           </div>
           <UpDownQuantity
+            setStockRTime={setStockRTime}
             product={props.product}
             quantity={quantity}
             setQuantity={setQuantity}
           />
         </section>
-        <section className="cart d-flex">
-          <div className="cart-insert">
-            <p onClick={data}>
-              <i className="fas fa-cart-plus"></i> Thêm Vào Giỏ Hàng
-            </p>
-          </div>
-          <Button buy={buy} />
-        </section>
+        {stockRTime !== 0 ? (
+          <section className="cart d-flex">
+            <div className="cart-insert">
+              <p onClick={data}>
+                <i className="fas fa-cart-plus"></i> Thêm Vào Giỏ Hàng
+              </p>
+            </div>
+            <Button buy={buy} />
+          </section>
+        ) : (
+          <section className="cart d-flex">
+            <div className="cart-insert">
+              <p style={{ cursor: "no-drop" }}>
+                <i className="fas fa-cart-plus"></i> Đã hết hàng !
+              </p>
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
