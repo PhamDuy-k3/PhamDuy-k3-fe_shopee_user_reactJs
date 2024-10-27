@@ -48,7 +48,7 @@
     .list-products {
       width: 100%;
       overflow-y: scroll;
-      height: 23rem;
+      max-height: 23rem;
      
       .item-product{
         border-bottom: 2px solid #F3F3F3;
@@ -155,6 +155,9 @@
         height: 4rem;
         background-color: #EE4D2D;
         color: white;
+      }
+      button:hover{
+        background-color: #ee5e41;
       }
     }
   }

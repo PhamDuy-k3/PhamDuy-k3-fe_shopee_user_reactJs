@@ -5,7 +5,7 @@ function SizeProduct({ selectSize, setSelectSize }) {
   const HandleSizeClick = (size) => {
     setSelectSize(size);
   };
-  var sizes = ["X", "M", "L", "XL", "XXL"];
+  var sizes = ["S", "M", "L", "XL", "XXL"];
   const sizes_new = sizes.map((size) => {
     return (
       <button

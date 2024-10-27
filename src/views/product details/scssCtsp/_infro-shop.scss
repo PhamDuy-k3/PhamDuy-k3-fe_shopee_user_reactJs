@@ -15,17 +15,19 @@
         }
         .list-btn-shop{
             button{
-                border: 1px solid $boder;
+               
                 padding: 0.5rem;
                 background-color: #FFEEE8;
                 color: $redColor;
-                
-               
+            }
+            button:first-child{
+                border: 1px solid #f8d0c2;
             }
             button:hover{
                 background-color: #f8d0c2;
             }
             button:last-child{
+                border: 1px solid $boder;
                 background-color: white;
                 color: black;
             }

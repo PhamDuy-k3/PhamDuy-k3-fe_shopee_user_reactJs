@@ -305,7 +305,7 @@ const ChatRealTime = () => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button onClick={handleSendMessage}>Send</button>
+        <button onClick={handleSendMessage}>Gửi</button>
       </div>
     </div>
   );

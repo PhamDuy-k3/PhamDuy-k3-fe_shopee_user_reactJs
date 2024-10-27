@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  Suspense,
+} from "react";
 import ComponentHeader from "../../components/header/header";
 import Banner from "../../components/banner/banner";
 import { Sale } from "../../components/sale/sale";
@@ -33,6 +39,7 @@ const Index = () => {
   const progressRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  //const Banner = React.lazy(() => import("../../components/banner/banner"));
   // Intersection Observer
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -186,6 +193,9 @@ const Index = () => {
 
           <section className="context">
             <section className="banner-sale">
+              {/* <Suspense fallback={<div>Loading...</div>}>
+                <Banner />
+              </Suspense> */}
               <Banner />
               <Sale />
             </section>

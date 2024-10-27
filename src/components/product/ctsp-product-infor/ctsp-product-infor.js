@@ -17,12 +17,13 @@ import { addToCart } from "../../../redux/action";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import Button from "../../button/button";
 
 function CtspProductInfor(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [colorProduct, setColorProduct] = useState("");
-  const [selectSize, setSelectSize] = useState("");
+  const [colorProduct, setColorProduct] = useState("Màu Trắng");
+  const [selectSize, setSelectSize] = useState("S");
   const [quantity, setQuantity] = useState(1);
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const [cookies, setCookie] = useCookies();
@@ -63,7 +64,7 @@ function CtspProductInfor(props) {
   // data product
   const data = () => {
     // navigate("/ProductDetail/:id");
-    
+
     const newProduct = {
       _id: productId.product_id,
       name: title.toLocaleUpperCase(),
@@ -124,7 +125,7 @@ function CtspProductInfor(props) {
       </section>
       <ToastContainer
         position="top-right"
-        autoClose={100}
+        autoClose={400}
         hideProgressBar={false}
         newestOnTop={true}
         closeOnClick
@@ -222,9 +223,7 @@ function CtspProductInfor(props) {
               <i className="fas fa-cart-plus"></i> Thêm Vào Giỏ Hàng
             </p>
           </div>
-          <div onClick={buy} className="mua">
-            <p>Mua Ngay</p>
-          </div>
+          <Button buy={buy} />
         </section>
       </div>
     </div>

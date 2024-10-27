@@ -359,7 +359,7 @@ function Cart() {
             </div>
           ) : (
             <div className="img-no-order">
-              <img src={imgNoOder} />
+              <img src={imgNoOder} alt=""/>
             </div>
           )}
         </div>

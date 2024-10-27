@@ -16,6 +16,7 @@ import { deleteToCartsAsync } from "../../api/delete";
 function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
+  const [totalDiscountcode, setTotalDiscountcode] = useState(total);
   const [carts, setCarts] = useState([]);
   const [status, setStatus] = useState("unconfirmed");
   const [cookies, setCookie] = useCookies();
@@ -64,6 +65,7 @@ function OrderLoading() {
       return accumulator + parseFloat(product.sum);
     }, 0);
     setTotal(totalSum);
+    setTotalDiscountcode(totalSum);
   }, [carts]);
 
   //tạo đơn hàng
@@ -100,7 +102,7 @@ function OrderLoading() {
   // đặt hàng
   const handleBuy = () => {
     if (cookies.user_token !== "") {
-      let total_prices = total;
+      let total_prices = totalDiscountcode;
       const data = { carts, status, total_prices, note, gmail };
 
       let paymentPromise = Promise.resolve();
@@ -116,10 +118,9 @@ function OrderLoading() {
           return createCartOder(data); // Tạo đơn hàng
         })
         .then(() => {
-          return deleteCartsByUserId(); // Xóa giỏ hàng sau khi đặt hàng thành công
+          return deleteCartsByUserId();
         })
         .then(() => {
-          // Điều hướng về trang "CartOder"
           navigate("/CartOder");
         })
         .catch((error) => {
@@ -256,7 +257,10 @@ function OrderLoading() {
                     );
                   })}
                 </div>
-                <DiscountCode total={VND.format(total)} />
+                <DiscountCode
+                  total={total}
+                  setTotalDiscountcode={setTotalDiscountcode}
+                />
                 <SelectPay setPay={setPay} />
                 <div id="noteOder">
                   <label htmlFor="noteOders">Ghi chú :</label>
@@ -280,7 +284,7 @@ function OrderLoading() {
                     >
                       <sub>đ</sub>
                       <p style={{ paddingLeft: "1rem" }} className="sum-price">
-                        {VND.format(total)}
+                        {VND.format(totalDiscountcode)}
                       </p>
                     </div>
                   </div>
@@ -290,7 +294,7 @@ function OrderLoading() {
             </div>
           ) : (
             <div className="img-no-order">
-              <img src={imgNoOder} />
+              <img src={imgNoOder} alt="d" />
             </div>
           )}
         </div>

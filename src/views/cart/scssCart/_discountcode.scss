@@ -1,6 +1,6 @@
 .color-bg{
-    color: white;
-    background-color: #EE4D2D;
+    color: #df3b1a;
+    background-color: white;
 }
 .disabled {
   pointer-events: none; 
@@ -10,6 +10,7 @@
 $boderColor: rgb(222, 217, 217);
 #discountCode{
     margin-left: 70%;
+    margin-top: 1rem;
     p{
       font-size: 1.1rem;
       margin-left: 3rem;
@@ -22,22 +23,48 @@ $boderColor: rgb(222, 217, 217);
   }
   #DiscountCode{
     padding: 10px;
+    border-radius: 5px;
     width: 35rem;
-    height: 40rem;
+    height: 38rem;
     border: 1px solid $boderColor;
-    position: absolute;
+    position: fixed;
     left: 33%;
-    top: 20%;
-    z-index: 1;
+    top: 10%;
+    z-index: 100;
     background-color: white;
     #items-discount-code>div{
+      cursor: pointer;
+      border-radius: 2px;
       margin-bottom: 1rem;
       border: 1px solid $boderColor;
       height: 8rem;
       .info-shop{
+        background-color: #f36c51;
         border-right: 1px solid $boderColor;
+        position: relative;
+        #triangle-left {
+          position: absolute;
+          width: 0;
+          height: 0;
+          top: 5rem;
+          left: 7.7rem;
+          border-top: 15px solid transparent;
+          border-right: 15px solid #F36C51;
+          border-bottom: 15px solid transparent;
+        }
+        .dots-dis{
+          position: absolute;
+          left: -3px;
+          .dot-dis{
+            width: 0.4rem;
+            height: 0.4rem;
+            margin-bottom: 0.3rem;
+            background-color: white;
+            border-radius: 30%;
+          }
+        }
           img{
-            margin-left: 2rem;
+            margin-left: 3.4rem;
             margin-top: 1rem;
             width: 4rem;
             height: 4rem;
@@ -85,19 +112,37 @@ $boderColor: rgb(222, 217, 217);
         }
       }
     }
+    #items-discount-code>div:hover{
+      background-color: #f4e5e2;
+    }
     #items-discount-code{
       overflow: scroll;
       height: 30rem;
     }
     #action-discountcode{
-        margin-left: 50%;
-      button{
-        padding: 0.5rem 1rem 0.5rem 1rem;
-        margin-left: 4rem;
+        padding-left: 24%;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+      p{
         border: 1px solid $boderColor;
+        margin-left: 1rem;
       }
-      button:last-child{
-        @extend .color-bg;
+      p:first-child{
+        padding: 0.7rem 4.5rem;
+      }
+      p:first-child:hover{
+        background-color: #f9f8f8;
+      }
+      p:last-child{
+        padding: 0.7rem 5rem;
+      }
+      p:last-child:hover{
+        background-color: #f16c52;
+      }
+      p:last-child{
+        background-color: #F05D40;
+        color: white;
       }
     }
   }

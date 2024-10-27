@@ -20,11 +20,12 @@
     overflow: hidden; 
     height: 6px;
     margin-top: 1rem;
+    margin-left: 25px;
 }
 
 .progress {
     height: 100%; 
-    background-color: red; 
+    background-color: #EE4D2D; 
     width: 0; 
     transition: width 1s ease; 
 }

@@ -36,6 +36,7 @@ function ComponentHeader() {
     setIsChangeLag(false);
   };
   const searchProduct = (data) => {
+    if (!data.search) return;
     localStorage.setItem("text_search", JSON.stringify(data.search));
     navigate(`/search?keyword=${data.search}`);
   };

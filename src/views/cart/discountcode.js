@@ -1,19 +1,18 @@
-import axios from "axios";
 import "./scssCart/styleCart.scss";
 import { useEffect, useState } from "react";
-import { VND } from "../../components/VND/vnd";
+import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
+import axios from "axios";
 
 const DiscountCode = (props) => {
   const [discountcodes, setDiscountcode] = useState([]);
   const [selectedDiscountCodes, setSelectedDiscountCodes] = useState([]);
-  const [response, setRespone] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
 
   // Hàm lấy dữ liệu mã giảm giá
   const fetchDataDiscountcode = async () => {
     try {
       const response = await axios.get("http://localhost:5050/discountcode");
-      if (response.data.status_code == 200) {
+      if (response.data.status_code === 200) {
         setDiscountcode(response.data.data);
       } else {
         setDiscountcode([]);
@@ -23,15 +22,43 @@ const DiscountCode = (props) => {
     }
   };
 
-  const fetchDataDiscountcodeChoese = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5050/discountcode?selectedDiscountCodes=${selectedDiscountCodes}`
-      );
-      setRespone(response.data.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+  const calculateDiscount = () => {
+    const selectedDiscountData = discountcodes.filter((item) =>
+      selectedDiscountCodes.includes(item.code)
+    );
+    console.log(selectedDiscountData);
+    const fixedValues = [];
+    const percentageValues = [];
+
+    selectedDiscountData.forEach((item) => {
+      if (item.discountType === "fixed") {
+        fixedValues.push(item.discountValue);
+      } else {
+        percentageValues.push(item.discountValue);
+      }
+    });
+
+    // Tính tổng giảm giá
+    const discountPercentage = percentageValues.reduce(
+      (acc, curr) => acc + curr,
+      0
+    );
+    const discountFixed = fixedValues.reduce((acc, curr) => acc + curr, 0);
+
+    // Tính toán tổng tiền sau khi áp dụng mã giảm giá
+    const totalDiscountPercentage = (props.total * discountPercentage) / 100;
+    const totalDiscountFixed = discountFixed * 1000;
+
+    let newTotal = props.total;
+
+    if (percentageValues.length > 0 && fixedValues.length === 0) {
+      newTotal -= totalDiscountPercentage;
+    } else if (percentageValues.length === 0 && fixedValues.length > 0) {
+      newTotal -= totalDiscountFixed;
+    } else if (percentageValues.length > 0 && fixedValues.length > 0) {
+      newTotal = newTotal - totalDiscountPercentage - totalDiscountFixed;
     }
+    props.setTotalDiscountcode(newTotal);
   };
 
   useEffect(() => {
@@ -41,6 +68,9 @@ const DiscountCode = (props) => {
   const handelIsDisplay = () => {
     setIsDisplay(true);
   };
+
+  document.body.style.overflowY = isDisplay ? "hidden" : "auto";
+
   const handleDiscountcode = (code) => {
     if (selectedDiscountCodes.includes(code)) {
       setSelectedDiscountCodes(
@@ -52,48 +82,51 @@ const DiscountCode = (props) => {
   };
 
   const choeseDiscountcode = () => {
-    fetchDataDiscountcodeChoese();
+    calculateDiscount();
     setIsDisplay(false);
   };
 
   return (
     <>
+      {isDisplay && <FlyZoom />}
+
       <div className="d-flex" id="discountCode">
         <p>Shopee Voucher</p>
         <p onClick={handelIsDisplay}>Chọn hoặc nhập mã</p>
       </div>
-      <div>
-        {response.length > 0 ? (
-          response.map((item) => <p key={item._id}>{item.discountValue}</p>)
-        ) : (
-          <p>Không có discount</p>
-        )}
-      </div>
+
       {isDisplay && (
         <div id="DiscountCode">
-          <h1>Phạm Duy Voucher</h1>
+          <p style={{ fontSize: "1.5rem" }}>Chọn Shopee Voucher</p>
           <div id="items-discount-code">
             {discountcodes.length > 0 ? (
               discountcodes.map((discountcode, index) => (
                 <div
                   onClick={() => {
-                    if (VND.format(discountcode.minOrderValue) <= props.total) {
+                    if (discountcode.minOrderValue <= props.total) {
                       handleDiscountcode(discountcode.code);
                     }
                   }}
                   key={index}
                   className={`d-flex ${
-                    VND.format(discountcode.minOrderValue) <= props.total
+                    discountcode.minOrderValue <= props.total &&
+                    new Date(discountcode.expirationDate) > new Date()
                       ? ""
                       : "disabled"
                   }`}
                 >
                   <div className="info-shop col-4">
+                    <div className="dots-dis">
+                      {[...Array(11)].map((_, i) => (
+                        <div className="dot-dis"></div>
+                      ))}
+                    </div>
                     <img
                       src={discountcode.logoShop}
                       alt={`${discountcode.shopName} logo`}
                     />
                     <p>{discountcode.shopName}</p>
+                    <div id="triangle-left"></div>
                   </div>
                   <div className="detail-code col-8">
                     <p>
@@ -131,8 +164,8 @@ const DiscountCode = (props) => {
             )}
           </div>
           <div id="action-discountcode">
-            <button onClick={() => setIsDisplay(false)}>Trở lại</button>
-            <button onClick={choeseDiscountcode}>Ok</button>
+            <p onClick={() => setIsDisplay(false)}>Trở lại</p>
+            <p onClick={choeseDiscountcode}>Ok</p>
           </div>
         </div>
       )}

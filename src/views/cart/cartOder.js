@@ -9,7 +9,6 @@ import { VND } from "../../components/VND/vnd";
 
 function CartOder() {
   const [sumSp, setSumSp] = useState(0);
-  const [total, setTotal] = useState(0);
   const [cartsOder, setCartsOrder] = useState([]);
   const [res, setRes] = useState([]);
   const [status, setStatus] = useState("");
@@ -47,14 +46,6 @@ function CartOder() {
   useEffect(() => {
     fetchCartsOder();
   }, [status]);
-
-  useEffect(() => {
-    setSumSp(cartsOder.length);
-    const totalSum = cartsOder.reduce((accumulator, product) => {
-      return accumulator + parseFloat(product.sum);
-    }, 0);
-    setTotal(VND.format(totalSum));
-  }, [cartsOder]);
 
   return (
     <>
@@ -189,7 +180,7 @@ function CartOder() {
                           style={{ paddingLeft: "1rem" }}
                           className="sum-price"
                         >
-                          {total}
+                          {VND.format(item.total_prices)}
                         </p>
                       </div>
                     </div>

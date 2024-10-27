@@ -1,0 +1,58 @@
+/* From Uiverse.io by adamgiebl */ 
+.btn-buy{
+button {
+    border: 1px solid red;
+    display: block;
+    position: relative;
+    padding: 0.82em 2em;
+    font-size: 18px;
+    background: transparent;
+    cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+    color: white;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    z-index: 1;
+    background-color: #EE4D2D;
+  }
+  
+  button span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    background: transparent;
+    z-index: -1;
+    border: 1px solid red;
+  }
+  
+  button span::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 8%;
+    height: 500%;
+    background: var(--lightgray);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+    transition: all 0.3s;
+  }
+  
+  button:hover span::before {
+    transform: translate(-50%, -50%) rotate(-90deg);
+    width: 100%;
+    background: white;
+  }
+  
+  button:hover {
+    color: red;
+  }
+  
+  button:active span::before {
+    background: white;
+  }
+}
