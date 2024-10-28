@@ -35,6 +35,7 @@ function CtspProductInfor(props) {
   let img_one = props.product?.image;
   let title = props.product?.name || "";
   const stock = props.product?.stock;
+  console.log(stock);
 
   useEffect(() => {
     if (props.product) {

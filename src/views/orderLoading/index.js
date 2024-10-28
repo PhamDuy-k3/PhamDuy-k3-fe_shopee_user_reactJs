@@ -26,6 +26,7 @@ function OrderLoading() {
   const [orderInfo, setOrderInfo] = useState("pay with MoMo");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [selectedDiscountCodes, setSelectedDiscountCodes] = useState([]);
 
   const ids_product = sessionStorage.getItem("ids_product");
 
@@ -103,7 +104,14 @@ function OrderLoading() {
   const handleBuy = () => {
     if (cookies.user_token !== "") {
       let total_prices = totalDiscountcode;
-      const data = { carts, status, total_prices, note, gmail };
+      const data = {
+        carts,
+        status,
+        total_prices,
+        note,
+        gmail,
+        selectedDiscountCodes,
+      };
 
       let paymentPromise = Promise.resolve();
 
@@ -258,6 +266,8 @@ function OrderLoading() {
                   })}
                 </div>
                 <DiscountCode
+                  setSelectedDiscountCodes={setSelectedDiscountCodes}
+                  selectedDiscountCodes={selectedDiscountCodes}
                   total={total}
                   setTotalDiscountcode={setTotalDiscountcode}
                 />

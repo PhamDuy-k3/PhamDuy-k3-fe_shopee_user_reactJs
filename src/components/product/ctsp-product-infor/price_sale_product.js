@@ -9,7 +9,6 @@ function PriceSaleProduct({
 }) {
   const [sale, setSale] = useState(0);
   const [cost, setCost] = useState(0);
-  console.log('reder')
   useEffect(() => {
     const price = product?.prices || 0;
     const discount = product?.discount || 0;

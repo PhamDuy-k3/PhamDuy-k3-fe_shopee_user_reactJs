@@ -33,7 +33,7 @@ function ProductDetails() {
       .then((res) => {
         setProduct(res.data);
       });
-  }, [url_id.product_id]);
+  }, [url_id.product_id, cookies.user_token]);
 
   return (
     <ProductContext.Provider value={product}>

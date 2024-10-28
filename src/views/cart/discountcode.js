@@ -5,7 +5,6 @@ import axios from "axios";
 
 const DiscountCode = (props) => {
   const [discountcodes, setDiscountcode] = useState([]);
-  const [selectedDiscountCodes, setSelectedDiscountCodes] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
 
   // Hàm lấy dữ liệu mã giảm giá
@@ -24,7 +23,7 @@ const DiscountCode = (props) => {
 
   const calculateDiscount = () => {
     const selectedDiscountData = discountcodes.filter((item) =>
-      selectedDiscountCodes.includes(item.code)
+      props.selectedDiscountCodes.includes(item.code)
     );
     console.log(selectedDiscountData);
     const fixedValues = [];
@@ -72,12 +71,12 @@ const DiscountCode = (props) => {
   document.body.style.overflowY = isDisplay ? "hidden" : "auto";
 
   const handleDiscountcode = (code) => {
-    if (selectedDiscountCodes.includes(code)) {
-      setSelectedDiscountCodes(
-        selectedDiscountCodes.filter((item) => item !== code)
+    if (props.selectedDiscountCodes.includes(code)) {
+      props.setSelectedDiscountCodes(
+        props.selectedDiscountCodes.filter((item) => item !== code)
       );
     } else {
-      setSelectedDiscountCodes([...selectedDiscountCodes, code]);
+      props.setSelectedDiscountCodes([...props.selectedDiscountCodes, code]);
     }
   };
 
@@ -149,7 +148,7 @@ const DiscountCode = (props) => {
                       <input
                         type="checkbox"
                         name="discount"
-                        checked={selectedDiscountCodes.includes(
+                        checked={props.selectedDiscountCodes.includes(
                           discountcode.code
                         )}
                         onChange={() => handleDiscountcode(discountcode.code)}
