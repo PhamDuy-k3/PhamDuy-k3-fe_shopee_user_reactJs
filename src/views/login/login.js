@@ -37,17 +37,14 @@ function Login() {
     }
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_LOCALHOST}/auth/login`,
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch("http://localhost:5050/auth/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
 
       const res = await response.json();
 
@@ -73,11 +70,15 @@ function Login() {
         setLoadingIcon(false);
         setCookie("user_token", res.user_token, {
           path: "/",
-          expires: moment().add(1, "months").toDate(),
+          expires: moment()
+            .add(1, "months")
+            .toDate(),
         });
         setCookie("user_refreshToken", res.refresh_token, {
           path: "/",
-          expires: moment().add(1, "months").toDate(),
+          expires: moment()
+            .add(1, "months")
+            .toDate(),
         });
         navigate("/");
       }

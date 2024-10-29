@@ -9,6 +9,8 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import FormComment from "./form";
+import { jwtDecode } from "jwt-decode";
+
 function FeedBack() {
   const [isImgOrVideo, setIsImgOrVideo] = useState(true);
   const [isDisplay, setIsDisplay] = useState(false);
@@ -20,14 +22,14 @@ function FeedBack() {
   const [userId, setUserId] = useState(null);
   const urlProductID = useParams();
 
-  // useEffect(() => {
-  //   if (cookies.user_token) {
-  //     // Giải mã token để lấy userId
-  //     const decoded = jwt_decode(cookies.user_token);
-  //     setUserId(decoded.id);
-  //   }
-  // }, [cookies.user_token]);
-  console.log(userId);
+  useEffect(() => {
+    if (cookies.user_token) {
+      // Giải mã token để lấy userId
+      const decoded = jwtDecode(cookies.user_token);
+      setUserId(decoded.id);
+    }
+  }, [cookies.user_token]);
+
   const toggleAction = (id) => {
     if (showActions.includes(id)) {
       setShowActions(showActions.filter((item) => item !== id));
@@ -110,16 +112,23 @@ function FeedBack() {
         {comments.length > 0 ? (
           comments.map((comment) => (
             <div className="feed-back-content-products">
-              <div className="icon-edit-comment">
-                <i
-                  onClick={() => toggleAction(comment._id)}
-                  class="fas fa-ellipsis-v"
-                ></i>
+              <div
+                onClick={() => toggleAction(comment._id)}
+                className="icon-edit-comment"
+              >
+                <i class="fas fa-ellipsis-v"></i>
               </div>
               {showActions.includes(comment._id) && (
                 <div className="content-edit-comment">
-                  <p onClick={() => editComment(comment)}>Chỉnh sửa</p>
-                  <p onClick={() => deleteComment(comment._id)}>Xóa</p>
+                  {comment.userId === userId ? (
+                    <>
+                      {" "}
+                      <p onClick={() => editComment(comment)}>Chỉnh sửa</p>
+                      <p onClick={() => deleteComment(comment._id)}>Xóa</p>
+                    </>
+                  ) : (
+                    <p>Báo cáo</p>
+                  )}
                 </div>
               )}
 
