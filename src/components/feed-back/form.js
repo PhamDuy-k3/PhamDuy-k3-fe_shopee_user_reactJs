@@ -7,25 +7,35 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import io from "socket.io-client";
 
-function FormComment({ productID, fetchDataComment, setComments }) {
+function FormComment({
+  productID,
+  setEditCommentData,
+  fetchDataComment,
+  setComments,
+  editCommentData,
+}) {
   const [show, setShow] = useState(false);
-  const [cookies, setCookie, removeCookies] = useCookies();
-  const [user, setUser] = useState();
+  const [cookies] = useCookies(["user_token"]);
+  const [user, setUser] = useState(null);
   const socketRef = useRef(null);
+  const imageInputRef = useRef(null);
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      rating: "1",
+      rating: "5",
     },
   });
-  const imageInputRef = useRef(null);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setEditCommentData("");
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
   useEffect(() => {
@@ -33,8 +43,8 @@ function FormComment({ productID, fetchDataComment, setComments }) {
     socketRef.current = socket;
 
     socket.on("comments", (cmt) => {
-      setComments((prevCommnets) => [
-        ...prevCommnets,
+      setComments((prevComments) => [
+        ...prevComments,
         { ...cmt, sender: "server" },
       ]);
     });
@@ -42,60 +52,55 @@ function FormComment({ productID, fetchDataComment, setComments }) {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [setComments]);
 
   useEffect(() => {
-    if (!cookies.user_token) {
-      return;
+    if (cookies.user_token) {
+      fetch("http://localhost:5050/users/profile/user", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.user_token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.data) setUser(res.data);
+        })
+        .catch((err) => console.error("Error fetching user data:", err));
     }
-    fetch(`http://localhost:5050/users/profile/user`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.user_token,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.data) {
-          setUser(res.data);
-        }
-      });
   }, [cookies.user_token]);
-  const onSubmit = async (data) => {
+
+  const handler = async (data, method, url) => {
     try {
       const formData = new FormData();
 
-      if (productID) formData.append("productId", productID);
+      formData.append("productId", productID);
       if (user?.name) formData.append("name_user", user?.name);
       if (data.material) formData.append("material", data.material);
       if (data.color) formData.append("color", data.color);
       if (data.describe) formData.append("describe", data.describe);
       if (data.content) formData.append("content", data.content);
-      if (data.rating) formData.append("rating", data.rating);
+      formData.append("rating", data.rating || "5");
+
       if (imageInputRef.current?.files[0]) {
         formData.append("image", imageInputRef.current.files[0]);
       }
-      // Kiểm tra và thêm ảnh vào formData nếu có
-      let imageBase64 = null;
-      if (imageInputRef.current?.files[0]) {
-        const file = imageInputRef.current.files[0];
-        imageBase64 = await convertFileToBase64(file); // Chuyển đổi ảnh sang base64
-      }
 
-      // Tạo dữ liệu comment và bao gồm chuỗi base64 của ảnh
       const commentData = {
         ...data,
         productId: productID,
-        image: imageBase64, // Thêm ảnh vào dữ liệu gửi qua socket
+        image: imageInputRef.current?.files[0]
+          ? await convertFileToBase64(imageInputRef.current.files[0])
+          : null,
       };
 
-      // Gửi dữ liệu qua socket bao gồm cả ảnh dưới dạng base64
       socketRef.current.emit("comments", commentData);
 
-      // Gửi dữ liệu (không bao gồm ảnh) tới API
-      await axios.post("http://localhost:5050/comments", formData, {
+      await axios({
+        method,
+        url,
+        data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${cookies.user_token}`,
@@ -105,17 +110,23 @@ function FormComment({ productID, fetchDataComment, setComments }) {
       handleClose();
       fetchDataComment();
       reset();
-
-      // Đặt lại giá trị của input ảnh sau khi gửi
-      if (imageInputRef.current) {
-        imageInputRef.current.value = "";
-      }
+      if (imageInputRef.current) imageInputRef.current.value = "";
     } catch (error) {
       console.error("Error submitting comment:", error);
     }
   };
 
-  // Hàm chuyển file thành chuỗi base64
+  const onSubmit = async (data) => {
+    if (editCommentData) {
+      handler(
+        data,
+        "put",
+        `http://localhost:5050/comments/${editCommentData._id}`
+      );
+    } else {
+      handler(data, "post", "http://localhost:5050/comments");
+    }
+  };
 
   const convertFileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -125,6 +136,17 @@ function FormComment({ productID, fetchDataComment, setComments }) {
       reader.onerror = (error) => reject(error);
     });
   };
+
+  useEffect(() => {
+    if (editCommentData) {
+      handleShow();
+      setValue("material", editCommentData.material);
+      setValue("color", editCommentData.color);
+      setValue("describe", editCommentData.describe);
+      setValue("content", editCommentData.content);
+      setValue("rating", editCommentData.rating);
+    }
+  }, [editCommentData, setValue]);
 
   return (
     <>

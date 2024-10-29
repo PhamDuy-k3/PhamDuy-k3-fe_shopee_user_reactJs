@@ -9,15 +9,56 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import FormComment from "./form";
-
 function FeedBack() {
   const [isImgOrVideo, setIsImgOrVideo] = useState(true);
   const [isDisplay, setIsDisplay] = useState(false);
   const [imgFb, setImgFb] = useState("");
   const [cookies, setCookie, removeCookies] = useCookies();
   const [comments, setComments] = useState([]);
-
+  const [showActions, setShowActions] = useState([]);
+  const [editCommentData, setEditCommentData] = useState(null);
+  const [userId, setUserId] = useState(null);
   const urlProductID = useParams();
+
+  // useEffect(() => {
+  //   if (cookies.user_token) {
+  //     // Giải mã token để lấy userId
+  //     const decoded = jwt_decode(cookies.user_token);
+  //     setUserId(decoded.id);
+  //   }
+  // }, [cookies.user_token]);
+  console.log(userId);
+  const toggleAction = (id) => {
+    if (showActions.includes(id)) {
+      setShowActions(showActions.filter((item) => item !== id));
+    } else {
+      if (showActions.length === 1) {
+        setShowActions([id]);
+      } else {
+        setShowActions([...showActions, id]);
+      }
+    }
+  };
+  const deleteComment = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5050/comments/${id}`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + cookies.user_token,
+          },
+        }
+      );
+      setComments(comments.filter((item) => item._id !== id));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const editComment = (comment) => {
+    setEditCommentData(comment);
+  };
 
   const handleOnClick = (value) => {
     if (value === "video") {
@@ -53,20 +94,35 @@ function FeedBack() {
   useEffect(() => {
     fetchDataComment();
   }, []);
-  
+
   return (
     <section id="feedBack" className="feed-back">
       <h1>ĐÁNH GIÁ SẢN PHẨM</h1>
       <FeedBackHeader />
       <FormComment
+        setEditCommentData={setEditCommentData}
         setComments={setComments}
         fetchDataComment={fetchDataComment}
         productID={urlProductID.product_id}
+        editCommentData={editCommentData}
       />
       <div className="feed-back-content">
         {comments.length > 0 ? (
           comments.map((comment) => (
             <div className="feed-back-content-products">
+              <div className="icon-edit-comment">
+                <i
+                  onClick={() => toggleAction(comment._id)}
+                  class="fas fa-ellipsis-v"
+                ></i>
+              </div>
+              {showActions.includes(comment._id) && (
+                <div className="content-edit-comment">
+                  <p onClick={() => editComment(comment)}>Chỉnh sửa</p>
+                  <p onClick={() => deleteComment(comment._id)}>Xóa</p>
+                </div>
+              )}
+
               <div className="item-feed-back-product d-flex">
                 <div className="img-product col-1">
                   <img src={imgUser} alt="" />
@@ -132,7 +188,7 @@ function FeedBack() {
                           )}
                         </div>
                       )} */}
-                    <img src={comment.image} alt="anh" />
+                    {comment.image && <img src={comment.image} alt="anh" />}
                   </div>
                   <div className="shop-feed-back">
                     <p>Phản Hồi Của Người Bán</p>

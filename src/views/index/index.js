@@ -10,8 +10,6 @@ import Banner from "../../components/banner/banner";
 import { Sale } from "../../components/sale/sale";
 import Category from "../../components/category/category";
 import Advertisements from "../../components/advertisements/advertisements";
-import FlastSale from "../../components/flast-sale/flast_sale";
-import ShopeeMaill from "../../components/shopee-maill/shopee-maill";
 import Suggest from "../../components/suggest/suggest";
 import Footer from "../../components/footer/footer";
 import Advertisement from "../../components/advertisement/advertisement";
@@ -25,6 +23,13 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./scssIndex/index.scss";
 
+const FlastSale = React.lazy(() =>
+  import("../../components/flast-sale/flast_sale")
+);
+const ShopeeMaill = React.lazy(() =>
+  import("../../components/shopee-maill/shopee-maill")
+);
+//const Banner = React.lazy(() => import("../../components/banner/banner"));
 const Index = () => {
   const [listProduct, setListProduct] = useState([]);
   const [listProduct2, setListProduct2] = useState([]);
@@ -39,7 +44,6 @@ const Index = () => {
   const progressRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  //const Banner = React.lazy(() => import("../../components/banner/banner"));
   // Intersection Observer
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -193,14 +197,25 @@ const Index = () => {
 
           <section className="context">
             <section className="banner-sale">
-              {/* <Suspense fallback={<div>Loading...</div>}>
+              {/* <Suspense fallback={<div>
+                  <Loading />
+                </div>}>
                 <Banner />
               </Suspense> */}
               <Banner />
               <Sale />
             </section>
             <Category list={categorys} />
-            <FlastSale list={listProduct} />
+            <Suspense
+              fallback={
+                <div>
+                  <Loading />
+                </div>
+              }
+            >
+              <FlastSale list={listProduct} />
+            </Suspense>
+
             <div className="progress-container">
               <div
                 ref={progressRef}
@@ -211,9 +226,18 @@ const Index = () => {
             <div ref={ref} className={`box__ ${inView ? "animate" : ""}`}>
               <Advertisements />
             </div>
-            <div data-aos="fade-in">
-              <ShopeeMaill list={listProduct} />
-            </div>
+            <Suspense
+              fallback={
+                <div>
+                  <Loading />
+                </div>
+              }
+            >
+              <div data-aos="fade-in">
+                <ShopeeMaill list={listProduct} />
+              </div>
+            </Suspense>
+
             <section ref={suggestRef} className="suggest">
               <div className="suggest-title text-align sticky-top">
                 <h4>{t("suggest.today_suggestion")}</h4>
