@@ -75,30 +75,20 @@
   .input-container {
     padding: 10px;
     border-top: 1px solid #ccc;
-    input[type="file"]{
-      border: none;
-      padding-left: 0;
-    }
-    input[type="file"]::file-selector-button {
-      border-radius: 4px;
-      padding: 0 16px;
-      height: 40px;
-      cursor: pointer;
-      background-color: white;
-      border: 1px solid rgba(0, 0, 0, 0.16);
-      box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
-      margin-right: 16px;
-      transition: background-color 200ms;
-    }
-    
-    /* file upload button hover state */
-    input[type="file"]::file-selector-button:hover {
-      background-color: #f3f4f6;
-    }
-    
-    /* file upload button active state */
-    input[type="file"]::file-selector-button:active {
-      background-color: #e5e7eb;
+    position: relative;
+    label{
+      i{
+        font-size: 1.4rem;
+        opacity: 0.7;
+      }
+      input{
+        cursor: pointer;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        left: 8px;
+        position: absolute;
+      }
     }
     input {
       width: 100%;
@@ -107,7 +97,6 @@
       border-radius: 5px;
       outline: none;
     }
-
     button {
       padding: 10px 20px;
       margin-left: 80%;
@@ -121,6 +110,19 @@
 
     button:hover {
       background-color: #f15c45;
+    }
+    .img-choese{
+      width: 20rem;
+      top: 6.4rem;
+      position: absolute;
+      height: 3.5rem;
+      background-color: rgba(0, 0, 0, 0.1);
+      border: 1px solid #e4e0e0;
+      img{
+        padding: 5px;
+        width: 4rem;
+        height: 100%;
+      }
     }
   }
 }

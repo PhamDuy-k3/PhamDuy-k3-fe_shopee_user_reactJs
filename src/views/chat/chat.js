@@ -13,6 +13,7 @@ const ChatRealTime = () => {
   const [cookies, setCookie] = useCookies();
   const [idAdmin, setIdAdmin] = useState(""); // Thay đổi kiểu dữ liệu
   const [idRoom, setIdRoom] = useState();
+  const [imageFileChoese, setImageFileChoese] = useState(null); // State để lưu trữ file ảnh
 
   const isTokenExpired = (token) => {
     if (!token) return true;
@@ -35,7 +36,9 @@ const ChatRealTime = () => {
       const { accessToken } = response.data;
       setCookie("user_token", accessToken, {
         path: "/",
-        expires: moment().add(1, "months").toDate(),
+        expires: moment()
+          .add(1, "months")
+          .toDate(),
       });
       return accessToken;
     } catch (error) {
@@ -115,10 +118,10 @@ const ChatRealTime = () => {
 
       const data = response.data.data;
       if (response.data.status_code === 201) {
-        await createRoomChat(); // Tạo phòng chat nếu không tồn tại
+        await createRoomChat();
       } else {
-        await createMessInRoomChat(data._id); // Gửi tin nhắn vào phòng chat
-        await getMessInRoomChat(data._id); // Lấy tin nhắn trong phòng chat
+        await createMessInRoomChat(data._id);
+        await getMessInRoomChat(data._id);
       }
     } catch (error) {
       console.error("Lỗi khi tìm phòng chat:", error);
@@ -146,20 +149,43 @@ const ChatRealTime = () => {
       console.error("Lỗi khi tìm phòng chat:", error);
     }
   };
+
   // hiển thị khi mới vào trang web
   useEffect(() => {
     getRoomF();
   }, []);
 
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
   // Tạo tin nhắn trong phòng chat
   const createMessInRoomChat = async (chatRoomId) => {
-    if (!chatRoomId) return; // Kiểm tra idRoom trước khi gọi API
+    if (!chatRoomId) return;
+
+    let content = message;
+    if (imageFile) {
+      content = await convertFileToBase64(imageFile);
+    }
+
     const data = {
-      content: message,
+      type: imageFile ? "image" : "text",
+      content: content,
       sender: "user",
       chatRoomId: chatRoomId,
     };
+    socketRef.current.emit("message", data);
+    await handleMess(data);
+    setMessage("");
+    setImageFile(null);
+    setImageFileChoese(null);
+  };
 
+  const handleMess = async (data) => {
     try {
       await axios.post("http://localhost:5050/chats/send-message", data, {
         headers: {
@@ -217,6 +243,7 @@ const ChatRealTime = () => {
   useEffect(() => {
     getAdmin();
   }, []);
+
   // Format thời gian
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
@@ -229,48 +256,15 @@ const ChatRealTime = () => {
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
+    const previewUrl = URL.createObjectURL(file);
+    setImageFileChoese(previewUrl);
     setImageFile(file);
-  };
-
-  // Gửi tin nhắn văn bản
-  const sendTextMessage = () => {
-    if (message.trim() !== "") {
-      const messageText = {
-        content: message,
-        sender: "user",
-      };
-      socketRef.current.emit("message", messageText);
-      setMessages((prevMessages) => [...prevMessages, messageText]);
-      getRoom();
-      setMessage("");
-    }
-  };
-
-  // Gửi tin nhắn ảnh
-  const sendImageMessage = () => {
-    if (imageFile) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const messageWithTimestamp = {
-          type: "image",
-          data: event.target.result,
-          timestamp: new Date().toISOString(),
-          sender: "self",
-        };
-        socketRef.current.emit("message", messageWithTimestamp);
-        setMessages((prevMessages) => [...prevMessages, messageWithTimestamp]);
-        setImageFile(null); // Reset imageFile state after sending
-      };
-      reader.readAsDataURL(imageFile);
-    }
   };
 
   // Xử lý sự kiện gửi tin nhắn
   const handleSendMessage = () => {
-    if (imageFile) {
-      sendImageMessage();
-    } else {
-      sendTextMessage();
+    if (message.trim() || imageFile) {
+      getRoom();
     }
   };
 
@@ -281,7 +275,7 @@ const ChatRealTime = () => {
           {msg.type === "image" ? (
             <img
               style={{ width: "10rem", height: "10rem" }}
-              src={msg.data}
+              src={msg.content}
               alt="sent"
             />
           ) : (
@@ -298,7 +292,14 @@ const ChatRealTime = () => {
     <div className="chat-container">
       <div className="messages">{messagesList}</div>
       <div className="input-container">
-        <input type="file" onChange={handleFileInputChange} />
+        <label htmlFor="file-img-mess">
+          <i className="fa fa-camera"></i>
+          <input
+            id="file-img-mess"
+            type="file"
+            onChange={handleFileInputChange}
+          />
+        </label>
 
         <input
           type="text"
@@ -306,6 +307,13 @@ const ChatRealTime = () => {
           onChange={(e) => setMessage(e.target.value)}
         />
         <button onClick={handleSendMessage}>Gửi</button>
+        {imageFileChoese !== null ? (
+          <div className="img-choese">
+            <img src={imageFileChoese} alt="anh" />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
