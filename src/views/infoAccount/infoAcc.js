@@ -5,10 +5,11 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ComponentHeader from "../../components/header/header";
+import File from "../../components/file/file";
 
 const Profile = () => {
   const [cookies] = useCookies();
-
+  const [imageUrl, setImageUrl] = useState(null);
   const [user, setUser] = useState(null);
 
   const {
@@ -16,6 +17,7 @@ const Profile = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch, // Sử dụng watch để theo dõi giá trị của avatar
   } = useForm({
     defaultValues: {
       name: "",
@@ -44,6 +46,7 @@ const Profile = () => {
         if (res.data) {
           const userData = res.data;
           setUser(userData);
+          setImageUrl(userData.avatar);
           setValue("name", userData.name);
           setValue("phone", userData.phone);
           setValue("email", userData.email);
@@ -55,6 +58,15 @@ const Profile = () => {
         console.error(error);
       });
   }, [cookies]);
+
+  // Theo dõi thay đổi của avatar
+  const avatarFile = watch("avatar");
+  useEffect(() => {
+    if (avatarFile && avatarFile.length > 0) {
+      const previewUrl = URL.createObjectURL(avatarFile[0]);
+      setImageUrl(previewUrl);
+    }
+  }, [avatarFile]);
 
   function formatDate(isoDate) {
     const date = new Date(isoDate);
@@ -79,7 +91,7 @@ const Profile = () => {
     if (data.address) formData.append("address", data.address);
 
     if (data.avatar && data.avatar.length > 0) {
-      formData.append("avatar", data.avatar[0]); // Phải kiểm tra nếu avatar được chọn
+      formData.append("avatar", data.avatar[0]);
     }
 
     fetch(urlApi, {
@@ -194,8 +206,18 @@ const Profile = () => {
             </div>
 
             <div className="profile-image">
-              <img src={user.avatar} alt="Profile" />
-              <input type="file" {...register("avatar")} />
+              <label htmlFor="file__image">
+                <div className="icon-camara">
+                  <i className="fa fa-camera"></i>
+                </div>
+                <img src={imageUrl} alt="Profile" />
+              </label>
+              <input
+                style={{ opacity: "0" }}
+                id="file__image"
+                type="file"
+                {...register("avatar")}
+              />
               <p>Dung lượng file tối đa 1 MB</p>
               <p>Định dạng: .JPEG, .PNG</p>
             </div>

@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
 import AOS from "aos";
+
 import "aos/dist/aos.css";
 import "./scssIndex/index.scss";
 
@@ -43,6 +44,8 @@ const Index = () => {
   const suggestRef = useRef(null);
   const progressRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+
+ 
 
   // Intersection Observer
   const { ref, inView } = useInView({
@@ -191,6 +194,7 @@ const Index = () => {
     <>
       {isTokenValid === true && (
         <div className="box">
+          
           <ComponentHeader />
           <Advertisement />
           <Chat />

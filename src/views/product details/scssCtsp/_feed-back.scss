@@ -43,6 +43,8 @@
         font-size: 1.1rem;
         margin-left: 5%;
         .feed-back-content-products{
+            border-top:1px solid #E8E8E8;
+            margin-top: 1rem;
             position: relative;
             .icon-edit-comment{
                 padding: 1rem;
@@ -58,14 +60,17 @@
                 position: absolute;
                 right: 2rem;
                 top: 2.4rem;
+                border-radius: 2px;
                 cursor: pointer;
                 p{
                     padding: 0.5rem 2rem 0.5rem 2rem;
                     margin-bottom: 0;
                 }
+                p:nth-child(2){
+                    border-top:1px solid #E8E8E8;
+                }
                 p:hover{
-                    color: white;
-                    background-color: #ef4e2e;
+                    background-color: #f7f5f5;
                 }
             }
             .item-feed-back-product{

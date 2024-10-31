@@ -10,6 +10,7 @@ import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 import { locales } from "../../i18n/i18n";
 import VoiceApp from "../voice/voice";
+import io from "socket.io-client";
 
 function ComponentHeader() {
   const navigate = useNavigate();
@@ -27,6 +28,17 @@ function ComponentHeader() {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    const socket = io("http://localhost:5050");
+
+    socket.on("orderConfirmedNotification", (order) => {
+      alert(`Đơn hàng ${order._id} của bạn đã được xác nhận`);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   // lấy danh sách cart trog store
   const carts_store = useSelector((state) => state.cart.items);
 

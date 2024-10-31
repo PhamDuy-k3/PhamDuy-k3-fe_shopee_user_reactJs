@@ -1,15 +1,16 @@
+import React, { useEffect, useState } from "react";
 import FeedBackHeader from "./feed-back-header";
 import imgUser from "../../assets/images/img/imgctsp/img-product.png";
 import imgFbackSmaill from "../../assets/images/img/imgctsp/img-fback-con.jpg";
 import imgFbackBig from "../../assets/images/img/imgctsp/img-fback-to.jpg";
 import imgVideo from "../../assets/images/img/product-4.jpg";
 import video from "../../assets/audio/video.mp4";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import FormComment from "./form";
 import { jwtDecode } from "jwt-decode";
+import LoadingFb from "./loadingFb";
 
 function FeedBack() {
   const [isImgOrVideo, setIsImgOrVideo] = useState(true);
@@ -20,11 +21,11 @@ function FeedBack() {
   const [showActions, setShowActions] = useState([]);
   const [editCommentData, setEditCommentData] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
   const urlProductID = useParams();
 
   useEffect(() => {
     if (cookies.user_token) {
-      // Giải mã token để lấy userId
       const decoded = jwtDecode(cookies.user_token);
       setUserId(decoded.id);
     }
@@ -34,62 +35,53 @@ function FeedBack() {
     if (showActions.includes(id)) {
       setShowActions(showActions.filter((item) => item !== id));
     } else {
-      if (showActions.length === 1) {
-        setShowActions([id]);
-      } else {
-        setShowActions([...showActions, id]);
-      }
+      setShowActions([...showActions, id]);
     }
   };
+
   const deleteComment = async (id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5050/comments/${id}`,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + cookies.user_token,
-          },
-        }
-      );
+      await axios.delete(`http://localhost:5050/comments/${id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.user_token}`,
+        },
+      });
       setComments(comments.filter((item) => item._id !== id));
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error deleting comment:", error);
     }
   };
+
   const editComment = (comment) => {
     setEditCommentData(comment);
   };
 
   const handleOnClick = (value) => {
-    if (value === "video") {
-      setIsImgOrVideo(false);
-    } else {
-      setIsImgOrVideo(true);
-    }
+    setIsImgOrVideo(value !== "video");
     setImgFb(value);
     setIsDisplay(true);
   };
 
   const fetchDataComment = async () => {
     try {
-      if (!urlProductID.product_id) {
-        return;
-      }
+      if (!urlProductID.product_id) return;
       const response = await axios.get(
         `http://localhost:5050/comments?productId=${urlProductID.product_id}`,
         {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: "Bearer " + cookies.user_token,
+            Authorization: `Bearer ${cookies.user_token}`,
           },
         }
       );
       setComments(response.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -109,20 +101,21 @@ function FeedBack() {
         editCommentData={editCommentData}
       />
       <div className="feed-back-content">
-        {comments.length > 0 ? (
+        {isLoading ? (
+          <LoadingFb />
+        ) : comments.length > 0 ? (
           comments.map((comment) => (
-            <div className="feed-back-content-products">
+            <div key={comment._id} className="feed-back-content-products">
               <div
                 onClick={() => toggleAction(comment._id)}
                 className="icon-edit-comment"
               >
-                <i class="fas fa-ellipsis-v"></i>
+                <i className="fas fa-ellipsis-v"></i>
               </div>
               {showActions.includes(comment._id) && (
                 <div className="content-edit-comment">
                   {comment.userId === userId ? (
                     <>
-                      {" "}
                       <p onClick={() => editComment(comment)}>Chỉnh sửa</p>
                       <p onClick={() => deleteComment(comment._id)}>Xóa</p>
                     </>
@@ -131,10 +124,9 @@ function FeedBack() {
                   )}
                 </div>
               )}
-
               <div className="item-feed-back-product d-flex">
                 <div className="img-product col-1">
-                  <img src={imgUser} alt="" />
+                  <img src={imgUser} alt="User" />
                 </div>
                 <div className="col-11">
                   <p className="name-product">{comment.name_user}</p>
@@ -143,7 +135,6 @@ function FeedBack() {
                       <i key={i} className="fas fa-star"></i>
                     ))}
                   </div>
-
                   <div className="fback d-flex mt-3">
                     <p>Chất liệu:</p>
                     {comment.material}
@@ -158,46 +149,7 @@ function FeedBack() {
                   </div>
                   <p className="product-cmt">{comment.content}</p>
                   <div className="feed-back-img-video">
-                    {/* <div className="feed-back-img-video-noClick d-flex flex-wrap">
-                        <img
-                          onClick={() => handleOnClick("imgFbackSmaill")}
-                          className={`img-video-one ${
-                            imgFb === "imgFbackSmaill"
-                              ? "active-img-video-one"
-                              : ""
-                          }`}
-                          src={imgFbackSmaill}
-                          alt=""
-                        />
-                        <div
-                          onClick={() => handleOnClick("video")}
-                          className={`img-video-one ${
-                            imgFb === "video" ? "active-img-video-one" : ""
-                          }`}
-                        >
-                          <img src={imgVideo} alt="" />
-                          <div className="d-flex icon-video">
-                            <i className="fas fa-video"></i>
-                            <p>0.21</p>
-                          </div>
-                        </div>
-                      </div>
-                      {isDisplay && (
-                        <div className="feed-back-video-onClick">
-                          {isImgOrVideo ? (
-                            <img
-                              className="img-video-two "
-                              src={imgFbackBig}
-                              alt=""
-                            />
-                          ) : (
-                            <video className="img-video-two" controls loop>
-                              <source src={video} />
-                            </video>
-                          )}
-                        </div>
-                      )} */}
-                    {comment.image && <img src={comment.image} alt="anh" />}
+                    {comment.image && <img src={comment.image} alt="Comment" />}
                   </div>
                   <div className="shop-feed-back">
                     <p>Phản Hồi Của Người Bán</p>
@@ -215,10 +167,11 @@ function FeedBack() {
             </div>
           ))
         ) : (
-          <p></p>
+          <p>Chưa có đánh giá nào</p>
         )}
       </div>
     </section>
   );
 }
+
 export default FeedBack;
