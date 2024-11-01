@@ -6,35 +6,37 @@ import "../../views/product/scssSp/styleSP.scss";
 import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
 import "./search.scss";
 import SuggestSP from "../product/suggest-sp";
-
+import { useLocation } from "react-router-dom";
 function Search() {
+  const location = useLocation();
   const [textSearch, setTextSearch] = useState("");
   const [sumPage, setSumtPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState("Phổ Biến");
 
-  // Lấy giá trị từ localStorage
-
   useEffect(() => {
-    const storedTextSearch = JSON.parse(localStorage.getItem("text_search"));
-    setTextSearch(storedTextSearch);
-  }, []);
+    const searchParams = new URLSearchParams(location.search);
+    const keywordParam = searchParams.get("keyword");
+    if (keywordParam) {
+      setTextSearch(keywordParam);
+    }
+  }, [location]);
 
-  const urlApi = `http://localhost:5050/products?&page=${currentPage}&name=${textSearch}`;
-  const array = ["Phổ Biến", "Mới Nhất", "Bán chạy"];
+  const urlApi = `http://localhost:5050/products?page=${currentPage}&name=${textSearch}`;
+  console.log(urlApi);
+  const filterOptions = ["Phổ Biến", "Mới Nhất", "Bán chạy"];
 
-  const list_filter = array.map((item, index) => {
-    return (
-      <li
-        style={{ cursor: "pointer" }}
-        key={index}
-        className={item === filter ? "active" : ""}
-        onClick={() => setFilter(item)}
-      >
-        {item}
-      </li>
-    );
-  });
+  const list_filter = filterOptions.map((item, index) => (
+    <li
+      style={{ cursor: "pointer" }}
+      key={index}
+      className={item === filter ? "active" : ""}
+      onClick={() => setFilter(item)}
+    >
+      {item}
+    </li>
+  ));
+
   return (
     <div className="box-search">
       <AutoLoadPage />
@@ -72,7 +74,7 @@ function Search() {
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               textSearch={textSearch}
-            ></SuggestSP>
+            />
           </div>
         </section>
       </div>
@@ -80,4 +82,5 @@ function Search() {
     </div>
   );
 }
+
 export default Search;

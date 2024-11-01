@@ -5,9 +5,11 @@ import ChatRealTime from "../../views/chat/chat";
 function Chat() {
   const chat_big = useRef();
   const chat_small = useRef();
+  const inputChat = useRef(null);
 
   const displayChatBigUp = () => {
     chat_big.current.style.display = "block";
+    inputChat.current.focus();
     chat_small.current.style.display = "none";
   };
 
@@ -43,7 +45,7 @@ function Chat() {
             </div>
           </div>
           <div className="chat-text">
-            <ChatRealTime  />
+            <ChatRealTime inputChat={inputChat} />
           </div>
         </div>
       </div>

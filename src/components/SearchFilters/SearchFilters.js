@@ -32,7 +32,7 @@ function SearchFilters() {
           </label>
         </li>
         <li className="themDm">
-          Thêm <i className="fas fa-less-than fa-rotate-270"></i>
+          Thêm <i style={{ color: "black" }} class="fas fa-chevron-down"></i>
         </li>
         <div className="list-display-two">
           <li>

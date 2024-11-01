@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ComponentHeader from "../../components/header/header";
 import File from "../../components/file/file";
-
+import imgdf from "../../../src/assets/images/img/avatar_default.jpg";
 const Profile = () => {
   const [cookies] = useCookies();
   const [imageUrl, setImageUrl] = useState(null);
@@ -61,6 +61,7 @@ const Profile = () => {
 
   // Theo dõi thay đổi của avatar
   const avatarFile = watch("avatar");
+
   useEffect(() => {
     if (avatarFile && avatarFile.length > 0) {
       const previewUrl = URL.createObjectURL(avatarFile[0]);
@@ -210,7 +211,7 @@ const Profile = () => {
                 <div className="icon-camara">
                   <i className="fa fa-camera"></i>
                 </div>
-                <img src={imageUrl} alt="Profile" />
+                <img src={imageUrl ? imageUrl : imgdf} alt="Profile" />
               </label>
               <input
                 style={{ opacity: "0" }}

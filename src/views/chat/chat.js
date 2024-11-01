@@ -4,8 +4,8 @@ import "./ChatRealTime.scss";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import moment from "moment";
-
-const ChatRealTime = () => {
+import imgChatDf from "../../../src/assets/images/img/chat_default.jpg";
+const ChatRealTime = ({ inputChat }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [imageFile, setImageFile] = useState(null); // State để lưu trữ file ảnh
@@ -66,9 +66,9 @@ const ChatRealTime = () => {
 
   // Tạo phòng chat
   const createRoomChat = async () => {
-    if (!idAdmin) return; // Kiểm tra idAdmin trước khi gọi API
+    if (!idAdmin) return;
     const data = {
-      adminId: idAdmin,
+      admin_Id: idAdmin,
     };
 
     try {
@@ -154,6 +154,7 @@ const ChatRealTime = () => {
   useEffect(() => {
     getRoomF();
   }, []);
+
 
   const convertFileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -285,7 +286,7 @@ const ChatRealTime = () => {
         </div>
       ))
     ) : (
-      <p>ko co mess</p>
+      <img id="img-df-chat" src={imgChatDf} alt="img_chat" />
     );
 
   return (
@@ -302,6 +303,7 @@ const ChatRealTime = () => {
         </label>
 
         <input
+          ref={inputChat}
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}

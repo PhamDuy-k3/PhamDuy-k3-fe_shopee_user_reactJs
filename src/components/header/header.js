@@ -51,6 +51,7 @@ function ComponentHeader() {
     if (!data.search) return;
     localStorage.setItem("text_search", JSON.stringify(data.search));
     navigate(`/search?keyword=${data.search}`);
+    setValue("search", "");
   };
   // lấy user qua phone
   useEffect(() => {
@@ -210,7 +211,7 @@ function ComponentHeader() {
               </>
             ) : (
               <>
-                <li>
+                <li id="name-user">
                   <ul id="img-name-user" className="d-flex">
                     {user && user.avatar ? (
                       <img src={user && user.avatar} alt="User Avatar" />
@@ -223,7 +224,6 @@ function ComponentHeader() {
                         : cookies.email_token
                         ? cookies.email_token.split("@")[0]
                         : ""}
-                      ...
                     </li>
                   </ul>
 
@@ -250,7 +250,9 @@ function ComponentHeader() {
       </div>
       <div className="logo-search-cart d-flex col-12">
         <div className="logo col-2 text-align">
-          <img src={logo} alt="logo-shopee" />
+          <Link to="/">
+            <img src={logo} alt="logo-shopee" />
+          </Link>
         </div>
         <div className="search col-8">
           <form onSubmit={handleSubmit(searchProduct)}>

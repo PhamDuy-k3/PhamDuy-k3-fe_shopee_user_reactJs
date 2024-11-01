@@ -13,7 +13,12 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-
+    #img-df-chat{
+      margin-left: 20%;
+      width: 20rem;
+      margin-top: 2rem;
+      height: auto;
+    }
     .message {
       max-width: 70%;
       padding: 10px;

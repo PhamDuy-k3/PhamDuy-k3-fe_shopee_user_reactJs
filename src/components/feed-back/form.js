@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import io from "socket.io-client";
+import Rates from "../rate/rate";
 
 function FormComment({
   productID,
@@ -19,18 +20,14 @@ function FormComment({
   const [user, setUser] = useState(null);
   const socketRef = useRef(null);
   const imageInputRef = useRef(null);
-
+  const [valueRate, setValueRate] = useState(5);
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      rating: "5",
-    },
-  });
+  } = useForm({});
 
   const handleClose = () => {
     setEditCommentData("");
@@ -81,7 +78,7 @@ function FormComment({
       if (data.color) formData.append("color", data.color);
       if (data.describe) formData.append("describe", data.describe);
       if (data.content) formData.append("content", data.content);
-      formData.append("rating", data.rating || "5");
+      formData.append("rating", valueRate);
 
       if (imageInputRef.current?.files[0]) {
         formData.append("image", imageInputRef.current.files[0]);
@@ -210,16 +207,23 @@ function FormComment({
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="rating">
-              <Form.Label>Đánh giá (1-5)</Form.Label>
-              <Form.Control
-                type="number"
-                min="1"
-                max="5"
-                {...register("rating", { required: true })}
-              />
-              {errors.rating && (
-                <p style={{ color: "red" }}>Đánh giá là bắt buộc</p>
-              )}
+              <div className="d-flex flex-column">
+                <Form.Label>Đánh giá (1-5)</Form.Label>
+                <Rates setValueRate={setValueRate} valueRate={valueRate} />
+                {!valueRate ? (
+                  <p
+                    style={{
+                      color: "red",
+                      marginTop: "10px",
+                      marginBottom: "0",
+                    }}
+                  >
+                    Đánh giá là bắt buộc
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="image">

@@ -141,14 +141,16 @@ ul li {
         }
         
     }
-    li:last-child{
+    #name-user{
+        width: 13rem;
         cursor: pointer;
         position: relative;
         #img-name-user{
+            overflow: hidden;
             padding-left: 0;
             margin-left: 0;
-            width: 1rem !important;
             li{
+                width: 90%;
                 margin-top: -2px;
                 font-size: 1.2rem;
             }
@@ -164,6 +166,7 @@ ul li {
             background-color: white;
             left: -11rem;
             font-size: 1.2rem;
+            margin-top: 5px;
             position: absolute;
             li{
                 padding: 0.5rem;

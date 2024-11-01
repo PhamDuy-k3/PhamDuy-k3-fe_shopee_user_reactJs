@@ -167,7 +167,7 @@ function FeedBack() {
             </div>
           ))
         ) : (
-          <p>Chưa có đánh giá nào</p>
+          <p></p>
         )}
       </div>
     </section>
