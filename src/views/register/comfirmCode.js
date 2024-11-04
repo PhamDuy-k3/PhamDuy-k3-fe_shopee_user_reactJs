@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function ComfirmCode() {
   const [code, setCode] = useState(["", "", "", ""]);
   const [user, setUser] = useState(null); // Khởi tạo là null để kiểm tra tình trạng tìm người dùng
@@ -37,10 +38,18 @@ export default function ComfirmCode() {
       if (user && codes == user?.verificationCode) {
         updateUser(); // Cập nhật thông tin khi mã xác nhận đúng
       } else {
-        alert("Mã xác nhận không đúng. Vui lòng thử lại!");
+        toast.error(() => (
+          <p style={{ paddingTop: "1rem" }}>
+            Mã xác nhận không đúng. Vui lòng thử lại!
+          </p>
+        ));
       }
     } else {
-      alert("Vui lòng nhập đủ 4 ký tự mã xác nhận.");
+      toast.error(() => (
+        <p style={{ paddingTop: "1rem" }}>
+          Vui lòng nhập đủ 4 ký tự mã xác nhận!
+        </p>
+      ));
     }
   };
 
@@ -84,7 +93,9 @@ export default function ComfirmCode() {
     })
       .then((res) => res.json())
       .then((res) => {
-        alert("Xác nhận thành công!");
+        toast.success(() => (
+          <p style={{ paddingTop: "1rem" }}>"Xác nhận thành công!</p>
+        ));
         navigate("/login");
       })
       .catch((error) => {
@@ -94,32 +105,46 @@ export default function ComfirmCode() {
 
   return (
     <div className="ComfirmCode">
-      <form className="form">
-        <span className="close">X</span>
-
-        <div className="info">
-          <span className="title">Nhập mã xác nhận đăng ký</span>
-          <p className="description">Chúng tôi đã gửi mã qua gmail của bạn</p>
-        </div>
-        <div className="input-fields">
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{ width: "350px" }}
+      />
+      <form class="form">
+        <div class="title">Xác thực OTP</div>
+        <p class="message">
+          Chúng tôi đã gửi mã xác minh đến email mà bạn đăng ký
+        </p>
+        <div class="inputs">
           {code.map((digit, index) => (
             <input
               key={index}
               id={`input-${index}`}
-              type="tel"
+              type="text"
               maxLength="1"
               value={digit}
               onChange={(e) => handleChange(index, e.target.value)}
             />
           ))}
         </div>
-
-        <div className="action-btns">
-          <button type="button" className="clear" onClick={handleClear}>
+        <div className="d-flex" style={{ marginLeft: "4rem" }}>
+          <button
+            style={{ backgroundColor: "gray" }}
+            onClick={handleClear}
+            class="action"
+          >
             Xóa
           </button>
-          <button type="button" className="verify" onClick={handleVerify}>
-            Xác nhận
+          <button onClick={handleVerify} class="action">
+            Xác thực
           </button>
         </div>
       </form>

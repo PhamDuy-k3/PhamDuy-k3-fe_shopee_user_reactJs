@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import moment from "moment";
 import imgChatDf from "../../../src/assets/images/img/chat_default.jpg";
+import LoadingMess from "../../components/loadingmess/loadingMess";
 const ChatRealTime = ({ inputChat }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
@@ -14,6 +15,7 @@ const ChatRealTime = ({ inputChat }) => {
   const [idAdmin, setIdAdmin] = useState(""); // Thay đổi kiểu dữ liệu
   const [idRoom, setIdRoom] = useState();
   const [imageFileChoese, setImageFileChoese] = useState(null); // State để lưu trữ file ảnh
+  const [loading, setLoading] = useState(false);
 
   const isTokenExpired = (token) => {
     if (!token) return true;
@@ -155,7 +157,6 @@ const ChatRealTime = ({ inputChat }) => {
     getRoomF();
   }, []);
 
-
   const convertFileToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -181,6 +182,7 @@ const ChatRealTime = ({ inputChat }) => {
     };
     socketRef.current.emit("message", data);
     await handleMess(data);
+    socketRef.current.emit("messloadingCompelete", false);
     setMessage("");
     setImageFile(null);
     setImageFileChoese(null);
@@ -231,7 +233,12 @@ const ChatRealTime = ({ inputChat }) => {
         { ...msg, sender: "admin" },
       ]);
     });
-
+    socket.on("messloading", (value) => {
+      setLoading(value);
+    });
+    socket.on("messloadingCompelete", (value) => {
+      setLoading(value);
+    });
     return () => {
       socket.disconnect();
     };
@@ -263,7 +270,8 @@ const ChatRealTime = ({ inputChat }) => {
   };
 
   // Xử lý sự kiện gửi tin nhắn
-  const handleSendMessage = () => {
+  const handleSendMessage = (event) => {
+    event.preventDefault();
     if (message.trim() || imageFile) {
       getRoom();
     }
@@ -289,9 +297,24 @@ const ChatRealTime = ({ inputChat }) => {
       <img id="img-df-chat" src={imgChatDf} alt="img_chat" />
     );
 
+  const handlekeyDown = (e) => {
+    const data1 = {
+      chatId: idRoom,
+      check: true,
+    };
+    socketRef.current.emit("messloading", data1);
+    if (e.key === "Enter") {
+      const data2 = {
+        chatId: idRoom,
+        check: false,
+      };
+      socketRef.current.emit("messloadingCompelete", data2);
+    }
+  };
   return (
-    <div className="chat-container">
+    <form onSubmit={handleSendMessage} className="chat-container">
       <div className="messages">{messagesList}</div>
+      {loading && <LoadingMess />}
       <div className="input-container">
         <label htmlFor="file-img-mess">
           <i className="fa fa-camera"></i>
@@ -303,12 +326,13 @@ const ChatRealTime = ({ inputChat }) => {
         </label>
 
         <input
+          onKeyDown={(e) => handlekeyDown(e)}
           ref={inputChat}
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button onClick={handleSendMessage}>Gửi</button>
+        <button type="submit">Gửi</button>
         {imageFileChoese !== null ? (
           <div className="img-choese">
             <img src={imageFileChoese} alt="anh" />
@@ -317,7 +341,7 @@ const ChatRealTime = ({ inputChat }) => {
           ""
         )}
       </div>
-    </div>
+    </form>
   );
 };
 

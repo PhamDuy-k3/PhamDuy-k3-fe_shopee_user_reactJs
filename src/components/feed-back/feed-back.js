@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import FeedBackHeader from "./feed-back-header";
 import imgUser from "../../assets/images/img/imgctsp/img-product.png";
 import imgFbackSmaill from "../../assets/images/img/imgctsp/img-fback-con.jpg";
@@ -22,6 +22,8 @@ function FeedBack() {
   const [editCommentData, setEditCommentData] = useState(null);
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [rating, setRating] = useState("");
+  const [commentsRating, setCommentsRating] = useState([]);
   const urlProductID = useParams();
 
   useEffect(() => {
@@ -64,11 +66,11 @@ function FeedBack() {
     setIsDisplay(true);
   };
 
-  const fetchDataComment = async () => {
+  const fetchDataComment = useCallback(async () => {
     try {
       if (!urlProductID.product_id) return;
       const response = await axios.get(
-        `http://localhost:5050/comments?productId=${urlProductID.product_id}`,
+        `http://localhost:5050/comments?productId=${urlProductID.product_id}&rating=${rating}`,
         {
           headers: {
             Accept: "application/json",
@@ -77,22 +79,29 @@ function FeedBack() {
           },
         }
       );
+      if (rating) {
+        if (response.data.data.length > 0) {
+          setCommentsRating(response.data.data);
+        } else {
+          setCommentsRating([""]);
+        }
+        return;
+      }
       setComments(response.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [urlProductID.product_id, rating, cookies.user_token]);
 
   useEffect(() => {
     fetchDataComment();
-  }, []);
-
+  }, [fetchDataComment]);
   return (
     <section id="feedBack" className="feed-back">
       <h1>ĐÁNH GIÁ SẢN PHẨM</h1>
-      <FeedBackHeader />
+      <FeedBackHeader setRating={setRating} comments={comments} />
       <FormComment
         setEditCommentData={setEditCommentData}
         setComments={setComments}
@@ -104,7 +113,12 @@ function FeedBack() {
         {isLoading ? (
           <LoadingFb />
         ) : comments.length > 0 ? (
-          comments.map((comment) => (
+          (commentsRating.length > 0
+            ? commentsRating[0] === ""
+              ? []
+              : commentsRating
+            : comments
+          ).map((comment) => (
             <div key={comment._id} className="feed-back-content-products">
               <div
                 onClick={() => toggleAction(comment._id)}
