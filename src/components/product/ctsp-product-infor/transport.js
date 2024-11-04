@@ -82,8 +82,9 @@ function TranSport() {
           <i className="fas fa-shuttle-van"></i> Vận Chuyển Tới
           <span className="address-new">{address}</span> &nbsp;
           <i
+            style={{ color: "black", cursor: "pointer" }}
             onClick={toggleAddressVisibility}
-            className="fas fa-less-than fa-rotate-270 change-dress"
+            class="fas fa-chevron-down"
           ></i>
         </div>
         <div className="phi-vc d-flex mt-3">
@@ -92,7 +93,11 @@ function TranSport() {
             <sup>đ</sup>
             {transportFee}
             <span>
-              &nbsp; <i className="fas fa-less-than fa-rotate-270"></i>
+              &nbsp;{" "}
+              <i
+                style={{ color: "black", cursor: "pointer" }}
+                class="fas fa-chevron-down"
+              ></i>
             </span>
           </p>
         </div>

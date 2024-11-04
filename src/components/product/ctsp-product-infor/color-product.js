@@ -14,10 +14,9 @@ function ColorProduct({ colorProduct, setColorProduct }) {
         <p>Màu Sắc</p>
       </div>
       <div className="color-list d-flex flex-wrap">
-        <button disabled>Màu Đỏ</button>
         {colorProducts.map((item) => {
           return (
-            <button
+            <div
               key={item}
               className={`color-sp ${
                 colorProduct === item ? "button-clicked" : ""
@@ -25,7 +24,14 @@ function ColorProduct({ colorProduct, setColorProduct }) {
               onClick={() => handleColorClick(item)}
             >
               {item}
-            </button>
+              {colorProduct === item ? (
+                <div className="highlight">
+                  <i class="fas fa-check"></i>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           );
         })}
       </div>

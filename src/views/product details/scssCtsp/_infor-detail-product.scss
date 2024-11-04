@@ -1,4 +1,31 @@
 @import '_varibal';
+@mixin highlight {
+    width: auto;
+            cursor: pointer;
+            padding: 0.6rem;
+            margin-right: 1rem;
+            border: 1px solid $boder;
+            background-color: white;
+            position: relative;
+            .highlight{
+                position: absolute;
+                width: 1rem;
+                height:1rem;
+                right: -14px;
+                top:2.1rem;
+                border-top-left-radius: 100%;
+                padding: 0;
+                background-color: red;
+                i{
+                    top:0.2rem;
+                    left: 0.3rem;
+                    position: absolute;
+                    margin-top: 0px;
+                    font-size: 0.5rem;
+                    color: white;
+                }
+            }
+  }
 .infor-detail-product{
     margin-top: 1rem;
     .insurance-text {
@@ -91,11 +118,8 @@
         p{
             padding-top: 0.5rem;
         }
-        .color-list button{
-            border: 1px solid $boder;
-            background-color: white;
-            padding: 0.4rem;
-            margin-right: 1rem;
+        .color-list div{
+            @include highlight;
         }
        
     }
@@ -105,17 +129,10 @@
             padding-top: 0.5rem;
         }
         .size-text{
-            button{
-                border: 1px solid $boder;
-                padding: 0.4rem 2rem 0.4rem 2rem;
-                margin-right: 1rem;
-                background-color: white;
+            div{
+                @include highlight;
+                padding: 0.6rem 1.5rem 0.6rem 1.5rem;
             }
-            button:focus{
-                border: 1px solid rgb(245, 150, 150);
-                color: $redColor;
-            }
-
         }
     }
     .number{

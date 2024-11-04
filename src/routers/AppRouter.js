@@ -10,6 +10,7 @@ import CartOder from "../views/cart/cartOder";
 import Profile from "../views/infoAccount/infoAcc";
 import OrderLoading from "../views/orderLoading";
 import ComfirmCode from "../views/register/comfirmCode";
+import Voucher from "../views/voucher/voucher";
 
 function AppRouter() {
   return (
@@ -22,6 +23,7 @@ function AppRouter() {
             path="/ProductDetail/:product_id"
             element={<ProductDetails />}
           />
+          <Route path="/voucher" element={<Voucher />} />
           <Route path="/search" element={<Search />} />
           <Route path="/Cart" element={<Cart />} />
           <Route path="/Profile" element={<Profile />} />

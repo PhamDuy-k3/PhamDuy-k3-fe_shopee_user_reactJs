@@ -1,0 +1,166 @@
+.color-bg{
+    color: #df3b1a;
+    background-color: #FDFDFD;;
+}
+#box-voucher{
+    background-color: #FDFDFD;
+    width: 100%;
+    .content-voucher{
+        width: 80%;
+        padding-top: 10rem;
+        height: auto;
+        margin-left: 10%;
+        .content-voucher__banner ,.content-voucher__huntvoucher{
+            width: 100%;
+            height: 40rem;
+            img{
+                width: 100%;
+                max-height: 100%;
+                min-height: 95%;
+               }
+        }
+        .content-voucher__items{
+            width: 70%;
+            margin-top: 2rem;
+            margin-left: 15%;
+        }
+        .content-voucher__items>div{
+            font-size: 1.5rem;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            border: 1px solid rgb(222, 217, 217);
+            height: 16rem;
+            .info-shop{
+              background-color: #EE4D2D;
+              border-right: 1px solid rgb(222, 217, 217);
+              position: relative;
+              #triangle-left {
+                position: absolute;
+                width: 0;
+                height: 0;
+                top: 11rem;
+                left: 12.4rem;
+                border-top: 22px solid transparent;
+                border-right: 22px solid #EE4D2D;
+                border-bottom: 22px solid transparent;
+              }
+              .dots-dis{
+                position: absolute;
+                left: -8px;
+                .dot-dis{
+                  width: 1.2rem;
+                  height: 1.2rem;
+                  margin-bottom: 0.6rem;
+                  background-color:#FDFDFD;
+                  border-radius: 50%;
+                }
+              }
+                img{
+                  margin-left: 5rem;
+                  margin-top: 1rem;
+                  width: 8rem;
+                  height: 8rem;
+                  border-radius: 100%;
+                }
+                p{
+                    width: 80%;
+                    margin-top: 2rem;
+                    text-align: center;
+                    padding: 2px;
+                    height: 3rem;
+                    font-weight: 500;
+                    font-size: 20px;
+                    margin-left: -1px;
+                    @extend .color-bg
+                }
+            }
+            .detail-code{
+              padding: 2.5rem;
+              background-color: white;
+              position: relative;
+               >p:nth-child(2){
+                font-size: 24px;
+              }
+              >p:nth-child(1){
+                font-size: 28px;
+                font-weight: 700;
+              }
+              .hsd{
+                font-size: 20px;
+               }
+               .save{
+                right: 1.5rem;
+                top:6rem;
+                padding: 1rem 2rem 1rem 2rem;
+                position: absolute;
+                color: white;
+                border-radius: 8px;
+               }
+              .nosave{
+                background-color: #EE4D2D;
+              }
+              .saved{
+                background-color:white;
+                color: #EE4D2D;
+                border: 2px solid #EE4D2D;
+              }
+              .usageLimit{
+                top:0.2rem;
+                right: 0;
+                font-weight: 700;
+                color: #EE4D2D;
+                border-top-left-radius:10px ;
+                border-bottom-left-radius: 10px;
+                background-color: #FFEAEA;
+                padding: 0.1rem 1rem 0.1rem 1.5rem;
+                position: absolute;
+              }
+              #up_voucher {
+                position: absolute;
+                right: 5rem;
+                animation: up_voucher 1s ease-in-out forwards ; 
+                img{
+                    width: 5rem;
+                }
+              }                  
+              
+              @keyframes up_voucher {
+                0% {
+                  top: 50px;
+                  opacity: 1;
+                }
+                100% {
+                  top: 20px;
+                  opacity: 0;
+                }
+              }
+            }
+            .detail-code>div{
+              font-size: 0.9rem;
+              color: grey;
+              p{
+                margin-right: 5px;
+              }
+            }
+          }
+          #content-voucher__items>div:hover{
+            background-color: #f4e5e2;
+        }
+        #to_up{
+            position: fixed;
+            top: 80%;
+            left: 90%;
+            i{
+                cursor: pointer;
+                font-size: 2rem;
+                color: #EE4D2D;
+            }
+            i:hover{
+                color: #e6320f;
+            }
+        }
+      
+    }
+}

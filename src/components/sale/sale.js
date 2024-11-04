@@ -33,12 +33,14 @@ export function Sale() {
         </div>
       </div>
       <div className="sale-item text-align">
-        <div className="sale-item-image">
-          <img src={sale_giam_gia} alt="" />
-        </div>
-        <div className="sale-item-text">
-          <p>{t("aside sale.voucher_discount")}</p>
-        </div>
+        <Link to="/voucher">
+          <div className="sale-item-image">
+            <img src={sale_giam_gia} alt="" />
+          </div>
+          <div className="sale-item-text">
+            <p>{t("aside sale.voucher_discount")}</p>
+          </div>
+        </Link>
       </div>
       <div className="sale-item text-align">
         <div className="sale-item-image">

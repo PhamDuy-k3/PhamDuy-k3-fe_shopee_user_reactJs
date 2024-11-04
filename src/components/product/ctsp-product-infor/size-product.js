@@ -8,13 +8,20 @@ function SizeProduct({ selectSize, setSelectSize }) {
   var sizes = ["S", "M", "L", "XL", "XXL"];
   const sizes_new = sizes.map((size) => {
     return (
-      <button
+      <div
         key={size}
         className={`size-sp ${selectSize === size ? "size-clicked" : ""}`}
         onClick={() => HandleSizeClick(size)}
       >
         {size}
-      </button>
+        {selectSize === size ? (
+          <div className="highlight">
+            <i class="fas fa-check"></i>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     );
   });
 
