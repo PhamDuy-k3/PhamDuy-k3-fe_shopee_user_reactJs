@@ -1,17 +1,25 @@
 import "./scssCart/styleCart.scss";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const DiscountCode = (props) => {
   const [discountcodes, setDiscountcode] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
+  const [cookies] = useCookies();
 
   // Hàm lấy dữ liệu mã giảm giá
-  const fetchDataDiscountcode = async () => {
+  const fetchUserVoucher = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:5050/discountcode");
-      if (response.data.status_code === 200) {
+      const response = await axios.get("http://localhost:5050/user_voucher", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.user_token}`,
+        },
+      });
+      if (response.status === 200) {
         setDiscountcode(response.data.data);
       } else {
         setDiscountcode([]);
@@ -19,23 +27,24 @@ const DiscountCode = (props) => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, [cookies.user_token]);
 
   const calculateDiscount = () => {
     const selectedDiscountData = discountcodes.filter((item) =>
-      props.selectedDiscountCodes.includes(item.code)
+      props.selectedDiscountCodes.includes(item.voucher_id.code)
     );
-    console.log(selectedDiscountData);
     const fixedValues = [];
     const percentageValues = [];
 
     selectedDiscountData.forEach((item) => {
-      if (item.discountType === "fixed") {
-        fixedValues.push(item.discountValue);
+      if (item.voucher_id.discountType === "fixed") {
+        fixedValues.push(item.voucher_id.discountValue);
       } else {
-        percentageValues.push(item.discountValue);
+        percentageValues.push(item.voucher_id.discountValue);
       }
     });
+    // lưu voucher đã chọn
+    props.setValueVoucher(selectedDiscountData);
 
     // Tính tổng giảm giá
     const discountPercentage = percentageValues.reduce(
@@ -61,8 +70,8 @@ const DiscountCode = (props) => {
   };
 
   useEffect(() => {
-    fetchDataDiscountcode();
-  }, []);
+    fetchUserVoucher();
+  }, [fetchUserVoucher]);
 
   const handelIsDisplay = () => {
     setIsDisplay(true);
@@ -102,14 +111,15 @@ const DiscountCode = (props) => {
               discountcodes.map((discountcode, index) => (
                 <div
                   onClick={() => {
-                    if (discountcode.minOrderValue <= props.total) {
-                      handleDiscountcode(discountcode.code);
+                    if (discountcode.voucher_id.minOrderValue <= props.total) {
+                      handleDiscountcode(discountcode.voucher_id.code);
                     }
                   }}
                   key={index}
                   className={`d-flex ${
-                    discountcode.minOrderValue <= props.total &&
-                    new Date(discountcode.expirationDate) > new Date()
+                    discountcode.voucher_id.minOrderValue <= props.total &&
+                    new Date(discountcode.voucher_id.expirationDate) >
+                      new Date()
                       ? ""
                       : "disabled"
                   }`}
@@ -121,26 +131,30 @@ const DiscountCode = (props) => {
                       ))}
                     </div>
                     <img
-                      src={discountcode.logoShop}
-                      alt={`${discountcode.shopName} logo`}
+                      src={discountcode.voucher_id.logoShop}
+                      alt={`${discountcode.voucher_id.shopName} logo`}
                     />
-                    <p>{discountcode.shopName}</p>
+                    <p>{discountcode.voucher_id.shopName}</p>
                     <div id="triangle-left"></div>
                   </div>
                   <div className="detail-code col-8">
                     <p>
-                      Giá: {discountcode.discountValue}
+                      Giá: {discountcode.voucher_id.discountValue}
                       <span>
-                        {discountcode.discountType === "fixed" ? "k" : "%"}
+                        {discountcode.voucher_id.discountType === "fixed"
+                          ? "k"
+                          : "%"}
                       </span>
                     </p>
-                    <p>Đơn tối thiểu: {discountcode.minOrderValue}</p>
+                    <p>
+                      Đơn tối thiểu: {discountcode.voucher_id.minOrderValue}
+                    </p>
                     <div className="d-flex">
-                      <p>Đã dùng: {discountcode.usedPercentage}%</p>
+                      <p>Đã dùng: {discountcode.voucher_id.usedPercentage}%</p>
                       <p>
                         HSD:{" "}
                         {new Date(
-                          discountcode.expirationDate
+                          discountcode.voucher_id.expirationDate
                         ).toLocaleDateString()}
                       </p>
                     </div>
@@ -149,12 +163,14 @@ const DiscountCode = (props) => {
                         type="checkbox"
                         name="discount"
                         checked={props.selectedDiscountCodes.includes(
-                          discountcode.code
+                          discountcode.voucher_id.code
                         )}
-                        onChange={() => handleDiscountcode(discountcode.code)}
+                        onChange={() =>
+                          handleDiscountcode(discountcode.voucher_id.code)
+                        }
                       />
                     </p>
-                    <p className="usageLimit">x{discountcode.usageLimit}</p>
+                    <p className="usageLimit">x{discountcode.quantity}</p>
                   </div>
                 </div>
               ))

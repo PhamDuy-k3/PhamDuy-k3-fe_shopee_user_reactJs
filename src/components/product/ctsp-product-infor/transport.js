@@ -61,7 +61,7 @@ function AddresTransport(props) {
 }
 function TranSport() {
   const [address, setAddress] = useState("Phường Định Công , Quận Hoàng Mai ");
-  const [transportFee, setTransportFee] = useState(12);
+  const [transportFee, setTransportFee] = useState(0);
   const [isAddressVisible, setIsAddressVisible] = useState(false);
 
   useEffect(() => {
@@ -84,19 +84,19 @@ function TranSport() {
           <i
             style={{ color: "black", cursor: "pointer" }}
             onClick={toggleAddressVisibility}
-            class="fas fa-chevron-down"
+            className="fas fa-chevron-down"
           ></i>
         </div>
         <div className="phi-vc d-flex mt-3">
           <p>Phí Vận Chuyển</p>
           <p>
-            <sup>đ</sup>
+            <sup style={{marginRight:'3px'}}>đ</sup>
             {transportFee}
             <span>
               &nbsp;{" "}
               <i
                 style={{ color: "black", cursor: "pointer" }}
-                class="fas fa-chevron-down"
+                className="fas fa-chevron-down"
               ></i>
             </span>
           </p>

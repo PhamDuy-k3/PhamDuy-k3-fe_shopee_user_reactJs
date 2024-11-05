@@ -103,7 +103,7 @@
               }
               .saved{
                 background-color:white;
-                color: #EE4D2D;
+                color: #EE4D2D ;
                 border: 2px solid #EE4D2D;
               }
               .usageLimit{
@@ -119,10 +119,18 @@
               }
               #up_voucher {
                 position: absolute;
-                right: 5rem;
-                animation: up_voucher 1s ease-in-out forwards ; 
+                right: 4rem;
+                animation: up_voucher 1s ease-in-out forwards ;
+                p{
+                  padding-top: 4px;
+                  font-weight: 600;
+                  color: #EE4D2D;
+                  font-size: 2rem;
+                } 
                 img{
-                    width: 5rem;
+                    padding-top: 0.8rem;
+                    width: 2.5rem;
+                    height: 3rem;
                 }
               }                  
               

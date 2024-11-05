@@ -12,7 +12,7 @@ import SelectPay from "./selectPay";
 import { PaymentForm } from "../../payment";
 import { VND } from "../../components/VND/vnd";
 import { deleteToCartsAsync } from "../../api/delete";
-
+import "./style.scss";
 function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
@@ -24,6 +24,7 @@ function OrderLoading() {
   const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
   const [pay, setPay] = useState();
   const [orderInfo, setOrderInfo] = useState("pay with MoMo");
+  const [valueVoucher, setValueVoucher] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedDiscountCodes, setSelectedDiscountCodes] = useState([]);
@@ -266,6 +267,7 @@ function OrderLoading() {
                   })}
                 </div>
                 <DiscountCode
+                  setValueVoucher={setValueVoucher}
                   setSelectedDiscountCodes={setSelectedDiscountCodes}
                   selectedDiscountCodes={selectedDiscountCodes}
                   total={total}
@@ -283,19 +285,41 @@ function OrderLoading() {
 
                 <div className="d-flex mt-3 colum-4">
                   <div className="col-9 d-flex">
-                    <p>
+                    <p style={{ fontSize: "1.2rem" }}>
                       Tổng thanh toán (
                       <span className="quantityCart-two">{sumSp}</span>) sản
                       phẩm :
                     </p>
-                    <div
-                      style={{ color: "#ee4d2d", fontSize: "1.5rem" }}
-                      className=""
-                    >
-                      <sub>đ</sub>
-                      <p style={{ paddingLeft: "1rem" }} className="sum-price">
-                        {VND.format(totalDiscountcode)}
-                      </p>
+                    <div id="price_order">
+                      <div className="d-flex">
+                        <p>Tổng tiền</p>
+                        <p>
+                          <sup>đ</sup> {VND.format(total)}
+                        </p>
+                      </div>
+                      <div className="d-flex">
+                        <p>Sử dụng mã giảm giá</p>
+                        <div className="d-flex">
+                          {valueVoucher.map((voucher, index) => (
+                            <p key={index}>
+                              {voucher.voucher_id.discountValue}
+                              {voucher.voucher_id.discountType === "fixed"
+                                ? "k"
+                                : "%"}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="d-flex">
+                        <p>Phí vận chuyển</p>
+                        <p>Miễn phí</p>
+                      </div>
+                      <div className="d-flex">
+                        <p>Tổng thanh toán</p>
+                        <p>
+                          <sup>đ</sup> {VND.format(totalDiscountcode)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <button onClick={handleBuy}>Đặt hàng</button>

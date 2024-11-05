@@ -16,7 +16,7 @@ function SizeProduct({ selectSize, setSelectSize }) {
         {size}
         {selectSize === size ? (
           <div className="highlight">
-            <i class="fas fa-check"></i>
+            <i className="fas fa-check"></i>
           </div>
         ) : (
           ""

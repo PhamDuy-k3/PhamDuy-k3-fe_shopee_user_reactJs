@@ -104,7 +104,7 @@ export default function ComfirmCode() {
   };
 
   return (
-    <div className="ComfirmCode">
+    <div classNameName="ComfirmCode">
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -118,12 +118,12 @@ export default function ComfirmCode() {
         theme="light"
         style={{ width: "350px" }}
       />
-      <form class="form">
-        <div class="title">Xác thực OTP</div>
-        <p class="message">
+      <form className="form">
+        <div className="title">Xác thực OTP</div>
+        <p className="message">
           Chúng tôi đã gửi mã xác minh đến email mà bạn đăng ký
         </p>
-        <div class="inputs">
+        <div className="inputs">
           {code.map((digit, index) => (
             <input
               key={index}
@@ -135,15 +135,15 @@ export default function ComfirmCode() {
             />
           ))}
         </div>
-        <div className="d-flex" style={{ marginLeft: "4rem" }}>
+        <div classNameName="d-flex" style={{ marginLeft: "4rem" }}>
           <button
             style={{ backgroundColor: "gray" }}
             onClick={handleClear}
-            class="action"
+            className="action"
           >
             Xóa
           </button>
-          <button onClick={handleVerify} class="action">
+          <button onClick={handleVerify} className="action">
             Xác thực
           </button>
         </div>

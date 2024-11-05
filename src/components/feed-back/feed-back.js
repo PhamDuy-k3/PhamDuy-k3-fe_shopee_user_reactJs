@@ -79,7 +79,7 @@ function FeedBack() {
           },
         }
       );
-      if (rating) {
+      if (rating || rating === 0) {
         if (response.data.data.length > 0) {
           setCommentsRating(response.data.data);
         } else {

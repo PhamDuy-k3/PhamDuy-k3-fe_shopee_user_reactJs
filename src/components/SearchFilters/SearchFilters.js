@@ -32,7 +32,7 @@ function SearchFilters() {
           </label>
         </li>
         <li className="themDm">
-          Thêm <i style={{ color: "black" }} class="fas fa-chevron-down"></i>
+          Thêm <i style={{ color: "black" }} className="fas fa-chevron-down"></i>
         </li>
         <div className="list-display-two">
           <li>

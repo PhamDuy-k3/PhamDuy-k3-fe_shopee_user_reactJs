@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import banner from "../../assets/images/img/voucher/voucher.jpg";
 import huntvoucher from "../../assets/images/img/voucher/san_voucher.jpg";
 import "./style.scss";
@@ -10,20 +10,23 @@ import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import addvoucherimg from "../../assets/images/img/voucher/add_voucher.jpg";
+import { Link } from "react-router-dom";
+
 export default function Voucher() {
   const [vouchers, setVouchers] = useState([]);
   const [cookies] = useCookies();
   const [ids_voucher, setIdsVoucher] = useState([]);
-  console.log(ids_voucher);
+  const [vouchercheck, setVoucherCheck] = useState([]);
+
   const handleUp = () => {
     window.scrollTo(0, 0);
   };
-  // lưu voucher
-  const addVoucher = async (id_voucher) => {
+
+  // Hàm để lưu voucher
+  const addVoucher = async (id_voucher, usageLimit) => {
+    setVoucherCheck(id_voucher);
     try {
-      const data = {
-        voucher_id: id_voucher,
-      };
+      const data = { voucher_id: id_voucher, quantity: usageLimit };
       const response = await axios.post(
         "http://localhost:5050/user_voucher",
         data,
@@ -37,8 +40,8 @@ export default function Voucher() {
       );
 
       if (response.status === 201) {
-        // toast.success("Lưu thành công.");
-        userVoucher();
+        toast.success("Lưu thành công.");
+        fetchUserVoucher();
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -51,8 +54,9 @@ export default function Voucher() {
       }
     }
   };
-  // danh sach voucher đã lưu
-  const userVoucher = async () => {
+
+  // Hàm để lấy danh sách voucher đã lưu
+  const fetchUserVoucher = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:5050/user_voucher", {
         headers: {
@@ -62,9 +66,7 @@ export default function Voucher() {
         },
       });
       if (response.status === 200) {
-        const ids = response.data.data.map((voucher) => {
-          return voucher.voucher_id;
-        });
+        const ids = response.data.data.map((voucher) => voucher.voucher_id._id);
         setIdsVoucher(ids);
       } else {
         setIdsVoucher([]);
@@ -72,11 +74,18 @@ export default function Voucher() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
-  // danh sach voucher
-  const fetchDataDiscountcode = async () => {
+  }, [cookies.user_token]);
+
+  // Hàm để lấy danh sách voucher
+  const fetchDataDiscountcode = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:5050/discountcode");
+      const response = await axios.get("http://localhost:5050/discountcode", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.user_token}`,
+        },
+      });
       if (response.data.status_code === 200) {
         setVouchers(response.data.data);
       } else {
@@ -85,11 +94,12 @@ export default function Voucher() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, [cookies.user_token]);
+
   useEffect(() => {
     fetchDataDiscountcode();
-    userVoucher();
-  }, [cookies.user_token]);
+    fetchUserVoucher();
+  }, [fetchDataDiscountcode, fetchUserVoucher]);
 
   return (
     <div id="box-voucher">
@@ -121,7 +131,7 @@ export default function Voucher() {
                 <div className="info-shop col-4">
                   <div className="dots-dis">
                     {[...Array(9)].map((_, i) => (
-                      <div className="dot-dis"></div>
+                      <div key={i} className="dot-dis"></div>
                     ))}
                   </div>
                   <img
@@ -148,16 +158,19 @@ export default function Voucher() {
                       ).toLocaleDateString()}
                     </p>
                   </div>
-                  {ids_voucher.includes(discountcode._id) ? (
-                    <div id="up_voucher">
+
+                  {vouchercheck === discountcode._id ? (
+                    <div className="d-flex" id="up_voucher">
+                      <p>+{discountcode.usageLimit}</p>
                       <img src={addvoucherimg} alt="addvoucherimg" />
                     </div>
                   ) : (
                     ""
                   )}
-
                   <p
-                    onClick={() => addVoucher(discountcode._id)}
+                    onClick={() =>
+                      addVoucher(discountcode._id, discountcode.usageLimit)
+                    }
                     className={`save ${
                       ids_voucher.includes(discountcode._id)
                         ? "saved"
@@ -165,7 +178,11 @@ export default function Voucher() {
                     }`}
                   >
                     {ids_voucher.includes(discountcode._id) ? (
-                      <span>Mua ngay</span>
+                      <span>
+                        <Link style={{ color: "#EE4D2D" }} to="/">
+                          Mua ngay
+                        </Link>
+                      </span>
                     ) : (
                       <span>Lưu</span>
                     )}
@@ -179,10 +196,10 @@ export default function Voucher() {
           )}
         </div>
         <div onClick={handleUp} id="to_up">
-          <i class="fas fa-arrow-up"></i>
+          <i className="fas fa-arrow-up"></i>
         </div>
       </div>
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }
