@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Profile.scss";
 import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
@@ -11,7 +11,7 @@ const Profile = () => {
   const [cookies] = useCookies();
   const [imageUrl, setImageUrl] = useState(null);
   const [user, setUser] = useState(null);
-
+  const birthdayRef = useRef();
   const {
     register,
     handleSubmit,
@@ -29,35 +29,44 @@ const Profile = () => {
     },
   });
 
+  const getProfile = async () => {
+    try {
+      const response = await fetch(`http://localhost:5050/users/profile/user`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.user_token}`,
+        },
+      });
+      const data = await response.json();
+
+      if (data.data) {
+        const userData = data.data;
+        setUser(userData);
+        setImageUrl(userData.avatar);
+        setValue("name", userData.name);
+        setValue("phone", userData.phone);
+        setValue("email", userData.email);
+        const formattedBirthday = new Date(userData.birthday)
+          .toISOString()
+          .split("T")[0];
+        setValue("birthday", formattedBirthday);
+        setValue("address", userData.address);
+        setValue("gender", userData.gender === 1 ? "male" : "female");
+      }
+    } catch (error) {
+      toast.error("Không thể tải dữ liệu người dùng.");
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (!cookies.user_token) {
       return;
     }
-    fetch(`http://localhost:5050/users/profile/user`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cookies.user_token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.data) {
-          const userData = res.data;
-          setUser(userData);
-          setImageUrl(userData.avatar);
-          setValue("name", userData.name);
-          setValue("phone", userData.phone);
-          setValue("email", userData.email);
-          setValue("gender", userData.gender === 1 ? "male" : "female");
-        }
-      })
-      .catch((error) => {
-        toast.error("Không thể tải dữ liệu người dùng.");
-        console.error(error);
-      });
-  }, [cookies]);
+    getProfile();
+  }, [cookies.user_token]);
 
   // Theo dõi thay đổi của avatar
   const avatarFile = watch("avatar");
@@ -68,14 +77,6 @@ const Profile = () => {
       setImageUrl(previewUrl);
     }
   }, [avatarFile]);
-
-  function formatDate(isoDate) {
-    const date = new Date(isoDate);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
 
   const urlApiUpdateUser = `http://localhost:5050/users/update/user`;
 
@@ -107,6 +108,7 @@ const Profile = () => {
       .then((res) => {
         if (res.status_code === 200) {
           toast.success(success);
+          // getProfile();
         } else {
           toast.error(error);
         }
@@ -133,7 +135,6 @@ const Profile = () => {
   const onSubmit = (data) => {
     updateUser(data);
   };
-
   return (
     <>
       <ComponentHeader />
@@ -193,13 +194,19 @@ const Profile = () => {
               </div>
               <div className="form-group">
                 <label>Ngày sinh</label>
-                <p>
-                  {user.birthday ? formatDate(user.birthday) : "Chưa cập nhật"}
-                </p>
+                <input
+                  ref={birthdayRef}
+                  type="date"
+                  {...register("birthday")}
+                />
               </div>
               <div className="form-group">
                 <label>Địa chỉ</label>
-                <p>{user.address || "Chưa cập nhật"}</p>
+                <input
+                  // value={user.address}
+                  type="text"
+                  {...register("address")}
+                />
               </div>
               <button style={{ backgroundColor: "#FA5230" }} type="submit">
                 Lưu

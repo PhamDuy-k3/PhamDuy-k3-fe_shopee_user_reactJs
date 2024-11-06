@@ -83,7 +83,7 @@ function CartOder() {
                           style={{ height: "13rem" }}
                           className="item-product"
                         >
-                          <div className="store-name">Name-store</div>
+                          <div className="store-name">Pham Duy Store</div>
 
                           <div
                             style={{ height: "13rem" }}

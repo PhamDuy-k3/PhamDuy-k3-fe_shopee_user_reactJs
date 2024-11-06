@@ -24,10 +24,42 @@
     }
 }
 .ctsp-product-infor{
+
     padding: 1rem;
     h1{
        
         font-size: 1.3rem;
+    }
+    #model-addcart{
+        width: 26rem;
+        height: 12rem;
+        font-size: 20px;
+        background-color: rgba($color: #000000, $alpha: 0.7);
+        align-items: center;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        left: 38%;
+        top: 35%;
+        border-radius: 3px;
+        z-index: 100;
+        box-shadow: 0 1px 5px 1px rgb(125, 123, 123);
+        .model-addcartz__icon{
+            margin-top: 1rem;
+            width:6rem;
+            height: 5rem;  border-radius: 100%;
+            background-color:#26AA99;
+        }
+        i{
+            color: white;
+            padding-left: 1.9rem;
+            padding-top: 1.5rem;
+            font-size: 2rem;
+        }
+        p{
+            margin-top: 1rem;
+            color: white;
+        }
     }
     .ctsp-product-infor-star{
         p{

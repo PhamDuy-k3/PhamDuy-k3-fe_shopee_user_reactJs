@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -21,14 +21,15 @@ import Button from "../../button/button";
 function CtspProductInfor(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [colorProduct, setColorProduct] = useState("Màu Trắng");
-  const [selectSize, setSelectSize] = useState("S");
+  const [colorProduct, setColorProduct] = useState();
+  const [selectSize, setSelectSize] = useState();
   const [quantity, setQuantity] = useState(1);
   const [priceSaleFormatted, setPriceSaleFormatted] = useState("");
   const [cookies, setCookie] = useCookies();
   const [stockRTime, setStockRTime] = useState(0);
-
+  const [modelAddCart, setModelAddCart] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const [ischeckSizeColor, setCheckSizeColor] = useState(true);
   const productId = useParams();
   const carts_store = useSelector((state) => state.cart.items);
 
@@ -60,14 +61,22 @@ function CtspProductInfor(props) {
         }
       );
       if (response.data.status_code === 200) {
-        toast.success(() => (
-          <p style={{ paddingTop: "1rem" }}>Đã thêm vào giỏ hàng!</p>
-        ));
+        setModelAddCart(true);
+
+        setInterval(() => {
+          setModelAddCart(false);
+        }, 3000);
       } else {
         toast.error(() => <p style={{ paddingTop: "1rem" }}>Thêm thất bại!</p>);
       }
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if (colorProduct && selectSize) {
+      setCheckSizeColor(true);
+    }
+  }, [colorProduct, selectSize]);
 
   // data product
   const data = () => {
@@ -100,14 +109,12 @@ function CtspProductInfor(props) {
         newProduct.image = img_one;
         break;
     }
-    // check khi user ko chọn thì sẽ cho mặc định
 
-    if (newProduct.color === "") {
-      newProduct.color = "Màu Trắng";
+    if (!newProduct.color && !newProduct.size) {
+      setCheckSizeColor(false);
+      return;
     }
-    if (newProduct.size === "") {
-      newProduct.size = "X";
-    }
+
     // kiểm tra sản phẩm đã có trong giỏ hàng chua
     const isProductInCart = carts_store.some(
       (pd) => pd.image === newProduct.image
@@ -129,6 +136,15 @@ function CtspProductInfor(props) {
 
   return (
     <div className="ctsp-product-infor col-7">
+      {modelAddCart && (
+        <div onMouseOver={() => setModelAddCart(false)} id="model-addcart">
+          <div className="model-addcartz__icon">
+            <i class="fas fa-check"></i>
+          </div>
+          <p>Sản phẩm đã được thêm vào giỏ hàng</p>
+        </div>
+      )}
+
       <section className="ctsp-product-infor-title">
         <h1>{title}</h1>
       </section>
@@ -211,11 +227,13 @@ function CtspProductInfor(props) {
           </div>
         </section>
         <TranSport></TranSport>
-        <ColorProduct
-          colorProduct={colorProduct}
-          setColorProduct={setColorProduct}
-        />
-        <SizeProduct selectSize={selectSize} setSelectSize={setSelectSize} />
+        <div style={ischeckSizeColor ? {} : { backgroundColor: "#FFF5F5" }}>
+          <ColorProduct
+            colorProduct={colorProduct}
+            setColorProduct={setColorProduct}
+          />
+          <SizeProduct selectSize={selectSize} setSelectSize={setSelectSize} />
+        </div>
         <section className="number d-flex">
           <div className="number-title col-2">
             <p>Số Lượng</p>

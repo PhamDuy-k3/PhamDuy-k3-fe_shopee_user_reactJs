@@ -180,7 +180,7 @@ function OrderLoading() {
                             checked={true}
                             disabled
                           />
-                          Name-store
+                        Pham Duy Store
                         </div>
 
                         <div
@@ -266,30 +266,20 @@ function OrderLoading() {
                     );
                   })}
                 </div>
-                <DiscountCode
-                  setValueVoucher={setValueVoucher}
-                  setSelectedDiscountCodes={setSelectedDiscountCodes}
-                  selectedDiscountCodes={selectedDiscountCodes}
-                  total={total}
-                  setTotalDiscountcode={setTotalDiscountcode}
-                />
-                <SelectPay setPay={setPay} />
-                <div id="noteOder">
+
+                <div className="d-flex" id="noteOder">
                   <label htmlFor="noteOders">Ghi chú :</label>
-                  <input
+                  <textarea
+                    rows={2}
+                    cols={60}
+                    placeholder="Nhập ghi chú"
                     onChange={(e) => handleNote(e)}
                     id="noteOders"
-                    placeholder="Nhập..."
-                  />
+                  ></textarea>
                 </div>
 
                 <div className="d-flex mt-3 colum-4">
-                  <div className="col-9 d-flex">
-                    <p style={{ fontSize: "1.2rem" }}>
-                      Tổng thanh toán (
-                      <span className="quantityCart-two">{sumSp}</span>) sản
-                      phẩm :
-                    </p>
+                  <div className="col-8 d-flex">
                     <div id="price_order">
                       <div className="d-flex">
                         <p>Tổng tiền</p>
@@ -314,6 +304,12 @@ function OrderLoading() {
                         <p>Phí vận chuyển</p>
                         <p>Miễn phí</p>
                       </div>
+                      <hr />
+                      <p style={{ fontSize: "1.2rem" }}>
+                        Tổng thanh toán (
+                        <span className="quantityCart-two">{sumSp}</span>) sản
+                        phẩm
+                      </p>
                       <div className="d-flex">
                         <p>Tổng thanh toán</p>
                         <p>
@@ -322,7 +318,17 @@ function OrderLoading() {
                       </div>
                     </div>
                   </div>
-                  <button onClick={handleBuy}>Đặt hàng</button>
+                  <div>
+                    <DiscountCode
+                      setValueVoucher={setValueVoucher}
+                      setSelectedDiscountCodes={setSelectedDiscountCodes}
+                      selectedDiscountCodes={selectedDiscountCodes}
+                      total={total}
+                      setTotalDiscountcode={setTotalDiscountcode}
+                    />
+                    <SelectPay setPay={setPay} />
+                    <button onClick={handleBuy}>Đặt hàng</button>
+                  </div>
                 </div>
               </div>
             </div>

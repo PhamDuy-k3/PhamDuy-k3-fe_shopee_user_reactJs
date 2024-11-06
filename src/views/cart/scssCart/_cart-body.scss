@@ -1,6 +1,47 @@
 
 .box_cart{
   padding-top: 10rem;
+  .model-delete{
+    width: 34rem;
+    height: 9.5rem;
+    background-color: white;
+    position: fixed;
+    left: 32%;
+    top: 35%;
+    border-radius: 3px;
+    z-index: 100;
+    box-shadow: 0 1px 5px 1px rgb(125, 123, 123);
+    .title{
+      padding: 1rem;
+      justify-content: center;
+      font-size: 1.5rem;
+      padding-bottom: 1rem;
+    }
+    .button-group{
+      margin-left: 11rem;
+      button{
+        margin-left: 1rem;
+        border: none;
+      }
+      button:first-child{
+        color: white;
+        padding: 0.5rem 3.3rem;
+        background-color: #ee5e41;
+      }
+      button:last-child{
+        padding: 0.5rem 4rem;
+        background-color: white;
+      }
+      button:first-child:hover{
+        background-color: #e94d2e;
+
+      }
+      button:last-child:hover{
+        background-color: #faf8f8;
+
+      }
+    }
+  }
   .body {
     padding: 0 2rem;
     width: 100%;
@@ -49,7 +90,7 @@
       width: 100%;
       overflow-y: scroll;
       max-height: 23rem;
-     
+      border-bottom: 1px solid #F3DD9E;
       .item-product{
         border-bottom: 2px solid #F3F3F3;
         padding: 1rem;
@@ -57,6 +98,10 @@
         .store-name{
           border-bottom: 2px solid #F3F3F3;
           padding-bottom: 1rem;
+          input{
+            margin-right: 1rem;
+          }
+         
         }
         .product-infor{
           margin-top: 1rem;
@@ -124,9 +169,15 @@
       }
       
     }
+    .ant-space{
+      margin-bottom: 1rem;
+      margin-left: -1rem;
+    }
     :where(.css-dev-only-do-not-override-11xg00t).ant-space-gap-col-small{
-      margin-left: 76%;
       color: #EE4D2D;
+    }
+    .ant-select-selection-item{
+      padding-left: 0;
     }
     .ant-space-item{
       width: 20rem;

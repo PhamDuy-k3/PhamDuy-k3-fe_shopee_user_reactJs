@@ -3,7 +3,7 @@
     >div:first-child{
         font-size: 1.2rem;
         p:last-child{
-            margin-left: 14.2rem;
+            margin-left: 25rem;
         }   
     }
     >div:nth-child(2){
@@ -11,7 +11,7 @@
         position: relative;
         div:last-child{
             position: absolute;
-            left: 20.1rem;
+            left: 30rem;
             p{
                 margin-right: 1rem;
                 padding: 1px 10px;
@@ -25,17 +25,17 @@
     >div:nth-child(3){
         font-size: 1.2rem;
         p:last-child{
-            margin-left: 12rem;
+            margin-left: 22rem;
             padding: 4px;
             border-radius: 8px;
         }   
     }
-    >div:nth-child(4){
+    > div:last-child{
         font-size: 1.6rem;
         font-weight: 400;
         p:last-child{
             color: #FB5530;
-            margin-left: 7.3rem;
+            margin-left: 18rem;
         }
     }
 }

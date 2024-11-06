@@ -16,12 +16,14 @@ import { updateToCartsAsync } from "../../api/update";
 import { FetchCartsByIdUser } from "../../api/fetchCartByIdUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
 // chưa chek trùng sản phẩm
 
 function Cart() {
   const [total, setTotal] = useState(0);
   const [carts, setCarts] = useState([]);
   const [cookies, setCookie] = useCookies();
+  const [deleteModal, setDeleteModal] = useState(false);
   const [idProductChooses, setIdProductChooses] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -136,11 +138,13 @@ function Cart() {
     dispatch(removeFromCart(id));
   };
 
+
   //xóa tất cả các sản phẩm trong giỏ hàng dựa vào id khách hàng
   const handelDeleteProductList = async () => {
     const array = [];
     await deleteToCartsAsync(fetchProducts, cookies.user_token);
     dispatch(deleteCarts(array));
+    setDeleteModal(false);
   };
 
   const handleBuy = async () => {
@@ -171,6 +175,21 @@ function Cart() {
       />
       <ComponentHeader />
       <div className="box_cart">
+        {deleteModal && (
+          <>
+            <FlyZoom />
+            <div className="model-delete">
+              <div className="title">
+                <p>Bạn có chắc muốn xóa các sản phẩm đã chọn?</p>
+              </div>
+              <div className="button-group">
+                <button onClick={() => setDeleteModal(false)}>Trở lại</button>
+                <button onClick={handelDeleteProductList}>OK</button>
+              </div>
+            </div>
+          </>
+        )}
+
         <div className="body">
           {carts.length > 0 ? (
             <div className="container-fluid">
@@ -207,7 +226,7 @@ function Cart() {
                             name="check-store"
                             id="check-store"
                           />
-                          Name-store
+                          Pham Duy Store
                         </div>
 
                         <div
@@ -319,7 +338,7 @@ function Cart() {
 
                   <div className="col-1">
                     <p
-                      onClick={handelDeleteProductList}
+                      onClick={() => setDeleteModal(true)}
                       style={{ cursor: " pointer" }}
                     >
                       Xóa Tất Cả
@@ -359,7 +378,7 @@ function Cart() {
             </div>
           ) : (
             <div className="img-no-order">
-              <img src={imgNoOder} alt=""/>
+              <img src={imgNoOder} alt="" />
             </div>
           )}
         </div>

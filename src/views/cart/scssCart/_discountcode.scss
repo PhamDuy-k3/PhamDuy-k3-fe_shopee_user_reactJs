@@ -9,17 +9,14 @@
 }
 $boderColor: rgb(222, 217, 217);
 #discountCode{
-    margin-left: 70%;
-    margin-top: 1rem;
     p{
       font-size: 1.1rem;
-      margin-left: 3rem;
+      margin-right: 3rem;
     }
     p:last-child{
       color: #0055AA;
       cursor: pointer;
     }
-    
   }
   #DiscountCode{
     padding: 10px;
