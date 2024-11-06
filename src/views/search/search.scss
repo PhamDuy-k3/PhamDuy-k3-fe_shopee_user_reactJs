@@ -1,5 +1,62 @@
 .box-search{
     .context-product{
-        height: 130rem;
+        max-height: 130rem;
     }
+   #shope_search{
+        width: 100%;
+        height: 20rem;
+        background-color: white;
+        .shope_search__info{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.5rem;
+            img{
+                margin-top: 3rem;
+                width: 5rem;
+                height: 5rem;
+                border-radius: 100%;
+            }
+            .shope_search__info-text{
+                margin-top: 1rem;
+                text-align: center;
+                p:first-child{
+                   font-size:15px;
+                   font-weight: 500;
+                }
+                p:last-child{
+                   font-size:15px;
+                    padding: 0.5rem 2rem;
+                    background-color:#FE5722;
+                    color: white;
+                }
+            }
+        }
+        .shope_search__products{
+            padding: 1rem;
+            display: flex;
+            .shope_search__products-item{
+                width: calc(100% / 2.9);
+                border: 1px solid rgb(232, 229, 229);
+                margin-right: 2%;
+                .shope_search__products-item-img{
+                    width: 100%;
+                    height: 70%;
+                    position: relative;
+                    img{
+                        width: 80%;
+                        height: 90%;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50% , -50%)
+                    }
+                }
+                div:last-child{
+                    margin-left: 1.6rem;
+                }
+                
+            }
+        }
+   }
 }

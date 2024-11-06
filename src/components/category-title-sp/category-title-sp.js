@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Menu } from "antd";
+import { memo } from "react";
+
 import {
   AppstoreOutlined,
   MailOutlined,
@@ -86,13 +88,15 @@ const getCategoryItems = (t) => [
 const CategoryTitleSp = ({ setProductWithBrands }) => {
   const [stateOpenKeys, setStateOpenKeys] = useState([]);
   const { t } = useTranslation(["product"]);
-
   const onOpenChange = (openKeys) => {
     setStateOpenKeys(openKeys);
   };
 
   return (
     <div className="category-title-sp col-2 ">
+      <h4>
+        <i class="fas fa-filter"></i> Bộ lọc tìm kiếm{" "}
+      </h4>
       <Menu
         mode="inline"
         defaultSelectedKeys={["11"]}
@@ -106,4 +110,4 @@ const CategoryTitleSp = ({ setProductWithBrands }) => {
   );
 };
 
-export default CategoryTitleSp;
+export default memo(CategoryTitleSp);

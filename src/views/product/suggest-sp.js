@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Pagination } from "antd";
 import { fetchAllProducts } from "../../redux/action";
@@ -48,9 +48,12 @@ const SuggestSP = (props) => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
-  const onPageChange = (pageNumber) => {
-    props.setCurrentPage(pageNumber);
-  };
+  const onPageChange = useCallback(
+    (pageNumber) => {
+      props.setCurrentPage(pageNumber);
+    },
+    [props.setCurrentPage]
+  );
 
   return (
     <>
