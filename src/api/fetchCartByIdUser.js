@@ -1,4 +1,8 @@
-export const FetchCartsByIdUser = async (setCarts, user_token) => {
+export const FetchCartsByIdUser = async (
+  setCarts,
+  setIdIdProductInCarts,
+  user_token
+) => {
   try {
     if (!user_token) {
       return;
@@ -19,6 +23,8 @@ export const FetchCartsByIdUser = async (setCarts, user_token) => {
 
     if (data && data.data) {
       setCarts(data.data);
+      const ids_product_in_carts = data.data.map((cart) => cart._id);
+      setIdIdProductInCarts(ids_product_in_carts);
     } else {
       console.warn("No data found:", data);
     }

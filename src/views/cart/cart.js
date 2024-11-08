@@ -12,7 +12,7 @@ import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 import ComponentHeader from "../../components/header/header";
 import { VND } from "../../components/VND/vnd";
 import { deleteToCartAsync, deleteToCartsAsync } from "../../api/delete";
-import { updateToCartsAsync } from "../../api/update";
+import { updateToCarts, updateToCartsAsync } from "../../api/update";
 import { FetchCartsByIdUser } from "../../api/fetchCartByIdUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +24,11 @@ function Cart() {
   const [carts, setCarts] = useState([]);
   const [cookies, setCookie] = useCookies();
   const [deleteModal, setDeleteModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
   const [idProductChooses, setIdProductChooses] = useState([]);
+  const [idsProductInCarts, setIdIdProductInCarts] = useState([]);
+  const [idsProductNeedUpdate, setIdIdProductNeedUpdate] = useState([]);
+  const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const checkboxRef = useRef(null);
@@ -58,11 +62,31 @@ function Cart() {
 
   //danh sách sản phẩm người dùng chọn
   const fetchProducts = async () => {
-    FetchCartsByIdUser(setCarts, cookies.user_token);
+    FetchCartsByIdUser(setCarts, setIdIdProductInCarts, cookies.user_token);
+  };
+
+  // lấy các sản phẩm có trong giở hàng trong bảng sản phẩm để check giá
+  const getProductsInCarts = async () => {
+    if (!cookies.user_token) return;
+    try {
+      const response = await fetch(
+        `http://localhost:5050/products/carts?ids=${idsProductInCarts}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.user_token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setProducts(data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // tính tổng tiền các sản phẩm có trong gio hàng
-
   const totalSum = useMemo(() => {
     return carts.reduce((accumulator, product) => {
       return accumulator + parseFloat(product.sum);
@@ -71,6 +95,9 @@ function Cart() {
 
   useEffect(() => {
     fetchProducts();
+  }, []);
+  useEffect(() => {
+    getProductsInCarts();
   }, []);
 
   useEffect(() => {
@@ -138,7 +165,6 @@ function Cart() {
     dispatch(removeFromCart(id));
   };
 
-
   //xóa tất cả các sản phẩm trong giỏ hàng dựa vào id khách hàng
   const handelDeleteProductList = async () => {
     const array = [];
@@ -147,7 +173,87 @@ function Cart() {
     setDeleteModal(false);
   };
 
-  const handleBuy = async () => {
+  // Hàm kiểm tra giá sản phẩm
+  const checkPriceProduct = (cart, products_update) => {
+    const updatedProducts = products
+      .filter(
+        (product) =>
+          product._id === cart._id &&
+          product.prices - (product.prices * cart.discount_code) / 100 !==
+            cart.price
+      )
+      .map((product) => ({
+        _id: product._id,
+        price: product.prices - (product.prices * cart.discount_code) / 100,
+        sum:
+          cart.quantity *
+          (product.prices - (product.prices * cart.discount_code) / 100),
+      }));
+
+    // check sự tồn tại trước khi push vào mảng cần update
+    updatedProducts.forEach((product) => {
+      const exists = products_update.some(
+        (prevProduct) => prevProduct._id === product._id
+      );
+
+      if (!exists) {
+        products_update.push(product);
+      }
+    });
+  };
+  //update cart vào trong database
+  const updateProductInCartDatabase = async (updatedCarts) => {
+    try {
+      await Promise.all(
+        updatedCarts.map((cart) =>
+          updateToCarts(cart._id, cart.price, cart.sum)
+        )
+      );
+      toast.success(() => (
+        <p style={{ paddingTop: "1rem" }}>Cập nhật giỏ hàng thành công!</p>
+      ));
+    } catch (error) {
+      console.error("Lỗi khi cập nhật giỏ hàng:", error);
+    }
+  };
+
+  //update thông tin mới cho cart
+  const updateProductIncart = async () => {
+    if (!idsProductNeedUpdate.length) return;
+
+    const updatedCarts = carts.map((cart) => {
+      const updatedProduct = idsProductNeedUpdate.find(
+        (product) => product._id === cart._id
+      );
+
+      if (updatedProduct) {
+        return {
+          ...cart,
+          price: updatedProduct.price,
+          sum: updatedProduct.sum,
+        };
+      }
+      return cart;
+    });
+    setCarts(updatedCarts);
+    setUpdateModal(false);
+    await updateProductInCartDatabase(updatedCarts);
+    setIdIdProductNeedUpdate([]);
+  };
+
+  const check = () => {
+    const products_update = [];
+    carts.forEach((cart) => {
+      checkPriceProduct(cart, products_update);
+    });
+
+    setIdIdProductNeedUpdate(products_update);
+
+    if (products_update.length > 0) {
+      setUpdateModal(true);
+      return;
+    }
+    //chuyển trang
     sessionStorage.setItem("ids_product", idProductChooses);
     if (idProductChooses.length === 0) {
       toast.error(() => (
@@ -158,6 +264,12 @@ function Cart() {
     navigate("/OrderLoading");
   };
 
+  const handleBuy = async () => {
+    await getProductsInCarts();
+    if (products) {
+      check();
+    }
+  };
   return (
     <>
       <ToastContainer
@@ -185,6 +297,20 @@ function Cart() {
               <div className="button-group">
                 <button onClick={() => setDeleteModal(false)}>Trở lại</button>
                 <button onClick={handelDeleteProductList}>OK</button>
+              </div>
+            </div>
+          </>
+        )}
+        {updateModal && (
+          <>
+            <FlyZoom />
+            <div className="model-update">
+              <div className="title">
+                <p>Sản phẩm có sự thay đổi , xin hãy cập nhật lại?</p>
+              </div>
+              <div className="button-group">
+                <button onClick={() => setUpdateModal(false)}>Trở lại</button>
+                <button onClick={updateProductIncart}>OK</button>
               </div>
             </div>
           </>

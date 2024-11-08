@@ -32,11 +32,11 @@ function CtspProductInfor(props) {
   const [ischeckSizeColor, setCheckSizeColor] = useState(true);
   const productId = useParams();
   const carts_store = useSelector((state) => state.cart.items);
+  const [sale, setSale] = useState(0);
 
   let img_one = props.product?.image;
   let title = props.product?.name || "";
   const stock = props.product?.stock;
-  console.log(stock);
 
   useEffect(() => {
     if (props.product) {
@@ -91,6 +91,7 @@ function CtspProductInfor(props) {
       price: priceSaleFormatted,
       size: selectSize,
       sum: total,
+      discount_code: sale,
     };
     switch (colorProduct) {
       case "Màu Trắng":
@@ -198,6 +199,8 @@ function CtspProductInfor(props) {
               </div>
             </div>
             <PriceSaleProduct
+              setSale={setSale}
+              sale={sale}
               isTimeUp={isTimeUp}
               product={props.product}
               priceSaleFormatted={priceSaleFormatted}
@@ -207,6 +210,8 @@ function CtspProductInfor(props) {
         ) : (
           <div style={{ paddingTop: "1.2rem" }}>
             <PriceSaleProduct
+              setSale={setSale}
+              sale={sale}
               isTimeUp={isTimeUp}
               product={props.product}
               priceSaleFormatted={priceSaleFormatted}

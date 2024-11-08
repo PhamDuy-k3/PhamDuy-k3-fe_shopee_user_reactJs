@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { VND } from "../../VND/vnd";
 import { memo } from "react";
 function PriceSaleProduct({
+  setSale,
+  sale,
   isTimeUp,
   priceSaleFormatted,
   setPriceSaleFormatted,
   product,
 }) {
-  const [sale, setSale] = useState(0);
   const [cost, setCost] = useState(0);
   useEffect(() => {
     const price = product?.prices || 0;
