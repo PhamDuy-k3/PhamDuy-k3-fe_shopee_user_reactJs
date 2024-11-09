@@ -1,11 +1,14 @@
 import axios from "axios";
 
 // Hàm xử lý thanh toán
-export const PaymentForm = async (amount, orderInfo) => {
+export const PaymentForm = async (data, user_token) => {
   try {
-    const response = await axios.post("http://localhost:5050/payment", {
-      amount: parseFloat(amount), // Đảm bảo số tiền được gửi dưới dạng số
-      orderInfo,
+    const response = await axios.post("http://localhost:5050/payment", data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user_token}`,
+      },
     });
 
     if (response.data.payUrl) {

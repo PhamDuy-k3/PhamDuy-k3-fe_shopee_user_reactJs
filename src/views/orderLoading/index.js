@@ -22,7 +22,7 @@ function OrderLoading() {
   const [cookies, setCookie] = useCookies();
   const [note, setNote] = useState("");
   const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
-  const [pay, setPay] = useState();
+  const [pay, setPay] = useState("");
   const [orderInfo, setOrderInfo] = useState("pay with MoMo");
   const [valueVoucher, setValueVoucher] = useState([]);
   const navigate = useNavigate();
@@ -104,28 +104,28 @@ function OrderLoading() {
   // đặt hàng
   const handleBuy = () => {
     if (cookies.user_token !== "") {
-      let total_prices = totalDiscountcode;
+      let amount = totalDiscountcode;
+      let paymentMethod = "pay";
       const data = {
         carts,
         status,
-        total_prices,
+        amount,
         note,
         gmail,
         selectedDiscountCodes,
+        orderInfo,
+        paymentMethod,
       };
 
       let paymentPromise = Promise.resolve();
 
       // Kiểm tra hình thức thanh toán
-      if (pay == 1) {
-        paymentPromise = PaymentForm(total_prices, orderInfo);
+      if (pay === "1") {
+        paymentPromise = PaymentForm(data, cookies.user_token);
       }
 
       // Xử lý promise cho PaymentForm
       paymentPromise
-        .then(() => {
-          return createCartOder(data); // Tạo đơn hàng
-        })
         .then(() => {
           return deleteCartsByUserId();
         })
@@ -180,7 +180,7 @@ function OrderLoading() {
                             checked={true}
                             disabled
                           />
-                        Pham Duy Store
+                          Pham Duy Store
                         </div>
 
                         <div
