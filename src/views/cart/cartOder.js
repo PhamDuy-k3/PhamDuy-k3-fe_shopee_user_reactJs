@@ -14,6 +14,18 @@ function CartOder() {
   const [status, setStatus] = useState("");
   const [cookies, setCookie] = useCookies();
 
+  //xóa các query ko cần thiết trong url
+  
+  useEffect(() => {
+    if (window.location.search || window.location.hash.includes("?")) {
+      const queryParams = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(
+        window.location.hash.split("?")[1]
+      );
+      window.history.replaceState(null, null, "/#/CartOder");
+    }
+  }, []);
+
   //danh sách sản phẩm người dùng order
   const fetchCartsOder = async () => {
     try {
@@ -184,31 +196,29 @@ function CartOder() {
                         </p>
                       </div>
                     </div>
-                    {item.status == "confirmed" ? (
+                    {item.status === "confirmed" ? (
                       <button style={{ marginLeft: "40%" }}>
                         Chờ thanh toán
                       </button>
-                    ) : item.status == "processing" ? (
-                      <button style={{ marginLeft: "30%", width: "25rem" }}>
-                        Đang giao hàng cho đơn vị vận chuyển
-                      </button>
-                    ) : item.status == "shipped" ? (
+                    ) : item.status === "processing" ? (
+                      <button style={{ marginLeft: "40%" }}>Đang xử lý</button>
+                    ) : item.status === "shipped" ? (
                       <button style={{ marginLeft: "40%" }}>
                         Đang giao hàng
                       </button>
-                    ) : item.status == "delivered" ? (
+                    ) : item.status === "delivered" ? (
                       <button
                         style={{ backgroundColor: "gray", marginLeft: "40%" }}
                       >
                         Đã thanh toán
                       </button>
-                    ) : item.status == "canceled" ? (
+                    ) : item.status === "canceled" ? (
                       <button
                         style={{ backgroundColor: "gray", marginLeft: "40%" }}
                       >
                         Đã hủy
                       </button>
-                    ) : item.status == "returned" ? (
+                    ) : item.status === "returned" ? (
                       <button
                         style={{ backgroundColor: "gray", marginLeft: "40%" }}
                       >
@@ -224,7 +234,7 @@ function CartOder() {
               ))
             ) : (
               <div className="img-no-order">
-                <img src={imgNoOder} />
+                <img src={imgNoOder} alt="" />
               </div>
             )}
           </div>

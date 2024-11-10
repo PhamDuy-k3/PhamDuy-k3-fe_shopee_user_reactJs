@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Hàm xử lý thanh toán
-export const PaymentForm = async (data, user_token) => {
+export const PaymentForm = async (data, user_token, navigate) => {
   try {
     const response = await axios.post("http://localhost:5050/payment", data, {
       headers: {
@@ -14,6 +14,7 @@ export const PaymentForm = async (data, user_token) => {
     if (response.data.payUrl) {
       window.location.href = response.data.payUrl;
     } else {
+      navigate("/OrderLoading");
       console.error("Error: No payment URL returned");
     }
   } catch (error) {

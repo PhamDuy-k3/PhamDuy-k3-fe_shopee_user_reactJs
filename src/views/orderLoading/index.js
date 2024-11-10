@@ -22,7 +22,7 @@ function OrderLoading() {
   const [cookies, setCookie] = useCookies();
   const [note, setNote] = useState("");
   const [gmail, setGmail] = useState("duylaptrinh03@gmail.com");
-  const [pay, setPay] = useState("");
+  const [pay, setPay] = useState("2");
   const [orderInfo, setOrderInfo] = useState("pay with MoMo");
   const [valueVoucher, setValueVoucher] = useState([]);
   const navigate = useNavigate();
@@ -83,6 +83,7 @@ function OrderLoading() {
           },
         }
       );
+      navigate("/CartOder");
       return response.data;
     } catch (error) {
       console.error("Error creating cart order:", error);
@@ -104,8 +105,8 @@ function OrderLoading() {
   // đặt hàng
   const handleBuy = () => {
     if (cookies.user_token !== "") {
-      let amount = totalDiscountcode;
-      let paymentMethod = "pay";
+      const amount = totalDiscountcode;
+      const paymentMethod = "pay";
       const data = {
         carts,
         status,
@@ -116,21 +117,29 @@ function OrderLoading() {
         orderInfo,
         paymentMethod,
       };
+      const newOrder = {
+        carts,
+        status: "unconfirmed",
+        total_prices: amount,
+        note: note,
+        gmail,
+        selectedDiscountCodes,
+      };
 
       let paymentPromise = Promise.resolve();
 
       // Kiểm tra hình thức thanh toán
       if (pay === "1") {
-        paymentPromise = PaymentForm(data, cookies.user_token);
+        paymentPromise = PaymentForm(data, cookies.user_token ,navigate);
+      }
+      if (pay === "2") {
+        paymentPromise = createCartOder(newOrder);
       }
 
       // Xử lý promise cho PaymentForm
       paymentPromise
         .then(() => {
           return deleteCartsByUserId();
-        })
-        .then(() => {
-          navigate("/CartOder");
         })
         .catch((error) => {
           console.error("Error during the order process:", error);
