@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/img/logo.png";
 import imgTb from "../../assets/images/img/tbao.jpg";
 import avatarDefault from "../../assets/images/img/avatar_default.jpg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 import { locales } from "../../i18n/i18n";
 import VoiceApp from "../voice/voice";
 import io from "socket.io-client";
+import { FetchCartsByIdUser } from "../../api/fetchCartByIdUser";
+import { addToCart } from "../../redux/action";
 
 function ComponentHeader() {
   const navigate = useNavigate();
@@ -21,6 +23,10 @@ function ComponentHeader() {
   const [isChangeLag, setIsChangeLag] = useState(false);
   const currentLanguage = locales[i18n.language];
   const { t } = useTranslation(["home"]);
+  const [carts, setCarts] = useState([]);
+  const [idsProductInCarts, setIdIdProductInCarts] = useState([]);
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -53,6 +59,14 @@ function ComponentHeader() {
     navigate(`/search?keyword=${data.search}`);
     setValue("search", "");
   };
+  const getCarts = async () => {
+    await FetchCartsByIdUser(
+      setCarts,
+      setIdIdProductInCarts,
+      cookies.user_token
+    );
+  };
+
   // lấy user qua phone
   useEffect(() => {
     if (!cookies.user_token) {
@@ -72,6 +86,7 @@ function ComponentHeader() {
           setUser(res.data);
         }
       });
+    getCarts();
   }, [cookies.user_token]);
 
   // đăng xuất
@@ -310,7 +325,7 @@ function ComponentHeader() {
           <Link to="/Cart">
             <i className="fas fa-cart-plus"></i>
             <p style={{ color: "white" }} className="quantityCart">
-              {carts_store?.length || ""}
+              {carts_store?.length > 0 ? carts_store?.length : carts?.length}
             </p>
           </Link>
         </div>

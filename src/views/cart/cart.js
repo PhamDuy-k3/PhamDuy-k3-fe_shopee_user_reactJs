@@ -178,7 +178,7 @@ function Cart() {
     const updatedProducts = products
       .filter(
         (product) =>
-          product._id === cart._id &&
+          product._id === cart.product_id &&
           product.prices - (product.prices * cart.discount_code) / 100 !==
             cart.price
       )
@@ -204,11 +204,9 @@ function Cart() {
   //update cart vào trong database
   const updateProductInCartDatabase = async (updatedCarts) => {
     try {
-      await Promise.all(
-        updatedCarts.map((cart) =>
-          updateToCarts(cart._id, cart.price, cart.sum)
-        )
-      );
+      for (const cart of updatedCarts) {
+        await updateToCarts(cart._id, cart.price, cart.sum);
+      }
       toast.success(() => (
         <p style={{ paddingTop: "1rem" }}>Cập nhật giỏ hàng thành công!</p>
       ));
@@ -223,7 +221,7 @@ function Cart() {
 
     const updatedCarts = carts.map((cart) => {
       const updatedProduct = idsProductNeedUpdate.find(
-        (product) => product._id === cart._id
+        (product) => product._id === cart.product_id /// loi
       );
 
       if (updatedProduct) {

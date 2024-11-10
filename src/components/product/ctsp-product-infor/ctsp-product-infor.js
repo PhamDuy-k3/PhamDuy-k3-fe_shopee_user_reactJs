@@ -17,6 +17,7 @@ import { addToCart } from "../../../redux/action";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Button from "../../button/button";
+import { v4 as uuidv4 } from "uuid";
 
 function CtspProductInfor(props) {
   const navigate = useNavigate();
@@ -62,7 +63,6 @@ function CtspProductInfor(props) {
       );
       if (response.data.status_code === 200) {
         setModelAddCart(true);
-
         setInterval(() => {
           setModelAddCart(false);
         }, 3000);
@@ -83,7 +83,8 @@ function CtspProductInfor(props) {
     // navigate("/ProductDetail/:id");
 
     const newProduct = {
-      _id: productId.product_id,
+      _id: uuidv4(),
+      product_id: productId.product_id,
       name: title.toLocaleUpperCase(),
       color: colorProduct,
       image: "",
@@ -160,7 +161,7 @@ function CtspProductInfor(props) {
         draggable
         pauseOnHover
         theme="light"
-        style={{ width: "300px" }}
+        style={{ width: "320px" }}
       />
       <section className="ctsp-product-infor-star d-flex">
         <p>

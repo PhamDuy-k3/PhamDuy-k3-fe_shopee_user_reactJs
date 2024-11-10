@@ -10,14 +10,15 @@ function PriceSaleProduct({
   product,
 }) {
   const [cost, setCost] = useState(0);
+  const discount = product?.discount || 0;
+  const price = product?.prices || 0;
+
   useEffect(() => {
-    const price = product?.prices || 0;
-    const discount = product?.discount || 0;
     setCost(price);
-    if (isTimeUp !== true) {
-      setSale(discount + 10);
-    } else {
+    if (isTimeUp === true) {
       setSale(discount);
+    } else {
+      setSale(discount + 10);
     }
   }, [product]);
 
@@ -42,12 +43,17 @@ function PriceSaleProduct({
         <sup>đ</sup>
         <span className="price-sale">{VND.format(priceSaleFormatted)}</span>
       </p>
-      <p style={{ marginLeft: "1rem", paddingTop: "0.9rem" }}>
-        <span className="sale">{sale - 10}</span>% GIẢM
+
+      <p className="sale_discount" style={{ marginLeft: "1rem" }}>
+        <span>{discount}</span>% GIẢM
       </p>
-      <p>
-        <span className="sale">{"10"}</span>% flast_sale
-      </p>
+      {isTimeUp === false ? (
+        <p className="sale_flastsale">
+          <span>{"10"}</span>% FLASTSALE
+        </p>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

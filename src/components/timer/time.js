@@ -10,7 +10,7 @@ function Time({ setIsTimeUp }) {
   });
 
   useEffect(() => {
-    const endDate = new Date("11/29/2024 00:00:00").getTime();
+    const endDate = new Date("12/11/2024 00:00:00").getTime();
     const intervalId = setInterval(() => {
       const now = new Date().getTime();
       const distance = endDate - now;

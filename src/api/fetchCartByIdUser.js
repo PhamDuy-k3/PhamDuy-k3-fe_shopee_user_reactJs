@@ -23,7 +23,7 @@ export const FetchCartsByIdUser = async (
 
     if (data && data.data) {
       setCarts(data.data);
-      const ids_product_in_carts = data.data.map((cart) => cart._id);
+      const ids_product_in_carts = data.data.map((cart) => cart.product_id);
       setIdIdProductInCarts(ids_product_in_carts);
     } else {
       console.warn("No data found:", data);
