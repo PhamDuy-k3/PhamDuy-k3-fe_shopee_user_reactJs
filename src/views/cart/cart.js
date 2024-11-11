@@ -28,7 +28,6 @@ function Cart() {
   const [idProductChooses, setIdProductChooses] = useState([]);
   const [idsProductInCarts, setIdIdProductInCarts] = useState([]);
   const [idsProductNeedUpdate, setIdIdProductNeedUpdate] = useState([]);
-  const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const checkboxRef = useRef(null);
@@ -66,8 +65,8 @@ function Cart() {
   };
 
   // lấy các sản phẩm có trong giở hàng trong bảng sản phẩm để check giá
-  const getProductsInCarts = async () => {
-    if (!cookies.user_token) return;
+  const getProductsInCarts = async (products) => {
+    if (!idsProductInCarts || idsProductInCarts.length === 0) return;
     try {
       const response = await fetch(
         `http://localhost:5050/products/carts?ids=${idsProductInCarts}`,
@@ -80,7 +79,7 @@ function Cart() {
         }
       );
       const data = await response.json();
-      setProducts(data.data);
+      products.push(data.data);
     } catch (error) {
       console.error(error);
     }
@@ -95,9 +94,6 @@ function Cart() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
-  useEffect(() => {
-    getProductsInCarts();
   }, []);
 
   useEffect(() => {
@@ -174,7 +170,7 @@ function Cart() {
   };
 
   // Hàm kiểm tra giá sản phẩm
-  const checkPriceProduct = (cart, products_update) => {
+  const checkPriceProduct = (cart, products_update, products) => {
     const updatedProducts = products
       .filter(
         (product) =>
@@ -239,10 +235,10 @@ function Cart() {
     setIdIdProductNeedUpdate([]);
   };
 
-  const check = () => {
+  const check = (products) => {
     const products_update = [];
     carts.forEach((cart) => {
-      checkPriceProduct(cart, products_update);
+      checkPriceProduct(cart, products_update, products);
     });
 
     setIdIdProductNeedUpdate(products_update);
@@ -263,9 +259,10 @@ function Cart() {
   };
 
   const handleBuy = async () => {
-    await getProductsInCarts();
-    if (products) {
-      check();
+    const products = [];
+    await getProductsInCarts(products);
+    if (products.length > 0) {
+      check(products[0]);
     }
   };
   return (
