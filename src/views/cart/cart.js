@@ -217,7 +217,7 @@ function Cart() {
 
     const updatedCarts = carts.map((cart) => {
       const updatedProduct = idsProductNeedUpdate.find(
-        (product) => product._id === cart.product_id /// loi
+        (product) => product._id === cart.product_id
       );
 
       if (updatedProduct) {

@@ -207,7 +207,10 @@
     color: $redColor !important;
     color: black;
 }
-
+.enabled{
+    pointer-events: none;
+    opacity: 0.5; 
+}
 @media (min-width:1080px) { 
    .infor-detail-product{
         font-size: 1.1rem;

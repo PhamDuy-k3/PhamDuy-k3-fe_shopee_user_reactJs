@@ -34,7 +34,6 @@ function ProductDetails() {
         setProduct(res.data);
       });
   }, [url_id.product_id, cookies.user_token]);
-
   return (
     <ProductContext.Provider value={product}>
       <div style={{ maxWidth: "1280px", margin: "auto" }}>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -34,16 +34,73 @@ function CtspProductInfor(props) {
   const productId = useParams();
   const carts_store = useSelector((state) => state.cart.items);
   const [sale, setSale] = useState(0);
+  const [stockSize, setStockSize] = useState();
+  const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [variants, setVariants] = useState([]);
 
   let img_one = props.product?.image;
   let title = props.product?.name || "";
   const stock = props.product?.stock;
+
+  const getVariant = async () => {
+    const response = await axios.get(
+      `http://localhost:5050/variants?product_id=${productId.product_id}`
+    );
+    const data = response.data.data;
+    const color = data.map((data) => {
+      return data.color;
+    });
+    const sizes = data.map((data) => {
+      if (data.size) {
+        return data.size;
+      }
+      return null;
+    });
+    setVariants(data);
+    setColors(color);
+    setSizes(sizes);
+  };
+
+  // const sizes = props.product?.sizes;
 
   useEffect(() => {
     if (props.product) {
       setStockRTime(stock);
     }
   }, [stock, props.product]);
+
+  useEffect(() => {
+    getVariant();
+  }, [props.product]);
+
+  // set stock và check trạng thái hàng
+  useEffect(() => {
+    if (!colorProduct) return;
+
+    let selectedVariant = null;
+    if (selectSize && sizes[0] !== null) {
+      selectedVariant = variants.find(
+        (variant) =>
+          variant.color === colorProduct && variant.size === selectSize
+      );
+      if (selectedVariant) {
+        setStockSize(selectedVariant.quantity);
+      } else {
+        setStockSize(0);
+      }
+    }
+    if (sizes[0] === null) {
+      selectedVariant = variants.find(
+        (variant) => variant.color === colorProduct
+      );
+      if (selectedVariant) {
+        setStockSize(selectedVariant.quantity);
+      } else {
+        setStockSize(0);
+      }
+    }
+  }, [selectSize, colorProduct, variants]);
 
   // tổng tiền
   const total = quantity * priceSaleFormatted;
@@ -73,8 +130,15 @@ function CtspProductInfor(props) {
   };
 
   useEffect(() => {
-    if (colorProduct && selectSize) {
-      setCheckSizeColor(true);
+    if (sizes[0] !== null) {
+      if (colorProduct && selectSize) {
+        setCheckSizeColor(true);
+      }
+    } else {
+      if (colorProduct) {
+        console.log("a");
+        setCheckSizeColor(true);
+      }
     }
   }, [colorProduct, selectSize]);
 
@@ -111,12 +175,24 @@ function CtspProductInfor(props) {
         newProduct.image = img_one;
         break;
     }
-
-    if (!newProduct.color && !newProduct.size) {
-      setCheckSizeColor(false);
-      return;
+    if (sizes[0] !== null) {
+      // Nếu có size, kiểm tra cả color và size
+      if (!newProduct.color || !newProduct.size) {
+        setCheckSizeColor(false);
+        return;
+      }
+    }
+    if (sizes[0] === null) {
+      if (!newProduct.color) {
+        setCheckSizeColor(false);
+        return;
+      }
     }
 
+    if (stockSize <= 0) {
+      toast.error(() => <p style={{ paddingTop: "1rem" }}>Hết hàng!</p>);
+      return;
+    }
     // kiểm tra sản phẩm đã có trong giỏ hàng chua
     const isProductInCart = carts_store.some(
       (pd) => pd.image === newProduct.image
@@ -135,9 +211,15 @@ function CtspProductInfor(props) {
     data();
     navigate("/Cart");
   };
-
   return (
     <div className="ctsp-product-infor col-7">
+      {/* {stockSize <= 0 && (
+        <divc id="model-out-of-stock">
+          <i class="fas fa-exclamation"></i>
+          <p>Hết hàng</p>
+        </divc>
+      )} */}
+
       {modelAddCart && (
         <div onMouseOver={() => setModelAddCart(false)} id="model-addcart">
           <div className="model-addcartz__icon">
@@ -235,23 +317,30 @@ function CtspProductInfor(props) {
         <TranSport></TranSport>
         <div style={ischeckSizeColor ? {} : { backgroundColor: "#FFF5F5" }}>
           <ColorProduct
+            colors={colors}
             colorProduct={colorProduct}
             setColorProduct={setColorProduct}
           />
-          <SizeProduct selectSize={selectSize} setSelectSize={setSelectSize} />
+          <SizeProduct
+            stockSize={stockSize}
+            sizes={sizes}
+            selectSize={selectSize}
+            setSelectSize={setSelectSize}
+          />
         </div>
         <section className="number d-flex">
           <div className="number-title col-2">
             <p>Số Lượng</p>
           </div>
           <UpDownQuantity
+            stockSize={stockSize}
             setStockRTime={setStockRTime}
             product={props.product}
             quantity={quantity}
             setQuantity={setQuantity}
           />
         </section>
-        {stockRTime !== 0 ? (
+        {stockRTime !== 0 && stockSize !== 0 ? (
           <section className="cart d-flex">
             <div className="cart-insert">
               <p onClick={data}>

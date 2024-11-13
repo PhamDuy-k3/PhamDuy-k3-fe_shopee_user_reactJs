@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { memo } from "react";
-function ColorProduct({ colorProduct, setColorProduct }) {
+function ColorProduct({ colorProduct, setColorProduct, colors }) {
   //const [colorProduct, setColorProduct] = useState("");
 
   const handleColorClick = (color) => {
     setColorProduct(color);
   };
-  const colorProducts = ["Màu Trắng", "Màu Đen", "Màu Xám", "Màu Xanh Da Trời"];
+  const colorUnique = [];
+  colors.map((color) => {
+    if (!colorUnique.includes(color)) colorUnique.push(color);
+    return color;
+  });
+  const colorProducts = colors;
 
   return (
     <section className="color d-flex">
@@ -14,7 +19,7 @@ function ColorProduct({ colorProduct, setColorProduct }) {
         <p>Màu Sắc</p>
       </div>
       <div className="color-list d-flex flex-wrap">
-        {colorProducts.map((item) => {
+        {colorUnique.map((item) => {
           return (
             <div
               key={item}

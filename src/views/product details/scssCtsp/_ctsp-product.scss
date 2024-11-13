@@ -27,8 +27,27 @@
 
     padding: 1rem;
     h1{
-       
         font-size: 1.3rem;
+    }
+    #model-out-of-stock{
+        width: 13rem;
+        height: 6rem;
+        top: 45%;
+        font-size: 18px;
+        background-color: rgba($color: #000000, $alpha: 0.7);
+        align-items: center;
+        position: fixed;
+        border-radius: 3px;
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        box-shadow: 0 1px 5px 1px rgb(125, 123, 123);
+        p{
+            margin-left: 1rem;
+            margin-top: 1rem;
+        }
     }
     #model-addcart{
         width: 26rem;

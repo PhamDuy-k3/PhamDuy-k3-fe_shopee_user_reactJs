@@ -4,7 +4,13 @@ import "react-toastify/dist/ReactToastify.css";
 import io from "socket.io-client";
 import { memo } from "react";
 
-function UpDownQuantity({ quantity, setQuantity, product, setStockRTime }) {
+function UpDownQuantity({
+  quantity,
+  setQuantity,
+  product,
+  setStockRTime,
+  stockSize,
+}) {
   const [totalProducts, setTotalProducts] = useState(0);
   const socketRef = useRef(null);
 
@@ -102,9 +108,11 @@ function UpDownQuantity({ quantity, setQuantity, product, setStockRTime }) {
       >
         +
       </button>
-      <p>
-        <span>{totalProducts}</span> sản phẩm có sẵn
-      </p>
+      {stockSize >= 0 && (
+        <p>
+          <span>{stockSize}</span> sản phẩm có sẵn
+        </p>
+      )}
     </div>
   );
 }
