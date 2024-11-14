@@ -21,8 +21,19 @@
     justify-content: space-around;
     width: 300px;
     background-color: white;
-    border-radius: 12px;
+    border-radius: 3px;
     padding: 20px;
+    position: relative;
+    i{
+      font-size: 1.5rem;
+      position: absolute;
+      top: 1rem;
+      cursor: pointer;
+      left: 1rem;
+    }
+    i:hover{
+      color: rgb(248, 126, 82);
+    }
   }
 
   .title {
@@ -58,14 +69,19 @@
 
   .action {
     margin-top: 24px;
-    padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: 3px;
     border: none;
     background-color: rgb(248, 126, 82);
     color: white;
     cursor: pointer;
     align-self: end;
     margin-right: 1rem;
+  }
+  button:first-child{
+    padding: 0.5rem 2rem;
+  }
+  button:last-child{
+    padding: 0.5rem 1rem;
   }
   button:first-child:hover{
     background-color: rgb(61, 59, 59) !important;

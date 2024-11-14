@@ -38,6 +38,29 @@
         }
     }
 }
+.dn-xt{
+    cursor: pointer;
+    .dnhap:hover{
+        color: chocolate;
+    }
+    #xacthucOTP{
+        width: 10rem;
+       
+        margin-left: 1.2rem;
+        p{
+            margin-bottom: 0;
+        }
+        i{
+            margin-top: 0.2rem;
+            margin-left: 1rem;
+        }
+        
+    }
+    #xacthucOTP:hover{
+        color: chocolate;
+    }
+}
+
 @media (min-width:1080px) { 
     .infor-login{
         .or-dk{

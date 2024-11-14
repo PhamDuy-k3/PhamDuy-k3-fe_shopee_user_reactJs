@@ -111,7 +111,7 @@ function Search() {
                   </div>
                 </div>
               </div>
-              <p>
+              <p style={{marginTop:'1rem' , fontSize:'1.2rem'}}>
                 Kết quả tìm kiếm cho từ khoá '
                 <span style={{ color: "red" }}>{textSearch}</span>'
               </p>

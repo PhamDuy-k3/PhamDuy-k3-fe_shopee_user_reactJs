@@ -94,7 +94,9 @@ export default function ComfirmCode() {
         console.error("Error updating user:", error);
       });
   };
-
+  const HandlePrevRegister = () => {
+    navigate("/register");
+  };
   return (
     <div className="box_conf">
       <img src={logo} alt="logo" />
@@ -114,6 +116,7 @@ export default function ComfirmCode() {
         />
 
         <form className="form" onSubmit={handleVerify}>
+          <i onClick={HandlePrevRegister} class="fas fa-arrow-left"></i>
           <div className="title">Xác thực OTP</div>
           <p className="message">
             Chúng tôi đã gửi mã xác minh đến email mà bạn đăng ký

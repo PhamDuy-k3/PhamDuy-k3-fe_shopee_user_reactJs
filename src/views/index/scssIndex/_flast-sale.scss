@@ -9,8 +9,11 @@ $colorRed:red;
             color: red;
         }
         .time {
-            margin-left: 150px;
-            margin-top: 30px;
+            margin-left: 13%;
+            margin-top: 2rem;
+            .item{
+                border-radius: 8px;
+            }
         }
     }
     .item-fl-sale{

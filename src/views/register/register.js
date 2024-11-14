@@ -31,13 +31,22 @@ export function Register() {
         alert("Đăng kí thành công");
         setCookie("id_user_register", response.data.data, {
           path: "/",
-          expires: moment().add(1, "months").toDate(),
+          expires: moment()
+            .add(1, "months")
+            .toDate(),
         });
         navigate("/Register/confirmCode");
       }
     } catch (error) {
       console.error("Đăng ký thất bại", error);
     }
+  };
+
+  const handleNextConf = () => {
+    navigate("/Register/confirmCode");
+  };
+  const HandlePrevLogin = () => {
+    navigate("/login");
   };
   return (
     <>
@@ -153,6 +162,26 @@ export function Register() {
                   <label htmlFor="login">
                     <input type="submit" id="login" value="ĐĂNG KÝ" />
                   </label>
+                </div>
+                <div style={{ marginTop: "1rem" }} className="d-flex dn-xt">
+                  <div onClick={HandlePrevLogin} className="col-7 dnhap">
+                    <p>Đăng nhập</p>
+                  </div>
+                  <div
+                    onClick={handleNextConf}
+                    className="d-flex"
+                    id="xacthucOTP"
+                  >
+                    <p>
+                      Xác thực mã OTP <span></span>{" "}
+                    </p>
+                    <i
+                      style={{
+                        fontSize: "1.2rem",
+                      }}
+                      class="fas fa-arrow-right"
+                    ></i>
+                  </div>
                 </div>
               </div>
             </div>

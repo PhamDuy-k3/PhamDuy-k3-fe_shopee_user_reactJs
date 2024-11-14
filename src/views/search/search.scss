@@ -21,11 +21,11 @@
                 margin-top: 1rem;
                 text-align: center;
                 p:first-child{
-                   font-size:15px;
+                   font-size:1rem;
                    font-weight: 500;
                 }
                 p:last-child{
-                   font-size:15px;
+                   font-size:1rem;
                     padding: 0.5rem 2rem;
                     background-color:#FE5722;
                     color: white;
@@ -37,7 +37,7 @@
             display: flex;
             .shope_search__products-item{
                 width: calc(100% / 2.9);
-                border: 1px solid rgb(232, 229, 229);
+                box-shadow: 0 1px 6px 1px rgb(233, 230, 230);
                 margin-right: 2%;
                 .shope_search__products-item-img{
                     width: 100%;
