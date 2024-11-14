@@ -51,13 +51,15 @@
     }
     .chat-small{
         width: 10rem;
+        height: 4rem;
         cursor: pointer;
-        border-radius: 0.5rem 0.5rem 0 0 ;
+        border-radius: 4px 4px 0 0 ;
         padding: 1rem 0 0 1.5rem;
         background-color: white;
         box-shadow: 0 1px 8px 1px rgb(228, 226, 226);
         color: #EE4D2D;
         font-size: 1.6rem;
+        margin-right: 0.87rem;
        p{
         font-weight: 600;
         margin-left: 1rem;

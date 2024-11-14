@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import logo from "../../assets/images/img/logo.png";
+import HeaderLoginRegister from "../../components/headerLogin-Register/headerLogin-Register";
 export default function ComfirmCode() {
-  const [code, setCode] = useState(["", "", "", ""]);
+  const [code, setCode] = useState(["", "", "", "", "", ""]);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [cookies] = useCookies();
@@ -29,14 +30,14 @@ export default function ComfirmCode() {
   };
 
   const handleClear = () => {
-    setCode(["", "", "", ""]);
+    setCode(["", "", "", "", "", ""]);
     document.getElementById("input-0").focus();
   };
 
   const handleVerify = (e) => {
     e.preventDefault(); // Ngừng hành động mặc định của form (submit)
     const codes = code.join("");
-    if (codes.length === 4) {
+    if (codes.length === 6) {
       if (user && codes === user?.verificationCode) {
         updateUser();
       } else {
@@ -99,7 +100,7 @@ export default function ComfirmCode() {
   };
   return (
     <div className="box_conf">
-      <img src={logo} alt="logo" />
+      <HeaderLoginRegister titleHeader="Xác thực" />
       <div className="ComfirmCode">
         <ToastContainer
           position="top-center"
@@ -117,7 +118,7 @@ export default function ComfirmCode() {
 
         <form className="form" onSubmit={handleVerify}>
           <i onClick={HandlePrevRegister} class="fas fa-arrow-left"></i>
-          <div className="title">Xác thực OTP</div>
+          <div className="title">Vui lòng nhập mã xác minh</div>
           <p className="message">
             Chúng tôi đã gửi mã xác minh đến email mà bạn đăng ký
           </p>
@@ -133,7 +134,7 @@ export default function ComfirmCode() {
               />
             ))}
           </div>
-          <div className="d-flex" style={{ marginLeft: "4rem" }}>
+          <div className="d-flex" style={{ marginLeft: "2.5rem" }}>
             <button
               style={{ backgroundColor: "gray" }}
               onClick={handleClear}

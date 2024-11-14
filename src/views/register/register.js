@@ -71,6 +71,7 @@ export function Register() {
                 <div className="Email d-flex">
                   <label htmlFor="Email">
                     <input
+                    style={{marginTop:'0rem'}}
                       type="email"
                       id="Email"
                       placeholder="Email"

@@ -41,10 +41,10 @@
                 width: 0;
                 height: 0;
                 top: 11rem;
-                left: 12.4rem;
-                border-top: 22px solid transparent;
-                border-right: 22px solid #EE4D2D;
-                border-bottom: 22px solid transparent;
+                left: 12.3rem;
+                border-top: 1.7rem solid transparent;
+                border-right:  1.7rem solid #EE4D2D;
+                border-bottom:  1.7rem solid transparent;
               }
               .dots-dis{
                 position: absolute;
@@ -70,8 +70,8 @@
                     text-align: center;
                     padding: 2px;
                     height: 3rem;
-                    font-weight: 500;
-                    font-size: 20px;
+                    font-weight: 400;
+                    font-size: 1.5rem;
                     margin-left: -1px;
                     @extend .color-bg
                 }
@@ -81,14 +81,14 @@
               background-color: white;
               position: relative;
                >p:nth-child(2){
-                font-size: 24px;
+                font-size: 1.6rem;
               }
               >p:nth-child(1){
-                font-size: 28px;
+                font-size: 2rem;
                 font-weight: 700;
               }
               .hsd{
-                font-size: 20px;
+                font-size: 1.5rem;
                }
                .save{
                 right: 1.5rem;
@@ -163,9 +163,10 @@
             i{
                 cursor: pointer;
                 font-size: 2rem;
-                color: #EE4D2D;
+                color: #EE4D2D; 
             }
             i:hover{
+              transform: scale(1.1);
                 color: #e6320f;
             }
         }

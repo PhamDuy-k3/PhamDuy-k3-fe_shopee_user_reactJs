@@ -279,7 +279,7 @@ function OrderLoading() {
                 <div className="d-flex" id="noteOder">
                   <label htmlFor="noteOders">Ghi chú :</label>
                   <textarea
-                    rows={2}
+                    rows={1}
                     cols={60}
                     placeholder="Nhập ghi chú"
                     onChange={(e) => handleNote(e)}
