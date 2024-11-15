@@ -18,6 +18,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Button from "../../button/button";
 import { v4 as uuidv4 } from "uuid";
+import { color } from "framer-motion";
 
 function CtspProductInfor(props) {
   const navigate = useNavigate();
@@ -38,8 +39,8 @@ function CtspProductInfor(props) {
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [variants, setVariants] = useState([]);
+  const [images, setImages] = useState([]);
 
-  let img_one = props.product?.image;
   let title = props.product?.name || "";
   const stock = props.product?.stock;
 
@@ -48,7 +49,7 @@ function CtspProductInfor(props) {
       `http://localhost:5050/variants?product_id=${productId.product_id}`
     );
     const data = response.data.data;
-    const color = data.map((data) => {
+    const colors = data.map((data) => {
       return data.color;
     });
     const sizes = data.map((data) => {
@@ -58,8 +59,24 @@ function CtspProductInfor(props) {
       return null;
     });
     setVariants(data);
-    setColors(color);
-    setSizes(sizes);
+    // check màu trùng lặp
+    const colorUnique = [];
+    colors.map((color) => {
+      if (!colorUnique.includes(color)) colorUnique.push(color);
+      return color;
+    });
+    setColors(colorUnique);
+
+    // check size trùng lặp
+
+    const arraySize = [];
+    sizes.map((size) => {
+      if (!arraySize.find((item) => item === size)) {
+        arraySize.push(size);
+      }
+      return size;
+    });
+    setSizes(arraySize);
   };
 
   // const sizes = props.product?.sizes;
@@ -68,6 +85,7 @@ function CtspProductInfor(props) {
     if (props.product) {
       setStockRTime(stock);
     }
+    setImages(props.product?.images);
   }, [stock, props.product]);
 
   useEffect(() => {
@@ -104,7 +122,6 @@ function CtspProductInfor(props) {
 
   // tổng tiền
   const total = quantity * priceSaleFormatted;
-
   // thêm cart
   const addToCartAsync = async (product) => {
     try {
@@ -158,23 +175,11 @@ function CtspProductInfor(props) {
       sum: total,
       discount_code: sale,
     };
-    switch (colorProduct) {
-      case "Màu Trắng":
-        newProduct.image = img_one;
-        break;
-      case "Màu Đen":
-        newProduct.image = imgSmall2;
-        break;
-      case "Màu Xám":
-        newProduct.image = imgSmall3;
-        break;
-      case "Màu Xanh Da Trời":
-        newProduct.image = imgSmall4;
-        break;
-      default:
-        newProduct.image = img_one;
-        break;
-    }
+    colors.forEach((color, i) => {
+      if (color === colorProduct) {
+        newProduct.image = images[i];
+      }
+    });
     if (sizes[0] !== null) {
       // Nếu có size, kiểm tra cả color và size
       if (!newProduct.color || !newProduct.size) {

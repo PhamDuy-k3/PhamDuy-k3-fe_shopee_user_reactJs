@@ -31,6 +31,9 @@ const Profile = () => {
 
   const getProfile = async () => {
     try {
+      if (!cookies.user_token) {
+        return;
+      }
       const response = await fetch(`http://localhost:5050/users/profile/user`, {
         method: "GET",
         headers: {
@@ -40,31 +43,44 @@ const Profile = () => {
         },
       });
       const data = await response.json();
-
+      console.log(data.data);
       if (data.data) {
         const userData = data.data;
-        setUser(userData);
-        setImageUrl(userData.avatar);
-        setValue("name", userData.name);
-        setValue("phone", userData.phone);
-        setValue("email", userData.email);
-        const formattedBirthday = new Date(userData.birthday)
-          .toISOString()
-          .split("T")[0];
-        setValue("birthday", formattedBirthday);
-        setValue("address", userData.address);
-        setValue("gender", userData.gender === 1 ? "male" : "female");
+        if (userData) {
+          setUser(userData);
+        }
+        if (userData.avatar) {
+          setImageUrl(userData.avatar);
+        }
+        if (userData.name) {
+          setValue("name", userData.name);
+        }
+        if (userData.phone) {
+          setValue("phone", userData.phone);
+        }
+        if (userData.email) {
+          setValue("email", userData.email);
+        }
+        
+        if (userData.birthday) {
+          const formattedBirthday = new Date(userData.birthday)
+            .toISOString()
+            .split("T")[0];
+          setValue("birthday", formattedBirthday);
+        }
+        if (userData.address) {
+          setValue("address", userData.address);
+        }
+        if (userData.gender) {
+          setValue("gender", userData.gender === 1 ? "male" : "female");
+        }
       }
     } catch (error) {
       toast.error("Không thể tải dữ liệu người dùng.");
       console.error(error);
     }
   };
-
   useEffect(() => {
-    if (!cookies.user_token) {
-      return;
-    }
     getProfile();
   }, [cookies.user_token]);
 
@@ -108,7 +124,6 @@ const Profile = () => {
       .then((res) => {
         if (res.status_code === 200) {
           toast.success(success);
-          // getProfile();
         } else {
           toast.error(error);
         }

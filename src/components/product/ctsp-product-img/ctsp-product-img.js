@@ -22,8 +22,8 @@ function CtspProductImg(props) {
   const [cookies] = useCookies();
   const [product, setProduct] = useState();
   const [isLike, setIsLike] = useState(false);
+  const [listImg, setListImg] = useState([]);
 
-  const img_one = props.product?.image;
   const likes = product?.likedBy || [];
   const productId = props.product?._id;
 
@@ -71,9 +71,10 @@ function CtspProductImg(props) {
   useEffect(() => {
     if (productId) {
       fetchProducts();
-      setImgBig(img_one);
+      setListImg(props.product?.images);
+      setImgBig(listImg[0]);
     }
-  }, [img_one, productId]);
+  }, [productId]);
 
   const handleMouseOver = (newImg) => {
     setImgBig(newImg);
@@ -122,9 +123,9 @@ function CtspProductImg(props) {
     handleLike(isLike ? "decreaseLike" : "increaseLike");
   };
 
-  const arrayImgBig = [img_one, img2, img3, img4, video];
+  const arrayImgBig = [...listImg, video];
 
-  const arrayImgSmall = [img_one, img2, img3, img4, img5];
+  const arrayImgSmall = [...listImg, img5];
 
   const arrayImgSmallComponents = arrayImgSmall.map((item, index) => (
     <div
@@ -162,7 +163,7 @@ function CtspProductImg(props) {
       <div className="ctsp-product-img col-5">
         <div className="ctsp-product-img-big active-img-big">
           {isImgVideo ? (
-            <img src={imgBig || img_one} alt="" />
+            <img src={imgBig || listImg[0]} alt="" />
           ) : (
             <video controls poster="img/imgctsp/banner-con-5.jpg" loop>
               <source src={video} />

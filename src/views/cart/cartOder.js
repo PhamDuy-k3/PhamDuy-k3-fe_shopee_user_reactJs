@@ -15,7 +15,7 @@ function CartOder() {
   const [cookies, setCookie] = useCookies();
 
   //xóa các query ko cần thiết trong url
-  
+
   useEffect(() => {
     if (window.location.search || window.location.hash.includes("?")) {
       const queryParams = new URLSearchParams(window.location.search);
@@ -121,16 +121,12 @@ function CartOder() {
                                   name="product-category"
                                   id="product-category"
                                 >
-                                  <option value="Phân Loại Hàng">
-                                    Phân Loại Hàng
-                                  </option>
                                   <option
                                     style={{ color: "red" }}
                                     value={product.color}
                                   >
                                     {product.color}
                                   </option>
-                                  <option value="white">Màu Trắng</option>
                                 </select>
                                 <p>Size : {product.size}</p>
                               </div>

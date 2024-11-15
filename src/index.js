@@ -10,6 +10,8 @@ import { MenPage } from "./components/menPage";
 import "../src/i18n/i18n";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+
+
 root.render(
   <Provider store={store}>
     <React.StrictMode>

@@ -1,16 +1,18 @@
 @import '_context';
-.product{
-    height: 50rem;
-    background-color: white;
-    .ctsp-product-title{
-        height: 3rem;
-        background-color: #F5F5F5;
-        ul{
-            padding-top: 1rem;
-            padding-left: 0rem
-        }
-        a{
-            color: #0558AC;
+.context-detal-product{
+    .product{
+        min-height: 50rem;
+        background-color: white;
+        .ctsp-product-title{
+            height: 3rem;
+            background-color: #F5F5F5;
+            ul{
+                padding-top: 1rem;
+                padding-left: 0rem
+            }
+            a{
+                color: #0558AC;
+            }
         }
     }
 }

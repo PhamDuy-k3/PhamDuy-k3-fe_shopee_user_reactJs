@@ -8,7 +8,7 @@ function Suggest(props) {
       <div key={product._id} className="suggest-product bg-white">
         <Link to={`/ProductDetail/${product.id}`}>
           <div className="suggest-product-img">
-            <img src={product.image} alt="" />
+            <img src={product.images[0]} alt="" />
           </div>
           <div className="suggest-product-text">
             <p>{product.name}</p>

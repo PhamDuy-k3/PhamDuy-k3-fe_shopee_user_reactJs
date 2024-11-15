@@ -119,6 +119,7 @@
             padding-top: 0.5rem;
         }
         .color-list div{
+            margin-bottom: 1rem;
             @include highlight;
         }
        

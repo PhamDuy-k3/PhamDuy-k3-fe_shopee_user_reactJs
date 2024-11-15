@@ -6,17 +6,11 @@ function SizeProduct({ selectSize, setSelectSize, sizes ,stockSize }) {
     setSelectSize(size);
   };
 
-  const arraySize = [];
-  sizes.map((size) => {
-    if (!arraySize.find((item) => item === size)) {
-      arraySize.push(size);
-    }
-    return size;
-  });
+  
 
   const sizes_new =
-    arraySize?.length > 0
-      ? arraySize.map((size) => {
+  sizes?.length > 0
+      ? sizes.map((size) => {
           return (
             <div
               key={size}

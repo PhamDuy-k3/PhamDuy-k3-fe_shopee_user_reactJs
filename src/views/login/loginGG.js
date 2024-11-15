@@ -21,24 +21,27 @@ const LoginGg = () => {
     const jsonPayload = decodeURIComponent(
       atob(base64)
         .split("")
-        .map(function (c) {
+        .map(function(c) {
           return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
         })
         .join("")
     );
     const profile = JSON.parse(jsonPayload);
 
-    const name = profile.name;
     const email = profile.email;
 
     setCookie("user_token", token, {
       path: "/",
-      exp: moment().add(1, "months").toDate(),
+      exp: moment()
+        .add(1, "months")
+        .toDate(),
     });
 
     setCookie("email_token", email, {
       path: "/",
-      exp: moment().add(1, "months").toDate(),
+      exp: moment()
+        .add(1, "months")
+        .toDate(),
     });
 
     navigate("/");

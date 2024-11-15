@@ -54,13 +54,17 @@ function Login() {
         return;
       }
 
-      if (!res.isVerified) {
+      if (res.isVerified === false) {
         alert("Tài khoản chưa xác thực!");
         setLoadingIcon(false);
         return;
       }
 
-      if (res.codeExpired && dayjs().isAfter(res.codeExpired)) {
+      if (
+        res.codeExpired &&
+        dayjs().isAfter(res.codeExpired) &&
+        res.isVerified === false
+      ) {
         alert("Mã xác thực đã hết hạn!");
         setLoadingIcon(false);
         return;
@@ -122,7 +126,7 @@ function Login() {
                   <input
                     type="text"
                     id="name"
-                    placeholder="Email/Số điện thoại/Tên đăng nhập.."
+                    placeholder="Số điện thoại"
                     {...register("phone", {
                       required: "Vui lòng điền giá trị !!!",
                       minLength: {

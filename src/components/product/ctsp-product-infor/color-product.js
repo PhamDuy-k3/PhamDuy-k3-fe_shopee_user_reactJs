@@ -6,12 +6,7 @@ function ColorProduct({ colorProduct, setColorProduct, colors }) {
   const handleColorClick = (color) => {
     setColorProduct(color);
   };
-  const colorUnique = [];
-  colors.map((color) => {
-    if (!colorUnique.includes(color)) colorUnique.push(color);
-    return color;
-  });
-  const colorProducts = colors;
+  
 
   return (
     <section className="color d-flex">
@@ -19,7 +14,7 @@ function ColorProduct({ colorProduct, setColorProduct, colors }) {
         <p>Màu Sắc</p>
       </div>
       <div className="color-list d-flex flex-wrap">
-        {colorUnique.map((item) => {
+        {colors.map((item) => {
           return (
             <div
               key={item}

@@ -130,7 +130,7 @@ function OrderLoading() {
 
       // Kiểm tra hình thức thanh toán
       if (pay === "1") {
-        paymentPromise = PaymentForm(data, cookies.user_token ,navigate);
+        paymentPromise = PaymentForm(data, cookies.user_token, navigate);
       }
       if (pay === "2") {
         paymentPromise = createCartOder(newOrder);
@@ -220,17 +220,14 @@ function OrderLoading() {
                                 style={{ height: "1.3rem" }}
                                 name="product-category"
                                 id="product-category"
+                                disabled
                               >
-                                <option value="Phân Loại Hàng">
-                                  Phân Loại Hàng
-                                </option>
                                 <option
                                   style={{ color: "red" }}
                                   value={cart.color}
                                 >
                                   {cart.color}
                                 </option>
-                                <option value="white">Màu Trắng</option>
                               </select>
                               <p>Size : {cart.size}</p>
                             </div>
