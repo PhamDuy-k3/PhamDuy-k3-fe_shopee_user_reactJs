@@ -108,10 +108,16 @@ function UpDownQuantity({
       >
         +
       </button>
-      {stockSize >= 0 && (
+      {stockSize > 0 ? (
         <p>
           <span>{stockSize}</span> sản phẩm có sẵn
         </p>
+      ) : stockSize === 0 ? (
+        <p style={{ color: "red" }}>
+          <span>Hết hàng</span>
+        </p>
+      ) : (
+        ""
       )}
     </div>
   );

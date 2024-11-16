@@ -23,7 +23,7 @@ function CtspProductImg(props) {
   const [product, setProduct] = useState();
   const [isLike, setIsLike] = useState(false);
   const [listImg, setListImg] = useState([]);
-
+  const [listVideos, setListVideos] = useState([]);
   const likes = product?.likedBy || [];
   const productId = props.product?._id;
 
@@ -67,11 +67,11 @@ function CtspProductImg(props) {
       console.error("Error fetching product:", error);
     }
   };
-
   useEffect(() => {
     if (productId) {
       fetchProducts();
       setListImg(props.product?.images);
+      setListVideos(props.product?.videos);
       setImgBig(listImg[0]);
     }
   }, [productId]);
@@ -79,12 +79,12 @@ function CtspProductImg(props) {
   const handleMouseOver = (newImg) => {
     setImgBig(newImg);
     setImgBigZoom(newImg);
-    setIsImgVideo(newImg !== video);
+    setIsImgVideo(newImg !== listVideos[0]);
   };
 
   const handleClick = (newImg) => {
     setImgBigZoom(newImg);
-    setIsImgVideo(newImg !== video);
+    setIsImgVideo(newImg !== listVideos[0]);
   };
 
   const handleIsZoom = () => {
@@ -123,7 +123,7 @@ function CtspProductImg(props) {
     handleLike(isLike ? "decreaseLike" : "increaseLike");
   };
 
-  const arrayImgBig = [...listImg, video];
+  const arrayImgBig = [...listImg, listVideos[0]];
 
   const arrayImgSmall = [...listImg, img5];
 
@@ -166,11 +166,10 @@ function CtspProductImg(props) {
             <img src={imgBig || listImg[0]} alt="" />
           ) : (
             <video controls poster="img/imgctsp/banner-con-5.jpg" loop>
-              <source src={video} />
+              <source src={listVideos[0]} />
             </video>
           )}
         </div>
-
         <div className="ctsp-product-img-small d-flex col-12">
           {arrayImgSmallComponents}
         </div>

@@ -42,8 +42,10 @@ const Profile = () => {
           Authorization: `Bearer ${cookies.user_token}`,
         },
       });
+      if (!response.ok) {
+        throw new Error("Không thể tải dữ liệu người dùng, vui lòng thử lại.");
+      }
       const data = await response.json();
-      console.log(data.data);
       if (data.data) {
         const userData = data.data;
         if (userData) {
@@ -61,7 +63,7 @@ const Profile = () => {
         if (userData.email) {
           setValue("email", userData.email);
         }
-        
+
         if (userData.birthday) {
           const formattedBirthday = new Date(userData.birthday)
             .toISOString()
@@ -76,7 +78,7 @@ const Profile = () => {
         }
       }
     } catch (error) {
-      toast.error("Không thể tải dữ liệu người dùng.");
+      toast.error(error.message || "Có lỗi xảy ra. Vui lòng thử lại sau.");
       console.error(error);
     }
   };

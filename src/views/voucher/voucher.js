@@ -24,7 +24,6 @@ export default function Voucher() {
 
   // Hàm để lưu voucher
   const addVoucher = async (id_voucher, usageLimit) => {
-    setVoucherCheck(id_voucher);
     try {
       const data = { voucher_id: id_voucher, quantity: usageLimit };
       const response = await axios.post(
@@ -41,6 +40,7 @@ export default function Voucher() {
 
       if (response.status === 201) {
         toast.success("Lưu thành công.");
+        setVoucherCheck(id_voucher);
         fetchUserVoucher();
       }
     } catch (error) {

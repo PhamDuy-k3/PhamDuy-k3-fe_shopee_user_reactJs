@@ -1,0 +1,27 @@
+#box_cartOder{
+    .body-product {
+        width: 99%;
+        margin-left: 1%;
+        margin-top: 1rem;
+    }
+    .list-products{
+        margin-top: 1rem;
+        background-color: white;
+        .item-product{
+            padding-left: 2rem;
+        }
+    }
+    .quantity{
+        input{
+            color: gray;
+        }
+    }
+    .sum{
+        font-size: 1.2rem;
+        >div{
+            div{
+                margin-left: 1rem;
+            }
+        }
+    }
+}

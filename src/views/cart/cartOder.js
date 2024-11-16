@@ -6,7 +6,7 @@ import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 import Menu from "./menu";
 import ComponentHeader from "../../components/header/header";
 import { VND } from "../../components/VND/vnd";
-
+import "./styleCartOder.scss";
 function CartOder() {
   const [sumSp, setSumSp] = useState(0);
   const [cartsOder, setCartsOrder] = useState([]);
@@ -62,19 +62,19 @@ function CartOder() {
   return (
     <>
       <ComponentHeader />
-      <div className="box_cart">
+      <div id="box_cartOder" className="box_cart ">
         <div className="body">
           <Menu status={status} setStatus={setStatus} />
           <div className="container-fluid">
             {res.length > 0 ? (
               res.map((item, index) => (
-                <div key={index} className="body-product bg-white mt-3">
+                <div key={index} className="body-product ">
                   <div className="d-flex colum-1">
                     <i
                       style={{ color: "#00b9a0" }}
                       className="fas fa-shuttle-van"
                     ></i>
-                    {item.status != "unconfirmed" ? (
+                    {item.status !== "unconfirmed" ? (
                       <p>Đơn hàng của bạn đã được người bán xác nhận !!!</p>
                     ) : (
                       <p>Đơn hàng của bạn đang chờ người bán xác nhận !!!</p>
@@ -85,7 +85,6 @@ function CartOder() {
                     <p className="col-2">Đơn Giá</p>
                     <p className="col-2">Số Lượng</p>
                     <p className="col-2">Số Tiền</p>
-                    <p className="col-1">Thao Tác</p>
                   </div>
                   <div className="list-products">
                     {item.carts.length > 0 ? (
@@ -141,11 +140,13 @@ function CartOder() {
                             </div>
                             <div className="quantity col-2 pt-5">
                               <input
+                                disabled
                                 className="cart-down-quantity"
                                 type="button"
                                 value="-"
                               />
                               <input
+                                disabled
                                 className="quantity_value"
                                 type="number"
                                 min="1"
@@ -172,13 +173,9 @@ function CartOder() {
                       <p>No items in cart</p>
                     )}
                   </div>
-                  <div className="d-flex mt-3 colum-4">
+                  <div className="d-flex mt-3 colum-4 sum">
                     <div className="col-4 d-flex">
-                      <p>
-                        Tổng thanh toán (
-                        <span className="quantityCart-two">{sumSp}</span>) sản
-                        phẩm :
-                      </p>
+                      <p>Thành tiền :</p>
                       <div
                         style={{ color: "#ee4d2d", fontSize: "1.5rem" }}
                         className=""
@@ -229,7 +226,7 @@ function CartOder() {
                 </div>
               ))
             ) : (
-              <div className="img-no-order">
+              <div style={{marginTop:'1rem'}} className="img-no-order">
                 <img src={imgNoOder} alt="" />
               </div>
             )}
