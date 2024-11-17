@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import "../cart/scssCart/styleCart.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { deleteCarts } from "../../redux/action";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -13,6 +13,10 @@ import { PaymentForm } from "../../payment";
 import { VND } from "../../components/VND/vnd";
 import { deleteToCartsAsync } from "../../api/delete";
 import "./style.scss";
+import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
+import ModelAddAddress from "./modelAddAddress";
+import NoteShippingFee from "./note_shippingFee";
+
 function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
   const [total, setTotal] = useState(0);
@@ -25,11 +29,33 @@ function OrderLoading() {
   const [pay, setPay] = useState("2");
   const [orderInfo, setOrderInfo] = useState("pay with MoMo");
   const [valueVoucher, setValueVoucher] = useState([]);
+  const [selectedDiscountCodes, setSelectedDiscountCodes] = useState([]);
+  const [
+    selectedDiscountCodesFreeShip,
+    setSelectedDiscountCodesFreeShip,
+  ] = useState([{ code: null, maxShippingFee: null }]);
+  const [shipping_fee, setShipping_fee] = useState(30000);
+  const [shipping_fee_new, setShipping_fee_new] = useState();
+  const [modelAddresses, setModelAddresses] = useState(false);
+  const [address, setAddress] = useState("");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [selectedDiscountCodes, setSelectedDiscountCodes] = useState([]);
 
   const ids_product = sessionStorage.getItem("ids_product");
+
+  const total_shipping_fee = () => {
+    if (
+      selectedDiscountCodesFreeShip &&
+      selectedDiscountCodesFreeShip[0].maxShippingFee > shipping_fee
+    ) {
+      setShipping_fee_new(0);
+    }
+    return shipping_fee;
+  };
+  useEffect(() => {
+    total_shipping_fee();
+  }, [selectedDiscountCodesFreeShip]);
 
   const fetchProducts = async () => {
     try {
@@ -58,6 +84,7 @@ function OrderLoading() {
 
   useEffect(() => {
     fetchProducts();
+    setAddress(sessionStorage.getItem("address"));
   }, []);
 
   // tính tổng tiền các sản phẩm có trong gio hàng
@@ -67,7 +94,7 @@ function OrderLoading() {
       return accumulator + parseFloat(product.sum);
     }, 0);
     setTotal(totalSum);
-    setTotalDiscountcode(totalSum);
+    setTotalDiscountcode(totalSum + shipping_fee);
   }, [carts]);
 
   //tạo đơn hàng
@@ -102,247 +129,310 @@ function OrderLoading() {
     setNote(e.target.value);
   };
 
-  // đặt hàng
-  const handleBuy = () => {
-    if (cookies.user_token !== "") {
-      const amount = totalDiscountcode;
-      const paymentMethod = "pay";
-      const data = {
-        carts,
-        status,
-        amount,
-        note,
-        gmail,
-        selectedDiscountCodes,
-        orderInfo,
-        paymentMethod,
-      };
-      const newOrder = {
-        carts,
-        status: "unconfirmed",
-        total_prices: amount,
-        note: note,
-        gmail,
-        selectedDiscountCodes,
-      };
-
-      let paymentPromise = Promise.resolve();
-
-      // Kiểm tra hình thức thanh toán
-      if (pay === "1") {
-        paymentPromise = PaymentForm(data, cookies.user_token, navigate);
-      }
-      if (pay === "2") {
-        paymentPromise = createCartOder(newOrder);
-      }
-
-      // Xử lý promise cho PaymentForm
-      paymentPromise
-        .then(() => {
-          return deleteCartsByUserId();
-        })
-        .catch((error) => {
-          console.error("Error during the order process:", error);
-        });
+  const handelAddress = () => {
+    if (address?.length > 8 && address !== null) {
+      setAddress(address);
+      setModelAddresses(false);
+      sessionStorage.setItem("address", address);
     }
   };
+  // đặt hàng
+  const handleBuy = () => {
+    if (address?.length <= 8 || address === null) {
+      setModelAddresses(true);
+      return;
+    }
+    if (cookies.user_token === "") {
+      alert("Vui lòng đăng nhập để đặt hàng!");
+      return;
+    }
+    const amount = totalDiscountcode;
+    const paymentMethod = "pay";
+    const data = {
+      carts,
+      status,
+      amount,
+      note,
+      gmail,
+      selectedDiscountCodes,
+      orderInfo,
+      paymentMethod,
+      address,
+    };
+    const newOrder = {
+      carts,
+      status: "unconfirmed",
+      total_prices: amount,
+      note: note,
+      gmail,
+      selectedDiscountCodes,
+      address,
+    };
+
+    let paymentPromise = Promise.resolve();
+
+    // Kiểm tra hình thức thanh toán
+    if (pay === "1") {
+      paymentPromise = PaymentForm(data, cookies.user_token, navigate);
+    }
+    if (pay === "2") {
+      paymentPromise = createCartOder(newOrder);
+    }
+
+    // Xử lý promise cho PaymentForm
+    paymentPromise
+      .then(() => {
+        return deleteCartsByUserId();
+      })
+      .catch((error) => {
+        console.error("Error during the order process:", error);
+      });
+  };
+  useEffect(() => {
+    document.body.style.overflowY = modelAddresses === true ? "hidden" : "auto";
+  }, [modelAddresses, address]);
 
   return (
     <>
-      <ComponentHeader />
-      <div className="box_cart">
-        <div className="body">
-          {carts.length > 0 ? (
-            <div className="container-fluid">
-              <div className="d-flex colum-1">
-                <i
-                  style={{ color: "#00b9a0" }}
-                  className="fas fa-shuttle-van"
-                ></i>
-                <p>
-                  Nhấn vào mục Mã giảm giá ở cuối trang để hưởng miến phí vận
-                  chuyển bạn nhé!
-                </p>
-              </div>
-              <div className="body-title d-flex">
-                <p className="col-5">Sản phẩm</p>
-                <p className="col-2">Đơn Giá</p>
-                <p className="col-2">Số Lượng</p>
-                <p className="col-2">Số Tiền</p>
-                <p className="col-1">Thao Tác</p>
-              </div>
-              <div className="body-product bg-white mt-3">
-                <div className="list-products">
-                  {carts.map((cart, index) => {
-                    return (
-                      <div
-                        key={index}
-                        style={{ height: "13rem" }}
-                        className="item-product"
-                      >
-                        <div className="store-name">
-                          <input
-                            className="slaveCheckbox"
-                            type="checkbox"
-                            name="check-store"
-                            id="check-store"
-                            checked={true}
-                            disabled
-                          />
-                          Pham Duy Store
-                        </div>
-
+      {modelAddresses && (
+        <>
+          <FlyZoom />
+          <div id="txt-address">
+            <div className="d-flex justify-content-between align-items-center">
+              <p>
+                <i className="fas fa-truck"></i>Địa Chỉ Giao Hàng
+              </p>
+            </div>
+            <div className="form-group">
+              <input
+                autoFocus
+                type="text"
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+            <div className="form-group d-flex">
+              <button onClick={() => setAddress("")}>Xóa</button>
+              <button onClick={handelAddress}>OK</button>
+            </div>
+          </div>
+        </>
+      )}
+      <div id="container-cart">
+        <ComponentHeader />
+        <div className="box_cart">
+          <div className="body">
+            {carts.length > 0 ? (
+              <div className="container-fluid">
+                <div className="address-transport">
+                  <div></div>
+                  <p>
+                    <i className="fas fa-map-marker-alt"></i>
+                    Địa Chỉ Nhận Hàng
+                  </p>
+                  <div className="d-flex">
+                    <p>
+                      {address || <p>Vui lòng thêm địa chỉ nhận hàng !!!</p>}
+                    </p>
+                    <div className="model-add-address">
+                      <ModelAddAddress setAddress={setAddress} />
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex colum-1">
+                  <i
+                    style={{ color: "#00b9a0" }}
+                    className="fas fa-shuttle-van"
+                  ></i>
+                  <p>
+                    Nhấn vào mục Mã giảm giá ở cuối trang để hưởng miến phí vận
+                    chuyển bạn nhé!
+                  </p>
+                </div>
+                <div className="body-title d-flex">
+                  <p className="col-7">Sản phẩm</p>
+                  <p className="col-2">Đơn Giá</p>
+                  <p className="col-2">Số Lượng</p>
+                  <p className="col-1">Số Tiền</p>
+                </div>
+                <div className="body-product  mt-3">
+                  <div className="list-products">
+                    {carts.map((cart, index) => {
+                      return (
                         <div
+                          key={index}
                           style={{ height: "13rem" }}
-                          className="d-flex product-infor"
+                          className="item-product"
                         >
-                          <div
-                            style={{ height: "8rem" }}
-                            className="col-5 d-flex product"
-                          >
+                          <div className="store-name">
                             <input
-                              className="Checkbox"
+                              className="slaveCheckbox"
                               type="checkbox"
-                              name="check-sp"
+                              name="check-store"
+                              id="check-store"
                               checked={true}
                               disabled
                             />
-                            <img
-                              style={{ height: "7rem" }}
-                              className="col-2"
-                              src={cart.image}
-                              alt=""
-                            />
-                            <p className="col-5 product-name">{cart.name}</p>
-                            <div className="d-flex flex-column">
-                              <select
-                                className="mt-3"
-                                style={{ height: "1.3rem" }}
-                                name="product-category"
-                                id="product-category"
+                            Pham Duy Store
+                          </div>
+
+                          <div
+                            style={{ height: "13rem" }}
+                            className="d-flex product-infor"
+                          >
+                            <div
+                              style={{ height: "8rem" }}
+                              className="col-7 d-flex product"
+                            >
+                              <input
+                                className="Checkbox"
+                                type="checkbox"
+                                name="check-sp"
+                                checked={true}
                                 disabled
-                              >
-                                <option
-                                  style={{ color: "red" }}
-                                  value={cart.color}
+                              />
+                              <div className="col-2 img">
+                                <img src={cart.image} alt="" />
+                              </div>
+
+                              <p className="col-5 product-name">{cart.name}</p>
+                              <div className="d-flex flex-column">
+                                <select
+                                  className="mt-3"
+                                  style={{ height: "1.3rem" }}
+                                  name="product-category"
+                                  id="product-category"
+                                  disabled
                                 >
-                                  {cart.color}
-                                </option>
-                              </select>
-                              <p>Size : {cart.size}</p>
+                                  <option
+                                    style={{ color: "red" }}
+                                    value={cart.color}
+                                  >
+                                    {cart.color}
+                                  </option>
+                                </select>
+                                <p>Size : {cart.size}</p>
+                              </div>
+                            </div>
+                            <div className="d-flex price-info col-2 pt-5 text-center">
+                              <p>
+                                {" "}
+                                <sup>đ</sup>{" "}
+                                <span className="price">
+                                  {VND.format(cart.price)}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="quantity col-2 pt-5">
+                              <input
+                                className="cart-down-quantity"
+                                type="button"
+                                value="-"
+                              />
+                              <input
+                                className="quantity_value"
+                                type="number"
+                                min="1"
+                                value={cart.quantity}
+                              />
+                              <input
+                                className="cart-up-quantity"
+                                type="button"
+                                value="+"
+                              />
+                            </div>
+                            <div className="total-price col-1 pt-5">
+                              <p>
+                                <sup>đ</sup>{" "}
+                                <span className="sum">
+                                  {VND.format(cart.sum)}
+                                </span>
+                              </p>
                             </div>
                           </div>
-                          <div className="d-flex price-info col-2 pt-5 text-center">
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <NoteShippingFee total={total} handleNote={handleNote} />
+                  <DiscountCode
+                    setValueVoucher={setValueVoucher}
+                    setSelectedDiscountCodes={setSelectedDiscountCodes}
+                    selectedDiscountCodesFreeShip={
+                      selectedDiscountCodesFreeShip
+                    }
+                    setSelectedDiscountCodesFreeShip={
+                      setSelectedDiscountCodesFreeShip
+                    }
+                    selectedDiscountCodes={selectedDiscountCodes}
+                    total={total}
+                    setTotalDiscountcode={setTotalDiscountcode}
+                  />
+                  <div className="d-flex mt-3 flex-column payment colum-4">
+                    <div className="payment__header d-flex">
+                      <p className="col-9">Phương thức thanh toán</p>
+                      <SelectPay setPay={setPay} />
+                    </div>
+                    <div className="payment__content d-flex flex-column">
+                      <div>
+                        <div id="price_order">
+                          <div className="d-flex">
+                            <p>Tổng tiền</p>
                             <p>
-                              {" "}
-                              <sup>đ</sup>{" "}
-                              <span className="price">
-                                {VND.format(cart.price)}
-                              </span>
+                              <sup>đ</sup> {VND.format(total)}
                             </p>
                           </div>
-                          <div className="quantity col-2 pt-5">
-                            <input
-                              className="cart-down-quantity"
-                              type="button"
-                              value="-"
-                            />
-                            <input
-                              className="quantity_value"
-                              type="number"
-                              min="1"
-                              value={cart.quantity}
-                            />
-                            <input
-                              className="cart-up-quantity"
-                              type="button"
-                              value="+"
-                            />
+                          <div className="d-flex">
+                            <p>Sử dụng mã giảm giá</p>
+                            <div className="d-flex">
+                              {valueVoucher.map((voucher, index) => (
+                                <p key={index}>
+                                  {voucher.voucher_id.discountValue}
+                                  {voucher.voucher_id.discountType === "fixed"
+                                    ? "k"
+                                    : "%"}
+                                </p>
+                              ))}
+                            </div>
                           </div>
-                          <div className="total-price col-2 pt-5">
+                          <div className="d-flex">
+                            <p>Phí vận chuyển</p>
+                            {selectedDiscountCodesFreeShip[0].code !== null ? (
+                              <p>
+                                <del style={{ marginRight: "1rem" }}>
+                                  {" "}
+                                  {VND.format(shipping_fee)}
+                                </del>
+                                {VND.format(shipping_fee_new)}
+                              </p>
+                            ) : (
+                              <p>{VND.format(shipping_fee)}</p>
+                            )}
+                          </div>
+                          <div className="d-flex">
+                            <p>Tổng thanh toán</p>
                             <p>
-                              <sup>đ</sup>{" "}
-                              <span className="sum">
-                                {VND.format(cart.sum)}
-                              </span>
+                              <sup>đ</sup> {VND.format(totalDiscountcode)}
                             </p>
                           </div>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-
-                <div className="d-flex" id="noteOder">
-                  <label htmlFor="noteOders">Ghi chú :</label>
-                  <textarea
-                    rows={1}
-                    cols={60}
-                    placeholder="Nhập ghi chú"
-                    onChange={(e) => handleNote(e)}
-                    id="noteOders"
-                  ></textarea>
-                </div>
-
-                <div className="d-flex mt-3 colum-4">
-                  <div className="col-8 d-flex">
-                    <div id="price_order">
-                      <div className="d-flex">
-                        <p>Tổng tiền</p>
-                        <p>
-                          <sup>đ</sup> {VND.format(total)}
-                        </p>
-                      </div>
-                      <div className="d-flex">
-                        <p>Sử dụng mã giảm giá</p>
-                        <div className="d-flex">
-                          {valueVoucher.map((voucher, index) => (
-                            <p key={index}>
-                              {voucher.voucher_id.discountValue}
-                              {voucher.voucher_id.discountType === "fixed"
-                                ? "k"
-                                : "%"}
-                            </p>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="d-flex">
-                        <p>Phí vận chuyển</p>
-                        <p>Miễn phí</p>
-                      </div>
-                      <hr />
-                      <p style={{ fontSize: "1.2rem" }}>
-                        Tổng thanh toán (
-                        <span className="quantityCart-two">{sumSp}</span>) sản
-                        phẩm
-                      </p>
-                      <div className="d-flex">
-                        <p>Tổng thanh toán</p>
-                        <p>
-                          <sup>đ</sup> {VND.format(totalDiscountcode)}
-                        </p>
+                      <div>
+                        <button id="paymnet__order" onClick={handleBuy}>
+                          Đặt hàng
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div>
-                    <DiscountCode
-                      setValueVoucher={setValueVoucher}
-                      setSelectedDiscountCodes={setSelectedDiscountCodes}
-                      selectedDiscountCodes={selectedDiscountCodes}
-                      total={total}
-                      setTotalDiscountcode={setTotalDiscountcode}
-                    />
-                    <SelectPay setPay={setPay} />
-                    <button onClick={handleBuy}>Đặt hàng</button>
-                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="img-no-order">
-              <img src={imgNoOder} alt="d" />
-            </div>
-          )}
+            ) : (
+              <div className="img-no-order">
+                <img src={imgNoOder} alt="d" />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

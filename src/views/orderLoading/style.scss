@@ -1,41 +1,281 @@
-#price_order{
-    margin-left: 1rem;
-    >div:first-child{
-        font-size: 1.2rem;
-        p:last-child{
-            margin-left: 25rem;
-        }   
-    }
-    >div:nth-child(2){
-        font-size: 1.2rem;
-        position: relative;
-        div:last-child{
-            position: absolute;
-            left: 30rem;
-            p{
-                margin-right: 1rem;
-                padding: 1px 10px;
-                border-radius: 8px;
-                color: white;
-                border: 6px dashed white ;
-                background-color: #e7440d;
-            }
-        }   
-    }
-    >div:nth-child(3){
-        font-size: 1.2rem;
-        p:last-child{
-            margin-left: 22rem;
-            padding: 4px;
-            border-radius: 8px;
-        }   
-    }
-    > div:last-child{
-        font-size: 1.6rem;
-        font-weight: 400;
-        p:last-child{
-            color: #FB5530;
-            margin-left: 18rem;
+#container-cart{
+  .body-title{
+    padding-left: 3rem;
+  }
+  .body-product{
+    .shop_voucher{
+      width: 100%;
+      height: 4rem;
+      margin-top: 1rem;
+      background-color: white;
+     
+      >div{
+        padding: 1rem 1.3rem;
+        img{
+          width: 3rem;
+          height: 2rem;
         }
+        p{
+          font-size: 1.2rem;
+        }
+      }
+      >p{
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        color: #0056b3;
+        cursor: pointer;
+        padding-right: 3rem;
+      }
     }
+    .payment{
+      
+      margin-bottom: 1rem;
+      .payment__header{
+        height: 5rem;
+        padding-top: 1.2rem;
+        border-bottom: 1px solid #eee;
+        p{
+          padding-left: 1rem;
+          font-size: 1.5rem;
+        }
+      }
+      .payment__content{
+        background-color: #FFFEFB;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+        font-size: 1.1rem;
+        >div:first-child{
+          border-bottom: 1px solid #eee;;
+        }
+        #price_order{
+          width: 100%;
+          padding-left: 70%;
+          >div:first-child{
+              p:last-child{
+                  margin-left: 10rem;
+              }   
+          }
+          >div:nth-child(2){
+              position: relative;
+              div:last-child{
+                  position: absolute;
+                  left: 15rem;
+                  p{
+                      margin-right: 1rem;
+                      padding: 1px 10px;
+                      border-radius: 8px;
+                      color: white;
+                      border: 6px dashed white ;
+                      background-color: #e7440d;
+                  }
+              }   
+          }
+          >div:nth-child(3){
+              p:last-child{
+                  margin-left: 7.6rem;
+                  padding: 4px;
+                  border-radius: 8px;
+              }   
+          }
+          > div:last-child{
+              font-weight: 400;
+              font-size: 1.2rem;
+              p:first-child{
+                margin-top: 0.5rem;
+              }
+              p:last-child{
+                  font-size: 1.7rem;
+                  color: #FB5530;
+                  margin-left: 3rem;
+              }
+          }
+      }
+      #paymnet__order{
+        margin-top: 1rem;
+        margin-left: 70%;
+        height: 2.5rem;
+      }
+       
+      }
+    }
+    .list-products{
+      background-color: white;
+      height: auto;
+      max-height: 40rem;
+      .product-infor{
+        .product{
+          .img{
+            img{
+              width: 80%;
+              height: 90%;
+            }
+          }
+          .product-name{
+            width: 50%;
+            margin-right: 2rem;
+          }
+        }
+        .price-info{
+          padding-left: 1rem;
+        }
+        .total-price{
+          p{
+            color: #F94E2F;
+          }
+        }
+        
+      }
+  }
+ 
+ }
 }
+
+.address-transport{
+  width: 100%;
+  height: 8rem;
+  position: relative;
+  padding: 2rem 1rem 1rem 1rem;
+  background-color: white;
+  margin-bottom: 1rem;
+  div:first-child{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: repeating-linear-gradient(45deg, #6fa6d6, #6fa6d6 33px, transparent 0, transparent 41px, #f18d9b 0, #f18d9b 74px, transparent 0, transparent 82px);
+    background-position-x: -30px;
+    background-size: 116px 3px;
+    height: 3px;
+    width: 100%
+  }
+  >p{
+    font-size: 1.5rem;
+    color: #F94E2F;
+    i{
+      margin-right: 1rem;
+    }
+  }
+  div:last-child{
+    >p{
+      font-size: 1.2rem;
+    }
+    .model-add-address{
+      position: absolute;
+      top: 50%;
+      right: 3.2rem;
+      p{
+        font-size: 1.1rem;
+        color: rgb(10, 10, 200);
+        cursor: pointer;
+        &:hover{
+          color: #F94E2F;
+        }
+      }
+    }
+  }
+}
+.modal-dialog{
+  .modal-body{
+    input{
+      width: 100%;
+      height: 3rem;
+      border: 1px solid rgb(220, 212, 212);
+      border-radius: 0.2rem;
+      padding-left: 1rem;
+      outline: none;
+    }
+  }
+  .modal-footer{
+    cursor: pointer;
+    p{
+      margin-right: 1rem;
+    }
+    p:first-child{
+      background-color: white;
+      padding: 0.5rem 3rem;
+      border: 1px solid rgb(220, 212, 212);
+    } 
+    p:last-child{
+      padding: 0.5rem 2rem;
+      color: white;
+      background-color: #F94E2F;
+
+    }
+  }
+}
+
+#txt-address {
+    width: 30rem;
+    height: 12.5rem;
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  
+    .d-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      i{
+        margin-right: 1rem;
+        color: #FB5530;
+      }
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+  
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #333;
+      }
+  
+      input {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-top: 8px;
+        outline: none !important;
+        &:focus {
+          border:1px solid #F94E2F;
+          outline: none !important;
+        }
+      }
+    }
+  
+    .form-group{
+        button {
+            width: 30%;
+            padding: 0.3rem;
+            font-size: 1.1rem;
+            color: white;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+          }
+          button:first-child{
+            background-color: gray;
+            margin-left: 10rem;
+          }
+          button:last-child{
+            background-color: #F94E2F;
+
+          }
+    } 
+        
+  }
+  

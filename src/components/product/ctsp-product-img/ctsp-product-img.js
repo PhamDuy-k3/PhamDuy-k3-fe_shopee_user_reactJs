@@ -94,6 +94,7 @@ function CtspProductImg(props) {
 
   const handleLike = async (action) => {
     try {
+      if (action === undefined) return;
       const res = await fetch(
         `http://localhost:5050/products/${action}/${productId}`,
         {

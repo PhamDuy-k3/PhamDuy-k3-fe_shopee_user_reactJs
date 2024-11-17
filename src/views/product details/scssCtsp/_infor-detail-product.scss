@@ -66,6 +66,49 @@
                     color: $redColor;
                 }
             }
+            
+            .shippingFee {
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem; 
+                z-index: 9;
+                padding: 1rem;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                cursor: context-menu;
+                .shippingfee {
+                  background-color: #fff;
+                  border-radius: 5px;
+                  padding: 1rem;
+                  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+                  transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    .shippingfee__type{
+                        font-weight: 500;
+                    } .shippingfee__fee{
+                       color: red;
+                    }
+                  &:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                  }
+              
+                  &__header {
+                    font-size: 1.3rem;
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 0.5rem;
+                  }
+              
+                  &__content {
+                    font-size: 1rem;
+                    color: #666;
+                    line-height: 1.5;
+                  }
+                }
+              }
+              
             .fa-less-than{
                 cursor: pointer;
             }
@@ -75,10 +118,10 @@
             background-color: white;
             position: fixed;
             border: 1px solid $boder;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 40rem;
-            bottom: 10rem;
-            top: 13rem;
-            left: 30rem;
             height: 18rem;
             padding: 1rem;
             .addres-transport-header{
@@ -99,7 +142,6 @@
                 }
                 .Used{
                     color: white;
-                    background-color: #F3826C;
                     font-size: 1.2rem;
                     padding: 0.8rem 1rem 0.8rem 1rem;
                 }

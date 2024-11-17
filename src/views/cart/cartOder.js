@@ -173,7 +173,7 @@ function CartOder() {
                       <p>No items in cart</p>
                     )}
                   </div>
-                  <div className="d-flex mt-3 colum-4 sum">
+                  <div className="d-flex mt-3 colum-4 total">
                     <div className="col-4 d-flex">
                       <p>Thành tiền :</p>
                       <div

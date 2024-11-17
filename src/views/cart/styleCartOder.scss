@@ -16,10 +16,10 @@
             color: gray;
         }
     }
-    .sum{
-        font-size: 1.2rem;
-        >div{
-            div{
+    .total{
+        div:first-child{
+            font-size: 1.2rem;
+            >div{
                 margin-left: 1rem;
             }
         }

@@ -1,145 +1,168 @@
-.color-bg{
-    color: #df3b1a;
-    background-color: white;
+$borderColor: rgb(222, 217, 217);
+$primaryColor: #f36c51;
+$secondaryColor: #26AB9A;
+$disabledColor: rgb(228, 224, 224);
+$hoverColor: #faf8f8;
+$actionButtonColor: #F05D40;
+$hoverActionButtonColor: #f16c52;
+
+.color-bg {
+  color: #df3b1a;
+  background-color: white;
 }
+
 .disabled {
-  pointer-events: none; 
-  opacity: 0.5; 
-  background-color: rgb(228, 224, 224); 
+  pointer-events: none;
+  opacity: 0.5;
+  background-color: $disabledColor;
 }
-$boderColor: rgb(222, 217, 217);
-#discountCode{
-    p{
-      font-size: 1.1rem;
-      margin-right: 3rem;
-    }
-    p:last-child{
-      color: #0055AA;
-      cursor: pointer;
-    }
-  }
-  #DiscountCode{
-    padding: 10px;
-    border-radius: 5px;
-    width: 35rem;
-    height: 38rem;
-    border: 1px solid $boderColor;
-    position: fixed;
-    left: 33%;
-    top: 10%;
-    z-index: 100;
-    background-color: white;
-    #items-discount-code>div{
-      cursor: pointer;
-      border-radius: 2px;
-      margin-bottom: 1rem;
-      border: 1px solid $boderColor;
-      height: 8rem;
-      .info-shop{
-        background-color: #f36c51;
-        border-right: 1px solid $boderColor;
-        position: relative;
-        #triangle-left {
-          position: absolute;
-          width: 0;
-          height: 0;
-          top: 5rem;
-          left: 7.7rem;
-          border-top: 15px solid transparent;
-          border-right: 15px solid #F36C51;
-          border-bottom: 15px solid transparent;
-        }
-        .dots-dis{
-          position: absolute;
-          left: -3px;
-          .dot-dis{
-            width: 0.4rem;
-            height: 0.4rem;
-            margin-bottom: 0.3rem;
-            background-color: white;
-            border-radius: 30%;
-          }
-        }
-          img{
-            margin-left: 3.4rem;
-            margin-top: 1rem;
-            width: 4rem;
-            height: 4rem;
-            border-radius: 100%;
-          }
-          p{
-            width: 80%;
-            margin-top: 2px;
-            text-align: center;
-            padding: 2px;
-            @extend .color-bg
-          }
+
+#DiscountCode {
+  overflow: scroll;
+  height: 30rem;
+  padding: 10px;
+  border-radius: 5px;
+  width: 35rem;
+  height: 38rem;
+  border: 1px solid $borderColor;
+  position: fixed;
+  left: 33%;
+  top: 10%;
+  z-index: 100;
+  background-color: white;
+
+  #items-discount-code  > div, #items-freeship > div  {
+    cursor: pointer;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+    border: 1px solid $borderColor;
+    height: 8rem;
+    
+    .info-shop {
+      background-color: $primaryColor;
+      border-right: 1px solid $borderColor;
+      position: relative;
+
+      #triangle-left {
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 5rem;
+        left: 7.7rem;
+        border-top: 15px solid transparent;
+        border-right: 15px solid $primaryColor;
+        border-bottom: 15px solid transparent;
       }
-      .detail-code{
-        padding: 10px;
-        position: relative;
-        >p:nth-child(1), >p:nth-child(2){
-          font-size: 1.2rem;
-        }
-        .save{
-          right: 1.5rem;
-          top:3rem;
-          position: absolute;
-          input{
-            width: 1.2rem;
-            height: 1.2rem;
-          }
-        }
-        .usageLimit{
-          top:0.2rem;
-          right: 0;
-          color: #EE4D2D;
-          border-top-left-radius:10px ;
-          border-bottom-left-radius: 10px;
-          background-color: #FFEAEA;
-          padding: 0.1rem 1rem 0.1rem 1.5rem;
-          position: absolute;
+
+      .dots-dis {
+        position: absolute;
+        left: -3px;
+
+        .dot-dis {
+          width: 0.4rem;
+          height: 0.4rem;
+          margin-bottom: 0.3rem;
+          background-color: white;
+          border-radius: 30%;
         }
       }
-      .detail-code>div{
-        font-size: 0.9rem;
-        color: grey;
-        p{
-          margin-right: 5px;
-        }
+
+      img {
+        margin-left: 3.4rem;
+        margin-top: 1rem;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 100%;
+      }
+
+      p {
+        width: 80%;
+        margin-top: 2px;
+        text-align: center;
+        padding: 2px;
+        @extend .color-bg;
       }
     }
-    #items-discount-code>div:hover{
-      background-color: #faf8f8;
+
+    .detail-code {
+      padding: 10px;
+      position: relative;
+      > p:nth-child(1) {
+       font-weight: 500;
+      }
+      > p:nth-child(1), > p:nth-child(2) {
+        font-size: 1.2rem;
+      }
+
+      .save {
+        right: 1.5rem;
+        top: 3rem;
+        position: absolute;
+
+        input {
+          width: 1.2rem;
+          height: 1.2rem;
+        }
+      }
+
+      .usageLimit {
+        top: 0.2rem;
+        right: 0;
+        color: #EE4D2D;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        background-color: #FFEAEA;
+        padding: 0.1rem 1rem 0.1rem 1.5rem;
+        position: absolute;
+      }
     }
-    #items-discount-code{
-      overflow: scroll;
-      height: 30rem;
-    }
-    #action-discountcode{
-        padding-left: 24%;
-        display: flex;
-        flex-direction: row;
-        cursor: pointer;
-      p{
-        border: 1px solid $boderColor;
-        margin-left: 1rem;
-      }
-      p:first-child{
-        padding: 0.7rem 4.5rem;
-      }
-      p:first-child:hover{
-        background-color: #f9f8f8;
-      }
-      p:last-child{
-        padding: 0.7rem 5rem;
-      }
-      p:last-child:hover{
-        background-color: #f16c52;
-      }
-      p:last-child{
-        background-color: #F05D40;
-        color: white;
+
+    .detail-code > div {
+      font-size: 0.9rem;
+      color: grey;
+
+      p {
+        margin-right: 5px;
       }
     }
   }
+
+  #items-discount-code > div:hover {
+    background-color: $hoverColor;
+  }
+  #items-freeship>div:hover {
+    background-color: $hoverColor;
+  }
+  #action-discountcode {
+    padding-left: 24%;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+
+    p {
+      border: 1px solid $borderColor;
+      margin-left: 1rem;
+    }
+
+    p:first-child {
+      padding: 0.7rem 4.5rem;
+    }
+
+    p:first-child:hover {
+      background-color: $hoverColor;
+    }
+
+    p:last-child {
+      padding: 0.7rem 5rem;
+    }
+
+    p:last-child:hover {
+      background-color: $hoverActionButtonColor;
+    }
+
+    p:last-child {
+      background-color: $actionButtonColor;
+      color: white;
+    }
+  }
+}

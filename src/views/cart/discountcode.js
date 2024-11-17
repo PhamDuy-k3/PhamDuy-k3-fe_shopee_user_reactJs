@@ -3,11 +3,15 @@ import { useCallback, useEffect, useState } from "react";
 import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { VND } from "../../components/VND/vnd";
+import img_voucher from "../../assets/images/img/img_voucher.jpg";
 
 const DiscountCode = (props) => {
   const [discountcodes, setDiscountcode] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
   const [cookies] = useCookies();
+  console.log(props.selectedDiscountCodes);
+  console.log(props.selectedDiscountCodesFreeShip);
 
   // Hàm lấy dữ liệu mã giảm giá
   const fetchUserVoucher = useCallback(async () => {
@@ -35,10 +39,13 @@ const DiscountCode = (props) => {
     );
     const fixedValues = [];
     const percentageValues = [];
+    const freeShips = [];
 
     selectedDiscountData.forEach((item) => {
       if (item.voucher_id.discountType === "fixed") {
         fixedValues.push(item.voucher_id.discountValue);
+      } else if (item.voucher_id.discountType === "freeshipping") {
+        freeShips.push([item.voucher_id.maxShippingFreeDiscount]);
       } else {
         percentageValues.push(item.voucher_id.discountValue);
       }
@@ -88,6 +95,9 @@ const DiscountCode = (props) => {
       props.setSelectedDiscountCodes([...props.selectedDiscountCodes, code]);
     }
   };
+  const handleDiscountcodeFreeShip = (code, maxShippingFee) => {
+    props.setSelectedDiscountCodesFreeShip([{ code, maxShippingFee }]);
+  };
 
   const choeseDiscountcode = () => {
     calculateDiscount();
@@ -98,86 +108,204 @@ const DiscountCode = (props) => {
     <>
       {isDisplay && <FlyZoom />}
 
-      <div className="d-flex" id="discountCode">
-        <p>Shopee Voucher</p>
-        <p onClick={handelIsDisplay}>Chọn hoặc nhập mã</p>
+      <div className="shop_voucher d-flex justify-content-between ">
+        <div className="d-flex">
+          <img src={img_voucher} alt="img_voucher" />
+          <p>Shopee Voucher</p>
+        </div>
+        <p onClick={handelIsDisplay}>Chọn Voucher</p>
       </div>
 
       {isDisplay && (
         <div id="DiscountCode">
           <p style={{ fontSize: "1.5rem" }}>Chọn Shopee Voucher</p>
-          <div id="items-discount-code">
+
+          {/* Mã freeship */}
+          <div id="items-freeship">
+            <p style={{ fontSize: "1.2rem" }}>Mã miễn phí vận chuyển</p>
             {discountcodes.length > 0 ? (
-              discountcodes.map((discountcode, index) => (
-                <div
-                  onClick={() => {
-                    if (discountcode.voucher_id.minOrderValue <= props.total) {
-                      handleDiscountcode(discountcode.voucher_id.code);
-                    }
-                  }}
-                  key={index}
-                  className={`d-flex ${
-                    discountcode.voucher_id.minOrderValue <= props.total &&
-                    new Date(discountcode.voucher_id.expirationDate) >
-                      new Date()
-                      ? ""
-                      : "disabled"
-                  }`}
-                >
-                  <div className="info-shop col-4">
-                    <div className="dots-dis">
-                      {[...Array(11)].map((_, i) => (
-                        <div className="dot-dis"></div>
-                      ))}
-                    </div>
-                    <img
-                      src={discountcode.voucher_id.logoShop}
-                      alt={`${discountcode.voucher_id.shopName} logo`}
-                    />
-                    <p>{discountcode.voucher_id.shopName}</p>
-                    <div id="triangle-left"></div>
-                  </div>
-                  <div className="detail-code col-8">
-                    <p>
-                      Giá: {discountcode.voucher_id.discountValue}
-                      <span>
-                        {discountcode.voucher_id.discountType === "fixed"
-                          ? "k"
-                          : "%"}
-                      </span>
-                    </p>
-                    <p>
-                      Đơn tối thiểu: {discountcode.voucher_id.minOrderValue}
-                    </p>
-                    <div className="d-flex">
-                      <p>Đã dùng: {discountcode.voucher_id.usedPercentage}%</p>
-                      <p>
-                        HSD:{" "}
-                        {new Date(
-                          discountcode.voucher_id.expirationDate
-                        ).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <p className="save">
-                      <input
-                        type="checkbox"
-                        name="discount"
-                        checked={props.selectedDiscountCodes.includes(
-                          discountcode.voucher_id.code
-                        )}
-                        onChange={() =>
-                          handleDiscountcode(discountcode.voucher_id.code)
-                        }
+              discountcodes
+                .filter(
+                  (discountcode) =>
+                    discountcode.voucher_id.discountType === "freeshipping"
+                )
+                .map((discountcode, index) => (
+                  <div
+                    onClick={() => {
+                      if (
+                        discountcode.voucher_id.minOrderValue <= props.total
+                      ) {
+                        handleDiscountcodeFreeShip(
+                          discountcode.voucher_id.code,
+                          discountcode.voucher_id.maxShippingFreeDiscount
+                        );
+                      }
+                    }}
+                    key={index}
+                    className={`d-flex ${
+                      discountcode.voucher_id.minOrderValue <= props.total &&
+                      new Date(discountcode.voucher_id.expirationDate) >
+                        new Date()
+                        ? ""
+                        : "disabled"
+                    }`}
+                  >
+                    <div
+                      style={{ backgroundColor: "#26AB9A" }}
+                      className="info-shop col-4"
+                    >
+                      <div className="dots-dis">
+                        {[...Array(11)].map((_, i) => (
+                          <div className="dot-dis" key={i}></div>
+                        ))}
+                      </div>
+                      <img
+                        src={discountcode.voucher_id.logoShop}
+                        alt={`${discountcode.voucher_id.shopName} logo`}
                       />
-                    </p>
-                    <p className="usageLimit">x{discountcode.quantity}</p>
+                      <p>{discountcode.voucher_id.shopName}</p>
+                    </div>
+                    <div className="detail-code col-8">
+                      <p>
+                        Giảm tối đa:{" "}
+                        {VND.format(
+                          discountcode.voucher_id.maxShippingFreeDiscount
+                        )}
+                      </p>
+                      <p>
+                        Đơn tối thiểu:{" "}
+                        {VND.format(discountcode.voucher_id.minOrderValue)}
+                      </p>
+                      <div className="d-flex">
+                        <p>
+                          Đã dùng: {discountcode.voucher_id.usedPercentage}%
+                        </p>
+                        <p>
+                          HSD:{" "}
+                          {new Date(
+                            discountcode.voucher_id.expirationDate
+                          ).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <p className="save">
+                        <input
+                          type="radio"
+                          name="discount"
+                          checked={
+                            props.selectedDiscountCodesFreeShip[0]?.code ===
+                            discountcode.voucher_id.code
+                          }
+                          onChange={() =>
+                            handleDiscountcodeFreeShip(
+                              discountcode.voucher_id.code,
+                              discountcode.voucher_id.maxShippingFreeDiscount
+                            )
+                          }
+                        />
+                      </p>
+
+                      <p className="usageLimit">x{discountcode.quantity}</p>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))
             ) : (
               <p>Không có dữ liệu</p>
             )}
           </div>
+          {/* Danh sách mã giảm giá khác */}
+          <div id="items-discount-code">
+            <p style={{ fontSize: "1.2rem" }}>Giảm giá</p>
+            {discountcodes.length > 0 ? (
+              discountcodes
+                .filter(
+                  (discountcode) =>
+                    discountcode.voucher_id.discountType !== "freeshipping"
+                )
+                .map((discountcode, index) => (
+                  <div
+                    onClick={() => {
+                      if (
+                        discountcode.voucher_id.minOrderValue <= props.total
+                      ) {
+                        handleDiscountcode(discountcode.voucher_id.code);
+                      }
+                    }}
+                    key={index}
+                    className={`d-flex ${
+                      discountcode.voucher_id.minOrderValue <= props.total &&
+                      new Date(discountcode.voucher_id.expirationDate) >
+                        new Date()
+                        ? ""
+                        : "disabled"
+                    }`}
+                  >
+                    <div
+                      className="info-shop col-4"
+                      style={
+                        discountcode.voucher_id.discountType === "freeshipping"
+                          ? { backgroundColor: "#26AB9A" }
+                          : {}
+                      }
+                    >
+                      <div className="dots-dis">
+                        {[...Array(11)].map((_, i) => (
+                          <div className="dot-dis" key={i}></div>
+                        ))}
+                      </div>
+                      <img
+                        src={discountcode.voucher_id.logoShop}
+                        alt={`${discountcode.voucher_id.shopName} logo`}
+                      />
+                      <p>{discountcode.voucher_id.shopName}</p>
+                    </div>
+                    <div className="detail-code col-8">
+                      {discountcode.voucher_id.discountType !==
+                        "freeshipping" && (
+                        <p>
+                          Giảm: {discountcode.voucher_id.discountValue}
+                          <span>
+                            {discountcode.voucher_id.discountType === "fixed"
+                              ? "k"
+                              : "%"}
+                          </span>
+                        </p>
+                      )}
+                      <p>
+                        Đơn tối thiểu:{" "}
+                        {VND.format(discountcode.voucher_id.minOrderValue)}
+                      </p>
+                      <div className="d-flex">
+                        <p>
+                          Đã dùng: {discountcode.voucher_id.usedPercentage}%
+                        </p>
+                        <p>
+                          HSD:{" "}
+                          {new Date(
+                            discountcode.voucher_id.expirationDate
+                          ).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <p className="save">
+                        <input
+                          type="checkbox"
+                          name="discount"
+                          checked={props.selectedDiscountCodes.includes(
+                            discountcode.voucher_id.code
+                          )}
+                          onChange={() =>
+                            handleDiscountcode(discountcode.voucher_id.code)
+                          }
+                        />
+                      </p>
+                      <p className="usageLimit">x{discountcode.quantity}</p>
+                    </div>
+                  </div>
+                ))
+            ) : (
+              <p>Không có dữ liệu</p>
+            )}
+          </div>
+
           <div id="action-discountcode">
             <p onClick={() => setIsDisplay(false)}>Trở lại</p>
             <p onClick={choeseDiscountcode}>Ok</p>

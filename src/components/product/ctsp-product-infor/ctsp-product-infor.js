@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -15,7 +15,6 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Button from "../../button/button";
 import { v4 as uuidv4 } from "uuid";
-import { color } from "framer-motion";
 
 function CtspProductInfor(props) {
   const navigate = useNavigate();
@@ -76,17 +75,15 @@ function CtspProductInfor(props) {
     setSizes(arraySize);
   };
 
-  // const sizes = props.product?.sizes;
-
   useEffect(() => {
     if (props.product) {
       setStockRTime(stock);
     }
-    setImages(props.product?.images);
   }, [stock, props.product]);
 
   useEffect(() => {
     getVariant();
+    setImages(props.product?.images);
   }, [props.product]);
 
   // set stock và check trạng thái hàng
@@ -150,7 +147,6 @@ function CtspProductInfor(props) {
       }
     } else {
       if (colorProduct) {
-        console.log("a");
         setCheckSizeColor(true);
       }
     }

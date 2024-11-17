@@ -128,7 +128,16 @@ export default function Voucher() {
           {vouchers.length > 0 ? (
             vouchers.map((discountcode, index) => (
               <div key={index} className="d-flex">
-                <div className="info-shop col-4">
+                <div
+                  style={
+                    discountcode.discountType === "freeshipping"
+                      ? {
+                          backgroundColor: "#26AB9A",
+                        }
+                      : {}
+                  }
+                  className="info-shop col-4"
+                >
                   <div className="dots-dis">
                     {[...Array(9)].map((_, i) => (
                       <div key={i} className="dot-dis"></div>
@@ -139,15 +148,29 @@ export default function Voucher() {
                     alt={`${discountcode.shopName} logo`}
                   />
                   <p>{discountcode.shopName}</p>
-                  <div id="triangle-left"></div>
+                  <div
+                    style={
+                      discountcode.discountType === "freeshipping"
+                        ? {
+                            borderRight: "1.7rem solid #26AB9A",
+                          }
+                        : {}
+                    }
+                    id="triangle-left"
+                  ></div>
                 </div>
                 <div className="detail-code col-8">
-                  <p>
-                    Giảm: {discountcode.discountValue}
-                    <span>
-                      {discountcode.discountType === "fixed" ? "k" : "%"}
-                    </span>
-                  </p>
+                  {discountcode.discountType === "freeshipping" ? (
+                    <p>Giảm tối đa: {VND.format(discountcode.maxShippingFreeDiscount)}</p>
+                  ) : (
+                    <p>
+                      Giảm: {discountcode.discountValue}
+                      <span>
+                        {discountcode.discountType === "fixed" ? "k" : "%"}
+                      </span>
+                    </p>
+                  )}
+
                   <p>Đơn tối thiểu: {VND.format(discountcode.minOrderValue)}</p>
                   <div className="d-flex hsd">
                     <p>Đã dùng: {discountcode.usedPercentage}%</p>

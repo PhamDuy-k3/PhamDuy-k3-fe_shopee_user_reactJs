@@ -36,6 +36,7 @@
 // sắp x
 .items-category-title{
     width: 90%;
+    height: 4rem;
     margin-left: 2rem;
     margin-top: 0.4rem;
     background-color: #EDEDED;
@@ -43,14 +44,21 @@
         padding-top: 0.5rem;
         margin-left: -1rem;
         padding-bottom: 0.5rem;
+        text-align: center;
+        height: 100%;
         li{
-            padding: 0.5rem;
+            padding: 0.6rem 1rem 0rem 1rem;
             background-color: white;
             margin-right: 1rem;
-            select{
-                padding: 1rem;
-                border-color: transparent;
-            }
         }
+        select{
+            outline: none;
+            cursor: pointer;
+            border-color: transparent;
+            
+        }
+        option:hover{
+            color: red;
+         }
     }
 }

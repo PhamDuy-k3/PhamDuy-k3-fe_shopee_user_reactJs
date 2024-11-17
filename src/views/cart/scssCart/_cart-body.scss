@@ -90,7 +90,7 @@
       width: 100%;
       overflow-y: scroll;
       max-height: 23rem;
-      border-bottom: 1px solid #F3DD9E;
+      border-bottom: 1px solid #e6e5e4;
       .item-product{
         border-bottom: 2px solid #F3F3F3;
         padding: 1rem;
@@ -199,6 +199,7 @@
     }
     @import '_discountcode.scss';
     .colum-4{
+      background-color: white;
       padding-left: 1rem;
       button{
         border: none ;
