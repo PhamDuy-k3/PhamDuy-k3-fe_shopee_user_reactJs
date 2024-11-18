@@ -36,15 +36,16 @@ function OrderLoading() {
     setSelectedDiscountCodesFreeShip,
   ] = useState({ code: null, maxShippingFee: null });
   const [shipping_fee_new, setShipping_fee_new] = useState();
-  const [modelAddresses, setModelAddresses] = useState(false);
   const [address, setAddress] = useState("");
   const [shippingfee, setShippingfee] = useState({});
+  const [showModelAddress, setShowModelAddress] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const ids_product = sessionStorage.getItem("ids_product");
 
+  //tính thành tiền sau khi có phí vận chuyển
   const total_shipping_fee = useCallback(() => {
     if (
       selectedDiscountCodesFreeShip &&
@@ -140,21 +141,17 @@ function OrderLoading() {
     setNote(e.target.value);
   };
 
-  const handelAddress = () => {
-    if (address?.length > 8 && address !== null) {
-      setAddress(address);
-      setModelAddresses(false);
-      sessionStorage.setItem("address", address);
-    }
-  };
   // đặt hàng
   const handleBuy = () => {
     if (address?.length <= 8 || address === null) {
-      setModelAddresses(true);
+      setShowModelAddress(true);
       return;
     }
     if (cookies.user_token === "") {
       alert("Vui lòng đăng nhập để đặt hàng!");
+      return;
+    }
+    if (!shippingfee) {
       return;
     }
     const amount = totalDiscountcode;
@@ -168,16 +165,21 @@ function OrderLoading() {
       selectedDiscountCodes,
       orderInfo,
       paymentMethod,
-      address,
+      shippingAddress: address,
+      deliveryMethod: shippingfee.type,
+      shippingFee: shippingfee.fee,
     };
     const newOrder = {
       carts,
       status: "unconfirmed",
-      total_prices: amount,
+      orderTotal: amount,
       note: note,
       gmail,
       selectedDiscountCodes,
-      address,
+      shippingAddress: address,
+      paymentMethod: "Thanh toán khi nhận hàng",
+      deliveryMethod: shippingfee.type,
+      shippingFee: shippingfee.fee,
     };
 
     let paymentPromise = Promise.resolve();
@@ -199,37 +201,9 @@ function OrderLoading() {
         console.error("Error during the order process:", error);
       });
   };
-  useEffect(() => {
-    document.body.style.overflowY = modelAddresses === true ? "hidden" : "auto";
-  }, [modelAddresses, address]);
 
   return (
     <>
-      {modelAddresses && (
-        <>
-          <FlyZoom />
-          <div id="txt-address">
-            <div className="d-flex justify-content-between align-items-center">
-              <p>
-                <i className="fas fa-truck"></i>Địa Chỉ Giao Hàng
-              </p>
-            </div>
-            <div className="form-group">
-              <input
-                autoFocus
-                type="text"
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-            <div className="form-group d-flex">
-              <button onClick={() => setAddress("")}>Xóa</button>
-              <button onClick={handelAddress}>OK</button>
-            </div>
-          </div>
-        </>
-      )}
       <div id="container-cart">
         <ComponentHeader />
         <div className="box_cart">
@@ -247,7 +221,11 @@ function OrderLoading() {
                       {address || <p>Vui lòng thêm địa chỉ nhận hàng !!!</p>}
                     </p>
                     <div className="model-add-address">
-                      <ModelAddAddress setAddress={setAddress} />
+                      <ModelAddAddress
+                        showModelAddress={showModelAddress}
+                        setShowModelAddress={setShowModelAddress}
+                        setAddress={setAddress}
+                      />
                     </div>
                   </div>
                 </div>
@@ -369,20 +347,15 @@ function OrderLoading() {
                   <NoteShippingFee
                     setShippingfee={setShippingfee}
                     shippingfee={shippingfee}
-                    sh
                     total={total}
                     handleNote={handleNote}
                   />
                   <DiscountCode
                     setValueVoucher={setValueVoucher}
                     setSelectedDiscountCodes={setSelectedDiscountCodes}
-                    selectedDiscountCodesFreeShip={
-                      selectedDiscountCodesFreeShip
-                    }
                     setSelectedDiscountCodesFreeShip={
                       setSelectedDiscountCodesFreeShip
                     }
-                    selectedDiscountCodes={selectedDiscountCodes}
                     total={total}
                     setTotalDiscountcode={setTotalDiscountcode}
                   />

@@ -7,10 +7,11 @@ import { VND } from "../../components/VND/vnd";
 import img_voucher from "../../assets/images/img/img_voucher.jpg";
 
 const DiscountCode = (props) => {
-  const [discountcodes, setDiscountcode] = useState([]);
+  const [discountcodes, setDiscountcodes] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
   const [cookies] = useCookies();
   const [discountcodeFreeShip, setDiscountcodeFreeShip] = useState({});
+  const [discountcodeChoese, setDiscountcodeChoese] = useState([]);
   // Hàm lấy dữ liệu mã giảm giá
   const fetchUserVoucher = useCallback(async () => {
     try {
@@ -22,9 +23,9 @@ const DiscountCode = (props) => {
         },
       });
       if (response.status === 200) {
-        setDiscountcode(response.data.data);
+        setDiscountcodes(response.data.data);
       } else {
-        setDiscountcode([]);
+        setDiscountcodes([]);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -33,7 +34,7 @@ const DiscountCode = (props) => {
 
   const calculateDiscount = () => {
     const selectedDiscountData = discountcodes.filter((item) =>
-      props.selectedDiscountCodes.includes(item.voucher_id.code)
+      discountcodeChoese.includes(item.voucher_id.code)
     );
     const fixedValues = [];
     const percentageValues = [];
@@ -85,21 +86,23 @@ const DiscountCode = (props) => {
   document.body.style.overflowY = isDisplay ? "hidden" : "auto";
 
   const handleDiscountcode = (code) => {
-    if (props.selectedDiscountCodes.includes(code)) {
-      props.setSelectedDiscountCodes(
-        props.selectedDiscountCodes.filter((item) => item !== code)
-      );
+    if (discountcodeChoese.includes(code)) {
+      setDiscountcodeChoese(discountcodeChoese.filter((item) => item !== code));
     } else {
-      props.setSelectedDiscountCodes([...props.selectedDiscountCodes, code]);
+      setDiscountcodeChoese([...discountcodeChoese, code]);
     }
   };
   const handleDiscountcodeFreeShip = (code, maxShippingFee) => {
-    setDiscountcodeFreeShip({ code, maxShippingFee });
+    if (discountcodeFreeShip.code === code) {
+      setDiscountcodeFreeShip({});
+    } else {
+      setDiscountcodeFreeShip({ code, maxShippingFee });
+    }
   };
-
   const choeseDiscountcode = () => {
     calculateDiscount();
     props.setSelectedDiscountCodesFreeShip(discountcodeFreeShip);
+    props.setSelectedDiscountCodes(discountcodeChoese);
     setIsDisplay(false);
   };
 
@@ -188,7 +191,7 @@ const DiscountCode = (props) => {
                       </div>
                       <p className="save">
                         <input
-                          type="radio"
+                          type="checkbox"
                           name="discount"
                           checked={
                             discountcodeFreeShip.code ===
@@ -288,7 +291,7 @@ const DiscountCode = (props) => {
                         <input
                           type="checkbox"
                           name="discount"
-                          checked={props.selectedDiscountCodes.includes(
+                          checked={discountcodeChoese.includes(
                             discountcode.voucher_id.code
                           )}
                           onChange={() =>

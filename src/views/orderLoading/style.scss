@@ -138,6 +138,7 @@
   }
  
  }
+ 
 }
 
 .address-transport{
@@ -180,112 +181,115 @@
           color: #F94E2F;
         }
       }
+     
     }
   }
 }
-.modal-dialog{
-  .modal-body{
-    input{
-      width: 100%;
-      height: 3rem;
-      border: 1px solid rgb(220, 212, 212);
-      border-radius: 0.2rem;
-      padding-left: 1rem;
-      outline: none;
-    }
-  }
-  .modal-footer{
-    cursor: pointer;
-    p{
-      margin-right: 1rem;
-    }
-    p:first-child{
-      background-color: white;
-      padding: 0.5rem 3rem;
-      border: 1px solid rgb(220, 212, 212);
-    } 
-    p:last-child{
-      padding: 0.5rem 2rem;
-      color: white;
-      background-color: #F94E2F;
+#model-address{
+    .modal-body{
+      .list-address-users{
+        display: flex;
+        position: relative;
 
-    }
-  }
-}
-
-#txt-address {
-    width: 30rem;
-    height: 12.5rem;
-    position: fixed;
-    z-index: 100;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: white;
-    border-radius: 3px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  
-    .d-flex {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-    p {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #333;
-      i{
-        margin-right: 1rem;
-        color: #FB5530;
+       .list-address-users__text{
+          cursor: pointer;
+          width: 80%;
+          padding: 0.5rem 2rem;
+          font-size: 1.1rem;
+          &:hover{
+            background-color: #F8F8F8;
+          }
+        }
+        .list-address-users__onchange{
+          color: #0a4079;
+          margin-left: 1rem;
+        }
+        input{
+          position: absolute;
+          top:0.2rem;
+          width: 1.2rem;
+          height: 1.2rem;
+        }
       }
-    }
-  
-    .form-group {
-      margin-bottom: 15px;
-  
-      label {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #333;
+      form{
+        input{
+          width: 100%;
+          height: 3rem;
+          border: 1px solid rgb(220, 212, 212);
+          border-radius: 0.2rem;
+          padding-left: 1rem;
+          outline: none;
+        }
+        div{
+          margin-top: 1rem;
+          padding-left: 50%;
+          cursor: pointer;
+          p{
+            margin-right: 1rem;
+          }
+          p{
+            padding: 0.5rem 3rem;
+            border: 1px solid rgb(220, 212, 212);
+          } 
+          p:first-child:hover{
+            background-color: rgb(244, 241, 241);
+          }
+          button{
+            width: 10rem;
+            height: 2.6rem;
+            border: 1px solid rgb(220, 212, 212);
+            color: white;
+            background-color: #F94E2F;
+            &:hover{
+              background-color: #f43e1e;
+            }
+          }
+        }
       }
-  
-      input {
-        width: 100%;
-        padding: 10px;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-top: 8px;
-        outline: none !important;
-        &:focus {
-          border:1px solid #F94E2F;
-          outline: none !important;
+      .add-address{
+        cursor: pointer;
+        width: 35%;
+        height: 3rem;
+        justify-content: center;
+        align-items: center;
+        padding-top: 1rem;
+        border: 1px solid rgb(220, 212, 212);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        i{
+          margin-right: 1rem;
+          margin-top: 0.2rem;
+        }
+        &:hover{
+          background-color: #f5f3f3;
         }
       }
     }
-  
-    .form-group{
-        button {
-            width: 30%;
-            padding: 0.3rem;
-            font-size: 1.1rem;
-            color: white;
-            border: 1px solid #eee;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-          }
-          button:first-child{
-            background-color: gray;
-            margin-left: 10rem;
-          }
-          button:last-child{
-            background-color: #F94E2F;
+    .modal-footer{
+      margin-top: 1rem;
+      display: flex;
+      cursor: pointer;
+      p{
+        margin-right: 1rem;
+      }
+      p{
+        padding: 0.5rem 3rem;
+        border: 1px solid rgb(220, 212, 212);
+      } 
+      p:first-child:hover{
+        background-color: rgb(244, 241, 241);
+      }
+      p:last-child{
+        padding: 0.5rem 3rem;
+        border: 1px solid rgb(220, 212, 212);
+        color: white;
+        background-color: #F94E2F;
+        &:hover{
+          background-color: #f43e1e;
+        }
+      }
+    }
+}
 
-          }
-    } 
-        
-  }
+
   

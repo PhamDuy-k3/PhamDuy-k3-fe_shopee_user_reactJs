@@ -15,7 +15,7 @@ function FormComment({
   setComments,
   editCommentData,
 }) {
-  const [show, setShow] = useState(false);
+  const [showModelComment, setShowModelComment] = useState(false);
   const [cookies] = useCookies(["user_token"]);
   const [user, setUser] = useState(null);
   const socketRef = useRef(null);
@@ -31,9 +31,9 @@ function FormComment({
 
   const handleClose = () => {
     setEditCommentData("");
-    setShow(false);
+    setShowModelComment(false);
   };
-  const handleShow = () => setShow(true);
+  const handleShow = () => setShowModelComment(true);
 
   useEffect(() => {
     const socket = io("http://localhost:5050");
@@ -160,7 +160,7 @@ function FormComment({
         Bình luận
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showModelComment} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Bình luận sản phẩm</Modal.Title>
         </Modal.Header>

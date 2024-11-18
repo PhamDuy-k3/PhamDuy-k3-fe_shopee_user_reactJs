@@ -178,7 +178,7 @@ function CartOder() {
                     <div className="col-4 d-flex">
                       <p>Thành tiền :</p>
                       <p style={{ paddingLeft: "1rem" }} className="sum-price">
-                        {VND_currency.format(item.total_prices)}
+                        {VND_currency.format(item.orderTotal)}
                       </p>
                     </div>
                     {item.status === "confirmed" ? (
