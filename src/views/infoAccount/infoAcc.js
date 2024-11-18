@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ComponentHeader from "../../components/header/header";
-import File from "../../components/file/file";
 import imgdf from "../../../src/assets/images/img/avatar_default.jpg";
 const Profile = () => {
   const [cookies] = useCookies();
@@ -15,7 +14,6 @@ const Profile = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     setValue,
     watch, // Sử dụng watch để theo dõi giá trị của avatar
   } = useForm({

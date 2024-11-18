@@ -10,13 +10,14 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 import ComponentHeader from "../../components/header/header";
-import { VND } from "../../components/VND/vnd";
+import { VND, VND_currency } from "../../components/VND/vnd";
 import { deleteToCartAsync, deleteToCartsAsync } from "../../api/delete";
 import { updateToCarts, updateToCartsAsync } from "../../api/update";
 import { FetchCartsByIdUser } from "../../api/fetchCartByIdUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
+import Footer from "../../components/footer/footer";
 // chưa chek trùng sản phẩm
 
 function Cart() {
@@ -445,19 +446,20 @@ function Cart() {
                   })}
                 </div>
 
-                <div className="d-flex mt-3 colum-4">
-                  <div className="col-2">
+                <div className="d-flex colum-4">
+                  <div className="col-2 pt-1">
                     <input
                       onChange={handleChosesCheckboxAll}
                       type="checkbox"
                       id="masterCheckbox"
                       ref={checkboxRef}
-                    />{" "}
+                      style={{marginRight:'1rem'}}
+                    />
                     Chọn tất Cả (
                     <span className="quantityCart-one">{carts.length}</span>)
                   </div>
 
-                  <div className="col-1">
+                  <div className="col-1 pt-1">
                     <p
                       onClick={() => setDeleteModal(true)}
                       style={{ cursor: " pointer" }}
@@ -465,24 +467,15 @@ function Cart() {
                       Xóa Tất Cả
                     </p>
                   </div>
-                  <div className="col-2">
+                  <div className="col-2 pt-1">
                     <p style={{ color: "#ee4d2d" }}>Lưu vào mục Đã Th...</p>
                   </div>
                   <div className="col-4 d-flex">
                     <p>
                       Tổng thanh toán (
                       <span className="quantityCart-two">{carts.length}</span>)
-                      sản phẩm :
+                      sản phẩm : <span className="cart_total"> {VND_currency.format(total)}</span>
                     </p>
-                    <div
-                      style={{ color: "#ee4d2d", fontSize: "1.5rem" }}
-                      className=""
-                    >
-                      <sub>đ</sub>
-                      <p style={{ paddingLeft: "1rem" }} className="sum-price">
-                        {VND.format(total)}
-                      </p>
-                    </div>
                   </div>
                   <button
                     style={
@@ -504,6 +497,7 @@ function Cart() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

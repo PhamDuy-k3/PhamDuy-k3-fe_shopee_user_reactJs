@@ -3,8 +3,7 @@
     position: fixed;
     min-width: 40rem;
     max-width: 90%; 
-    height: auto; 
-    max-height: 80vh; 
+    height: 37rem; 
     top: 50%;
     left: 50%;
     z-index: 100;
@@ -12,15 +11,15 @@
     transform: translate(-50%, -50%);
     background-color: #ffffff;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
-    overflow-y: auto;
     display: flex;
+    cursor: pointer;
     flex-direction: column;
   
     .shippingfee__title {
       font-size: 1.6rem;
       font-weight: 400;
     }
-  
+    
     .shippingfee {
       width: 100%;
       padding: 1rem;
@@ -29,12 +28,18 @@
       display: flex;
       flex-direction: column;
       transition: box-shadow 0.3s, transform 0.3s;
-  
+      position: relative;
       &:hover {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         transform: scale(1.03);
       }
-  
+      .fa-check{
+        position: absolute;
+        right: 1rem;
+        top: 3.5rem;
+        font-size: 1.2rem;
+        color: #ee5118;
+      }
       &__type {
         font-size: 1.2rem;
         font-weight: 600;
@@ -57,6 +62,26 @@
         color: #555; 
         font-style: italic;
         margin-top: 0.5rem;
+      }
+    }
+    .shippingfee__footer{
+      position: absolute;
+      bottom: 0rem;
+      right: 2rem;
+      p:first-child{
+        margin-right: 1rem;
+        padding: 0.5rem 3rem;
+      }
+      p:first-child:hover{
+        background-color: #f7f5f4;
+      }
+      p:last-child{
+        padding: 0.5rem 3rem;
+        background-color: #ee5118;
+        color: white;
+      }
+      p:last-child:hover{
+        background-color: #cb3d09;
       }
     }
   }
@@ -87,8 +112,11 @@
         }
     }
     .note-shippingfe__shippingfe{
-    
         .col-7{
+          .onchange{
+            cursor: pointer;
+            color: rgb(8, 8, 147);
+          }
             div:last-child{
                 p:first-child{
                     color: #26AA99;

@@ -88,8 +88,7 @@
     }
     .list-products {
       width: 100%;
-      overflow-y: scroll;
-      max-height: 23rem;
+      height: auto;
       border-bottom: 1px solid #e6e5e4;
       .item-product{
         border-bottom: 2px solid #F3F3F3;
@@ -198,13 +197,26 @@
       color: #EE4D2D
     }
     @import '_discountcode.scss';
+
     .colum-4{
+      font-size: 1.2rem;
+      border-top: 1px solid #eee;
+      width: 100%;
+      height: 5rem;
+      position: sticky;
+      bottom: 0;
       background-color: white;
       padding-left: 1rem;
+      padding-top: 1rem ;
+      .cart_total{
+        font-size: 1.5rem;
+        color: #ee5e41;
+        font-weight: 400;
+      }
       button{
         border: none ;
         width: 15rem;
-        height: 4rem;
+        height: 2.5rem;
         background-color: #EE4D2D;
         color: white;
       }

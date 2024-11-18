@@ -5,8 +5,9 @@ import { useCookies } from "react-cookie";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
 import Menu from "./menu";
 import ComponentHeader from "../../components/header/header";
-import { VND } from "../../components/VND/vnd";
+import { VND, VND_currency } from "../../components/VND/vnd";
 import "./styleCartOder.scss";
+import Footer from "../../components/footer/footer";
 function CartOder() {
   const [sumSp, setSumSp] = useState(0);
   const [cartsOder, setCartsOrder] = useState([]);
@@ -173,21 +174,12 @@ function CartOder() {
                       <p>No items in cart</p>
                     )}
                   </div>
-                  <div className="d-flex mt-3 colum-4 total">
+                  <div className="d-flex mt-3 total">
                     <div className="col-4 d-flex">
                       <p>Thành tiền :</p>
-                      <div
-                        style={{ color: "#ee4d2d", fontSize: "1.5rem" }}
-                        className=""
-                      >
-                        <sub>đ</sub>
-                        <p
-                          style={{ paddingLeft: "1rem" }}
-                          className="sum-price"
-                        >
-                          {VND.format(item.total_prices)}
-                        </p>
-                      </div>
+                      <p style={{ paddingLeft: "1rem" }} className="sum-price">
+                        {VND_currency.format(item.total_prices)}
+                      </p>
                     </div>
                     {item.status === "confirmed" ? (
                       <button style={{ marginLeft: "40%" }}>
@@ -226,13 +218,14 @@ function CartOder() {
                 </div>
               ))
             ) : (
-              <div style={{marginTop:'1rem'}} className="img-no-order">
+              <div style={{ marginTop: "1rem" }} className="img-no-order">
                 <img src={imgNoOder} alt="" />
               </div>
             )}
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

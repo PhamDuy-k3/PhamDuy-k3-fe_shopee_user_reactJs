@@ -10,9 +10,7 @@ const DiscountCode = (props) => {
   const [discountcodes, setDiscountcode] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
   const [cookies] = useCookies();
-  console.log(props.selectedDiscountCodes);
-  console.log(props.selectedDiscountCodesFreeShip);
-
+  const [discountcodeFreeShip, setDiscountcodeFreeShip] = useState({});
   // Hàm lấy dữ liệu mã giảm giá
   const fetchUserVoucher = useCallback(async () => {
     try {
@@ -96,11 +94,12 @@ const DiscountCode = (props) => {
     }
   };
   const handleDiscountcodeFreeShip = (code, maxShippingFee) => {
-    props.setSelectedDiscountCodesFreeShip([{ code, maxShippingFee }]);
+    setDiscountcodeFreeShip({ code, maxShippingFee });
   };
 
   const choeseDiscountcode = () => {
     calculateDiscount();
+    props.setSelectedDiscountCodesFreeShip(discountcodeFreeShip);
     setIsDisplay(false);
   };
 
@@ -192,7 +191,7 @@ const DiscountCode = (props) => {
                           type="radio"
                           name="discount"
                           checked={
-                            props.selectedDiscountCodesFreeShip[0]?.code ===
+                            discountcodeFreeShip.code ===
                             discountcode.voucher_id.code
                           }
                           onChange={() =>

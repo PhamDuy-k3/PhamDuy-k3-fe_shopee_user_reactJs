@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import "../cart/scssCart/styleCart.scss";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { deleteCarts } from "../../redux/action";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -10,12 +10,13 @@ import DiscountCode from "../cart/discountcode";
 import ComponentHeader from "../../components/header/header";
 import SelectPay from "./selectPay";
 import { PaymentForm } from "../../payment";
-import { VND } from "../../components/VND/vnd";
+import { VND, VND_currency } from "../../components/VND/vnd";
 import { deleteToCartsAsync } from "../../api/delete";
 import "./style.scss";
 import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
 import ModelAddAddress from "./modelAddAddress";
 import NoteShippingFee from "./note_shippingFee";
+import Footer from "../../components/footer/footer";
 
 function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
@@ -33,31 +34,36 @@ function OrderLoading() {
   const [
     selectedDiscountCodesFreeShip,
     setSelectedDiscountCodesFreeShip,
-  ] = useState([{ code: null, maxShippingFee: null }]);
-  const [shipping_fee, setShipping_fee] = useState(30000);
+  ] = useState({ code: null, maxShippingFee: null });
   const [shipping_fee_new, setShipping_fee_new] = useState();
   const [modelAddresses, setModelAddresses] = useState(false);
   const [address, setAddress] = useState("");
+  const [shippingfee, setShippingfee] = useState({});
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const ids_product = sessionStorage.getItem("ids_product");
 
-  const total_shipping_fee = () => {
+  const total_shipping_fee = useCallback(() => {
     if (
       selectedDiscountCodesFreeShip &&
-      selectedDiscountCodesFreeShip[0].maxShippingFee > shipping_fee
+      selectedDiscountCodesFreeShip.maxShippingFee > shippingfee.fee
     ) {
       setShipping_fee_new(0);
+    } else {
+      setShipping_fee_new(
+        shippingfee.fee - selectedDiscountCodesFreeShip.maxShippingFee
+      );
     }
-    return shipping_fee;
-  };
+    return shippingfee.fee;
+  }, [selectedDiscountCodesFreeShip, shippingfee.fee]);
+
   useEffect(() => {
     total_shipping_fee();
-  }, [selectedDiscountCodesFreeShip]);
+  }, [total_shipping_fee]);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       if (!cookies.user_token && !ids_product) {
         return;
@@ -80,12 +86,12 @@ function OrderLoading() {
     } catch (error) {
       console.error("Error fetching API:", error);
     }
-  };
+  }, [ids_product, cookies.user_token]);
 
   useEffect(() => {
     fetchProducts();
     setAddress(sessionStorage.getItem("address"));
-  }, []);
+  }, [fetchProducts]);
 
   // tính tổng tiền các sản phẩm có trong gio hàng
   useEffect(() => {
@@ -94,9 +100,14 @@ function OrderLoading() {
       return accumulator + parseFloat(product.sum);
     }, 0);
     setTotal(totalSum);
-    setTotalDiscountcode(totalSum + shipping_fee);
-  }, [carts]);
+    if (shippingfee.fee) {
+      setTotalDiscountcode(totalSum + shippingfee.fee);
+      return;
+    }
+    setTotalDiscountcode(totalSum);
+  }, [carts, shippingfee]);
 
+  console.log(shippingfee.fee);
   //tạo đơn hàng
   const createCartOder = async (data) => {
     try {
@@ -355,7 +366,13 @@ function OrderLoading() {
                       );
                     })}
                   </div>
-                  <NoteShippingFee total={total} handleNote={handleNote} />
+                  <NoteShippingFee
+                    setShippingfee={setShippingfee}
+                    shippingfee={shippingfee}
+                    sh
+                    total={total}
+                    handleNote={handleNote}
+                  />
                   <DiscountCode
                     setValueVoucher={setValueVoucher}
                     setSelectedDiscountCodes={setSelectedDiscountCodes}
@@ -369,7 +386,7 @@ function OrderLoading() {
                     total={total}
                     setTotalDiscountcode={setTotalDiscountcode}
                   />
-                  <div className="d-flex mt-3 flex-column payment colum-4">
+                  <div className="d-flex mt-3 flex-column payment ">
                     <div className="payment__header d-flex">
                       <p className="col-9">Phương thức thanh toán</p>
                       <SelectPay setPay={setPay} />
@@ -379,9 +396,7 @@ function OrderLoading() {
                         <div id="price_order">
                           <div className="d-flex">
                             <p>Tổng tiền</p>
-                            <p>
-                              <sup>đ</sup> {VND.format(total)}
-                            </p>
+                            <p>{VND_currency.format(total)}</p>
                           </div>
                           <div className="d-flex">
                             <p>Sử dụng mã giảm giá</p>
@@ -398,23 +413,20 @@ function OrderLoading() {
                           </div>
                           <div className="d-flex">
                             <p>Phí vận chuyển</p>
-                            {selectedDiscountCodesFreeShip[0].code !== null ? (
+                            {selectedDiscountCodesFreeShip.code !== null ? (
                               <p>
                                 <del style={{ marginRight: "1rem" }}>
-                                  {" "}
-                                  {VND.format(shipping_fee)}
+                                  {VND_currency.format(shippingfee.fee)}
                                 </del>
-                                {VND.format(shipping_fee_new)}
+                                {VND_currency.format(shipping_fee_new)}
                               </p>
                             ) : (
-                              <p>{VND.format(shipping_fee)}</p>
+                              <p>{VND_currency.format(shippingfee.fee)}</p>
                             )}
                           </div>
                           <div className="d-flex">
                             <p>Tổng thanh toán</p>
-                            <p>
-                              <sup>đ</sup> {VND.format(totalDiscountcode)}
-                            </p>
+                            <p>{VND_currency.format(totalDiscountcode)}</p>
                           </div>
                         </div>
                       </div>
@@ -434,6 +446,7 @@ function OrderLoading() {
             )}
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

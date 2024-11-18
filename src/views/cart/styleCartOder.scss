@@ -17,11 +17,26 @@
         }
     }
     .total{
+        width: 100%;
+        height: 4.5rem;
+        padding: 1rem 2rem;
+        background-color: rgb(255, 255, 255);
         div:first-child{
             font-size: 1.2rem;
-            >div{
-                margin-left: 1rem;
+            p:first-child{
+                margin-top: 0.3rem;
             }
+            p:last-child{
+                font-size: 1.5rem;
+                color: rgb(236, 78, 42);
+            }
+        }
+        button{
+            width: 10rem;
+            border: 1px solid #ccc;
+            height: 2.5rem;
+            background-color: rgb(241, 85, 50);
+            color: white;
         }
     }
 }

@@ -28,7 +28,8 @@
       }
     }
     .payment{
-      
+      width: 100%;
+      background-color: white;
       margin-bottom: 1rem;
       .payment__header{
         height: 5rem;
@@ -91,9 +92,18 @@
           }
       }
       #paymnet__order{
+        width: 16rem;
+        height: 2.5rem;
+        border: 1px solid #ccc;
+        color: white;
+        background-color: #F94E2F;
         margin-top: 1rem;
         margin-left: 70%;
         height: 2.5rem;
+        &:hover{
+          background-color: #e72f0e;
+
+        }
       }
        
       }
@@ -101,7 +111,7 @@
     .list-products{
       background-color: white;
       height: auto;
-      max-height: 40rem;
+    
       .product-infor{
         .product{
           .img{
