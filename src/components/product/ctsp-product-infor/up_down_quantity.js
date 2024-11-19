@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import io from "socket.io-client";
-import { memo } from "react";
 
 function UpDownQuantity({
+  selectSize,
+  colorProduct,
   quantity,
   setQuantity,
   product,
@@ -14,6 +15,7 @@ function UpDownQuantity({
   const [totalProducts, setTotalProducts] = useState(0);
   const socketRef = useRef(null);
 
+  // Socket connection for real-time stock updates
   useEffect(() => {
     const socket = io("http://localhost:5050");
 
@@ -27,8 +29,9 @@ function UpDownQuantity({
     return () => {
       socket.disconnect();
     };
-  }, [product]);
+  }, [product, setStockRTime]);
 
+  // Set initial product stock when the product changes
   useEffect(() => {
     if (product) {
       setTotalProducts(product.stock);
@@ -38,14 +41,16 @@ function UpDownQuantity({
     }
   }, [product, quantity, setQuantity]);
 
+  // Handle quantity increment
   const handleUpQuantity = () => {
-    if (quantity >= totalProducts) {
+    if (quantity >= stockSize) {
       toast.error("Quá số lượng sản phẩm có sẵn!");
     } else {
       setQuantity(quantity + 1);
     }
   };
 
+  // Handle quantity decrement
   const handleDownQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -54,6 +59,7 @@ function UpDownQuantity({
     }
   };
 
+  // Handle direct quantity input
   const handleChange = (e) => {
     const quantity_ = e.target.value;
 
@@ -63,9 +69,9 @@ function UpDownQuantity({
     }
 
     const quantityNumber = parseInt(quantity_, 10);
-    if (quantityNumber > totalProducts) {
+    if (quantityNumber > stockSize) {
       toast.error("Quá số lượng sản phẩm có sẵn!");
-      setQuantity(totalProducts);
+      setQuantity(stockSize);
     } else if (quantityNumber < 1 || isNaN(quantityNumber)) {
       toast.error("Số lượng tối thiểu là 1");
       setQuantity(1);
@@ -73,6 +79,8 @@ function UpDownQuantity({
       setQuantity(quantityNumber);
     }
   };
+
+  const isDisabled = totalProducts === 0 || !selectSize || !colorProduct;
 
   return (
     <div className="number-text d-flex">
@@ -91,20 +99,23 @@ function UpDownQuantity({
       />
       <button
         onClick={handleDownQuantity}
-        className={`down ${totalProducts === 0 ? "disabled" : ""}`}
+        className={`down ${isDisabled ? "disabled" : ""}`}
+        disabled={isDisabled}
       >
         -
       </button>
       <input
         onChange={handleChange}
-        className={`quantity ${totalProducts === 0 ? "disabled" : ""}`}
+        className={`quantity ${isDisabled ? "disabled" : ""}`}
         type="number"
         min={totalProducts === 0 ? "0" : "1"}
         value={quantity}
+        disabled={isDisabled}
       />
       <button
-        className={`up ${totalProducts === 0 ? "disabled" : ""}`}
+        className={`up ${isDisabled ? "disabled" : ""}`}
         onClick={handleUpQuantity}
+        disabled={isDisabled}
       >
         +
       </button>

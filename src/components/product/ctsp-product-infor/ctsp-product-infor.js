@@ -331,6 +331,8 @@ function CtspProductInfor(props) {
             <p>Số Lượng</p>
           </div>
           <UpDownQuantity
+            colorProduct={colorProduct}
+            selectSize={selectSize}
             stockSize={stockSize}
             setStockRTime={setStockRTime}
             product={props.product}
