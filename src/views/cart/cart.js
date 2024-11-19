@@ -18,6 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
 import Footer from "../../components/footer/footer";
+import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
 // chưa chek trùng sản phẩm
 
 function Cart() {
@@ -281,6 +282,7 @@ function Cart() {
         theme="light"
         style={{ width: "300px" }}
       />
+      <AutoLoadPage/>
       <ComponentHeader />
       <div className="box_cart">
         {deleteModal && (

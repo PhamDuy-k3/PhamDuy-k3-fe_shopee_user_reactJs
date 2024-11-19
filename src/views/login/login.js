@@ -88,6 +88,8 @@ function Login() {
       }
     } catch (error) {
       console.error("Đã xảy ra lỗi:", error);
+      setLoadingIcon(false);
+
       alert("Đã xảy ra lỗi khi đăng nhập.");
     }
   };

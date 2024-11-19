@@ -38,7 +38,7 @@ function OrderLoading() {
   const [shipping_fee_new, setShipping_fee_new] = useState();
   const [address, setAddress] = useState("");
   const [shippingfee, setShippingfee] = useState({});
-  const [showModelAddress, setShowModelAddress] = useState(false);
+  const [showModelAddress, setShowModelAddress] = useState(true);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -91,9 +91,9 @@ function OrderLoading() {
 
   useEffect(() => {
     fetchProducts();
-    setAddress(sessionStorage.getItem("address"));
+    
   }, [fetchProducts]);
-
+ 
   // tính tổng tiền các sản phẩm có trong gio hàng
   useEffect(() => {
     setSumSp(carts.length);
@@ -201,7 +201,7 @@ function OrderLoading() {
         console.error("Error during the order process:", error);
       });
   };
-
+ 
   return (
     <>
       <div id="container-cart">
