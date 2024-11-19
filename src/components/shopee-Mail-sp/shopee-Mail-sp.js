@@ -12,7 +12,6 @@ function ShopeeMailSp(props) {
     ) : (
       <p>Không có sản phẩm</p>
     );
-  console.log("rendering ");
   return (
     <section className="shopee-mail-sp">
       <div className="item-shopee-mail-title">

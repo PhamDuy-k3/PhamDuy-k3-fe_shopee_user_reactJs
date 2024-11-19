@@ -20,8 +20,6 @@ import Footer from "../../components/footer/footer";
 
 function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [totalDiscountcode, setTotalDiscountcode] = useState(total);
   const [carts, setCarts] = useState([]);
   const [status, setStatus] = useState("unconfirmed");
   const [cookies, setCookie] = useCookies();
@@ -35,11 +33,13 @@ function OrderLoading() {
     selectedDiscountCodesFreeShip,
     setSelectedDiscountCodesFreeShip,
   ] = useState({ code: null, maxShippingFee: null });
-  const [shipping_fee_new, setShipping_fee_new] = useState();
+  const [shipping_fee_new, setShipping_fee_new] = useState(0);
   const [address, setAddress] = useState("");
   const [shippingfee, setShippingfee] = useState({});
-  const [showModelAddress, setShowModelAddress] = useState(true);
-
+  const [showModelAddress, setShowModelAddress] = useState(false);
+  const [total, setTotal] = useState(0); // số tiền ban đầu
+  const [totalDiscountcode, setTotalDiscountcode] = useState(0); // số tiền sau khi chọn mã giảm giá
+  const [totalAmout, setTotalAmout] = useState(0); // thành tiền cuối cùng
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -47,21 +47,18 @@ function OrderLoading() {
 
   //tính thành tiền sau khi có phí vận chuyển
   const total_shipping_fee = useCallback(() => {
-    if (
-      selectedDiscountCodesFreeShip &&
-      selectedDiscountCodesFreeShip.maxShippingFee > shippingfee.fee
-    ) {
-      setShipping_fee_new(0);
-    } else {
-      setShipping_fee_new(
-        shippingfee.fee - selectedDiscountCodesFreeShip.maxShippingFee
-      );
+    if (selectedDiscountCodesFreeShip.maxShippingFee > shippingfee.fee) {
+      return 0;
+    } else if (selectedDiscountCodesFreeShip.maxShippingFee !== null) {
+      return shippingfee.fee - selectedDiscountCodesFreeShip.maxShippingFee;
+    } else if (selectedDiscountCodesFreeShip.maxShippingFee === null) {
+      return shippingfee.fee;
     }
-    return shippingfee.fee;
   }, [selectedDiscountCodesFreeShip, shippingfee.fee]);
 
   useEffect(() => {
-    total_shipping_fee();
+    const newShippingFee = total_shipping_fee();
+    setShipping_fee_new(newShippingFee);
   }, [total_shipping_fee]);
 
   const fetchProducts = useCallback(async () => {
@@ -91,24 +88,31 @@ function OrderLoading() {
 
   useEffect(() => {
     fetchProducts();
-    
   }, [fetchProducts]);
- 
+
   // tính tổng tiền các sản phẩm có trong gio hàng
   useEffect(() => {
     setSumSp(carts.length);
+
     const totalSum = carts.reduce((accumulator, product) => {
       return accumulator + parseFloat(product.sum);
     }, 0);
     setTotal(totalSum);
-    if (shippingfee.fee) {
-      setTotalDiscountcode(totalSum + shippingfee.fee);
-      return;
-    }
     setTotalDiscountcode(totalSum);
   }, [carts, shippingfee]);
 
-  console.log(shippingfee.fee);
+  // tính thành tiền cần thành toán
+  useEffect(() => {
+    const newTotalAmount =
+      totalDiscountcode === total
+        ? total + +shipping_fee_new
+        : totalDiscountcode + +shipping_fee_new;
+
+    if (newTotalAmount !== totalAmout) {
+      setTotalAmout(newTotalAmount);
+    }
+  }, [totalDiscountcode, shipping_fee_new, total, totalAmout]);
+
   //tạo đơn hàng
   const createCartOder = async (data) => {
     try {
@@ -201,7 +205,6 @@ function OrderLoading() {
         console.error("Error during the order process:", error);
       });
   };
- 
   return (
     <>
       <div id="container-cart">
@@ -399,7 +402,7 @@ function OrderLoading() {
                           </div>
                           <div className="d-flex">
                             <p>Tổng thanh toán</p>
-                            <p>{VND_currency.format(totalDiscountcode)}</p>
+                            <p>{VND_currency.format(totalAmout)}</p>
                           </div>
                         </div>
                       </div>

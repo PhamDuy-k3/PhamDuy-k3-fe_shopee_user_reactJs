@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 import ModelUpdateAddress from "./modelUpdateAddress";
-
+import { memo } from "react";
 const ModelAddAddress = ({
   setAddress,
   showModelAddress,
@@ -238,4 +238,4 @@ const ModelAddAddress = ({
   );
 };
 
-export default ModelAddAddress;
+export default memo(ModelAddAddress);

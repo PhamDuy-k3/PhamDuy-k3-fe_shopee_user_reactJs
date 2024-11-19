@@ -5,12 +5,15 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { VND } from "../../components/VND/vnd";
 import img_voucher from "../../assets/images/img/img_voucher.jpg";
-
+import { memo } from "react";
 const DiscountCode = (props) => {
   const [discountcodes, setDiscountcodes] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
   const [cookies] = useCookies();
-  const [discountcodeFreeShip, setDiscountcodeFreeShip] = useState({});
+  const [discountcodeFreeShip, setDiscountcodeFreeShip] = useState({
+    code: null,
+    maxShippingFee: null,
+  });
   const [discountcodeChoese, setDiscountcodeChoese] = useState([]);
   // Hàm lấy dữ liệu mã giảm giá
   const fetchUserVoucher = useCallback(async () => {
@@ -32,6 +35,7 @@ const DiscountCode = (props) => {
     }
   }, [cookies.user_token]);
 
+  // tính thành tiền sau khi chọn mã giảm giá
   const calculateDiscount = () => {
     const selectedDiscountData = discountcodes.filter((item) =>
       discountcodeChoese.includes(item.voucher_id.code)
@@ -71,6 +75,9 @@ const DiscountCode = (props) => {
       newTotal -= totalDiscountFixed;
     } else if (percentageValues.length > 0 && fixedValues.length > 0) {
       newTotal = newTotal - totalDiscountPercentage - totalDiscountFixed;
+    } else {
+      // ko chọn cái nào
+      newTotal = props.total;
     }
     props.setTotalDiscountcode(newTotal);
   };
@@ -85,20 +92,28 @@ const DiscountCode = (props) => {
 
   document.body.style.overflowY = isDisplay ? "hidden" : "auto";
 
+  //discount code
   const handleDiscountcode = (code) => {
-    if (discountcodeChoese.includes(code)) {
-      setDiscountcodeChoese(discountcodeChoese.filter((item) => item !== code));
-    } else {
-      setDiscountcodeChoese([...discountcodeChoese, code]);
-    }
+    const discountcodeChoese_new = discountcodeChoese.includes(code)
+      ? discountcodeChoese.filter((item) => item !== code)
+      : [...discountcodeChoese, code];
+
+    setDiscountcodeChoese(discountcodeChoese_new);
   };
+
+  // free ship
   const handleDiscountcodeFreeShip = (code, maxShippingFee) => {
-    if (discountcodeFreeShip.code === code) {
-      setDiscountcodeFreeShip({});
-    } else {
-      setDiscountcodeFreeShip({ code, maxShippingFee });
-    }
+    const discountcodeFreeShip_new =
+      discountcodeFreeShip.code === code
+        ? {
+            code: null,
+            maxShippingFee: null,
+          }
+        : { code, maxShippingFee };
+
+    setDiscountcodeFreeShip(discountcodeFreeShip_new);
   };
+  // lưu
   const choeseDiscountcode = () => {
     calculateDiscount();
     props.setSelectedDiscountCodesFreeShip(discountcodeFreeShip);
@@ -318,4 +333,4 @@ const DiscountCode = (props) => {
   );
 };
 
-export default DiscountCode;
+export default memo(DiscountCode);

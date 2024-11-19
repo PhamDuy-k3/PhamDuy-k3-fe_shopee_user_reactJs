@@ -5,8 +5,9 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
+import { memo } from "react";
 
-export const ModelAddressDefault = ({
+const ModelAddressDefault = ({
   getAddress,
   setShowModelAddress,
   addressUpdated,
@@ -75,7 +76,7 @@ export const ModelAddressDefault = ({
       if (allDefaultFalseResponse || oneAddressTrueResponse) {
         alert("Cập nhật thành công:");
         getAddress();
-        setShowModelAddress(true)
+        setShowModelAddress(true);
         setShowModelUpdateAddress(false);
         setModelAcceptDefault(false);
         addressUpdated.default = true;
@@ -113,3 +114,4 @@ export const ModelAddressDefault = ({
     </Modal>
   );
 };
+export default memo(ModelAddressDefault);

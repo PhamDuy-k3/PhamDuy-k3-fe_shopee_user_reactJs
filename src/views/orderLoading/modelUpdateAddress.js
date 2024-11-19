@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
-import { ModelAddressDefault } from "./modelAddressDefault";
+import ModelAddressDefault from "./modelAddressDefault";
+import { memo } from "react";
 
 const ModelUpdateAddress = ({
   addressUpdated,
@@ -184,4 +185,4 @@ const ModelUpdateAddress = ({
   );
 };
 
-export default ModelUpdateAddress;
+export default memo(ModelUpdateAddress);
