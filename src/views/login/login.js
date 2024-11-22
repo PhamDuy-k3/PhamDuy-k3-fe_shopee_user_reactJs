@@ -17,6 +17,7 @@ function Login() {
   const navigate = useNavigate();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [loadingIcon, setLoadingIcon] = useState(false);
+  const [error, setError] = useState("");
   const {
     register,
     handleSubmit,
@@ -49,11 +50,11 @@ function Login() {
       const res = await response.json();
 
       if (res.error) {
-        alert(`${res.error.message}`);
+        setError(res.error.message);
         setLoadingIcon(false);
         return;
       }
-
+      setError("");
       if (res.isVerified === false) {
         alert("Tài khoản chưa xác thực!");
         setLoadingIcon(false);
@@ -164,6 +165,7 @@ function Login() {
               {errors.password && (
                 <p id="error_pass">{errors.password.message}</p>
               )}
+              <p id="error_pass">{error}</p>
               <div className="login__">
                 <label htmlFor="login">
                   {loadingIcon && <i className="fas fa-sync fa-spin"></i>}

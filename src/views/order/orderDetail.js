@@ -1,40 +1,24 @@
-import { useDispatch } from "react-redux";
-import "./scssCart/styleCart.scss";
+import "../cart/scssCart/styleCart.scss";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
-import Menu from "./menu";
-import ComponentHeader from "../../components/header/header";
 import { VND, VND_currency } from "../../components/VND/vnd";
-import "./styleCartOder.scss";
-import Footer from "../../components/footer/footer";
-function CartOder() {
-  const [sumSp, setSumSp] = useState(0);
-  const [cartsOder, setCartsOrder] = useState([]);
-  const [res, setRes] = useState([]);
+import "./styleListOrder.scss";
+import { useParams } from "react-router-dom";
+
+function OrderDatail() {
+  const [order, setOrder] = useState([]);
   const [status, setStatus] = useState("");
   const [cookies, setCookie] = useCookies();
+  const id_order = useParams();
 
-  //xóa các query ko cần thiết trong url
-
-  useEffect(() => {
-    if (window.location.search || window.location.hash.includes("?")) {
-      const queryParams = new URLSearchParams(window.location.search);
-      const hashParams = new URLSearchParams(
-        window.location.hash.split("?")[1]
-      );
-      window.history.replaceState(null, null, "/#/CartOder");
-    }
-  }, []);
-
-  //danh sách sản phẩm người dùng order
-  const fetchCartsOder = async () => {
+  const fetchOderById = async () => {
     try {
-      if (!cookies.user_token && !status) {
+      if (!cookies.user_token || !id_order.orderId) {
         return;
       }
       const response = await fetch(
-        `http://localhost:5050/cartsOder/?status=${status}`,
+        `http://localhost:5050/cartsOder/${id_order.orderId}`,
         {
           method: "GET",
           headers: {
@@ -44,52 +28,49 @@ function CartOder() {
         }
       );
       const data = await response.json();
-      const sortedOrders = data.data.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-
-      setRes(sortedOrders);
-
-      setCartsOrder(data.data[0]?.carts || []);
+      if (!data) return;
+      setOrder(data.data);
     } catch (error) {
       console.error("Error fetching API:", error);
     }
   };
 
   useEffect(() => {
-    fetchCartsOder();
-  }, [status]);
+    fetchOderById();
+  }, [id_order]);
+
+  console.log(order);
 
   return (
     <>
-      <ComponentHeader />
       <div id="box_cartOder" className="box_cart ">
         <div className="body">
-          <Menu status={status} setStatus={setStatus} />
           <div className="container-fluid">
-            {res.length > 0 ? (
-              res.map((item, index) => (
-                <div key={index} className="body-product ">
+            <div className="container-fluid">
+              {order ? (
+                <div className="body-product ">
                   <div className="d-flex colum-1">
-                    <i
-                      style={{ color: "#00b9a0" }}
-                      className="fas fa-shuttle-van"
-                    ></i>
-                    {item.status !== "unconfirmed" ? (
-                      <p>Đơn hàng của bạn đã được người bán xác nhận !!!</p>
-                    ) : (
-                      <p>Đơn hàng của bạn đang chờ người bán xác nhận !!!</p>
-                    )}
+                    <p className="col-7">Thông tin chi tiết đơn hàng của bạn !</p>
+                    <div className="d-flex">
+                      {" "}
+                      <p>Mã Đơn Hàng : {order.orderId}</p>
+                      <p>|</p>
+                      {order.paymentStatus === "paid" ? (
+                        <p style={{ color: "green" }}>ĐƠN HÀNG ĐÃ HOÀN THÀNH</p>
+                      ) : (
+                        <p style={{ color: "red" }}>ĐƠN HÀNG CHƯA HOÀN THÀNH</p>
+                      )}
+                    </div>
                   </div>
                   <div className="body-title d-flex">
-                    <p className="col-5">Sản phẩm</p>
+                    <p className="col-7">Sản phẩm</p>
                     <p className="col-2">Đơn Giá</p>
                     <p className="col-2">Số Lượng</p>
-                    <p className="col-2">Số Tiền</p>
+                    <p className="col-1">Số Tiền</p>
                   </div>
                   <div className="list-products">
-                    {item.carts.length > 0 ? (
-                      item.carts.map((product, index) => (
+                    {order.carts?.length > 0 ? (
+                      order.carts.map((product, index) => (
                         <div
                           key={index}
                           style={{ height: "13rem" }}
@@ -103,7 +84,7 @@ function CartOder() {
                           >
                             <div
                               style={{ height: "8rem" }}
-                              className="col-5 d-flex product"
+                              className="col-7 d-flex product"
                             >
                               <img
                                 style={{ height: "7rem" }}
@@ -159,7 +140,7 @@ function CartOder() {
                                 value="+"
                               />
                             </div>
-                            <div className="total-price col-2 pt-5">
+                            <div className="total-price col-1 pt-5">
                               <p>
                                 <sup>đ</sup>{" "}
                                 <span className="sum">
@@ -174,60 +155,73 @@ function CartOder() {
                       <p>No items in cart</p>
                     )}
                   </div>
-                  <div className="d-flex mt-3 total">
-                    <div className="col-4 d-flex">
-                      <p>Thành tiền :</p>
-                      <p style={{ paddingLeft: "1rem" }} className="sum-price">
-                        {VND_currency.format(item.orderTotal)}
+                  <div className="info-order-fee">
+                    <div className="d-flex">
+                      <p className="col-8">Tổng tiền hàng</p>
+                      <p className="info-order-fee__text">
+                        {VND_currency.format(order.subTotal)}
                       </p>
                     </div>
-                    {item.status === "confirmed" ? (
-                      <button style={{ marginLeft: "40%" }}>
-                        Chờ thanh toán
-                      </button>
-                    ) : item.status === "processing" ? (
-                      <button style={{ marginLeft: "40%" }}>Đang xử lý</button>
-                    ) : item.status === "shipped" ? (
-                      <button style={{ marginLeft: "40%" }}>
-                        Đang giao hàng
-                      </button>
-                    ) : item.status === "delivered" ? (
-                      <button
-                        style={{ backgroundColor: "gray", marginLeft: "40%" }}
-                      >
-                        Đã thanh toán
-                      </button>
-                    ) : item.status === "canceled" ? (
-                      <button
-                        style={{ backgroundColor: "gray", marginLeft: "40%" }}
-                      >
-                        Đã hủy
-                      </button>
-                    ) : item.status === "returned" ? (
-                      <button
-                        style={{ backgroundColor: "gray", marginLeft: "40%" }}
-                      >
-                        Trả hàng
-                      </button>
-                    ) : (
-                      <button style={{ marginLeft: "40%" }}>
-                        Chờ xác nhận
-                      </button>
+                    <div className="d-flex">
+                      <p className="col-8">Phi vận chuyển</p>
+                      <p className="info-order-fee__text">
+                        {VND_currency.format(order.shippingFee)}
+                      </p>
+                    </div>
+                    <div className="d-flex">
+                      <p className="col-8">Giảm giá phí vận chuyển</p>
+                      <div className="info-order-fee__text">
+                        {order.shippingDiscount > 0 ? (
+                          <p>
+                            <span>-</span>
+                            {VND_currency.format(order.shippingDiscount)}
+                          </p>
+                        ) : (
+                          VND_currency.format(order.shippingDiscount)
+                        )}{" "}
+                      </div>
+                    </div>
+                    <div className="d-flex sum-price">
+                      <p className="col-8">Thành tiền </p>
+                      <p className="info-order-fee__text">
+                        {VND_currency.format(order.orderTotal)}
+                      </p>
+                    </div>
+                    {order.paymentMethod === "COD" && (
+                      <div id="payment-upon-receipt" className="d-flex ">
+                        <i class="fas fa-bell"></i>
+                        <p>
+                          Vui lòng thanh toán
+                          <span className="mx-2" style={{ color: "red" }}>
+                            {VND_currency.format(order.orderTotal)}
+                          </span>
+                          khi nhận hàng
+                        </p>
+                      </div>
                     )}
+                    <div id="payment-method" className="d-flex ">
+                      <p className="col-6">
+                        {" "}
+                        <i class="far fa-money-bill-alt"></i>Phương thức thanh
+                        toán
+                      </p>
+                      {order.paymentMethod === "COD" ? (
+                        <p>Thanh Toán Khi Nhận Hàng</p>
+                      ) : (
+                        <p>{order.paymentMethod}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
-              ))
-            ) : (
-              <div style={{ marginTop: "1rem" }} className="img-no-order">
-                <img src={imgNoOder} alt="" />
-              </div>
-            )}
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
 
-export default CartOder;
+export default OrderDatail;

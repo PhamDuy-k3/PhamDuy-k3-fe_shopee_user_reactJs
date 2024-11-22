@@ -86,21 +86,23 @@ function Cart() {
       console.error(error);
     }
   };
-
-  // tính tổng tiền các sản phẩm có trong gio hàng
-  const totalSum = useMemo(() => {
-    return carts.reduce((accumulator, product) => {
-      return accumulator + parseFloat(product.sum);
-    }, 0);
-  }, [carts]);
-
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    setTotal(totalSum);
-  }, [carts]);
+  // tính tổng tiền các sản phẩm có trong gio hàng
+
+  useMemo(() => {
+    const cartsChoses = carts.filter((cart) =>
+      idProductChooses.includes(cart._id)
+    );
+    setTotal(
+      cartsChoses.reduce((accumulator, product) => {
+        const sum = parseFloat(product.sum);
+        return accumulator + (isNaN(sum) ? 0 : sum);
+      }, 0)
+    );
+  }, [carts, idProductChooses]);
 
   const handleQuantity = useCallback(
     (id, a) => {
@@ -216,13 +218,17 @@ function Cart() {
   //update thông tin mới cho cart
   const updateProductIncart = async () => {
     if (!idsProductNeedUpdate.length) return;
-
+    let cartsChange = [];
     const updatedCarts = carts.map((cart) => {
       const updatedProduct = idsProductNeedUpdate.find(
         (product) => product._id === cart.product_id
       );
-
       if (updatedProduct) {
+        cartsChange.push({
+          ...cart,
+          price: updatedProduct.price,
+          sum: updatedProduct.sum,
+        });
         return {
           ...cart,
           price: updatedProduct.price,
@@ -233,7 +239,10 @@ function Cart() {
     });
     setCarts(updatedCarts);
     setUpdateModal(false);
-    await updateProductInCartDatabase(updatedCarts);
+    if (cartsChange.length > 0) {
+      await updateProductInCartDatabase(cartsChange);
+    }
+
     setIdIdProductNeedUpdate([]);
   };
 
@@ -282,7 +291,7 @@ function Cart() {
         theme="light"
         style={{ width: "300px" }}
       />
-      <AutoLoadPage/>
+      <AutoLoadPage />
       <ComponentHeader />
       <div className="box_cart">
         {deleteModal && (
@@ -455,7 +464,7 @@ function Cart() {
                       type="checkbox"
                       id="masterCheckbox"
                       ref={checkboxRef}
-                      style={{marginRight:'1rem'}}
+                      style={{ marginRight: "1rem" }}
                     />
                     Chọn tất Cả (
                     <span className="quantityCart-one">{carts.length}</span>)
@@ -476,7 +485,11 @@ function Cart() {
                     <p>
                       Tổng thanh toán (
                       <span className="quantityCart-two">{carts.length}</span>)
-                      sản phẩm : <span className="cart_total"> {VND_currency.format(total)}</span>
+                      sản phẩm :{" "}
+                      <span className="cart_total">
+                        {" "}
+                        {VND_currency.format(total)}
+                      </span>
                     </p>
                   </div>
                   <button

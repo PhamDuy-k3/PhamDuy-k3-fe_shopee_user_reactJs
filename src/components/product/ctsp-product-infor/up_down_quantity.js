@@ -13,9 +13,7 @@ function UpDownQuantity({
   stockSize,
 }) {
   const [totalProducts, setTotalProducts] = useState(0);
-  const socketRef = useRef(null);
 
-  // Socket connection for real-time stock updates
   useEffect(() => {
     const socket = io("http://localhost:5050");
 
@@ -31,7 +29,6 @@ function UpDownQuantity({
     };
   }, [product, setStockRTime]);
 
-  // Set initial product stock when the product changes
   useEffect(() => {
     if (product) {
       setTotalProducts(product.stock);
@@ -41,7 +38,6 @@ function UpDownQuantity({
     }
   }, [product, quantity, setQuantity]);
 
-  // Handle quantity increment
   const handleUpQuantity = () => {
     if (quantity >= stockSize) {
       toast.error("Quá số lượng sản phẩm có sẵn!");
@@ -50,7 +46,6 @@ function UpDownQuantity({
     }
   };
 
-  // Handle quantity decrement
   const handleDownQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -59,21 +54,16 @@ function UpDownQuantity({
     }
   };
 
-  // Handle direct quantity input
   const handleChange = (e) => {
     const quantity_ = e.target.value;
-
     if (quantity_ === "") {
       setQuantity("");
       return;
     }
-
     const quantityNumber = parseInt(quantity_, 10);
     if (quantityNumber > stockSize) {
-      toast.error("Quá số lượng sản phẩm có sẵn!");
       setQuantity(stockSize);
     } else if (quantityNumber < 1 || isNaN(quantityNumber)) {
-      toast.error("Số lượng tối thiểu là 1");
       setQuantity(1);
     } else {
       setQuantity(quantityNumber);
@@ -85,8 +75,8 @@ function UpDownQuantity({
   return (
     <div className="number-text d-flex">
       <ToastContainer
-        position="top-right"
-        autoClose={700}
+        position="top-center"
+        autoClose={300}
         hideProgressBar={false}
         newestOnTop={true}
         closeOnClick

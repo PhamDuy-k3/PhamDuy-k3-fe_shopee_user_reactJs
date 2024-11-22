@@ -1,0 +1,113 @@
+#box_cartOder{
+    .body-product {
+        width: 99%;
+        margin-left: 1%;
+        margin-top: 1rem;
+        .colum-1{
+            a{
+                color: gray;
+                p{
+                    font-size: 1.3rem;
+                    margin-top: -0.5rem;
+                    i{
+                        padding-right: 0.5rem;
+                    }
+                }
+                &:hover{
+                    color: #ef4010;
+                }
+            }
+        }
+    }
+    .list-products{
+        margin-top: 1rem;
+        background-color: white;
+        .item-product{
+            padding-left: 2rem;
+            .product{
+                .product-name{
+                    width: 50%;
+                }
+                
+            }
+            .total-price{
+                color: red;
+            }
+        }
+    }
+    .info-order-fee{
+        background-color: white;
+       >div{
+        padding-top: 1rem;
+        padding-left: 75%;
+        border: 1px solid #ebe9e9;
+        >p:first-child{
+            color: gray;
+            position: relative;
+        }
+        .info-order-fee__text{
+            position: absolute;
+            right: 6rem;
+        }
+       }
+       .sum-price{
+        p:last-child{
+            font-size: 1.5rem;
+            color: rgb(242, 73, 26);
+        }
+        p:first-child{
+            padding-top: 0.3rem;
+            color: gray;
+
+        }
+    }
+    #payment-method{
+        padding-left: 65% !important;
+        >p:first-child{
+            color: gray;
+        }
+        i{
+            color: #ef4010;
+            margin-right: 5px;
+        }
+    }
+    #payment-upon-receipt{
+        border: 1px solid #F3DB97;
+        background-color: #FFFEFB;
+        padding-left: 2rem;
+        i{
+            color: #ef4010;
+            margin-top: 0.3rem;
+            margin-right: 1rem;
+        }
+    }
+    }
+    .quantity{
+        input{
+            color: gray;
+        }
+    }
+    .total{
+        width: 100%;
+        height: 4.5rem;
+        padding: 1rem 2rem;
+        background-color: rgb(255, 255, 255);
+        div:first-child{
+            font-size: 1.2rem;
+            p:first-child{
+                margin-top: 0.3rem;
+            }
+            p:last-child{
+                font-size: 1.5rem;
+                color: rgb(236, 78, 42);
+            }
+        }
+        button{
+            width: 10rem;
+            border: 1px solid #ccc;
+            height: 2.5rem;
+            background-color: rgb(241, 85, 50);
+            color: white;
+        }
+    }
+}

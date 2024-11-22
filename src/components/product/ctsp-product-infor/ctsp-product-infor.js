@@ -39,7 +39,7 @@ function CtspProductInfor(props) {
 
   let title = props.product?.name || "";
   const stock = props.product?.stock;
-
+  const sold = props.product?.soldCount;
   const getVariant = async () => {
     const response = await axios.get(
       `http://localhost:5050/variants?product_id=${productId.product_id}`
@@ -258,8 +258,8 @@ function CtspProductInfor(props) {
           </Link>
         </p>
         <p>
-          <span>3,2</span>
-          <span>k</span> Đã Bán
+          <span  style={{marginRight:'0.5rem'}}>{sold}</span>
+          Đã Bán
         </p>
         <p>Tố cáo</p>
       </section>

@@ -1,4 +1,4 @@
-import "./scssCart/styleCart.scss";
+import "../cart/scssCart/styleCart.scss";
 import { useCallback, useEffect, useState } from "react";
 import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
 import axios from "axios";
@@ -15,6 +15,7 @@ const DiscountCode = (props) => {
     maxShippingFee: null,
   });
   const [discountcodeChoese, setDiscountcodeChoese] = useState([]);
+
   // Hàm lấy dữ liệu mã giảm giá
   const fetchUserVoucher = useCallback(async () => {
     try {
@@ -116,8 +117,8 @@ const DiscountCode = (props) => {
   // lưu
   const choeseDiscountcode = () => {
     calculateDiscount();
-    props.setSelectedDiscountCodesFreeShip(discountcodeFreeShip);
-    props.setSelectedDiscountCodes(discountcodeChoese);
+    props.setFreeShipCode(discountcodeFreeShip);
+    props.setDiscountCodes(discountcodeChoese);
     setIsDisplay(false);
   };
 

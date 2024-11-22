@@ -93,7 +93,7 @@ function ComponentHeader() {
   const logout = (e) => {
     e.preventDefault();
     removeCookies("user_token");
-    window.location.href = "http://localhost:3000/#/login";
+    window.location.href = "http://localhost:3000/login";
   };
   //handel info
   const handleIsInfo = () => {

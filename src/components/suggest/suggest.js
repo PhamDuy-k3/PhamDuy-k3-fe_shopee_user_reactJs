@@ -27,7 +27,7 @@ function Suggest(props) {
             </div>
             <div className="suggest-product-sold">
               <p>
-                Đã bán <span>148</span> <span>k</span>
+                Đã bán <span> {product.soldCount}</span>
               </p>
             </div>
           </div>

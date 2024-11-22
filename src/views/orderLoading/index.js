@@ -1,22 +1,22 @@
 import { useDispatch } from "react-redux";
 import "../cart/scssCart/styleCart.scss";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { deleteCarts } from "../../redux/action";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import imgNoOder from "..//..//assets/images/img/no-order.jpg";
-import DiscountCode from "../cart/discountcode";
 import ComponentHeader from "../../components/header/header";
 import SelectPay from "./selectPay";
 import { PaymentForm } from "../../payment";
 import { VND, VND_currency } from "../../components/VND/vnd";
 import { deleteToCartsAsync } from "../../api/delete";
 import "./style.scss";
-import FlyZoom from "../../components/product/ctsp-product-img/fly-zoom";
 import ModelAddAddress from "./modelAddAddress";
 import NoteShippingFee from "./note_shippingFee";
 import Footer from "../../components/footer/footer";
+import Discountcode from "./discountcode";
+import { generateOrderCode } from "../../utils/generateOrderCode";
 
 function OrderLoading() {
   const [sumSp, setSumSp] = useState(0);
@@ -28,11 +28,11 @@ function OrderLoading() {
   const [pay, setPay] = useState("2");
   const [orderInfo, setOrderInfo] = useState("pay with MoMo");
   const [valueVoucher, setValueVoucher] = useState([]);
-  const [selectedDiscountCodes, setSelectedDiscountCodes] = useState([]);
-  const [
-    selectedDiscountCodesFreeShip,
-    setSelectedDiscountCodesFreeShip,
-  ] = useState({ code: null, maxShippingFee: null });
+  const [discountCodes, setDiscountCodes] = useState([]);
+  const [freeShipCode, setFreeShipCode] = useState({
+    code: null,
+    maxShippingFee: null,
+  });
   const [shipping_fee_new, setShipping_fee_new] = useState(0);
   const [address, setAddress] = useState("");
   const [shippingfee, setShippingfee] = useState({});
@@ -47,14 +47,14 @@ function OrderLoading() {
 
   //tính thành tiền sau khi có phí vận chuyển
   const total_shipping_fee = useCallback(() => {
-    if (selectedDiscountCodesFreeShip.maxShippingFee > shippingfee.fee) {
+    if (freeShipCode.maxShippingFee > shippingfee.fee) {
       return 0;
-    } else if (selectedDiscountCodesFreeShip.maxShippingFee !== null) {
-      return shippingfee.fee - selectedDiscountCodesFreeShip.maxShippingFee;
-    } else if (selectedDiscountCodesFreeShip.maxShippingFee === null) {
+    } else if (freeShipCode.maxShippingFee !== null) {
+      return shippingfee.fee - freeShipCode.maxShippingFee;
+    } else if (freeShipCode.maxShippingFee === null) {
       return shippingfee.fee;
     }
-  }, [selectedDiscountCodesFreeShip, shippingfee.fee]);
+  }, [freeShipCode, shippingfee.fee]);
 
   useEffect(() => {
     const newShippingFee = total_shipping_fee();
@@ -126,8 +126,8 @@ function OrderLoading() {
           },
         }
       );
-      navigate("/CartOder");
-      return response.data;
+      if (response.data.status_code === 200) {
+      }
     } catch (error) {
       console.error("Error creating cart order:", error);
       throw error;
@@ -144,67 +144,93 @@ function OrderLoading() {
   const handleNote = (e) => {
     setNote(e.target.value);
   };
-
   // đặt hàng
   const handleBuy = () => {
-    if (address?.length <= 8 || address === null) {
+    // Kiểm tra địa chỉ
+    if (!address || address.length <= 8) {
       setShowModelAddress(true);
       return;
     }
-    if (cookies.user_token === "") {
+
+    // Kiểm tra người dùng đã đăng nhập chưa
+    if (!cookies.user_token) {
       alert("Vui lòng đăng nhập để đặt hàng!");
       return;
     }
+
+    // Kiểm tra phí vận chuyển
     if (!shippingfee) {
+      alert("Phí vận chuyển không hợp lệ!");
       return;
     }
-    const amount = totalDiscountcode;
-    const paymentMethod = "pay";
-    const data = {
+
+    // Chuẩn bị mã giảm giá và mã freeship
+    const DiscountCodesAndFreeShip = [
+      ...discountCodes,
+      ...(freeShipCode.code ? [freeShipCode.code] : []),
+    ];
+
+    // Chuẩn bị dữ liệu thanh toán Momo
+    const data_momo = {
       carts,
       status,
-      amount,
+      amount: totalAmout,
+      subTotal: total,
       note,
       gmail,
-      selectedDiscountCodes,
+      discountCodes: DiscountCodesAndFreeShip,
       orderInfo,
-      paymentMethod,
+      paymentMethod: "pay",
       shippingAddress: address,
       deliveryMethod: shippingfee.type,
       shippingFee: shippingfee.fee,
+      shippingDiscount: shippingfee.fee - shipping_fee_new,
     };
-    const newOrder = {
+
+    // Chuẩn bị dữ liệu thanh toán COD
+    const data_cod = {
+      orderId: generateOrderCode(),
       carts,
       status: "unconfirmed",
-      orderTotal: amount,
-      note: note,
+      subTotal: total,
+      orderTotal: totalAmout,
+      note,
       gmail,
-      selectedDiscountCodes,
+      discountCodes: DiscountCodesAndFreeShip,
       shippingAddress: address,
-      paymentMethod: "Thanh toán khi nhận hàng",
+      paymentMethod: "COD",
       deliveryMethod: shippingfee.type,
       shippingFee: shippingfee.fee,
+      shippingDiscount: shippingfee.fee - shipping_fee_new,
     };
 
-    let paymentPromise = Promise.resolve();
-
-    // Kiểm tra hình thức thanh toán
+    // Xử lý hình thức thanh toán
+    let paymentPromise;
     if (pay === "1") {
-      paymentPromise = PaymentForm(data, cookies.user_token, navigate);
-    }
-    if (pay === "2") {
-      paymentPromise = createCartOder(newOrder);
+      paymentPromise = PaymentForm(data_momo, cookies.user_token, navigate);
+    } else if (pay === "2") {
+      paymentPromise = createCartOder(data_cod);
+    } else {
+      alert("Vui lòng chọn phương thức thanh toán!");
+      return;
     }
 
-    // Xử lý promise cho PaymentForm
+    // Thực hiện thanh toán và xóa giỏ hàng
     paymentPromise
       .then(() => {
         return deleteCartsByUserId();
       })
+      .then(() => {
+        navigate("/CartOder");
+      })
+      .then(() => {
+        console.log("Đơn hàng đã được xử lý và giỏ hàng đã được xóa.");
+      })
       .catch((error) => {
-        console.error("Error during the order process:", error);
+        console.error("Lỗi trong quá trình đặt hàng:", error);
       });
   };
+
   return (
     <>
       <div id="container-cart">
@@ -353,12 +379,10 @@ function OrderLoading() {
                     total={total}
                     handleNote={handleNote}
                   />
-                  <DiscountCode
+                  <Discountcode
                     setValueVoucher={setValueVoucher}
-                    setSelectedDiscountCodes={setSelectedDiscountCodes}
-                    setSelectedDiscountCodesFreeShip={
-                      setSelectedDiscountCodesFreeShip
-                    }
+                    setDiscountCodes={setDiscountCodes}
+                    setFreeShipCode={setFreeShipCode}
                     total={total}
                     setTotalDiscountcode={setTotalDiscountcode}
                   />
@@ -369,14 +393,16 @@ function OrderLoading() {
                     </div>
                     <div className="payment__content d-flex flex-column">
                       <div>
-                        <div id="price_order">
+                        <div id="price-order">
                           <div className="d-flex">
                             <p>Tổng tiền</p>
-                            <p>{VND_currency.format(total)}</p>
+                            <p className="price-order__text">
+                              {VND_currency.format(total)}
+                            </p>
                           </div>
                           <div className="d-flex">
                             <p>Sử dụng mã giảm giá</p>
-                            <div className="d-flex">
+                            <div className="d-flex price-order__text voucher">
                               {valueVoucher.map((voucher, index) => (
                                 <p key={index}>
                                   {voucher.voucher_id.discountValue}
@@ -389,25 +415,29 @@ function OrderLoading() {
                           </div>
                           <div className="d-flex">
                             <p>Phí vận chuyển</p>
-                            {selectedDiscountCodesFreeShip.code !== null ? (
-                              <p>
+                            {freeShipCode.code !== null ? (
+                              <p className="price-order__text">
                                 <del style={{ marginRight: "1rem" }}>
                                   {VND_currency.format(shippingfee.fee)}
                                 </del>
                                 {VND_currency.format(shipping_fee_new)}
                               </p>
                             ) : (
-                              <p>{VND_currency.format(shippingfee.fee)}</p>
+                              <p className="price-order__text">
+                                {VND_currency.format(shippingfee.fee)}
+                              </p>
                             )}
                           </div>
                           <div className="d-flex">
                             <p>Tổng thanh toán</p>
-                            <p>{VND_currency.format(totalAmout)}</p>
+                            <p className="price-order__text">
+                              {VND_currency.format(totalAmout)}
+                            </p>
                           </div>
                         </div>
                       </div>
                       <div>
-                        <button id="paymnet__order" onClick={handleBuy}>
+                        <button id="btn-paymnet-order" onClick={handleBuy}>
                           Đặt hàng
                         </button>
                       </div>

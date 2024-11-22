@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 function ProductDetailsDescribe({ product }) {
   let brand_id = product && product.brand_id;
   let category_id = product && product.category_id;
+  const stock = product?.stock;
+
   const [brand, setBrand] = useState();
   const [category, setCategory] = useState();
 
@@ -89,11 +91,11 @@ function ProductDetailsDescribe({ product }) {
                 </tr>
                 <tr>
                   <td>Số lượng hàng kh..</td>
-                  <td>1221</td>
+                  <td>{product?.stock + product?.soldCount}</td>
                 </tr>
                 <tr>
                   <td>Số sản phẩm còn lại</td>
-                  <td>109938610</td>
+                  <td>{stock}</td>
                 </tr>
                 <tr>
                   <td>Gửi từ</td>

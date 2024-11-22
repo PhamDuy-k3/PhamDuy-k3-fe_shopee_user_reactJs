@@ -48,50 +48,34 @@
         >div:first-child{
           border-bottom: 1px solid #eee;;
         }
-        #price_order{
+        #price-order{
           width: 100%;
-          padding-left: 70%;
-          >div:first-child{
-              p:last-child{
-                  margin-left: 10rem;
-              }   
+          padding-left: 65%;
+         >div{
+          position: relative;
+          .price-order__text{
+            position: absolute;
+            right: 3.2rem;
           }
-          >div:nth-child(2){
-              position: relative;
-              div:last-child{
-                  position: absolute;
-                  left: 15rem;
-                  p{
-                      margin-right: 1rem;
-                      padding: 1px 10px;
-                      border-radius: 8px;
-                      color: white;
-                      border: 6px dashed white ;
-                      background-color: #e7440d;
-                  }
-              }   
+          .voucher{
+            p{
+              padding: 0rem 1rem;
+              border: 2px dashed red;
+              margin-right: 0.2rem;
+            }
           }
-          >div:nth-child(3){
-              p:last-child{
-                  margin-left: 7.6rem;
-                  padding: 4px;
-                  border-radius: 8px;
-              }   
-          }
-          > div:last-child{
-              font-weight: 400;
-              font-size: 1.2rem;
-              p:first-child{
-                margin-top: 0.5rem;
-              }
-              p:last-child{
-                  font-size: 1.7rem;
-                  color: #FB5530;
-                  margin-left: 3rem;
-              }
-          }
+         }
+         >div:last-child{
+            p:first-child{
+              margin-top: 0.5rem;
+            }
+            p:last-child{
+              font-size: 1.5rem;
+              color: #e83516;
+            }
+         }
       }
-      #paymnet__order{
+      #btn-paymnet-order{
         width: 16rem;
         height: 2.5rem;
         border: 1px solid #ccc;

@@ -88,9 +88,9 @@ const ModelAddAddress = ({
   // sử lý sự kiện chọn address
   const handelChoeseAddress = (txtaddress) => {
     if (addressChoese.includes(txtaddress)) {
-      setddressChoese([]);
+      setddressChoese('');
     } else {
-      setddressChoese([txtaddress]);
+      setddressChoese(txtaddress);
     }
   };
   // hủy
@@ -98,6 +98,7 @@ const ModelAddAddress = ({
     setAddAddress(false);
     reset();
   };
+  //cập nhật
   const handleUpdateAddress = (address) => {
     setAddressUpdated(address);
     setShowModelUpdateAddress(true);
