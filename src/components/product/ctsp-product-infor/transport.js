@@ -4,9 +4,11 @@ import { VND, VND_currency } from "../../VND/vnd";
 import { memo } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import ModelAddAddress from "../../../views/orderLoading/modelAddAddress";
 function AddresTransport(props) {
   const [txtAddress, setTxtAddress] = useState("");
-
+  const [address, setAddress] = useState("");
+  const [showModelAddress, setShowModelAddress] = useState(false);
   function HendelChangeAdress() {
     if (txtAddress.length < 8) {
       alert("Địa chỉ phải có ít nhất 8 ký tự");
@@ -24,6 +26,11 @@ function AddresTransport(props) {
   }
   return (
     <div className="addres-transport">
+      {/* <ModelAddAddress
+        setAddress={setAddress}
+        showModelAddress={showModelAddress}
+        setShowModelAddress={setShowModelAddress}
+      /> */}
       <div className="addres-transport-header d-flex">
         <p>Địa chỉ nhận hàng</p>
         <i
@@ -61,6 +68,7 @@ function AddresTransport(props) {
           <i className="fas fa-map-marker-alt"></i>
           <p>&nbsp; Sử dụng địa chỉ hiện tại</p>
         </div>
+        {/* <p onClick={() => setShowModelAddress(true)}>Thêm địa chỉ</p> */}
         <div className="">
           <p style={{ marginLeft: "1rem" }}>Đia chỉ của tôi</p>
           <p>

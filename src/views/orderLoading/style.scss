@@ -229,6 +229,99 @@
             height: 3rem;
           }
         }
+        #provinces-districts-towns{
+          width: 100%;
+          height: 3rem;
+          border: 1px solid rgb(220, 212, 212);
+          border-radius: 0.2rem;
+          outline: none;
+          position: relative;
+          margin-bottom: 1rem;
+          .no-click {
+            pointer-events: none; 
+            cursor: no-drop; 
+          }
+          .provinces-districts-towns__input{
+            width: 100%;
+            height: 100%;
+            input{
+              width: 100%;
+              height: 100%;
+              border-top: none;
+              border-left: none;
+              border-right: none;
+            }
+            i{
+              color: black;
+              margin: 1rem 1rem 1rem 1rem;
+            }
+          }
+          .provinces-districts-towns__content{
+            width: 100%;
+            height: 16rem;
+            border: 1px solid rgb(220, 212, 212);
+            background-color: white;
+            z-index: 111;
+            position: absolute;
+           .provinces-districts-towns__title{
+            height: 3rem;
+            >div{
+              cursor: pointer;
+              text-align: center;
+              margin-top: 0.5rem;
+              border: 0.5px solid #eee;
+              &:hover{
+                background-color: #f8f8f8;
+              }
+            }
+            
+           }
+           .provinces-districts-towns__list{
+            max-height: 11rem;
+            overflow :auto;
+            padding: 1rem;
+            >p{
+              margin-bottom: 0.5rem;
+              padding: 0.5rem;
+              cursor: pointer;
+              &:hover{
+                color: #f43e1e;
+                background-color: #F8F8F8;
+              }
+            }
+           }
+          }
+          // .slider{
+          //   border: 1px solid #ccc;
+          //     width: 100%;
+          //     height: 1rem;
+          //     .slider__item{
+          //       position: relative;
+          //       width: 0;
+          //       height: 1rem;
+          //       background-color: red;
+          //       animation-name: slider_districts;
+          //       animation-duration: 1s;
+          //       animation-iteration-count: infinite;
+          //       animation-timing-function: ease-in-out;
+          //     }
+          // }
+          // @keyframes slider_provinces {
+          //   from{
+          //     width: 0%;
+          //   }to{
+          //     width: 30%;
+          //   }
+          // }
+          // @keyframes slider_districts {
+          //   from{
+          //     width: 30%;
+          //   }to{
+          //     width: 60%;
+          //   }
+          // }
+          
+        }
         input{
           width: 100%;
           height: 5rem;

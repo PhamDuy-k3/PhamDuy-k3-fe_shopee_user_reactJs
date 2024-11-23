@@ -331,10 +331,7 @@ function Cart() {
                   style={{ color: "#00b9a0" }}
                   className="fas fa-shuttle-van"
                 ></i>
-                <p>
-                  Nhấn vào mục Mã giảm giá ở cuối trang để hưởng miến phí vận
-                  chuyển bạn nhé!
-                </p>
+                <p>Danh sách sản phẩm bạn đã thêm vào giỏ hàng!</p>
               </div>
               <div className="body-title d-flex">
                 <p className="col-5">Sản phẩm</p>

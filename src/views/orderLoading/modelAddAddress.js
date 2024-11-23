@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 import ModelUpdateAddress from "./modelUpdateAddress";
 import { memo } from "react";
+import ProvincesDistrictTown from "./provincesDistrictTown";
 const ModelAddAddress = ({
   setAddress,
   showModelAddress,
@@ -25,6 +26,7 @@ const ModelAddAddress = ({
   const [isAddAddress, setAddAddress] = useState(false);
   const [showModelUpdateAddress, setShowModelUpdateAddress] = useState(false);
   const [addressUpdated, setAddressUpdated] = useState({});
+  const [addressLocations, setAddressLocations] = useState();
   const handleClose = () => {
     setShowModelAddress(false);
   };
@@ -76,7 +78,6 @@ const ModelAddAddress = ({
 
   // lưu
   const handleSave = () => {
-    // Nếu không có địa chỉ được chọn và data không đủ dài
     if (addressChoese.length === 0) {
       return;
     }
@@ -88,7 +89,7 @@ const ModelAddAddress = ({
   // sử lý sự kiện chọn address
   const handelChoeseAddress = (txtaddress) => {
     if (addressChoese.includes(txtaddress)) {
-      setddressChoese('');
+      setddressChoese("");
     } else {
       setddressChoese(txtaddress);
     }
@@ -197,7 +198,9 @@ const ModelAddAddress = ({
                   )}
                 </div>
               </div>
-
+              <ProvincesDistrictTown
+                setAddressLocations={setAddressLocations}
+              />
               <input
                 disabled={!watch("name") || !watch("phone")}
                 type="text"
@@ -210,11 +213,9 @@ const ModelAddAddress = ({
                 })}
                 placeholder="Địa chỉ cụ thể"
               />
-
               {errors.address && watch("name") && watch("phone") && (
                 <p style={{ color: "red" }}>{errors.address.message}</p>
               )}
-
               <div className="d-flex action-address">
                 <p onClick={handleCancelAddAddress}>Hủy</p>
                 <button type="submit">Thêm</button>
@@ -227,7 +228,6 @@ const ModelAddAddress = ({
           <p onClick={handleSave}>Xác nhận</p>
         </Modal.Footer>
       </Modal>
-
       <ModelUpdateAddress
         getAddress={getAddress}
         addressUpdated={addressUpdated}
