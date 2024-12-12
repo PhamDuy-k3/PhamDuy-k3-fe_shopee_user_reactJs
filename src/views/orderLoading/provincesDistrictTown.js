@@ -2,17 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-const ProvincesDistrictTown = ({ setAddressLocations }) => {
+const ProvincesDistrictTown = ({ selectedLocation, setSelectedLocation }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [cookies] = useCookies();
   const [provinceList, setProvinceList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
   const [townList, setTownList] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState({
-    province: {},
-    district: {},
-    town: {},
-  });
+
   const [addressOptions, setAddressOptions] = useState();
 
   const [style, setStyle] = useState();
@@ -161,12 +157,6 @@ const ProvincesDistrictTown = ({ setAddressLocations }) => {
       );
     });
   };
-
-  useEffect(() => {
-    if (displayAddress_text.length > 0) {
-      setAddressLocations(displayAddress_text);
-    }
-  }, displayAddress_text);
   const handleAddressSelection = (data) => {
     const addressList = renderAddressOptions(data);
     setAddressOptions(addressList);

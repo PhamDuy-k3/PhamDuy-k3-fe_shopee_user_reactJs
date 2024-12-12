@@ -36,7 +36,7 @@ function ProductDetails() {
   }, [url_id.product_id, cookies.user_token]);
   return (
     <ProductContext.Provider value={product}>
-      <div style={{ maxWidth: "1280px", margin: "auto" }}>
+      <div className="maxWidth">
         <ComponentHeader />
         <AutoLoadPage />
         <div className="context-detal-product">

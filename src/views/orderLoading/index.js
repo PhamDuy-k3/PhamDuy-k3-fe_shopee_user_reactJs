@@ -144,6 +144,7 @@ function OrderLoading() {
   const handleNote = (e) => {
     setNote(e.target.value);
   };
+
   // đặt hàng
   const handleBuy = () => {
     // Kiểm tra địa chỉ
@@ -233,7 +234,7 @@ function OrderLoading() {
 
   return (
     <>
-      <div id="container-cart">
+      <div className="maxWidth" id="container-cart">
         <ComponentHeader />
         <div className="box_cart">
           <div className="body">

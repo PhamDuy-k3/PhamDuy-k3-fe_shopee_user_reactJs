@@ -26,7 +26,11 @@ const ModelAddAddress = ({
   const [isAddAddress, setAddAddress] = useState(false);
   const [showModelUpdateAddress, setShowModelUpdateAddress] = useState(false);
   const [addressUpdated, setAddressUpdated] = useState({});
-  const [addressLocations, setAddressLocations] = useState();
+  const [selectedLocation, setSelectedLocation] = useState({
+    province: {},
+    district: {},
+    town: {},
+  });
   const handleClose = () => {
     setShowModelAddress(false);
   };
@@ -59,8 +63,11 @@ const ModelAddAddress = ({
 
   // thêm địa chỉ
   const addAddress = async (data) => {
-    if (!cookies.user_token) return;
     try {
+      if (!cookies.user_token || !selectedLocation) return;
+      data.province = selectedLocation.province.name;
+      data.district = selectedLocation.district.name;
+      data.town = selectedLocation.town.name;
       const response = await axios.post("http://localhost:5050/address", data, {
         headers: {
           Authorization: `Bearer ${cookies.user_token}`,
@@ -133,6 +140,15 @@ const ModelAddAddress = ({
                       <p className="address-users__address">
                         {address.address}
                       </p>
+                      <div >
+                        <p style={{fontSize:'1.1rem'}}>
+                          <span>{address.province}</span>
+                          <span>, </span>
+                          <span>{address.district}</span>
+                          <span>, </span>
+                          <span>{address.town}</span>
+                        </p>
+                      </div>
                       {address.default === true && (
                         <p className="address-users__default">Mặc định</p>
                       )}
@@ -199,7 +215,8 @@ const ModelAddAddress = ({
                 </div>
               </div>
               <ProvincesDistrictTown
-                setAddressLocations={setAddressLocations}
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
               />
               <input
                 disabled={!watch("name") || !watch("phone")}

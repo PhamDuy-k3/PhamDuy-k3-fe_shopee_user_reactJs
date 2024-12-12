@@ -278,238 +278,240 @@ function Cart() {
   };
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={500}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        style={{ width: "300px" }}
-      />
-      <AutoLoadPage />
-      <ComponentHeader />
-      <div className="box_cart">
-        {deleteModal && (
-          <>
-            <FlyZoom />
-            <div className="model-delete">
-              <div className="title">
-                <p>Bạn có chắc muốn xóa các sản phẩm đã chọn?</p>
+      <div className="maxWidth">
+        <ToastContainer
+          position="top-right"
+          autoClose={500}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          style={{ width: "300px" }}
+        />
+        <AutoLoadPage />
+        <ComponentHeader />
+        <div className="box_cart">
+          {deleteModal && (
+            <>
+              <FlyZoom />
+              <div className="model-delete">
+                <div className="title">
+                  <p>Bạn có chắc muốn xóa các sản phẩm đã chọn?</p>
+                </div>
+                <div className="button-group">
+                  <button onClick={() => setDeleteModal(false)}>Trở lại</button>
+                  <button onClick={handelDeleteProductList}>OK</button>
+                </div>
               </div>
-              <div className="button-group">
-                <button onClick={() => setDeleteModal(false)}>Trở lại</button>
-                <button onClick={handelDeleteProductList}>OK</button>
+            </>
+          )}
+          {updateModal && (
+            <>
+              <FlyZoom />
+              <div className="model-update">
+                <div className="title">
+                  <p>Sản phẩm có sự thay đổi , xin hãy cập nhật lại?</p>
+                </div>
+                <div className="button-group">
+                  <button onClick={() => setUpdateModal(false)}>Trở lại</button>
+                  <button onClick={updateProductIncart}>OK</button>
+                </div>
               </div>
-            </div>
-          </>
-        )}
-        {updateModal && (
-          <>
-            <FlyZoom />
-            <div className="model-update">
-              <div className="title">
-                <p>Sản phẩm có sự thay đổi , xin hãy cập nhật lại?</p>
-              </div>
-              <div className="button-group">
-                <button onClick={() => setUpdateModal(false)}>Trở lại</button>
-                <button onClick={updateProductIncart}>OK</button>
-              </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
 
-        <div className="body">
-          {carts.length > 0 ? (
-            <div className="container-fluid">
-              <div className="d-flex colum-1">
-                <i
-                  style={{ color: "#00b9a0" }}
-                  className="fas fa-shuttle-van"
-                ></i>
-                <p>Danh sách sản phẩm bạn đã thêm vào giỏ hàng!</p>
-              </div>
-              <div className="body-title d-flex">
-                <p className="col-5">Sản phẩm</p>
-                <p className="col-2">Đơn Giá</p>
-                <p className="col-2">Số Lượng</p>
-                <p className="col-2">Số Tiền</p>
-                <p className="col-1">Thao Tác</p>
-              </div>
-              <div className="body-product bg-white mt-3">
-                <div className="list-products">
-                  {carts.map((cart, index) => {
-                    return (
-                      <div
-                        key={index}
-                        style={{ height: "13rem" }}
-                        className="item-product"
-                      >
-                        <div className="store-name">
-                          <input
-                            className="slaveCheckbox"
-                            type="checkbox"
-                            name="check-store"
-                            id="check-store"
-                          />
-                          Pham Duy Store
-                        </div>
-
+          <div className="body">
+            {carts.length > 0 ? (
+              <div className="container-fluid">
+                <div className="d-flex colum-1">
+                  <i
+                    style={{ color: "#00b9a0" }}
+                    className="fas fa-shuttle-van"
+                  ></i>
+                  <p>Danh sách sản phẩm bạn đã thêm vào giỏ hàng!</p>
+                </div>
+                <div className="body-title d-flex">
+                  <p className="col-5">Sản phẩm</p>
+                  <p className="col-2">Đơn Giá</p>
+                  <p className="col-2">Số Lượng</p>
+                  <p className="col-2">Số Tiền</p>
+                  <p className="col-1">Thao Tác</p>
+                </div>
+                <div className="body-product bg-white mt-3">
+                  <div className="list-products">
+                    {carts.map((cart, index) => {
+                      return (
                         <div
+                          key={index}
                           style={{ height: "13rem" }}
-                          className="d-flex product-infor"
+                          className="item-product"
                         >
-                          <div
-                            style={{ height: "8rem" }}
-                            className="col-5 d-flex product"
-                          >
+                          <div className="store-name">
                             <input
-                              className="Checkbox"
+                              className="slaveCheckbox"
                               type="checkbox"
-                              checked={idProductChooses.includes(cart._id)}
-                              onChange={() => handleChosesCheckbox(cart._id)}
-                              name="check-sp"
+                              name="check-store"
+                              id="check-store"
                             />
-                            <img
-                              style={{ height: "7rem" }}
-                              className="col-2"
-                              src={cart.image}
-                              alt=""
-                            />
-                            <p className="col-5 product-name">{cart.name}</p>
-                            <div className="d-flex flex-column">
-                              <select
-                                className="mt-3"
-                                style={{ height: "1.3rem" }}
-                                name="product-category"
-                                id="product-category"
-                              >
-                                <option value="Phân Loại Hàng">
-                                  Phân Loại Hàng
-                                </option>
-                                <option
-                                  style={{ color: "red" }}
-                                  value={cart.color}
+                            Pham Duy Store
+                          </div>
+
+                          <div
+                            style={{ height: "13rem" }}
+                            className="d-flex product-infor"
+                          >
+                            <div
+                              style={{ height: "8rem" }}
+                              className="col-5 d-flex product"
+                            >
+                              <input
+                                className="Checkbox"
+                                type="checkbox"
+                                checked={idProductChooses.includes(cart._id)}
+                                onChange={() => handleChosesCheckbox(cart._id)}
+                                name="check-sp"
+                              />
+                              <img
+                                style={{ height: "7rem" }}
+                                className="col-2"
+                                src={cart.image}
+                                alt=""
+                              />
+                              <p className="col-5 product-name">{cart.name}</p>
+                              <div className="d-flex flex-column">
+                                <select
+                                  className="mt-3"
+                                  style={{ height: "1.3rem" }}
+                                  name="product-category"
+                                  id="product-category"
                                 >
-                                  {cart.color}
-                                </option>
-                                <option value="white">Màu Trắng</option>
-                              </select>
-                              <p>Size : {cart.size}</p>
+                                  <option value="Phân Loại Hàng">
+                                    Phân Loại Hàng
+                                  </option>
+                                  <option
+                                    style={{ color: "red" }}
+                                    value={cart.color}
+                                  >
+                                    {cart.color}
+                                  </option>
+                                  <option value="white">Màu Trắng</option>
+                                </select>
+                                <p>Size : {cart.size}</p>
+                              </div>
+                            </div>
+                            <div className="d-flex price-info col-2 pt-5 text-center">
+                              <p>
+                                {" "}
+                                <sup>đ</sup>{" "}
+                                <span className="price">
+                                  {VND.format(cart.price)}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="quantity col-2 pt-5">
+                              <input
+                                onClick={() => handleQuantity(cart._id, -1)}
+                                className="cart-down-quantity"
+                                type="button"
+                                value="-"
+                              />
+                              <input
+                                onChange={(e) =>
+                                  handleChangeQuantity(cart._id, e)
+                                }
+                                className="quantity_value"
+                                type="number"
+                                min="1"
+                                value={cart.quantity}
+                              />
+                              <input
+                                onClick={() => handleQuantity(cart._id, 1)}
+                                className="cart-up-quantity"
+                                type="button"
+                                value="+"
+                              />
+                            </div>
+                            <div className="total-price col-2 pt-5">
+                              <p>
+                                <sup>đ</sup>{" "}
+                                <span className="sum">
+                                  {VND.format(cart.sum)}
+                                </span>
+                              </p>
+                            </div>
+                            <div
+                              onClick={() => deleteProduct(cart._id)}
+                              className="remove-item col-1 pt-5"
+                            >
+                              <p>Xóa</p>
                             </div>
                           </div>
-                          <div className="d-flex price-info col-2 pt-5 text-center">
-                            <p>
-                              {" "}
-                              <sup>đ</sup>{" "}
-                              <span className="price">
-                                {VND.format(cart.price)}
-                              </span>
-                            </p>
-                          </div>
-                          <div className="quantity col-2 pt-5">
-                            <input
-                              onClick={() => handleQuantity(cart._id, -1)}
-                              className="cart-down-quantity"
-                              type="button"
-                              value="-"
-                            />
-                            <input
-                              onChange={(e) =>
-                                handleChangeQuantity(cart._id, e)
-                              }
-                              className="quantity_value"
-                              type="number"
-                              min="1"
-                              value={cart.quantity}
-                            />
-                            <input
-                              onClick={() => handleQuantity(cart._id, 1)}
-                              className="cart-up-quantity"
-                              type="button"
-                              value="+"
-                            />
-                          </div>
-                          <div className="total-price col-2 pt-5">
-                            <p>
-                              <sup>đ</sup>{" "}
-                              <span className="sum">
-                                {VND.format(cart.sum)}
-                              </span>
-                            </p>
-                          </div>
-                          <div
-                            onClick={() => deleteProduct(cart._id)}
-                            className="remove-item col-1 pt-5"
-                          >
-                            <p>Xóa</p>
-                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="d-flex colum-4">
-                  <div className="col-2 pt-1">
-                    <input
-                      onChange={handleChosesCheckboxAll}
-                      type="checkbox"
-                      id="masterCheckbox"
-                      ref={checkboxRef}
-                      style={{ marginRight: "1rem" }}
-                    />
-                    Chọn tất Cả (
-                    <span className="quantityCart-one">{carts.length}</span>)
+                      );
+                    })}
                   </div>
 
-                  <div className="col-1 pt-1">
-                    <p
-                      onClick={() => setDeleteModal(true)}
-                      style={{ cursor: " pointer" }}
+                  <div className="d-flex colum-4">
+                    <div className="col-2 pt-1">
+                      <input
+                        onChange={handleChosesCheckboxAll}
+                        type="checkbox"
+                        id="masterCheckbox"
+                        ref={checkboxRef}
+                        style={{ marginRight: "1rem" }}
+                      />
+                      Chọn tất Cả (
+                      <span className="quantityCart-one">{carts.length}</span>)
+                    </div>
+
+                    <div className="col-1 pt-1">
+                      <p
+                        onClick={() => setDeleteModal(true)}
+                        style={{ cursor: " pointer" }}
+                      >
+                        Xóa Tất Cả
+                      </p>
+                    </div>
+                    <div className="col-2 pt-1">
+                      <p style={{ color: "#ee4d2d" }}>Lưu vào mục Đã Th...</p>
+                    </div>
+                    <div className="col-4 d-flex">
+                      <p>
+                        Tổng thanh toán (
+                        <span className="quantityCart-two">{carts.length}</span>
+                        ) sản phẩm :{" "}
+                        <span className="cart_total">
+                          {" "}
+                          {VND_currency.format(total)}
+                        </span>
+                      </p>
+                    </div>
+                    <button
+                      style={
+                        idProductChooses.length === 0
+                          ? { backgroundColor: "gray", cursor: "no-drop" }
+                          : {}
+                      }
+                      onClick={handleBuy}
                     >
-                      Xóa Tất Cả
-                    </p>
+                      Mua Hàng
+                    </button>
                   </div>
-                  <div className="col-2 pt-1">
-                    <p style={{ color: "#ee4d2d" }}>Lưu vào mục Đã Th...</p>
-                  </div>
-                  <div className="col-4 d-flex">
-                    <p>
-                      Tổng thanh toán (
-                      <span className="quantityCart-two">{carts.length}</span>)
-                      sản phẩm :{" "}
-                      <span className="cart_total">
-                        {" "}
-                        {VND_currency.format(total)}
-                      </span>
-                    </p>
-                  </div>
-                  <button
-                    style={
-                      idProductChooses.length === 0
-                        ? { backgroundColor: "gray", cursor: "no-drop" }
-                        : {}
-                    }
-                    onClick={handleBuy}
-                  >
-                    Mua Hàng
-                  </button>
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="img-no-order">
-              <img src={imgNoOder} alt="" />
-            </div>
-          )}
+            ) : (
+              <div className="img-no-order">
+                <img src={imgNoOder} alt="" />
+              </div>
+            )}
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }

@@ -6,9 +6,9 @@ import AutoLoadPage from "../../components/autoLoadPage/autoLoadPage";
 
 export default function OrderLayout() {
   return (
-    <div>
+    <div className="maxWidth">
       <ComponentHeader />
-      <AutoLoadPage/>
+      <AutoLoadPage />
       <div id="layout_oder">
         <Outlet></Outlet>
       </div>
